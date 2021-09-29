@@ -28,7 +28,6 @@ public class PostCommentDao implements postCommentDAO_interface{
 			pstmt = con.prepareStatement(INSERT_STMT);
 			java.util.Date date = new java.util.Date();
 			java.sql.Timestamp timestamp = new java.sql.Timestamp(date.getTime());
-			
 			pstmt.setInt(1, commentVO.getArticleId());
 			pstmt.setInt(2, commentVO.getMemberId());
 			pstmt.setString(3, commentVO.getContent());
@@ -151,13 +150,13 @@ public class PostCommentDao implements postCommentDAO_interface{
 		PostCommentVO good = new PostCommentVO();
 		good.setArticleId(2);
 		good.setMemberId(3);
-		good.setContent("Æg");
+		good.setContent("ï¿½g");
 		
 		control.insert(good);
 		
 //		PostCommentVO change = new PostCommentVO();
 //		change.setCommentId(1);
-//		change.setContent("Äê");
+//		change.setContent("ï¿½ï¿½");
 //		
 //		control.update(change);
 		

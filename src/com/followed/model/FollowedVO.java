@@ -3,15 +3,15 @@ package com.followed.model;
 import java.io.Serializable;
 
 public class FollowedVO implements Serializable{
-	private Integer followedMappigID;
+	private Integer AIfollowedID;
 	private Integer memberId;
 	private Integer followedId;
 	
-	public Integer getFollowedMappigID() {
-		return followedMappigID;
+	public Integer getAIFollowedID() {
+		return AIfollowedID;
 	}
-	public void setFollowedMappigID(Integer followedMappigID) {
-		this.followedMappigID = followedMappigID;
+	public void setFollowedID(Integer AIfollowedID) {
+		this.AIfollowedID = AIfollowedID;
 	}
 	public Integer getMemberId() {
 		return memberId;

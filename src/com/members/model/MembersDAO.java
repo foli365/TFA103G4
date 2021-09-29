@@ -8,14 +8,25 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.List;
+
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
+import javax.sql.DataSource;
 
 public class MembersDAO implements MembersDAO_interface {
 
-	String driver = "com.mysql.cj.jdbc.Driver";
-	String url = "jdbc:mysql://localhost:3306/gocamping?serverTimezone=Asia/Taipei";
-	String userid = "Yves";
-	String passwd = "123456";
+	private static DataSource ds = null;
+	static {
+		try {
+			Context ctx = new InitialContext();
+			ds = (DataSource) ctx.lookup("java:comp/env/jdbc/camping");
+		} catch (NamingException e) {
+			e.printStackTrace();
+		}
+	}
 
 	private static final String INSERT_STMT = "INSERT INTO members (name, email) VALUES (?, ?)";
 	private static final String GET_ALL_STMT = "SELECT member_id, name, phone, email, membership, member_status, thumbnail, address FROM members order by member_id";
@@ -29,8 +40,7 @@ public class MembersDAO implements MembersDAO_interface {
 		PreparedStatement pstmt = null;
 		
 		try {
-			Class.forName(driver);
-			con = DriverManager.getConnection(url, userid, passwd);
+			con = ds.getConnection();
 			pstmt = con.prepareStatement(INSERT_STMT);
 			
 			pstmt.setString(1, membersVO.getName());
@@ -38,9 +48,6 @@ public class MembersDAO implements MembersDAO_interface {
 			
 			pstmt.executeUpdate();
 			
-		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -71,8 +78,7 @@ public class MembersDAO implements MembersDAO_interface {
 		PreparedStatement pstmt = null;
 		
 		try {
-			Class.forName(driver);
-			con = DriverManager.getConnection(url, userid, passwd);
+			con = ds.getConnection();
 			pstmt = con.prepareStatement(UPDATE);
 			
 			pstmt.setString(1, membersVO.getName());
@@ -86,9 +92,6 @@ public class MembersDAO implements MembersDAO_interface {
 			
 			pstmt.executeUpdate();
 			
-		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -122,8 +125,7 @@ public class MembersDAO implements MembersDAO_interface {
 		
 		try {
 			
-			Class.forName(driver);
-			con = DriverManager.getConnection(url, userid, passwd);
+			con = ds.getConnection();
 			pstmt = con.prepareStatement(GET_ONE_STMT);
 			
 			pstmt.setInt(1, memberId);
@@ -139,12 +141,13 @@ public class MembersDAO implements MembersDAO_interface {
 				membersVO.setMemberStatus(rs.getInt("member_status"));
 				membersVO.setName(rs.getString("name"));
 				membersVO.setPhone(rs.getString("phone"));
-				membersVO.setThumbnail(rs.getBytes("thumbnail"));
+				byte[] imagesBytes = rs.getBytes("thumbnail");
+				if (imagesBytes != null) {
+					String base64Img = Base64.getEncoder().encodeToString(imagesBytes);
+					membersVO.setBase64Image(base64Img);
+				}
 				
 			}
-		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -185,8 +188,7 @@ public class MembersDAO implements MembersDAO_interface {
 		ResultSet rs = null;
 		
 		try {
-			Class.forName(driver);
-			con = DriverManager.getConnection(url, userid, passwd);
+			con = ds.getConnection();
 			pstmt = con.prepareStatement(GET_ALL_STMT);
 			rs = pstmt.executeQuery();
 			
@@ -199,13 +201,14 @@ public class MembersDAO implements MembersDAO_interface {
 				memVO.setMemberStatus(rs.getInt("member_status"));
 				memVO.setName(rs.getString("name"));
 				memVO.setPhone(rs.getString("phone"));
-				memVO.setThumbnail(rs.getBytes("thumbnail"));
+				byte[] imagesBytes = rs.getBytes("thumbnail");
+				if (imagesBytes != null) {
+					String base64Img = Base64.getEncoder().encodeToString(imagesBytes);
+					memVO.setBase64Image(base64Img);
+				}
 				list.add(memVO);
 			}
 			
-		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -237,19 +240,19 @@ public class MembersDAO implements MembersDAO_interface {
 	
 	public static void main(String[] args) {
 		MembersDAO control = new MembersDAO();
+//		
+//		//��
+//		MembersVO CMPunk = new MembersVO();
+//		CMPunk.setName("CM.Punk");
+//		CMPunk.setEmail("AEW_CM-PUNK@gmail.com");
+//		
+//		control.insert(CMPunk);
 		
-		//插入
-		MembersVO CMPunk = new MembersVO();
-		CMPunk.setName("CM.Punk");
-		CMPunk.setEmail("AEW_CM-PUNK@gmail.com");
-		
-		control.insert(CMPunk);
-		
-		//更新
+		//��
 //		MembersVO sophia = new MembersVO();
 //		sophia.setName("Haru");
 //		sophia.setEmail("haru@gmail.com");
-//		sophia.setAddress("	カナガワケン, カワサキシタカツク, カミサクノベ, 424-5656");
+//		sophia.setAddress("	������, ���������, ��������, 424-5656");
 //		sophia.setPhone("+8151-953-5954");
 //		sophia.setMemberId(1);
 //		byte[] pic = null;
@@ -264,7 +267,7 @@ public class MembersDAO implements MembersDAO_interface {
 //		sophia.setMemberStatus(2);
 //		control.update(sophia);
 		
-		//查詢
+		//�閰�
 //		MembersVO tar = control.findByPrimaryKey(1);
 //		System.out.print(tar.getName() + ",");
 //		System.out.print(tar.getEmail() + ",");
@@ -275,7 +278,7 @@ public class MembersDAO implements MembersDAO_interface {
 //		System.out.println(tar.getMemberStatus() + ",");
 //		System.out.println("--------------------");
 		
-		//全數查詢
+		//���閰�
 		List<MembersVO> list = control.getAll();
 		for (MembersVO membersVO : list) {
 			System.out.print(membersVO.getName() + ",");

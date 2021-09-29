@@ -60,7 +60,7 @@ public class FollowedDAO implements FollowedDAO_interface{
 		
 	}
 	@Override
-	public void delete(Integer followedMappigID) {
+	public void delete(Integer AIfollowedID) {
 		// TODO Auto-generated method stub
 		Connection con = null;
 		PreparedStatement pstmt = null;
@@ -70,7 +70,7 @@ public class FollowedDAO implements FollowedDAO_interface{
 			con = DriverManager.getConnection(url, userid, passwd);
 			pstmt = con.prepareStatement(DELETE);
 			
-			pstmt.setInt(1, followedMappigID);
+			pstmt.setInt(1, AIfollowedID);
 			
 			pstmt.executeUpdate();
 		} catch (ClassNotFoundException e) {
