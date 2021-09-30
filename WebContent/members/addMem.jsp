@@ -1,6 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=BIG5"
-	pageEncoding="BIG5"%>
+    pageEncoding="BIG5"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ page import="com.members.model.*"%>
+<%@ page import="java.util.*"%>
+
+<% 
+	MemberService memSer = new MemberService();
+	
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -8,6 +15,6 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<h1>會員資料表</h1>
+
 </body>
 </html>
