@@ -9,7 +9,7 @@ public class FollowedDAO implements FollowedDAO_interface{
 	
 	String driver = "com.mysql.cj.jdbc.Driver";
 	String url = "jdbc:mysql://localhost:3306/gocamping?serverTimezone=Asia/Taipei";
-	String userid = "Yves";
+	String userid = "root";
 	String passwd = "123456";
 	
 	private static final String INSERT_STMT = "INSERT INTO FOLLOWED (MEMBER_ID, FOLLOWED_ID) VALUES (?, ?)";

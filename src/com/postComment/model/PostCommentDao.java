@@ -9,7 +9,7 @@ public class PostCommentDao implements postCommentDAO_interface{
 	
 	String driver = "com.mysql.cj.jdbc.Driver";
 	String url = "jdbc:mysql://localhost:3306/gocamping?serverTimezone=Asia/Taipei";
-	String userid = "Yves";
+	String userid = "root";
 	String passwd = "123456";
 
 	private static final String INSERT_STMT = "INSERT INTO post_comment (ARTICLE_ID, MEMBER_ID, CONTENT, TIMESTAMP) VALUES (?, ?, ?, ?)";

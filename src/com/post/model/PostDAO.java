@@ -1,7 +1,5 @@
 package com.post.model;
 
-import java.io.FileInputStream;
-import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -26,11 +24,11 @@ public class PostDAO implements PostDAO_Interface {
 		}
 	}
 
-	private static final String INSERT_STMT = "INSERT INTO post (author_id, article, created) VALUES (?, ?, ?)";
-	private static final String UPDATE = "UPDATE post set article=? where ARTICLE_ID = ?";
+	private static final String INSERT_STMT = "INSERT INTO post (author_id, title, article, created) VALUES (?, ?, ?, ?)";
+	private static final String UPDATE = "UPDATE post set title=? article=? where ARTICLE_ID = ?";
 	private static final String DELETE = "DELETE FROM post where article_id = ?";
-	private static final String GET_ONE_STMT = "SELECT author_id,article_id,article,created,picture1,picture2,picture3 FROM post where author_id= ?";
-	private static final String GET_ALL_STMT = "SELECT author_id,article_id,article,picture1,picture2,picture3 FROM post order by created";
+	private static final String GET_ONE_STMT = "SELECT author_id, article_id, article, created FROM post where author_id= ?";
+	private static final String GET_ALL_STMT = "SELECT author_id, article_id, article, created FROM post order by created";
 
 
 	@Override
@@ -44,10 +42,11 @@ public class PostDAO implements PostDAO_Interface {
 		try {
 			con = ds.getConnection();
 			pstmt = con.prepareStatement(INSERT_STMT);
-
+			
 			pstmt.setInt(1, postVO.getAuthorId());
-			pstmt.setString(2, postVO.getArticle());
-			pstmt.setTimestamp(3, timestamp);
+			pstmt.setString(2, postVO.getTitle());
+			pstmt.setString(3, postVO.getArticle());
+			pstmt.setTimestamp(4, timestamp);
 
 			pstmt.executeUpdate();
 
@@ -85,8 +84,9 @@ public class PostDAO implements PostDAO_Interface {
 			con = ds.getConnection();
 			pstmt = con.prepareStatement(UPDATE);
 
-			pstmt.setString(1, postVO.getArticle());
-			pstmt.setInt(2, postVO.getPostId());
+			pstmt.setString(1, postVO.getTitle());
+			pstmt.setString(2, postVO.getArticle());
+			pstmt.setInt(3, postVO.getPostId());
 
 			pstmt.executeUpdate();
 		} catch (SQLException e) {
@@ -124,7 +124,7 @@ public class PostDAO implements PostDAO_Interface {
 			pstmt = con.prepareStatement(DELETE);
 
 			pstmt.setInt(1, articleId);
-
+			
 			pstmt.executeUpdate();
 
 			// Handle any driver errors
@@ -203,6 +203,7 @@ public class PostDAO implements PostDAO_Interface {
 		return list;
 	}
 	
+	@Override
 	public List<PostVO> getAll(){
 		List<PostVO> list = new ArrayList<PostVO>();
 		PostVO postVO = null;
@@ -220,6 +221,7 @@ public class PostDAO implements PostDAO_Interface {
 				postVO = new PostVO();
 				postVO.setPostId(rs.getInt("article_id"));
 				postVO.setAuthorId(rs.getInt("author_id"));
+				postVO.setTitle(rs.getString("title"));
 				postVO.setArticle(rs.getString("article"));
 				postVO.setCreated(rs.getTimestamp("created"));
 				list.add(postVO);
@@ -251,56 +253,5 @@ public class PostDAO implements PostDAO_Interface {
 		}
 		return list;
 	}
-
-	public static void main(String[] args) {
-
-		PostDAO control = new PostDAO();
-
-		// �s�W
-//		PostVO ig = new PostVO();
-//		ig.setAuthorId(4);
-//		ig.setArticle(
-//				"Praesent eget enim a odio pretium iaculis. Vestibulum vestibulum est vitae felis malesuada, at mollis ante rhoncus.");
-//		control.insert(ig);
-
-		// �ק�
-//		PostVO edit = new PostVO();
-//		edit.setArticle("cool");
-//		edit.setArticleId(3);
-//		byte[] pic1 = null;
-//		try {
-//			pic1 = getPictureByteArray("img/2.jpg");
-//		} catch (IOException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-//		edit.setPic1(pic1);
-//		control.update(edit);
-
-		// �R��
-//		control.delete(5);
-		
-		//��ۤv���峹
-		List<PostVO> list = control.findByAuthor(1);
-		for (PostVO postVO : list) {
-			System.out.println("�峹�s��: " + postVO.getPostId());
-			System.out.println("�@��: " + postVO.getAuthorId());
-			System.out.println("����: " + postVO.getArticle());
-			System.out.println("�إ߮ɶ�: " + postVO.getCreated());
-			System.out.println("==================="); 
-		}
-		
-
-	}
-
-	public static byte[] getPictureByteArray(String path) throws IOException {
-		FileInputStream fis = new FileInputStream(path);
-		byte[] buffer = new byte[fis.available()];
-		fis.read(buffer);
-		fis.close();
-		return buffer;
-	}
-	
-
 
 }

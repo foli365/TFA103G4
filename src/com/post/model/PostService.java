@@ -12,9 +12,10 @@ public class PostService {
 		dao = new PostDAO();
 	}
 
-	public PostVO addPost(Integer authorId, String article) {
+	public PostVO addPost(Integer authorId, String title, String article) {
 		PostVO postVO = new PostVO();
 		postVO.setAuthorId(authorId);
+		postVO.setTitle(title);
 		postVO.setArticle(article);
 		java.util.Date date = new java.util.Date();
 		java.sql.Timestamp timestamp = new java.sql.Timestamp(date.getTime());
@@ -23,7 +24,7 @@ public class PostService {
 		return postVO;
 	}
 	
-	public PostVO updatePost(Integer postId, Integer authorId, String article, String pic1, String pic2, String pic3) {
+	public PostVO updatePost(Integer postId, Integer authorId, String article) {
 		PostVO postVO = new PostVO();
 		postVO.setAuthorId(authorId);
 		postVO.setArticle(article);
@@ -38,6 +39,10 @@ public class PostService {
 	
     public List<PostVO> findByAuthor(Integer authorId){
     	return dao.findByAuthor(authorId);
+    }
+    
+    public List<PostVO> getAll(){
+    	return dao.getAll();
     }
 	
 	public static byte[] getPictureByteArray(String path) throws IOException {
