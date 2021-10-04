@@ -34,6 +34,10 @@ public class PostService {
 		dao.delete(articleId);
 	}
 	
+	public PostVO findByPostId(Integer postId) {
+		return dao.findByPostId(postId);
+	}
+	
     public List<PostVO> findByAuthor(Integer authorId){
     	return dao.findByAuthor(authorId);
     }
