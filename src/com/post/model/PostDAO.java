@@ -27,7 +27,8 @@ public class PostDAO implements PostDAO_Interface {
 	private static final String INSERT_STMT = "INSERT INTO post (author_id, title, article, created) VALUES (?, ?, ?, ?)";
 	private static final String UPDATE = "UPDATE post set title=?, article=?, created=? where post_id = ?";
 	private static final String DELETE = "DELETE FROM post where post_id = ?";
-	private static final String GET_ONE_STMT = "SELECT author_id, post_id, article, created FROM post where author_id= ?";
+	private static final String GET_ONE_BY_AUTHOR = "SELECT author_id, post_id, title, article, created FROM post where author_id= ?";
+	private static final String GET_ONE_BY_POSTID = "SELECT author_id, post_id, title, article, created FROM post where post_id= ?";
 	private static final String GET_ALL_STMT = "SELECT author_id, post_id, title, article, created FROM post order by created";
 
 
@@ -162,14 +163,14 @@ public class PostDAO implements PostDAO_Interface {
 
 		try {
 			con = ds.getConnection();
-			pstmt = con.prepareStatement(GET_ONE_STMT);
+			pstmt = con.prepareStatement(GET_ONE_BY_AUTHOR);
 
 			pstmt.setInt(1, authorId);
 			rs = pstmt.executeQuery();
 
 			while (rs.next()) {
 				post = new PostVO();
-				post.setPostId(rs.getInt("article_id"));
+				post.setPostId(rs.getInt("post_id"));
 				post.setAuthorId(rs.getInt("author_id"));
 				post.setTitle(rs.getString("title"));
 				post.setArticle(rs.getString("article"));
@@ -205,6 +206,58 @@ public class PostDAO implements PostDAO_Interface {
 
 		// TODO Auto-generated method stub
 		return list;
+	}
+	
+	public PostVO findByPostId(Integer postId) {
+		PostVO post = null;
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+
+		try {
+			con = ds.getConnection();
+			pstmt = con.prepareStatement(GET_ONE_BY_POSTID);
+
+			pstmt.setInt(1, postId);
+			rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				post = new PostVO();
+				post.setPostId(rs.getInt("post_id"));
+				post.setAuthorId(rs.getInt("author_id"));
+				post.setTitle(rs.getString("title"));
+				post.setArticle(rs.getString("article"));
+				post.setCreated(rs.getTimestamp("created"));
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+
+		// TODO Auto-generated method stub
+		return post;
 	}
 	
 	@Override

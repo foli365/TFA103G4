@@ -47,7 +47,12 @@ public class MemberService {
 	}
 
 	public List<MembersVO> getAll() {
-		return dao.getAll();
+		if (dao.getAll() != null) {
+			return dao.getAll();			
+		} else {
+			System.out.println("¨ú­È¥X²{¿ù»~");
+			return null;
+		}
 	}
 	
 	public static byte[] getPictureByteArray(String path) throws IOException {

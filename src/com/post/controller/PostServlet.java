@@ -11,7 +11,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.emp.model.EmpService;
 import com.post.model.PostService;
 import com.post.model.PostVO;
 
@@ -26,7 +25,7 @@ public class PostServlet extends HttpServlet {
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		res.setCharacterEncoding("UTF-8");
+		req.setCharacterEncoding("UTF-8");
 		String action = req.getParameter("action");
 		
 		if ("update".equals(action)) {
