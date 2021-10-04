@@ -25,10 +25,10 @@ public class PostDAO implements PostDAO_Interface {
 	}
 
 	private static final String INSERT_STMT = "INSERT INTO post (author_id, title, article, created) VALUES (?, ?, ?, ?)";
-	private static final String UPDATE = "UPDATE post set title=? article=? where ARTICLE_ID = ?";
-	private static final String DELETE = "DELETE FROM post where article_id = ?";
-	private static final String GET_ONE_STMT = "SELECT author_id, article_id, article, created FROM post where author_id= ?";
-	private static final String GET_ALL_STMT = "SELECT author_id, article_id, article, created FROM post order by created";
+	private static final String UPDATE = "UPDATE post set title=?, article=?, created=? where post_id = ?";
+	private static final String DELETE = "DELETE FROM post where post_id = ?";
+	private static final String GET_ONE_STMT = "SELECT author_id, post_id, article, created FROM post where author_id= ?";
+	private static final String GET_ALL_STMT = "SELECT author_id, post_id, title, article, created FROM post order by created";
 
 
 	@Override
@@ -79,6 +79,8 @@ public class PostDAO implements PostDAO_Interface {
 		// TODO Auto-generated method stub
 		Connection con = null;
 		PreparedStatement pstmt = null;
+		java.util.Date date = new java.util.Date();
+		java.sql.Timestamp timestamp = new java.sql.Timestamp(date.getTime());
 
 		try {
 			con = ds.getConnection();
@@ -86,7 +88,8 @@ public class PostDAO implements PostDAO_Interface {
 
 			pstmt.setString(1, postVO.getTitle());
 			pstmt.setString(2, postVO.getArticle());
-			pstmt.setInt(3, postVO.getPostId());
+			pstmt.setTimestamp(3, timestamp);
+			pstmt.setInt(4, postVO.getPostId());
 
 			pstmt.executeUpdate();
 		} catch (SQLException e) {
@@ -168,6 +171,7 @@ public class PostDAO implements PostDAO_Interface {
 				post = new PostVO();
 				post.setPostId(rs.getInt("article_id"));
 				post.setAuthorId(rs.getInt("author_id"));
+				post.setTitle(rs.getString("title"));
 				post.setArticle(rs.getString("article"));
 				post.setCreated(rs.getTimestamp("created"));
 				list.add(post);
@@ -219,7 +223,7 @@ public class PostDAO implements PostDAO_Interface {
 			
 			while (rs.next()) {
 				postVO = new PostVO();
-				postVO.setPostId(rs.getInt("article_id"));
+				postVO.setPostId(rs.getInt("post_id"));
 				postVO.setAuthorId(rs.getInt("author_id"));
 				postVO.setTitle(rs.getString("title"));
 				postVO.setArticle(rs.getString("article"));

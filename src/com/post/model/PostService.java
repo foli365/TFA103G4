@@ -1,8 +1,5 @@
 package com.post.model;
 
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.sql.Timestamp;
 import java.util.List;
 
 public class PostService {
@@ -24,11 +21,11 @@ public class PostService {
 		return postVO;
 	}
 	
-	public PostVO updatePost(Integer postId, Integer authorId, String article) {
+	public PostVO updatePost(Integer postId, String title, String article) {
 		PostVO postVO = new PostVO();
-		postVO.setAuthorId(authorId);
-		postVO.setArticle(article);
 		postVO.setPostId(postId);
+		postVO.setTitle(title);
+		postVO.setArticle(article);
 		dao.update(postVO);
 		return postVO;
 	}
@@ -44,12 +41,4 @@ public class PostService {
     public List<PostVO> getAll(){
     	return dao.getAll();
     }
-	
-	public static byte[] getPictureByteArray(String path) throws IOException {
-		FileInputStream fis = new FileInputStream(path);
-		byte[] buffer = new byte[fis.available()];
-		fis.read(buffer);
-		fis.close();
-		return buffer;
-	}
 }
