@@ -178,8 +178,8 @@
 								<div class="card-body">
 									<div class="row">
 										<div class="col">
-											<h4 class="card-title" style="margin-bottom: -10px;">
-												${postVO.title}
+											<h4 class="card-title">
+												<a href="<%=request.getContextPath()%>/post/post.jsp?postId=${postVO.postId}" style="text-decoration: none; color: inherit;">${postVO.title}</a>
 											</h4>
 										</div>
 										<div class="col text-end">
@@ -190,7 +190,7 @@
 													aria-expanded="false"><i class="fas fa-ellipsis-v"></i></button>
 												<ul class="dropdown-menu">
 													<li class="dropdown-item text-end">
-														<button data-bs-toggle="modal" data-bs-target="#popEdit">編輯</button>
+														<button data-bs-toggle="modal" data-bs-target="#popEdit${postVO.postId}">編輯</button>
 													</li>
 													<li class="dropdown-item text-end">
 														<form method="post" action="<%=request.getContextPath()%>/post/post.do">
@@ -212,7 +212,7 @@
 							</div>
 						</div>
 					</div>
-					<div class="modal fade" id="popEdit" data-bs-backdrop="static"
+					<div class="modal fade" id="popEdit${postVO.postId}" data-bs-backdrop="static"
 					data-bs-keyboard="false" tabindex="-1"
 					aria-labelledby="staticBackdropLabel" aria-hidden="true">
 					<div class="modal-dialog modal-xl">
@@ -230,7 +230,7 @@
 											class="form-control" id="recipient-name" value="${postVO.title}"/>
 									</div>
 									<div class="mb-3">
-										<textarea name="article" id="summernote2" cols="30" rows="30">${postVO.article}</textarea>
+										<textarea name="article" class="summernote" id="summernote2" cols="30" rows="30">${postVO.article}</textarea>
 									</div>
 									<div class="modal-footer">
 										<button type="button" class="btn btn-secondary"
@@ -297,7 +297,7 @@
 // 					}
 // 				}
 			});
-			$('#summernote2').summernote({
+			$('.summernote').summernote({
 				spellCheck: false,
 				toolbar: [
 					['style', ['style']],

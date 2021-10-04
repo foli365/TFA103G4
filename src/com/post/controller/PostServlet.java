@@ -21,7 +21,7 @@ public class PostServlet extends HttpServlet {
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		res.setCharacterEncoding("UTF-8");
+		req.setCharacterEncoding("UTF-8");
 		String action = req.getParameter("action");
 		
 		if ("update".equals(action)) {
