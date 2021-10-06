@@ -1,12 +1,16 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="com.post.model.*"%>
+<%@ page import="com.members.model.*"%>
 <%@ page import="java.util.*"%>
 
 <%
 	PostService postSvc = new PostService();
 	List<PostVO> list = postSvc.getAll();
 	pageContext.setAttribute("list", list);
+	MembersDAO dao = new MembersDAO();
+    MembersVO haru = dao.findByPrimaryKey(1);
+    pageContext.setAttribute("memberVO", haru);
 %>
 <jsp:useBean id="memSvc" class="com.members.model.MemberService"
 	scope="request"></jsp:useBean>
@@ -21,12 +25,12 @@
 <link
 	href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css"
 	rel="stylesheet" />
-<link rel="stylesheet" href="./index.css" />
 <link rel="stylesheet"
 	href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" />
 <link rel="stylesheet"
 	href="./summernote-0.8.18-dist/summernote-lite.css">
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css">
+<link rel="stylesheet" href="index.css" />
 <style type="text/css">
 #author {
 	text-decoration: none;
@@ -39,10 +43,24 @@
 
 #post {
 	box-shadow: 0px 0px 2px rgba(0, 0, 0, 0.50);
+	max-height: 350px;
+	position: relative;
+	overflow: hidden;
+}
+.read-more{
+	position: absolute; 
+  	bottom: 0; 
+  	left: 0;
+  	width: 100%; 
+  	text-align: center; 
+  	margin: 0; padding: 30px 0; 
+	
+  /* "transparent" only works here because == rgba(0,0,0,0) */
+   	background-image: linear-gradient(to bottom, transparent, white);
 }
 
 #post:hover {
-	border: 1px solid #3E7DC0;
+	border: 1px solid #EDE1DA;
 	transition: all 0.2s ease-in;
 }
 
@@ -61,7 +79,7 @@
 </style>
 </head>
 
-<body>
+<body style="background-color: #7B7571;">
 	<nav class="navbar navbar-expand-md navbar-light sticky-top"
 		style="background-color: #fbefe7">
 		<div class="container-fluid">
@@ -115,14 +133,10 @@
 	<div class="container mt-3" style="max-width: 1600px">
 		<div class="row justify-content-center">
 			<div class="col" style="max-width: 800px">
-				<div class="row mb-3 p-1"
+				<div class="row mb-3 p-1 justify-content-center"
 					style="border: 1px solid #d3d4d6; background-color: white; border-radius: 5px;">
-					<div class="col-1">
-						<img
-							style="max-width: 50px; border-radius: 50%; display: inline-block;"
-							src="./img/avatar.jpg" alt="" />
+					<div class="col-1" style="background-size: cover; max-width: 50px; max-height: 50px; border-radius: 50%; display: inline-block; background-image: url('data:image/jpg;base64,${memberVO.base64Image}')">
 					</div>
-
 					<div class="col-11 my-auto">
 						<button type="button" class="btn btn-light" style="width: 100%"
 							data-bs-toggle="modal" data-bs-target="#popUp">
@@ -177,12 +191,16 @@
 							<div class="col">
 								<div class="card-body">
 									<div class="row">
-										<div class="col">
+										<div class="col-11">
+										<p class="card-text">
+										<small class="text-muted">發布於  ${postVO.passed} - <a
+										id="author" href="">${memSvc.findByPrimaryKey(postVO.authorId).name}</a></small>
+									</p>
 											<h4 class="card-title">
 												<a href="<%=request.getContextPath()%>/post/post.jsp?postId=${postVO.postId}" style="text-decoration: none; color: inherit;">${postVO.title}</a>
 											</h4>
 										</div>
-										<div class="col text-end">
+										<div class="col-1 text-end">
 											<div class="btn-group dropend">
 												<button id="option"
 													class="btn btn-secondary btn-sm"
@@ -204,10 +222,7 @@
 										</div>
 									</div>
 									<p class="card-text">${postVO.article}</p>
-									<p class="card-text">
-										<small class="text-muted">${postVO.created} - <a
-										id="author" href="">${memSvc.findByPrimaryKey(postVO.authorId).name}</a></small>
-									</p>
+									<p class="read-more"></p>
 								</div>
 							</div>
 						</div>
