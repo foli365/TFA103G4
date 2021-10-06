@@ -16,5 +16,6 @@ public class MembersServlet extends HttpServlet {
 		// TODO Auto-generated method stub
 		req.setCharacterEncoding("UTF-8");
 		
+		
 	}
 }

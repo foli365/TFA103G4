@@ -10,8 +10,15 @@ public class PostVO implements Serializable{
 	private String title;
 	private String article;
 	private Timestamp created;
+	private String passed;
 	
 
+	public String getPassed() {
+		return passed;
+	}
+	public void setPassed(String passed) {
+		this.passed = passed;
+	}
 	public String getTitle() {
 		return title;
 	}

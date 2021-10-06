@@ -4,13 +4,18 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
+
+import oracle.sql.DATE;
 
 public class PostDAO implements PostDAO_Interface {
 
@@ -29,8 +34,7 @@ public class PostDAO implements PostDAO_Interface {
 	private static final String DELETE = "DELETE FROM post where post_id = ?";
 	private static final String GET_ONE_BY_AUTHOR = "SELECT author_id, post_id, title, article, created FROM post where author_id= ?";
 	private static final String GET_ONE_BY_POSTID = "SELECT author_id, post_id, title, article, created FROM post where post_id= ?";
-	private static final String GET_ALL_STMT = "SELECT author_id, post_id, title, article, created FROM post order by created";
-
+	private static final String GET_ALL_STMT = "SELECT author_id, post_id, title, article, created FROM post order by created desc";
 
 	@Override
 	public void insert(PostVO postVO) {
@@ -43,7 +47,7 @@ public class PostDAO implements PostDAO_Interface {
 		try {
 			con = ds.getConnection();
 			pstmt = con.prepareStatement(INSERT_STMT);
-			
+
 			pstmt.setInt(1, postVO.getAuthorId());
 			pstmt.setString(2, postVO.getTitle());
 			pstmt.setString(3, postVO.getArticle());
@@ -128,7 +132,7 @@ public class PostDAO implements PostDAO_Interface {
 			pstmt = con.prepareStatement(DELETE);
 
 			pstmt.setInt(1, articleId);
-			
+
 			pstmt.executeUpdate();
 
 			// Handle any driver errors
@@ -175,6 +179,7 @@ public class PostDAO implements PostDAO_Interface {
 				post.setTitle(rs.getString("title"));
 				post.setArticle(rs.getString("article"));
 				post.setCreated(rs.getTimestamp("created"));
+				post.setPassed(getTimeAgo(rs.getTimestamp("created")));
 				list.add(post);
 			}
 		} catch (SQLException e) {
@@ -207,7 +212,7 @@ public class PostDAO implements PostDAO_Interface {
 		// TODO Auto-generated method stub
 		return list;
 	}
-	
+
 	public PostVO findByPostId(Integer postId) {
 		PostVO post = null;
 		Connection con = null;
@@ -228,6 +233,7 @@ public class PostDAO implements PostDAO_Interface {
 				post.setTitle(rs.getString("title"));
 				post.setArticle(rs.getString("article"));
 				post.setCreated(rs.getTimestamp("created"));
+				post.setPassed(getTimeAgo(rs.getTimestamp("created")));
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -259,21 +265,21 @@ public class PostDAO implements PostDAO_Interface {
 		// TODO Auto-generated method stub
 		return post;
 	}
-	
+
 	@Override
-	public List<PostVO> getAll(){
+	public List<PostVO> getAll() {
 		List<PostVO> list = new ArrayList<PostVO>();
 		PostVO postVO = null;
-		
+
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		
+
 		try {
 			con = ds.getConnection();
 			pstmt = con.prepareStatement(GET_ALL_STMT);
 			rs = pstmt.executeQuery();
-			
+
 			while (rs.next()) {
 				postVO = new PostVO();
 				postVO.setPostId(rs.getInt("post_id"));
@@ -281,11 +287,12 @@ public class PostDAO implements PostDAO_Interface {
 				postVO.setTitle(rs.getString("title"));
 				postVO.setArticle(rs.getString("article"));
 				postVO.setCreated(rs.getTimestamp("created"));
+				postVO.setPassed(getTimeAgo(rs.getTimestamp("created")));
 				list.add(postVO);
 			}
 		} catch (Exception e) {
 			// TODO: handle exception
-		}finally {
+		} finally {
 			if (rs != null) {
 				try {
 					rs.close();
@@ -311,4 +318,35 @@ public class PostDAO implements PostDAO_Interface {
 		return list;
 	}
 
+	public String getTimeAgo(Timestamp timestamp) {
+		long created = timestamp.getTime();
+		Date date = new Date();
+		long current = date.getTime();
+		Calendar cal = Calendar.getInstance();
+		cal.setTimeInMillis(created);
+		int calMonth = cal.get(Calendar.MONTH);
+		int calDays = cal.get(Calendar.DATE);
+		int calYears = cal.get(Calendar.YEAR);
+		long diffInSec = (current - created) / 1000;
+		long min = diffInSec / 60;
+		long hrs = diffInSec / 3600;
+		long days = diffInSec / 86400;
+		long years = diffInSec / 31207680;
+		if (diffInSec <= 60) {
+			return diffInSec + "秒前";
+		} else if (min <= 60) {
+			return min + "分鐘前";
+		} else if (hrs <= 24) {
+			return hrs + "小時前";
+		} else if (days <= 48) {
+			return days + "天前";
+		} else if (days > 48) {
+			return calMonth + "月" + calDays + "日";
+		} else {
+			if (years >= 1) {
+				return calYears + "年" + calMonth + "月" + calDays + "日";
+			}
+		}
+		return null;
+	}
 }

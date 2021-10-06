@@ -241,23 +241,22 @@ public class MembersDAO implements MembersDAO_interface {
 	public static void main(String[] args) {
 		MembersDAO control = new MembersDAO();
 //		
-//		//��
+//
 //		MembersVO CMPunk = new MembersVO();
 //		CMPunk.setName("CM.Punk");
 //		CMPunk.setEmail("AEW_CM-PUNK@gmail.com");
 //		
 //		control.insert(CMPunk);
 		
-		//��
+		//update
 //		MembersVO sophia = new MembersVO();
 //		sophia.setName("Haru");
 //		sophia.setEmail("haru@gmail.com");
-//		sophia.setAddress("	������, ���������, ��������, 424-5656");
 //		sophia.setPhone("+8151-953-5954");
 //		sophia.setMemberId(1);
 //		byte[] pic = null;
 //		try {
-//			pic = getPictureByteArray("img/haru.jpg");
+//			pic = getPictureByteArray("img/b90tyligr4621.jpg");
 //		} catch (IOException e) {
 //			// TODO Auto-generated catch block
 //			e.printStackTrace();
@@ -267,7 +266,7 @@ public class MembersDAO implements MembersDAO_interface {
 //		sophia.setMemberStatus(2);
 //		control.update(sophia);
 		
-		//�閰�
+		//
 //		MembersVO tar = control.findByPrimaryKey(1);
 //		System.out.print(tar.getName() + ",");
 //		System.out.print(tar.getEmail() + ",");
@@ -278,7 +277,7 @@ public class MembersDAO implements MembersDAO_interface {
 //		System.out.println(tar.getMemberStatus() + ",");
 //		System.out.println("--------------------");
 		
-		//���閰�
+		//
 		List<MembersVO> list = control.getAll();
 		for (MembersVO membersVO : list) {
 			System.out.print(membersVO.getName() + ",");

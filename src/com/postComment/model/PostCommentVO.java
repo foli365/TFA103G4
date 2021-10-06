@@ -5,11 +5,19 @@ import java.sql.Timestamp;
 
 public class PostCommentVO implements Serializable {
 	private Integer commentId;
-	private Integer articleId;
+	private Integer postId;
 	private Integer memberId;
 	private String content;
 	private Timestamp created;
+	private String passed;
 	
+	
+	public String getPassed() {
+		return passed;
+	}
+	public void setPassed(String passed) {
+		this.passed = passed;
+	}
 	public Integer getCommentId() {
 		return commentId;
 	}
@@ -22,11 +30,11 @@ public class PostCommentVO implements Serializable {
 	public void setCommentId(Integer commentId) {
 		this.commentId = commentId;
 	}
-	public Integer getArticleId() {
-		return articleId;
+	public Integer getPostId() {
+		return postId;
 	}
-	public void setArticleId(Integer articleId) {
-		this.articleId = articleId;
+	public void setPostId(Integer postId) {
+		this.postId = postId;
 	}
 	public Integer getMemberId() {
 		return memberId;

@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="zh-tw">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
+    <link rel="stylesheet" href="./index.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-md navbar-light sticky-top" style="background-color: #fbefe7;">
+        <div class="container-fluid">
+            <a class="navbar-brand ms-lg-5" href="" style="font-size: 1.25em;">GoCamping</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <form class="d-flex">
+                    <input class="form-control me-2 rounded-pill ml-0" type="search" placeholder="Search"
+                        aria-label="Search">
+                    <button id="searchIcon" class="btn" type="submit" style="padding: 0"><i
+                            class="bi bi-search"></i></button>
+                </form>
+                <ul class="navbar-nav ms-auto mb-2 mb-lg-0 me-xl-5">
+                    <li class="nav-item">
+                        <a id="hosting" class="nav-link" href="#" style="color: green;">上架營地</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" style="color: #E40580;">商城</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="../fourms/index.html" style="color: #0B83ED;">論壇</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="../RegisterAndLogin/register.html">註冊</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="../RegisterAndLogin/login.html">登入</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                            data-bs-toggle="dropdown" aria-expanded="false">
+                            會員姓名
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                            <li><a class="dropdown-item" href="../Account/accountCenter.html">會員中心</a></li>
+                            <li><a class="dropdown-item" href="../Account/editProfile.html">編輯會員資料</a></li>
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+                            <li><a class="dropdown-item" href="#">登出</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <h1 id="title" class="text-center mt-5">Find yourself outside</h1>
+    <h3 class="text-center mb-5">Discover and book tent camping, RV parks,<br> cabins, treehouses, and glamping.</h3>
+
+    <div id="decoImg" class="container-sm ">
+        <div id="search" class="container">
+            <form id="form" action="" class="">
+                <div class="d-flex container row mt-3 gx-2 align-items-center justify-content-center" id="searchSet">
+                    <div class="col-md-3">
+                        <input type="text" class="form-control rounded-pill" placeholder="想去哪裡?"
+                            aria-label="First name">
+                    </div>
+                    <div class="col-md-3">
+                        <input id="date" type="date" class="form-control rounded-pill" placeholder="輸入日期"
+                            aria-label="Last name">
+                    </div>
+                    <div class="col-md-3">
+                        <select class="form-select rounded-pill" aria-label="Last name">
+                            <option selected>人數</option>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5+">5+</option>
+                        </select>
+                    </div>
+                    <div class="col-md-1">
+                        <button type="submit" class="btn btn-success"><i class="bi bi-search"></i></button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="container-sm" id="hot">
+        <h1 class="my-5" style="color: #D84627;">熱門營區</h1>
+        <div class="row mb-5 mx-0">
+            <div class="col-md d-flex justify-content-center gx-0">
+                <div class="card" style="width: 100%;">
+                    <img src="./img/0_Campsites.jpg" class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title">Card title</h5>
+                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of
+                            the
+                            card's content.</p>
+                        <a href="#" class="btn btn-primary">瀏覽營地</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md d-flex justify-content-center">
+                <div class="card" style="width: 100%;">
+                    <img src="./img/shutterstock_625918454.0.webp" class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title">Card title</h5>
+                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of
+                            the
+                            card's content.</p>
+                        <a href="#" class="btn btn-primary">瀏覽營地</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md d-flex justify-content-center">
+                <div class="card" style="width: 100%;">
+                    <img src="./img/Leave-No-Trace-campsite-tent.jpg" class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title">Card title</h5>
+                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of
+                            the
+                            card's content.</p>
+                        <a href="#" class="btn btn-primary">瀏覽營地</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-U1DAWAznBHeqEIlVSCgzq+c9gqGAJn5c/t99JyeKa9xxaYpSvHU5awsuZVVFIhvj"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script src="./js/flatpickr.js"></script>
+</body>
+
+</html>
