@@ -1,5 +1,7 @@
 package com.postComment.model;
 
+import java.util.List;
+
 public class PostCommentService {
 	private postCommentDAO_interface dao;
 	
@@ -8,9 +10,9 @@ public class PostCommentService {
 		dao = new PostCommentDao();
 	}
 	
-	public PostCommentVO addPostComment(Integer articleId, Integer memberId,String content) {
+	public PostCommentVO addPostComment(Integer postId, Integer memberId,String content) {
 		PostCommentVO postCommentVO = new PostCommentVO();
-		postCommentVO.setArticleId(articleId);
+		postCommentVO.setPostId(postId);
 		postCommentVO.setMemberId(memberId);
 		postCommentVO.setContent(content);
 		java.util.Date date = new java.util.Date();
@@ -30,5 +32,9 @@ public class PostCommentService {
 	
 	public void delete(Integer commentId) {
 		dao.delete(commentId);
+	}
+	
+	public List<PostCommentVO> findByPostId(Integer postId){
+		return dao.findByPostId(postId);
 	}
 }

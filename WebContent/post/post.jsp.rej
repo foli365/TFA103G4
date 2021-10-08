@@ -1,0 +1,31 @@
+diff a/WebContent/post/post.jsp b/WebContent/post/post.jsp	(rejected hunks)
+@@ -193,17 +193,29 @@
+ 					</button>
+ 					<button type="button" style="border: 0px;"
+ 						class="btn btn-outline-secondary p-2">
++<<<<<<< HEAD
+ 						<i class="far fa-flag" style="margin-right: 5px;"></i>檢舉
++=======
++						<i class="far fa-flag" style="margin-right: 5px;"></i>���|
++>>>>>>> 622945b4980bd504d60c8e3d8fe6a75c82a5c8c1
+ 					</button>
+ 				</div>
+ 				<form class="pt-2"
+ 					action="<%=request.getContextPath()%>/post/comment.do"
+ 					method="post">
++<<<<<<< HEAD
+ 					<textarea style="resize: none;" placeholder="快來發表你的評論吧~"
+ 						class="form-control" name="comment"
+ 						id="exampleFormControlTextarea1" rows="4"></textarea>
+ 					<button type="submit" class="btn btn-outline-secondary float-end"
+ 						style="margin-top: 15px">發送</button>
++=======
++					<textarea style="resize: none;" placeholder="�֨ӵo��A�����קa~"
++						class="form-control" name="comment"
++						id="exampleFormControlTextarea1" rows="4"></textarea>
++					<button type="submit" class="btn btn-outline-secondary float-end"
++						style="margin-top: 15px">�o�e</button>
++>>>>>>> 622945b4980bd504d60c8e3d8fe6a75c82a5c8c1
+ 					<input type="hidden" name="action" value="insert"> <input
+ 						type="hidden" name="postId" value="${postId}">
+ 				</form>

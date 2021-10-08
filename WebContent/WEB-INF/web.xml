@@ -23,4 +23,12 @@
     <servlet-name>PostServlet</servlet-name>
     <url-pattern>/post/post.do</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <servlet-name>CommentServlet</servlet-name>
+    <servlet-class>com.postComment.controller.PostCommentServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>CommentServlet</servlet-name>
+    <url-pattern>/post/comment.do</url-pattern>
+  </servlet-mapping>
 </web-app>
