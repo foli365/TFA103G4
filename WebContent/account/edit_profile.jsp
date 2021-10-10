@@ -1,3 +1,15 @@
+<%@page import="com.members.model.MemberService"%>
+<%@page import="com.members.model.MembersVO"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+	
+<%
+ 	MemberService memSvc = new MemberService();
+	MembersVO memVO = memSvc.findByPrimaryKey((Integer)session.getAttribute("id"));
+	pageContext.setAttribute("memVO", memVO);
+%>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -6,61 +18,11 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
 </head>
 
 <body>
-    <nav class="navbar navbar-expand-md navbar-light sticky-top"
-		style="background-color: #fbefe7">
-		<div class="container-fluid">
-			<a class="navbar-brand ms-lg-5" href="../Homepage/index.html"
-				style="font-size: 1.25em">GoCamping</a>
-			<button class="navbar-toggler" type="button"
-				data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
-				aria-controls="navbarSupportedContent" aria-expanded="false"
-				aria-label="Toggle navigation">
-				<span class="navbar-toggler-icon"></span>
-			</button>
-			<div class="collapse navbar-collapse" id="navbarSupportedContent">
-				<form class="d-flex">
-					<input class="form-control me-2 rounded-pill ml-0" type="search"
-						placeholder="Search" aria-label="Search" />
-					<button id="searchIcon" class="btn" type="submit"
-						style="padding: 0">
-						<i class="bi bi-search"></i>
-					</button>
-				</form>
-				<ul class="navbar-nav ms-auto mb-2 mb-lg-0 me-xl-5">
-					<li class="nav-item"><a id="hosting" class="nav-link" href="#"
-						style="color: green">上架營地</a></li>
-					<li class="nav-item"><a class="nav-link" href="#"
-						style="color: #e40580">商城</a></li>
-					<li class="nav-item"><a class="nav-link" href="#"
-						style="color: #0b83ed">論壇</a></li>
-					<li class="nav-item"><a class="nav-link"
-						href="../RegisterAndLogin/register.html">註冊</a></li>
-					<li class="nav-item"><a class="nav-link"
-						href="../RegisterAndLogin/login.html">登入</a></li>
-					<li class="nav-item dropdown"><a
-						class="nav-link dropdown-toggle" href="#" id="navbarDropdown"
-						role="button" data-bs-toggle="dropdown" aria-expanded="false">
-							會員姓名 </a>
-						<ul class="dropdown-menu dropdown-menu-end"
-							aria-labelledby="navbarDropdown">
-							<li><a class="dropdown-item"
-								href="../Account/accountCenter.html">會員中心</a></li>
-							<li><a class="dropdown-item"
-								href="../Account/editProfile.html">編輯會員資料</a></li>
-							<li>
-								<hr class="dropdown-divider" />
-							</li>
-							<li><a class="dropdown-item" href="#">登出</a></li>
-						</ul></li>
-				</ul>
-			</div>
-		</div>
-	</nav>
+    <%@ include file="/template/navbar.jsp" %>
     <div class="container" style="margin-top: 100px;">
         <div class="d-flex align-items-start">
             <div style="border: 0px; width: 175px;" class="nav flex-column nav-tabs me-3" id="v-pills-tab"
@@ -80,26 +42,28 @@
                     aria-labelledby="v-pills-home-tab">
                     <div class="container">
                         <h2>編輯個人資料</h2>
-                        <form style="border: 1px solid #DEE2E6; padding: 40px;" action="">
+                        <form style="border: 1px solid #DEE2E6; padding: 40px;" action="<%=request.getContextPath()%>/account/member.do" method="post" enctype="multipart/form-data">
                             <div class="mb-3 mx-auto" style="width: 400px;">
                                 <label for="formFile" class="form-label">個人資料頭貼:</label>
                                 <img style="max-width: 15%; margin-bottom: 10px;"
-                                    src="./img/default-avatar-profile-image-vector-social-media-user-icon-potrait-182347582.jpg"
+                                    src="data:image/jpg;base64,${memVO.base64Image}"
                                     alt="">
-                                <input class="form-control" type="file" id="formFile">
+                                <input class="form-control" type="file" id="formFile" name="photo">
                             </div>
                             <div class="mb-3 mx-auto" style="width: 400px;">
-                                <input type="email" placeholder="電子郵件" class="form-control" id="email"
-                                    aria-describedby="emailHelp">
+                                <input type="text" placeholder="姓名" class="form-control" id="name"
+                                    aria-describedby="name" name="name" value="${memVO.name}">
                             </div>
                             <div class="mb-3 mx-auto" style="width: 400px;">
-                                <input type="password" placeholder="地址" class="form-control" id="password">
+                                <input type="text" placeholder="地址" class="form-control" name="address" id="address" value="${memVO.address}">
                             </div>
                             <div class="mb-3 mx-auto" style="width: 400px;">
-                                <input type="password" placeholder="手機號碼" class="form-control" id="phone">
+                                <input type="text" placeholder="手機號碼" class="form-control" name="phone" id="phone" value="${memVO.phone}">
                             </div>
                             <div class="d-grid gap-2 col-6 ms-auto" style="width: 80px">
                                 <button id="submit" class="btn btn-success" type="submit">儲存</button>
+                            	<input type="hidden" name="action" value="update">
+                            	<input type="hidden" name="id" value="${memVO.memberId}">
                             </div>
                         </form>
                     </div>
@@ -109,17 +73,17 @@
                         <h2>更改密碼</h2>
                         <form style="border: 1px solid #DEE2E6; padding: 40px;" action="">
                             <div class="mb-3 mx-auto" style="width: 400px;">
-                                <input type="email" placeholder="目前密碼" class="form-control" id="email"
+                                <input type="email" placeholder="目前密碼" class="form-control" id="currentPword"
                                     aria-describedby="emailHelp">
                             </div>
                             <div class="mb-3 mx-auto" style="width: 400px;">
-                                <input type="password" placeholder="更新密碼" class="form-control" id="password">
+                                <input type="password" placeholder="更新密碼" class="form-control" id="newPword">
                             </div>
                             <div class="mb-3 mx-auto" style="width: 400px;">
-                                <input type="password" placeholder="確認更新密碼" class="form-control" id="phone">
+                                <input type="password" placeholder="確認更新密碼" class="form-control" id="confirmPword">
                             </div>
                             <div class="d-grid gap-2 col-6 ms-auto" style="width: 80px">
-                                <button id="submit" class="btn btn-success" type="submit">儲存</button>
+                                <button id="submitPwordChange" class="btn btn-success" type="submit">儲存</button>
                             </div>
                         </form>
                     </div>
@@ -129,7 +93,7 @@
             </div>
         </div>
     </div>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js"></script>
+    <%@ include file="/template/script.html" %>
 </body>
 
 </html>

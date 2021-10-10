@@ -79,7 +79,7 @@ button:focus {
 						style="color: green">上架營地</a></li>
 					<li class="nav-item"><a class="nav-link" href="#"
 						style="color: #e40580">商城</a></li>
-					<li class="nav-item"><a class="nav-link" href="#"
+					<li class="nav-item"><a class="nav-link" href="index.jsp"
 						style="color: #0b83ed">論壇</a></li>
 					<li class="nav-item"><a class="nav-link"
 						href="../RegisterAndLogin/register.html">註冊</a></li>

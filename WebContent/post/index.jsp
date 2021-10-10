@@ -9,8 +9,10 @@
 	List<PostVO> list = postSvc.getAll();
 	pageContext.setAttribute("list", list);
 	MembersDAO dao = new MembersDAO();
-    MembersVO haru = dao.findByPrimaryKey(1);
-    pageContext.setAttribute("memberVO", haru);
+	if(session.getAttribute("id") != null){
+		MembersVO memVO = dao.findByPrimaryKey((Integer)session.getAttribute("id"));
+		pageContext.setAttribute("memberVO", memVO);
+	}
 %>
 <jsp:useBean id="memSvc" class="com.members.model.MemberService"
 	scope="request"></jsp:useBean>
@@ -60,7 +62,7 @@
 }
 
 #post:hover {
-	border: 1px solid #EDE1DA;
+	border: 0.5px solid black;
 	transition: all 0.2s ease-in;
 }
 
@@ -79,63 +81,16 @@
 </style>
 </head>
 
-<body style="background-color: #7B7571;">
-	<nav class="navbar navbar-expand-md navbar-light sticky-top"
-		style="background-color: #fbefe7">
-		<div class="container-fluid">
-			<a class="navbar-brand ms-lg-5" href="../Homepage/index.html"
-				style="font-size: 1.25em">GoCamping</a>
-			<button class="navbar-toggler" type="button"
-				data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
-				aria-controls="navbarSupportedContent" aria-expanded="false"
-				aria-label="Toggle navigation">
-				<span class="navbar-toggler-icon"></span>
-			</button>
-			<div class="collapse navbar-collapse" id="navbarSupportedContent">
-				<form class="d-flex">
-					<input class="form-control me-2 rounded-pill ml-0" type="search"
-						placeholder="Search" aria-label="Search" />
-					<button id="searchIcon" class="btn" type="submit"
-						style="padding: 0">
-						<i class="bi bi-search"></i>
-					</button>
-				</form>
-				<ul class="navbar-nav ms-auto mb-2 mb-lg-0 me-xl-5">
-					<li class="nav-item"><a id="hosting" class="nav-link" href="#"
-						style="color: green">上架營地</a></li>
-					<li class="nav-item"><a class="nav-link" href="#"
-						style="color: #e40580">商城</a></li>
-					<li class="nav-item"><a class="nav-link" href="#"
-						style="color: #0b83ed">論壇</a></li>
-					<li class="nav-item"><a class="nav-link"
-						href="../RegisterAndLogin/register.html">註冊</a></li>
-					<li class="nav-item"><a class="nav-link"
-						href="../RegisterAndLogin/login.html">登入</a></li>
-					<li class="nav-item dropdown"><a
-						class="nav-link dropdown-toggle" href="#" id="navbarDropdown"
-						role="button" data-bs-toggle="dropdown" aria-expanded="false">
-							會員姓名 </a>
-						<ul class="dropdown-menu dropdown-menu-end"
-							aria-labelledby="navbarDropdown">
-							<li><a class="dropdown-item"
-								href="../Account/accountCenter.html">會員中心</a></li>
-							<li><a class="dropdown-item"
-								href="../Account/editProfile.html">編輯會員資料</a></li>
-							<li>
-								<hr class="dropdown-divider" />
-							</li>
-							<li><a class="dropdown-item" href="#">登出</a></li>
-						</ul></li>
-				</ul>
-			</div>
-		</div>
-	</nav>
+<body style="background-color: #DAE0E6;">
+	<%@ include file="/template/navbar.jsp" %>
+	<input type="hidden" id="id" value="${id}">
 	<div class="container mt-3" style="max-width: 1600px">
 		<div class="row justify-content-center">
 			<div class="col" style="max-width: 800px">
 				<div class="row mb-3 p-1 justify-content-center"
 					style="border: 1px solid #d3d4d6; background-color: white; border-radius: 5px;">
-					<div class="col-1" style="background-size: cover; max-width: 50px; max-height: 50px; border-radius: 50%; display: inline-block; background-image: url('data:image/jpg;base64,${memberVO.base64Image}')">
+					<div class="col-1"
+						style="background-size: cover; max-width: 50px; max-height: 50px; border-radius: 50%; display: inline-block; background-image: url('data:image/jpg;base64,${memberVO.base64Image}')">
 					</div>
 					<div class="col-11 my-auto">
 						<button type="button" class="btn btn-light" style="width: 100%"
@@ -192,29 +147,36 @@
 								<div class="card-body">
 									<div class="row">
 										<div class="col-11">
-										<p class="card-text">
-										<small class="text-muted">發布於  ${postVO.passed} - <a
-										id="author" href="">${memSvc.findByPrimaryKey(postVO.authorId).name}</a></small>
-									</p>
+											<p class="card-text">
+												<small class="text-muted">發布於 ${postVO.passed} - <a
+													id="author" href="">${memSvc.findByPrimaryKey(postVO.authorId).name}</a></small>
+											</p>
 											<h4 class="card-title">
-												<a href="<%=request.getContextPath()%>/post/post.jsp?postId=${postVO.postId}" style="text-decoration: none; color: inherit;">${postVO.title}</a>
+												<a
+													href="<%=request.getContextPath()%>/post/post.jsp?postId=${postVO.postId}"
+													style="text-decoration: none; color: inherit;">${postVO.title}</a>
 											</h4>
 										</div>
 										<div class="col-1 text-end">
 											<div class="btn-group dropend">
-												<button id="option"
-													class="btn btn-secondary btn-sm"
+												<button id="option" class="btn btn-secondary btn-sm"
 													type="button" data-bs-toggle="dropdown"
-													aria-expanded="false"><i class="fas fa-ellipsis-v"></i></button>
+													aria-expanded="false">
+													<i class="fas fa-ellipsis-v"></i>
+												</button>
 												<ul class="dropdown-menu">
 													<li class="dropdown-item text-end">
-														<button data-bs-toggle="modal" data-bs-target="#popEdit${postVO.postId}">編輯</button>
+														<button data-bs-toggle="modal"
+															data-bs-target="#popEdit${postVO.postId}">編輯</button>
 													</li>
 													<li class="dropdown-item text-end">
-														<form method="post" action="<%=request.getContextPath()%>/post/post.do">
-															<input id="delete" style="background-color: white; border: 0px" type="submit" value="刪除">
-															<input type="hidden" name="action" value="delete">
-															<input type="hidden" name="postId"  value="${postVO.postId}">
+														<form method="post"
+															action="<%=request.getContextPath()%>/post/post.do">
+															<input id="delete"
+																style="background-color: white; border: 0px"
+																type="submit" value="刪除"> <input type="hidden"
+																name="action" value="delete"> <input
+																type="hidden" name="postId" value="${postVO.postId}">
 														</form>
 													</li>
 												</ul>
@@ -227,48 +189,49 @@
 							</div>
 						</div>
 					</div>
-					<div class="modal fade" id="popEdit${postVO.postId}" data-bs-backdrop="static"
-					data-bs-keyboard="false" tabindex="-1"
-					aria-labelledby="staticBackdropLabel" aria-hidden="true">
-					<div class="modal-dialog modal-xl">
-						<div class="modal-content">
-							<div class="modal-header">
-								<h5 class="modal-title" id="staticBackdropLabel">編輯文章</h5>
-								<button type="button" class="btn-close" data-bs-dismiss="modal"
-									aria-label="Close"></button>
-							</div>
-							<div class="modal-body">
-								<FORM method="POST"
-									ACTION="<%=request.getContextPath()%>/post/post.do">
-									<div class="mb-1">
-										<input name="title" type="text" placeholder="文章標題"
-											class="form-control" id="recipient-name" value="${postVO.title}"/>
-									</div>
-									<div class="mb-3">
-										<textarea name="article" class="summernote" id="summernote2" cols="30" rows="30">${postVO.article}</textarea>
-									</div>
-									<div class="modal-footer">
-										<button type="button" class="btn btn-secondary"
-											data-bs-dismiss="modal">取消</button>
-										<button type="submit" class="btn btn-primary">確認</button>
-										<input type="hidden" name="action" value="update">
-										<input type="hidden" name="postId" value="${postVO.postId}">
-									</div>
-								</FORM>
+					<div class="modal fade" id="popEdit${postVO.postId}"
+						data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+						aria-labelledby="staticBackdropLabel" aria-hidden="true">
+						<div class="modal-dialog modal-xl">
+							<div class="modal-content">
+								<div class="modal-header">
+									<h5 class="modal-title" id="staticBackdropLabel">編輯文章</h5>
+									<button type="button" class="btn-close" data-bs-dismiss="modal"
+										aria-label="Close"></button>
+								</div>
+								<div class="modal-body">
+									<FORM method="POST"
+										ACTION="<%=request.getContextPath()%>/post/post.do">
+										<div class="mb-1">
+											<input name="title" type="text" placeholder="文章標題"
+												class="form-control" id="recipient-name"
+												value="${postVO.title}" />
+										</div>
+										<div class="mb-3">
+											<textarea name="article" class="summernote" id="summernote2"
+												cols="30" rows="30">${postVO.article}</textarea>
+										</div>
+										<div class="modal-footer">
+											<button type="button" class="btn btn-secondary"
+												data-bs-dismiss="modal">取消</button>
+											<button type="submit" class="btn btn-primary">確認</button>
+											<input type="hidden" name="action" value="update"> <input
+												type="hidden" name="postId" value="${postVO.postId}">
+										</div>
+									</FORM>
+								</div>
 							</div>
 						</div>
 					</div>
-				</div>
 				</c:forEach>
 			</div>
 		</div>
 	</div>
-	<script
-		src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js"></script>
-	<script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+	<%@ include file="/template/script.html" %>
 	<script src="./summernote-0.8.18-dist/summernote-lite.js"></script>
 	<script src="./summernote-0.8.18-dist/lang/summernote-zh-TW.js"></script>
 	<script>
+		console.log($("#id").val())
 // 		function uploadImage(image) {
 // 			var data = new FormData();
 // 			data.append("img", image);
