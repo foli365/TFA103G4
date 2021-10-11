@@ -22,7 +22,7 @@ public class LoginHandler extends HttpServlet {
 		MemberService memSvc = new MemberService();
 		String bcryptHashString;
 		try {
-			bcryptHashString = memSvc.findByEmail(email).getPassword();			
+			bcryptHashString = memSvc.findByEmail(email).getPassword();
 		} catch (Throwable e) {
 			return false;
 		}
@@ -56,7 +56,7 @@ public class LoginHandler extends HttpServlet {
 				RequestDispatcher failedView = req.getRequestDispatcher(url);
 				failedView.forward(req, res);
 			}
-			
+
 		} else {
 			// 【帳號 , 密碼有效時, 才做以下工作】
 			MemberService memSvc = new MemberService();
