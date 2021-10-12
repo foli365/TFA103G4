@@ -8,5 +8,5 @@ public interface PostDAO_Interface {
     public void delete(Integer articleId);
     public List<PostVO> findByAuthor(Integer authorId);
     public PostVO findByPostId(Integer postId);
-    public List<PostVO> getAll();    
+    public List<PostVO> getAll();
 }

@@ -4,6 +4,8 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.List;
 
+
+
 public class MemberService {
 
 	private MembersDAO_interface dao;
@@ -13,30 +15,25 @@ public class MemberService {
 		dao = new MembersDAO();
 	}
 
-	public MembersVO addMember(String name, String phone, String email) {
+	public MembersVO addMember(String name, String password, String email, byte[] thumbnail) {
 		MembersVO membersVO = new MembersVO();
 		membersVO.setName(name);
-		membersVO.setPhone(phone);
+		membersVO.setPassword(password);
 		membersVO.setEmail(email);
+		membersVO.setThumbnail(thumbnail);
 		dao.insert(membersVO);
 		return membersVO;
 	}
 
-	public MembersVO updateMembers(Integer memberId, String name, String phone, String email, Integer membership, Integer memberStatus,
-			String thumbnail, String address) {
+	public MembersVO updateMembers(Integer memberId, String name, String phone, Integer membership, Integer memberStatus,
+			byte[] thumbnail, String address) {
 		MembersVO membersVO = new MembersVO();
 		membersVO.setName(name);
 		membersVO.setAddress(address);
-		membersVO.setEmail(email);
 		membersVO.setMembership(membership);
 		membersVO.setMemberStatus(memberStatus);
 		membersVO.setPhone(phone);
-		try {
-			membersVO.setThumbnail(getPictureByteArray(thumbnail));
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		membersVO.setThumbnail(thumbnail);
 		membersVO.setMemberId(memberId);
 		dao.update(membersVO);
 		return membersVO;
@@ -44,6 +41,10 @@ public class MemberService {
 
 	public MembersVO findByPrimaryKey(Integer memberId) {
 		return dao.findByPrimaryKey(memberId);
+	}
+	
+	public MembersVO findByEmail(String email) {
+		return dao.findByEmail(email);
 	}
 
 	public List<MembersVO> getAll() {
