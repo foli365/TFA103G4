@@ -16,7 +16,7 @@
 	crossorigin="anonymous">
 <style type="text/css">
 body {
-	background: url("/TFA103G4/img/Hawaii.jpg") no-repeat center center
+	background: url("<%=request.getContextPath()%>/img/Hawaii.jpg") no-repeat center center
 		fixed;
 	-webkit-background-size: cover;
 	-moz-background-size: cover;
