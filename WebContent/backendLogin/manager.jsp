@@ -132,6 +132,7 @@
 		</table>
 		<%@ include file="page2.file"%>
 	</div>
+	<input type="hidden" name="no" value="no">
 	
 	<script src="../js/jquery.js"></script>
 	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
