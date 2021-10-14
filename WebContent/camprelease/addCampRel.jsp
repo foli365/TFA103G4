@@ -1,4 +1,4 @@
-<%@ page contentType="text/html; charset=UTF-8" pageEncoding="Big5"%>
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="com.camprelease.model.*"%>
 
@@ -10,7 +10,7 @@ CampReleaseVO campreleaseVO = (CampReleaseVO) request.getAttribute("campreleaseV
 <html>
 <head>
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
-<title>Go campingÀç¦a¥Zµn</title>
+<title>Go campingç‡Ÿåœ°åˆŠç™»</title>
 <%--   <link rel="stylesheet" href="<%=request.getContextPath()%>/camprelease/css/index.css" /> --%>
   <link rel='stylesheet' href='<%=request.getContextPath()%>/camprelease/css/bootstrap.min4.1.3.css' />
   <link rel="stylesheet" href="<%=request.getContextPath()%>/camprelease/css/stepstyle.css">
@@ -82,7 +82,7 @@ imput{
         white-space: nowrap;
       }
 
-      /* ¥H¤U³]³Æ */
+      /* ä»¥ä¸‹è¨­å‚™ */
       .setting-label{
         position: relative;
         display: inline-block;
@@ -125,9 +125,9 @@ imput{
 </style>
 <body>
 
-<%-- ¿ù»~ªí¦C --%>
+<%-- éŒ¯èª¤è¡¨åˆ— --%>
 <c:if test="${not empty errorMsgs}">
-	<font style="color:red">½Ğ­×¥¿¥H¤U¿ù»~:</font>
+	<font style="color:red">è«‹ä¿®æ­£ä»¥ä¸‹éŒ¯èª¤:</font>
 	<ul>
 		<c:forEach var="message" items="${errorMsgs}">
 			<li style="color:red">${message}</li>
@@ -136,7 +136,7 @@ imput{
 </c:if>
 
 <header class="header" >
-  <h1 class="header__title">Go campingÀç¦a¥Zµn</h1><br>
+  <h1 class="header__title">Go campingç‡Ÿåœ°åˆŠç™»</h1><br>
   <table id="table-1">
 		 <h4><a href="<%=request.getContextPath()%>/camprelease/Select_Page.jsp"><img src="images/gocamping.jpg" width="500" height="125" border="0"><br>back home</a></h4>
 </table>
@@ -147,11 +147,11 @@ imput{
         <div class="row">
           <div class="col-12 col-lg-8 ml-auto mr-auto mb-4">
             <div class="multisteps-form__progress">
-              <button class="multisteps-form__progress-btn js-active" type="button" title="User Info">Àç¦a¸ê°T</button>
-              <button class="multisteps-form__progress-btn" type="button" title="Address">¦aÂI</button>
-              <button class="multisteps-form__progress-btn" type="button" title="Picture">Àç¦a¹Ï¤ù</button>
-              <button class="multisteps-form__progress-btn" type="button" title="Order tirp">°t®M¦æµ{</button>
-              <button class="multisteps-form__progress-btn" type="button" title="Setting">³]³Æ»PªA°È</button>
+              <button class="multisteps-form__progress-btn js-active" type="button" title="User Info">ç‡Ÿåœ°è³‡è¨Š</button>
+              <button class="multisteps-form__progress-btn" type="button" title="Address">åœ°é»</button>
+              <button class="multisteps-form__progress-btn" type="button" title="Picture">ç‡Ÿåœ°åœ–ç‰‡</button>
+              <button class="multisteps-form__progress-btn" type="button" title="Order tirp">é…å¥—è¡Œç¨‹</button>
+              <button class="multisteps-form__progress-btn" type="button" title="Setting">è¨­å‚™èˆ‡æœå‹™</button>
             
             </div>
           </div>
@@ -161,33 +161,33 @@ imput{
           <div class="col-12 col-lg-8 m-auto">
             <form class="multisteps-form__form">
               <div class="multisteps-form__panel shadow p-4 rounded bg-white js-active" data-animation="scaleIn">
-                <h3 class="multisteps-form__title">Àç¦a¸ê°T</h3>
+                <h3 class="multisteps-form__title">ç‡Ÿåœ°è³‡è¨Š</h3>
                 <div class="multisteps-form__content"> 
                   <div class="form-row mt-4">
                     <div class="col-12 col-sm-6">
-                      <label for="inputName" class="col-form-label">Àç¦a¦WºÙ</label>
-                      <input class="multisteps-form__input form-control" type="TEXT" name="campName" size="45" id="c_name" value="<%= (campreleaseVO==null)? "¤Ñ¤ÑÀç¦a³õ" : campreleaseVO.getCampName()%>"/>
+                      <label for="inputName" class="col-form-label">ç‡Ÿåœ°åç¨±</label>
+                      <input class="multisteps-form__input form-control" type="TEXT" name="campName" size="45" id="c_name" value="<%= (campreleaseVO==null)? "å¤©å¤©ç‡Ÿåœ°å ´" : campreleaseVO.getCampName()%>"/>
                     </div>
                   </div>
                   <div class="form-row mt-4">
-                      <label for="inputintr" class="col-form-label">Àç¦a¤¶²Ğ</label>
-                        <textarea class="multisteps-form__textarea form-control" type="TEXT" id="c_intr" value="<%= (campreleaseVO==null)? "³o¬OÀç¦a°Ï,¥i¥HÅSÀç³o¼Ë" : campreleaseVO.getCampDescription()%>" ></textarea>
+                      <label for="inputintr" class="col-form-label">ç‡Ÿåœ°ä»‹ç´¹</label>
+                        <textarea class="multisteps-form__textarea form-control" type="TEXT" id="c_intr" value="<%= (campreleaseVO==null)? "é€™æ˜¯ç‡Ÿåœ°å€,å¯ä»¥éœ²ç‡Ÿé€™æ¨£" : campreleaseVO.getCampDescription()%>" ></textarea>
 
                   </div>
                   <div class="form-row mt-4">
                     <div class="col-12 col-sm-6">
-                      <label for="inputprice" class="col-form-label">»ù®æ</label>
+                      <label for="inputprice" class="col-form-label">åƒ¹æ ¼</label>
                         <input class="multisteps-form__input form-control" type="TEXT" id="c_price" value="<%= (campreleaseVO==null)? "1000" : campreleaseVO.getCampPrice()%>" />
                     </div>
                   </div>
                   <div class="form-row mt-4">
                     <div class="col-12 col-sm-6">
-                  <label for="inputchoose" class="col-form-label">¤ÀÃş</label>
+                  <label for="inputchoose" class="col-form-label">åˆ†é¡</label>
                     <select class="multisteps-form__select form-control" id="c_choose">
-                      <option selected="selected">¤ÀÃş...</option>
-                      <option>¤s¤W</option>
-                      <option>´òÃä</option>
-                      <option>´ËªL</option>
+                      <option selected="selected">åˆ†é¡...</option>
+                      <option>å±±ä¸Š</option>
+                      <option>æ¹–é‚Š</option>
+                      <option>æ£®æ—</option>
                     </select>
                     </div>
                   </div>
@@ -199,9 +199,9 @@ imput{
               </div>
 
               <div class="multisteps-form__panel shadow p-4 rounded bg-white" data-animation="scaleIn">
-                <h3 class="multisteps-form__title">¦aÂI</h3>
+                <h3 class="multisteps-form__title">åœ°é»</h3>
                 <div class="multisteps-form__content">
-<!--                     ¦a¹Ï§ì¸g½n¬I¤u¤¤ -->
+<!--                     åœ°åœ–æŠ“ç¶“ç·¯æ–½å·¥ä¸­ -->
                   <div class="form-row mt-4">
                     <div class="col">
                       <div id="floating-panel">
@@ -219,7 +219,7 @@ imput{
               </div>
 
               <div class="multisteps-form__panel shadow p-4 rounded bg-white" data-animation="scaleIn">
-                <h3 class="multisteps-form__title">½Ğ¤W¶ÇÀç¦a¹Ï¤ù</h3>
+                <h3 class="multisteps-form__title">è«‹ä¸Šå‚³ç‡Ÿåœ°åœ–ç‰‡</h3>
                 <div class="multisteps-form__content">
                   <div class="form-row mt-4">
                     <div class="col" id="preview">
@@ -264,11 +264,11 @@ imput{
               </div>
 
               <div class="multisteps-form__panel shadow p-4 rounded bg-white" data-animation="scaleIn">
-                <h3 class="multisteps-form__title">°t®M¦æµ{</h3>
+                <h3 class="multisteps-form__title">é…å¥—è¡Œç¨‹</h3>
                 <div class="multisteps-form__content">
                   <div class="form-row mt-4">
                     <div class="col-12 col-sm-6">
-                      <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo">+¶}©l·s¼W¦æµ{</button>
+                      <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo">+é–‹å§‹æ–°å¢è¡Œç¨‹</button>
                     </div>
                   </div>
                   <div class="row">
@@ -281,22 +281,22 @@ imput{
               </div>
 
               <div class="multisteps-form__panel shadow p-4 rounded bg-white" data-animation="scaleIn">
-                <h3 class="multisteps-form__title">³]³Æ»PªA°È</h3>
+                <h3 class="multisteps-form__title">è¨­å‚™èˆ‡æœå‹™</h3>
                 <div class="multisteps-form__content">
                   <div class="ws-nowrap camp5">
-                    <label class="setting-label circle-line" for="setting1"><input type="checkbox" name="setting[]" id="setting1" value=""><span class="material-icons md-18">outdoor_grill ¯N¦×°Ï</span></label><br>
-                    <label class="setting-label circle-line" for="setting2"><input type="checkbox" name="setting[]" id="setting2" value=""><span class="material-icons md-18">pool ªa¦À</span></label><br>
-                    <label class="setting-label circle-line" for="setting3"><input type="checkbox" name="setting[]" id="setting3" value=""><span class="material-icons md-18">wifi  ºô¸ô</span></label><br>
-                    <label class="setting-label circle-line" for="setting4"><input type="checkbox" name="setting[]" id="setting4" value=""><span class="material-icons md-18">smoke_free ¸TµÒ</span></label><br>
-                    <label class="setting-label circle-line" for="setting5"><input type="checkbox" name="setting[]" id="setting5" value=""><span class="material-icons md-18">pets Ãdª«</span></label><br>
-                    <label class="setting-label circle-line" for="setting6"><input type="checkbox" name="setting[]" id="setting6" value=""><span class="material-icons md-18">shower ²O¯D</span></label><br>
+                    <label class="setting-label circle-line" for="setting1"><input type="checkbox" name="setting[]" id="setting1" value=""><span class="material-icons md-18">outdoor_grill çƒ¤è‚‰å€</span></label><br>
+                    <label class="setting-label circle-line" for="setting2"><input type="checkbox" name="setting[]" id="setting2" value=""><span class="material-icons md-18">pool æ³³æ± </span></label><br>
+                    <label class="setting-label circle-line" for="setting3"><input type="checkbox" name="setting[]" id="setting3" value=""><span class="material-icons md-18">wifi  ç¶²è·¯</span></label><br>
+                    <label class="setting-label circle-line" for="setting4"><input type="checkbox" name="setting[]" id="setting4" value=""><span class="material-icons md-18">smoke_free ç¦è¸</span></label><br>
+                    <label class="setting-label circle-line" for="setting5"><input type="checkbox" name="setting[]" id="setting5" value=""><span class="material-icons md-18">pets å¯µç‰©</span></label><br>
+                    <label class="setting-label circle-line" for="setting6"><input type="checkbox" name="setting[]" id="setting6" value=""><span class="material-icons md-18">shower æ·‹æµ´</span></label><br>
                   </div>
                   <div class="button-row d-flex mt-4">
                     <button class="btn btn-primary js-btn-prev" type="button" title="Prev">Prev</button>
                     <button class="btn ml-auto" type="reset" title="Reset">Reset</button>
                     <button class="btn btn-success ml-auto" type="submit" title="Send" id="btn_submit">Send</button>
                     <input type="hidden" name="action" value="insert">
-                    <input type="submit" value="°e¥X·s¼W">
+                    <input type="submit" value="é€å‡ºæ–°å¢">
                   </div>
                 </div>
               </div>
@@ -308,12 +308,12 @@ imput{
       </div>
     </div>
     
-        <!-- °t®M¼u¥Xµøµ¡ -->
+        <!-- é…å¥—å½ˆå‡ºè¦–çª— -->
     <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
       <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">½Ğ·s¼W°t®M¦æµ{</h5>
+            <h5 class="modal-title" id="exampleModalLabel">è«‹æ–°å¢é…å¥—è¡Œç¨‹</h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
@@ -321,15 +321,15 @@ imput{
           <div class="modal-body">
             <form>
               <div class="form-group">
-                <label for="recipient-name" class="col-form-label">¦æµ{¦WºÙ</label>
+                <label for="recipient-name" class="col-form-label">è¡Œç¨‹åç¨±</label>
                 <input type="text" class="form-control" id="recipient-name">
               </div>
               <div class="form-group">
-                <label for="recipient-people" class="col-form-label">¤H¼Æ</label>
+                <label for="recipient-people" class="col-form-label">äººæ•¸</label>
                 <input type="text" class="form-control" id="recipient-people">
               </div>
               <div class="form-group">
-                <label for="recipient-price" class="col-form-label">»ù¿ú</label>
+                <label for="recipient-price" class="col-form-label">åƒ¹éŒ¢</label>
                 <input type="text" class="form-control" id="recipient-price">
               </div>
               <div class="form-group">
@@ -347,9 +347,9 @@ imput{
     </div>
 <!--     </FORM> -->
 
-<%-- ¿ù»~ªí¦C --%>
+<%-- éŒ¯èª¤è¡¨åˆ— --%>
 <c:if test="${not empty errorMsgs}">
-	<font style="color:red">½Ğ­×¥¿¥H¤U¿ù»~:</font>
+	<font style="color:red">è«‹ä¿®æ­£ä»¥ä¸‹éŒ¯èª¤:</font>
 	<ul>
 		<c:forEach var="message" items="${errorMsgs}">
 			<li style="color:red">${message}</li>
@@ -360,37 +360,37 @@ imput{
 <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/camprelease/camprelease.do" name="form1">
 <table>
 	<tr>
-		<td>Àç¦a¦WºÙ:</td>
+		<td>ç‡Ÿåœ°åç¨±:</td>
 		<td><input type="TEXT" name="campName" size="45" 
-			 value="<%= (campreleaseVO==null)? "¤Ñ¤ÑÀç¦a³õ" : campreleaseVO.getCampName()%>" /></td>
+			 value="<%= (campreleaseVO==null)? "å¤©å¤©ç‡Ÿåœ°å ´" : campreleaseVO.getCampName()%>" /></td>
 	</tr>
 	<tr>
-		<td>¦aÂI:</td>
+		<td>åœ°é»:</td>
 		<td><input type="TEXT" name="location" size="45"
-			 value="<%= (campreleaseVO==null)? "¥x¥_¥«¤j¦w°Ï23¸¹" : campreleaseVO.getLocation()%>" /></td>
+			 value="<%= (campreleaseVO==null)? "å°åŒ—å¸‚å¤§å®‰å€23è™Ÿ" : campreleaseVO.getLocation()%>" /></td>
 	</tr>
 	<tr>
-		<td>¸g«×:</td>
+		<td>ç¶“åº¦:</td>
 		<td><input type="TEXT" name="latitude" size="45"
 			 value="<%= (campreleaseVO==null)? "23.567" : campreleaseVO.getLatitude()%>" /></td>
 	</tr>
 	<tr>
-		<td>½n«×:</td>
+		<td>ç·¯åº¦:</td>
 		<td><input type="TEXT" name="longtitude" size="45"
 			 value="<%= (campreleaseVO==null)? "50.2321" : campreleaseVO.getLongtitude()%>" /></td>
 	</tr>
 	<tr>
-		<td>Àç¦a¤¶²Ğ:</td>
+		<td>ç‡Ÿåœ°ä»‹ç´¹:</td>
 		<td><input type="TEXT" name="campDescription" size="45"
-		     value="<%= (campreleaseVO==null)? "³o¬OÀç¦a°Ï,¥i¥HÅSÀç³o¼Ë" : campreleaseVO.getCampDescription()%>" /></td>
+		     value="<%= (campreleaseVO==null)? "é€™æ˜¯ç‡Ÿåœ°å€,å¯ä»¥éœ²ç‡Ÿé€™æ¨£" : campreleaseVO.getCampDescription()%>" /></td>
 	</tr>
 	<tr>
-		<td>»ù¿ú:</td>
+		<td>åƒ¹éŒ¢:</td>
 		<td><input type="TEXT" name="campPrice" size="45"
 		     value="<%= (campreleaseVO==null)? "1000" : campreleaseVO.getCampPrice()%>" /></td>
 	</tr>
 	<tr>
-		<td>¤é´Á:</td>
+		<td>æ—¥æœŸ:</td>
 		<td><input type="TEXT" name="listedTime" size="45" id="f_date1"></td>
 	</tr>
 	<tr>
@@ -419,7 +419,7 @@ imput{
 		     value="<%= (campreleaseVO==null)? "" : campreleaseVO.getPicture5()%>" /></td>
 	</tr>
 	<tr>
-		<td>·|­û½s¸¹:<font color=red><b>*</b></font></td>
+		<td>æœƒå“¡ç·¨è™Ÿ:<font color=red><b>*</b></font></td>
 		<td><select size="1" name="memberId">
 <%-- 		<c:forEach var="campreleaseVO" items="${deptSvc.all}"> --%>
 				<option value="${campreleaseVO.memberId}" >
@@ -430,7 +430,7 @@ imput{
 </table>
 <br>
 <input type="hidden" name="action" value="insert">
-<input type="submit" value="°e¥X·s¼W">
+<input type="submit" value="é€å‡ºæ–°å¢">
 </FORM>
 <script src="<%=request.getContextPath()%>/camprelease/js/popper.min.js"></script>
 <script src="<%=request.getContextPath()%>/camprelease/js/bootstrap.min.4.1.3.js"></script>
@@ -467,13 +467,13 @@ $.datetimepicker.setLocale('zh');
 $('#f_date1').datetimepicker({
    theme: '',              //theme: 'dark',
    timepicker:true,       //timepicker:true,
-   step: 1,                //step: 60 (³o¬Otimepickerªº¹w³]¶¡¹j60¤ÀÄÁ)
+   step: 1,                //step: 60 (é€™æ˜¯timepickerçš„é è¨­é–“éš”60åˆ†é˜)
    format:'Y-m-d H:i:s',         //format:'Y-m-d H:i:s',
    value: '<%=listedTime%>', // value:   new Date(),
-   //disabledDates:        ['2017/06/08','2017/06/09','2017/06/10'], // ¥h°£¯S©w¤£§t
-   //startDate:	            '2017/07/10',  // °_©l¤é
-   //minDate:               '-1970-01-01', // ¥h°£¤µ¤é(¤£§t)¤§«e
-   //maxDate:               '+1970-01-01'  // ¥h°£¤µ¤é(¤£§t)¤§«á
+   //disabledDates:        ['2017/06/08','2017/06/09','2017/06/10'], // å»é™¤ç‰¹å®šä¸å«
+   //startDate:	            '2017/07/10',  // èµ·å§‹æ—¥
+   //minDate:               '-1970-01-01', // å»é™¤ä»Šæ—¥(ä¸å«)ä¹‹å‰
+   //maxDate:               '+1970-01-01'  // å»é™¤ä»Šæ—¥(ä¸å«)ä¹‹å¾Œ
 });
 
 </script>

@@ -152,9 +152,13 @@ public class CampReleaseServlet extends HttpServlet {
 				}
 
 				String campDescription = req.getParameter("campDescription").trim();
+				String campDescriptionReg = "^[(\u4e00-\u9fa5)(a-zA-Z0-9_)]{5,50}$";
 				if (campDescription == null || campDescription.trim().length() == 0) {
 					errorMsgs.add("營地介紹請填寫");
+				} else if (!campDescription.trim().matches(campDescriptionReg)) { // 以下練習正則(規)表示式(regular-expression)
+					errorMsgs.add("營地介紹: 只能是中、英文字母、數字和_ , 且長度必需在5到50之間");
 				}
+
 
 				Integer campPrice = null;
 				try {

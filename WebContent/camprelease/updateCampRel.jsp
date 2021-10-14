@@ -1,16 +1,16 @@
-<%@ page contentType="text/html; charset=UTF-8" pageEncoding="Big5"%>
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="com.camprelease.model.*"%>
 
 <%
-CampReleaseVO campreleaseVO = (CampReleaseVO) request.getAttribute("campreleaseVO"); //CampReleaseServlet.java (Concroller) ¦s¤JreqªºempVOª«¥ó (¥]¬AÀ°¦£¨ú¥XªºcampreleaseVO, ¤]¥]¬A¿é¤J¸ê®Æ¿ù»~®ÉªºcampreleaseVOª«¥ó)
+CampReleaseVO campreleaseVO = (CampReleaseVO) request.getAttribute("campreleaseVO"); //CampReleaseServlet.java (Concroller) å­˜å…¥reqçš„empVOç‰©ä»¶ (åŒ…æ‹¬å¹«å¿™å–å‡ºçš„campreleaseVO, ä¹ŸåŒ…æ‹¬è¼¸å…¥è³‡æ–™éŒ¯èª¤æ™‚çš„campreleaseVOç‰©ä»¶)
 %>
 
 <!DOCTYPE html>
 <html>
 <head>
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
-<title>Àç¦a¸ê®Æ§ó·s</title>
+<title>ç‡Ÿåœ°è³‡æ–™æ›´æ–°</title>
 
 <style>
   table#table-1 {
@@ -49,16 +49,16 @@ CampReleaseVO campreleaseVO = (CampReleaseVO) request.getAttribute("campreleaseV
 
 <table id="table-1">
 	<tr><td>
-		 <h3>Àç¦a¸ê®Æ­×§ï</h3>
+		 <h3>ç‡Ÿåœ°è³‡æ–™ä¿®æ”¹</h3>
 		 <h4><a href="<%=request.getContextPath()%>/camprelease/Select_Page.jsp"><img src="images/title_camp.png" width="100" height="32" border="0">back home</a></h4>
 	</td></tr>
 </table>
 
-<h3>¸ê®Æ­×§ï:</h3>
+<h3>è³‡æ–™ä¿®æ”¹:</h3>
 
-<%-- ¿ù»~ªí¦C --%>
+<%-- éŒ¯èª¤è¡¨åˆ— --%>
 <c:if test="${not empty errorMsgs}">
-	<font style="color:red">½Ğ­×¥¿¥H¤U¿ù»~:</font>
+	<font style="color:red">è«‹ä¿®æ­£ä»¥ä¸‹éŒ¯èª¤:</font>
 	<ul>
 		<c:forEach var="message" items="${errorMsgs}">
 			<li style="color:red">${message}</li>
@@ -69,38 +69,38 @@ CampReleaseVO campreleaseVO = (CampReleaseVO) request.getAttribute("campreleaseV
 <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/camprelease/camprelease.do" name="form1">
 <table>
 	<tr>
-		<td>Àç¦a½s¸¹:<font color=red><b>*</b></font></td>
+		<td>ç‡Ÿåœ°ç·¨è™Ÿ:<font color=red><b>*</b></font></td>
 		<td><%=campreleaseVO.getCampId()%></td>
 	</tr>
 	<tr>
-		<td>·|­û½s¸¹:<font color=red><b>*</b></font></td>
+		<td>æœƒå“¡ç·¨è™Ÿ:<font color=red><b>*</b></font></td>
 		<td><%=campreleaseVO.getMemberId()%></td>
 	<tr>
-		<td>Àç¦a¦WºÙ:</td>
+		<td>ç‡Ÿåœ°åç¨±:</td>
 		<td><input type="TEXT" name="campName" size="45" value="<%=campreleaseVO.getCampName()%>" /></td>
 	</tr>
 	<tr>
-		<td>¦a§}:</td>
+		<td>åœ°å€:</td>
 		<td><input type="TEXT" name="location" size="45"	value="<%=campreleaseVO.getLocation()%>" /></td>
 	</tr>
 	<tr>
-		<td>¸g«×:</td>
+		<td>ç¶“åº¦:</td>
 		<td><input type="TEXT" name="latitude" size="45"	value="<%=campreleaseVO.getLatitude()%>" /></td>
 	</tr>
 	<tr>
-		<td>½n«×:</td>
+		<td>ç·¯åº¦:</td>
 		<td><input type="TEXT" name="longtitude" size="45" value="<%=campreleaseVO.getLongtitude()%>" /></td>
 	</tr>
 	<tr>
-		<td>Àç¦a¤¶²Ğ:</td>
+		<td>ç‡Ÿåœ°ä»‹ç´¹:</td>
 		<td><input type="TEXT" name="campDescription" size="45" value="<%=campreleaseVO.getCampDescription()%>" /></td>
 	</tr>
 	<tr>
-		<td>»ù®æ:</td>
+		<td>åƒ¹æ ¼:</td>
 		<td><input type="TEXT" name="campPrice" size="45" value="<%=campreleaseVO.getCampPrice()%>" /></td>
 	</tr>
 	<tr>
-		<td>¤é´Á:</td>
+		<td>æ—¥æœŸ:</td>
 		<td><input name="listedTime" id="f_date1" type="text" ></td>
 	</tr>
 	<tr>
@@ -136,10 +136,10 @@ CampReleaseVO campreleaseVO = (CampReleaseVO) request.getAttribute("campreleaseV
 <input type="hidden" name="action" value="update">
 <input type="hidden" name="campId" value="<%=campreleaseVO.getCampId()%>">
 <input type="hidden" name="memberId" value="<%=campreleaseVO.getMemberId()%>">
-<input type="submit" value="°e¥X­×§ï"></FORM>
+<input type="submit" value="é€å‡ºä¿®æ”¹"></FORM>
 </body>
 
-<!-- =========================================¥H¤U¬° datetimepicker ¤§¬ÛÃö³]©w========================================== -->
+<!-- =========================================ä»¥ä¸‹ç‚º datetimepicker ä¹‹ç›¸é—œè¨­å®š========================================== -->
 
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/datetimepicker/jquery.datetimepicker.css" />
 <script src="<%=request.getContextPath()%>/datetimepicker/jquery.js"></script>
@@ -159,13 +159,13 @@ CampReleaseVO campreleaseVO = (CampReleaseVO) request.getAttribute("campreleaseV
         $('#f_date1').datetimepicker({
            theme: '',              //theme: 'dark',
  	       timepicker:false,       //timepicker:true,
- 	       step: 1,                //step: 60 (³o¬Otimepickerªº¹w³]¶¡¹j60¤ÀÄÁ)
+ 	       step: 1,                //step: 60 (é€™æ˜¯timepickerçš„é è¨­é–“éš”60åˆ†é˜)
  	       format:'Y-m-d H:i:s',         //format:'Y-m-d H:i:s',
  		   value: '<%=campreleaseVO.getListedTime()%>', // value:   new Date(),
-           //disabledDates:        ['2017/06/08','2017/06/09','2017/06/10'], // ¥h°£¯S©w¤£§t
-           //startDate:	            '2017/07/10',  // °_©l¤é
-           //minDate:               '-1970-01-01', // ¥h°£¤µ¤é(¤£§t)¤§«e
-           //maxDate:               '+1970-01-01'  // ¥h°£¤µ¤é(¤£§t)¤§«á
+           //disabledDates:        ['2017/06/08','2017/06/09','2017/06/10'], // å»é™¤ç‰¹å®šä¸å«
+           //startDate:	            '2017/07/10',  // èµ·å§‹æ—¥
+           //minDate:               '-1970-01-01', // å»é™¤ä»Šæ—¥(ä¸å«)ä¹‹å‰
+           //maxDate:               '+1970-01-01'  // å»é™¤ä»Šæ—¥(ä¸å«)ä¹‹å¾Œ
         });
 </script>   
 </html>
