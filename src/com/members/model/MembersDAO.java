@@ -143,6 +143,7 @@ public class MembersDAO implements MembersDAO_interface {
 				membersVO.setMemberStatus(rs.getInt("member_status"));
 				membersVO.setName(rs.getString("name"));
 				membersVO.setPhone(rs.getString("phone"));
+				membersVO.setThumbnail(rs.getBytes("thumbnail"));
 				byte[] imagesBytes = rs.getBytes("thumbnail");
 				if (imagesBytes != null) {
 					String base64Img = Base64.getEncoder().encodeToString(imagesBytes);

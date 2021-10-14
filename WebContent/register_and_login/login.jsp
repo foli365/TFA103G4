@@ -82,7 +82,7 @@ h5 {
 	<div id="main" class="container">
 		<h1 style="padding-top: 30px">歡迎回來</h1>
 		<h5>
-			第一次使用雲露營嗎?<a id="register" href="/TFA103G4/register_and_login/register.jsp">帳號註冊</a>
+			第一次使用雲露營嗎?<a id="register" href="<%=request.getContextPath()%>/register_and_login/register.jsp">帳號註冊</a>
 		</h5>
 		<input type="hidden" id="noPword" value="${noPassword}">
 		<form action="<%=request.getContextPath()%>/account/login.do"

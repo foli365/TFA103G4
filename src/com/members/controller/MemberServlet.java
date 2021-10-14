@@ -10,6 +10,7 @@ import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
 import com.members.model.MemberService;
 import com.members.model.MembersVO;
@@ -71,6 +72,8 @@ public class MemberServlet extends HttpServlet {
 			
 				MembersVO updatedMemVO = memSvc.updateMembers(id, name, phone, membership, memberStatus, buf, address);
 				req.setAttribute("memVO", updatedMemVO);
+				HttpSession session = req.getSession();
+				session.setAttribute("account", updatedMemVO.getName());
 				String url = "/account/edit_profile.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url);
 				successView.forward(req, res);
