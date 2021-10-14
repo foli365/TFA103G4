@@ -51,11 +51,14 @@ ProductVO productVO = (ProductVO) request.getAttribute("productVO");
             </div>
             <ul>
                 <li>
-                    <a href="#" class="feat-btn">會員管理
+                    <a href="#" class="feat-btn">帳號管理
                         <span class="fas fa-caret-down first"></span>
                     </a>
                     <ul class="feat-show">
-                        <li><a href="UserTable.jsp" class="member_list">會員資料表</a></li>
+                        <li><a href="http://localhost:8081/git/backendLogin/member.jsp" class="member_list">會員帳號管理</a></li>
+                    </ul>
+                     <ul class="feat-show">
+                        <li><a href="http://localhost:8081/git/backendLogin/manager.jsp" class="manager_list">管理員帳號管理</a></li>
                     </ul>
                 </li>
                 <li>
@@ -73,8 +76,8 @@ ProductVO productVO = (ProductVO) request.getAttribute("productVO");
                         </a>
 
                     <ul class="bom-show">
-                        <li><a href="#" class="camp_list">營地訂單</a></li>
-                        <li><a href="#" class="alert_managament">檢舉管理</a></li>
+                        <li><a href="http://localhost:8081/git/backendLogin/camp.jsp" class="camp_list">營地列表</a></li>
+                        <li><a href="http://localhost:8081/git/backendLogin/alert.jsp" class="alert_managament">檢舉管理</a></li>
                     </ul>
                 </li>
                 <li>

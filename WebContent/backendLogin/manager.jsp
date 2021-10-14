@@ -42,8 +42,8 @@
 						class="fas fa-caret-down second"></span>
 				</a>
 					<ul class="serv-show">
-						<li><a href="#" class="product_up">商品上架</a></li>
-						<li><a href="#" class="product_list">商品資料表</a></li>
+						<li><a href="http://localhost:8081/git/product/PushProduct.jsp" class="product_up">商品上架</a></li>
+						<li><a href="http://localhost:8081/git/product/selectAll.jsp" class="product_list">商品資料表</a></li>
 					</ul></li>
 				<li><a href="#1" class="bom-btn">營地管理 <span
 						class="fas fa-caret-down second_1"></span>
