@@ -63,4 +63,17 @@
     <servlet-name>Register</servlet-name>
     <url-pattern>/account/register.do</url-pattern>
   </servlet-mapping>
+<!--   <filter> -->
+<!--     <filter-name>loginFilter</filter-name> -->
+<!--     <filter-class>filters.LoginFilter</filter-class> -->
+<!--   </filter> -->
+<!--   <filter-mapping> -->
+<!--     <filter-name>loginFilter</filter-name> -->
+<!--     <url-pattern>/account/*</url-pattern> -->
+<!--     <dispatcher>REQUEST</dispatcher> -->
+<!--     <dispatcher>FORWARD</dispatcher> -->
+<!--     <dispatcher>INCLUDE</dispatcher> -->
+<!--     <dispatcher>ERROR</dispatcher> -->
+<!--     <dispatcher>ASYNC</dispatcher> -->
+<!--   </filter-mapping> -->
 </web-app>
