@@ -1,0 +1,110 @@
+@import url(reset.css);
+
+/* Bootstrap 4 text input with search icon */
+
+/* .container {
+    padding-right: 120px;
+    padding-left: 120px;
+} */
+.navbar {
+	margin-bottom: 10px;
+	margin-left: 20px;
+}
+
+.search-bar {
+	padding: 20px 40px;
+	border-radius: 60px;
+	box-shadow: rgb(0 0 0/ 25%) 0px 2px 4px 0px;
+	margin-bottom: 20px;
+	position: relative;
+}
+
+.col-2 {
+	padding-left: 5px;
+	padding-right: 5px;
+}
+
+.col-3 {
+	padding-left: 5px;
+	padding-right: 5px;
+}
+
+.has-search .has-icon {
+	padding-left: 2.375rem;
+	border-radius: 20px;
+}
+
+.has-search .choose-date {
+	border-radius: 20px;
+}
+
+.has-search p {
+	line-height: 40px;
+	margin-bottom: auto;
+}
+
+.has-search .form-control-feedback {
+	position: absolute;
+	z-index: 2;
+	display: block;
+	width: 3rem;
+	height: 3rem;
+	line-height: 2.375rem;
+	text-align: center;
+	pointer-events: none;
+	color: black;
+}
+
+.search-icon {
+	border: none;
+	font-size: 25px;
+	background-color: transparent;
+	position: absolute;
+	top: 65px;
+	right: 80px;
+}
+
+.row-2 {
+	margin-bottom: 20px;
+}
+
+.map {
+	height: 700px;
+}
+
+#map {
+	height: 100%;
+	/* The height is 400 pixels */
+	width: 100%;
+	/* The width is the width of the web page */
+}
+
+.camp-list {
+	margin-left: 20px;
+	height: 700px;
+	width: 750px;
+	overflow: auto;
+}
+
+.list-group-item {
+	padding: 10px;
+}
+
+.camp-name {
+	padding-top: 5px;
+	font-size: 24px;
+}
+
+.camp-addr {
+	padding-top: 5px;
+}
+
+.camp-content {
+	padding-top: 5px;
+	height: 150px;
+}
+
+.camp-picture {
+	float: right;
+	width: 350px;
+}

@@ -1,3 +1,4 @@
+<%@page import="com.sun.beans.util.Cache"%>
 <%@page import="com.members.model.MemberService"%>
 <%@page import="com.members.model.MembersVO"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
@@ -5,14 +6,17 @@
 	pageEncoding="UTF-8"%>
 
 <%
+	response.setHeader("Cache-Control", "no-store");
+	response.setHeader("Pragma", "no-cache");
+	response.setDateHeader("Expires", 0);
 	Object account = session.getAttribute("account");
-	if(account == null){
+	if (account == null) {
 		session.setAttribute("location", request.getRequestURI());
 		response.sendRedirect(request.getContextPath() + "/register_and_login/login.jsp");
 		return;
 	}
- 	MemberService memSvc = new MemberService();
-	MembersVO memVO = memSvc.findByPrimaryKey((Integer)session.getAttribute("id"));
+	MemberService memSvc = new MemberService();
+	MembersVO memVO = memSvc.findByPrimaryKey((Integer) session.getAttribute("id"));
 	pageContext.setAttribute("memVO", memVO);
 %>
 
@@ -57,9 +61,16 @@
 							action="<%=request.getContextPath()%>/account/member.do"
 							method="post" enctype="multipart/form-data">
 							<div class="mb-3 mx-auto" style="width: 400px;">
-								<label for="formFile" class="form-label">個人資料頭貼:</label> <img
-									style="max-width: 15%; margin-bottom: 10px;"
-									src="data:image/jpg;base64,${memVO.base64Image}" alt="">
+								<div class="row">
+									<div class="col align-self-center">
+									<label for="formFile" class="form-label">個人資料頭貼:</label>
+										<div class=""
+											style="background-size: cover; width: 75px; height: 75px; border-radius: 50%; display: inline-block; background-image: url('data:image/jpg;base64,${memVO.base64Image}')">
+										</div>
+									</div>
+									<div class="col" style="margin-left: -20px">
+									</div>
+								</div>
 								<input class="form-control" type="file" id="formFile"
 									name="photo">
 							</div>

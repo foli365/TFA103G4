@@ -43,7 +43,7 @@
 					<ul class="dropdown-menu dropdown-menu-end "
 						aria-labelledby="navbarDropdown">
 						<li><a class="dropdown-item"
-							href="../account/account_center.html">會員中心</a></li>
+							href="../account/account_center.jsp">會員中心</a></li>
 						<li><a class="dropdown-item"
 							href="../account/edit_profile.jsp">編輯會員資料</a></li>
 						<li>
