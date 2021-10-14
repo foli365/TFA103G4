@@ -14,7 +14,7 @@ $("a.product_list").on("click", function() {
 
 });
 $("a.alert_managament").on("click", function() {
-    $(window).attr('location', 'alert.html');
+    $(window).attr('location', '../backendLogin/alert.jsp');
 });
 $("a.camp_list").on("click", function() {
     $(window).attr('location', 'camp.html');

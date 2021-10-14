@@ -1,9 +1,8 @@
-<%@ page language="java" contentType="text/html; charset=BIG5"
-    pageEncoding="BIG5"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="BIG5">
+<meta charset="UTF-8">
 <title>Insert title here</title>
 <script src="../js/jquery.js"></script>
     <script src="https://kit.fontawesome.com/a076d05399.js"></script>
@@ -14,102 +13,102 @@
  <div class="container">
         <nav class="sidebar">
             <div class="min_picture">
-                <h1>«á»OºÞ²z</h1>
+                <h1>å¾Œè‡ºç®¡ç†</h1>
             </div>
             <ul>
                   <li>
-                    <a href="#" class="feat-btn">±b¸¹ºÞ²z
+                    <a href="#" class="feat-btn">å¸³è™Ÿç®¡ç†
                         <span class="fas fa-caret-down first"></span>
                     </a>
                     <ul class="feat-show">
-                        <li><a href="#" class="member_list">·|­û±b¸¹ºÞ²z</a></li>
+                        <li><a href="#" class="member_list">æœƒå“¡å¸³è™Ÿç®¡ç†</a></li>
                     </ul>
                      <ul class="feat-show">
-                        <li><a href="#" class="manager_list">ºÞ²z­û±b¸¹ºÞ²z</a></li>
+                        <li><a href="#" class="manager_list">ç®¡ç†å“¡å¸³è™Ÿç®¡ç†</a></li>
                     </ul>
                 </li>
                 <li>
-                    <a href="#" class="serv-btn">°Ó«~ºÞ²z
+                    <a href="#" class="serv-btn">å•†å“ç®¡ç†
                         <span class="fas fa-caret-down second"></span> 
                     </a>
                     <ul class="serv-show">
-                        <li><a href="#" class="product_up">°Ó«~¤W¬[</a></li>
-                        <li><a href="#" class="product_list">°Ó«~¸ê®Æªí</a></li>
+                        <li><a href="http://localhost:8081/git/product/PushProduct.jsp" class="product_up">å•†å“ä¸Šæž¶</a></li>
+                        <li><a href="http://localhost:8081/git/product/selectAll.jsp" class="product_list">å•†å“è³‡æ–™è¡¨</a></li>
                     </ul>
                 </li>
                 <li>
-                    <a href="#1" class="bom-btn">Àç¦aºÞ²z
+                    <a href="#1" class="bom-btn">ç‡Ÿåœ°ç®¡ç†
                         <span class="fas fa-caret-down second_1"></span> 
                         </a>
 
                     <ul class="bom-show">
-                        <li><a href="#" class="camp_list">Àç¦a­q³æ</a></li>
-                        <li><a href="#" class="alert_managament">ÀËÁ|ºÞ²z</a></li>
+                        <li><a href="#" class="camp_list">ç‡Ÿåœ°åˆ—è¡¨</a></li>
+                        <li><a href="#" class="alert_managament">æª¢èˆ‰ç®¡ç†</a></li>
                     </ul>
                 </li>
                 <li>
-                    <a href="#" class="mky-btn">°Ó«°ºÞ²z
+                    <a href="#" class="mky-btn">å•†åŸŽç®¡ç†
                         <span class="fas fa-caret-down second_2"></span> 
                     </a>
                     <ul class="mky-show">
-                        <li><a href="#" class="shopping_list">°Ó«°­q³æ</a></li>
+                        <li><a href="#" class="shopping_list">å•†åŸŽè¨‚å–®</a></li>
                     </ul>
                 </li>
             </ul>
         </nav>
     </div>
     <div class="rightside">
-        <h2>·|­ûºÞ²z</h2><br>
-        <h3>·|­ûÃþ«¬¡G</h3>
+        <h2>æœƒå“¡ç®¡ç†</h2><br>
+        <h3>æœƒå“¡é¡žåž‹ï¼š</h3>
         <div class="dropdown">
             <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-             ½Ð¿ï¾Ü
+             è«‹é¸æ“‡
             </button>
             <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                <li><a class="dropdown-item" href="#">¤@¯ë·|­û</a></li>
-                <li><a class="dropdown-item" href="#">Àç¦a·~¥D</a></li>
+                <li><a class="dropdown-item" href="#">ä¸€èˆ¬æœƒå“¡</a></li>
+                <li><a class="dropdown-item" href="#">ç‡Ÿåœ°æ¥­ä¸»</a></li>
             </ul>
         </div>
         <div class="searcher">
             <form action="" class="parent">
-                <input type="text" class="search" placeholder="·|­û¬d¸ß">
+                <input type="text" class="search" placeholder="æœƒå“¡æŸ¥è©¢">
                 <input type="button" name="" id="" class="btn_search">
             </form>
 
-            <button type="button" class="btn btn-outline-success">¬d¸ß</button>
+            <button type="button" class="btn btn-outline-success">æŸ¥è©¢</button>
         </div>
         <table class="rwd-table ">
             <tr>
-                <th>½s¸¹</th>
-                <th>©m¦W</th>
-                <th>¨­¤ÀÃÒ¦r¸¹</th>
-                <th>¦a§}</th>
-                <th>¹q¤l«H½c</th>
-                <th>¨­¤À</th>
-                <th>ª¬ºA</th>
-                <th>½s¿è</th>
+                <th>ç·¨è™Ÿ</th>
+                <th>å§“å</th>
+                <th>èº«åˆ†è­‰å­—è™Ÿ</th>
+                <th>åœ°å€</th>
+                <th>é›»å­ä¿¡ç®±</th>
+                <th>èº«åˆ†</th>
+                <th>ç‹€æ…‹</th>
+                <th>ç·¨è¼¯</th>
             </tr>
             <tr>
-                <td data-th="½s¸¹">1</td>
-                <td data-th="©m¦W">±i¤T</td>
-                <td data-th="¨­¤ÀÃÒ¦r¸¹">A123456789</td>
-                <td data-th="¦a§}">¥x¥_¥«¤ß·N°Ïxx¸ô40¸¹x¼Ó</td>
-                <td data-th="¹q¤l«H½c">TIBAME@gmail.com</td>
-                <td data-th="¨­¤À">¤@¯ë</td>
-                <td data-th="ª¬ºA">³q¹L</td>
-                <td data-th="½s¿è"><button type="button" class="btn btn-primary" id="btn_edit">½s¿è</button>
-                    <button type="button" class="btn btn-danger" id="btn_edit">§R°£</button></td>
+                <td data-th="ç·¨è™Ÿ">1</td>
+                <td data-th="å§“å">å¼µä¸‰</td>
+                <td data-th="èº«åˆ†è­‰å­—è™Ÿ">A123456789</td>
+                <td data-th="åœ°å€">å°åŒ—å¸‚å¿ƒæ„å€xxè·¯40è™Ÿxæ¨“</td>
+                <td data-th="é›»å­ä¿¡ç®±">TIBAME@gmail.com</td>
+                <td data-th="èº«åˆ†">ä¸€èˆ¬</td>
+                <td data-th="ç‹€æ…‹">é€šéŽ</td>
+                <td data-th="ç·¨è¼¯"><button type="button" class="btn btn-primary" id="btn_edit">ç·¨è¼¯</button>
+                    <button type="button" class="btn btn-danger" id="btn_edit">åˆªé™¤</button></td>
             </tr>
             <tr>
-                <td data-th="½s¸¹">1</td>
-                <td data-th="©m¦W">±i¤T</td>
-                <td data-th="¨­¤ÀÃÒ¦r¸¹">A123456789</td>
-                <td data-th="¦a§}">¥x¥_¥«¤ß·N°Ïxx¸ô40¸¹x¼Ó</td>
-                <td data-th="¹q¤l«H½c">TIBAME@gmail.com</td>
-                <td data-th="¨­¤À">Àç¦a·~¥D</td>
-                <td data-th="ª¬ºA">«Ý¼f</td>
-                <td data-th="½s¿è"><button type="button" class="btn btn-primary" id="btn_edit">½s¿è</button>
-                    <button type="button" class="btn btn-danger" id="btn_edit">§R°£</button></td>
+                <td data-th="ç·¨è™Ÿ">1</td>
+                <td data-th="å§“å">å¼µä¸‰</td>
+                <td data-th="èº«åˆ†è­‰å­—è™Ÿ">A123456789</td>
+                <td data-th="åœ°å€">å°åŒ—å¸‚å¿ƒæ„å€xxè·¯40è™Ÿxæ¨“</td>
+                <td data-th="é›»å­ä¿¡ç®±">TIBAME@gmail.com</td>
+                <td data-th="èº«åˆ†">ç‡Ÿåœ°æ¥­ä¸»</td>
+                <td data-th="ç‹€æ…‹">å¾…å¯©</td>
+                <td data-th="ç·¨è¼¯"><button type="button" class="btn btn-primary" id="btn_edit">ç·¨è¼¯</button>
+                    <button type="button" class="btn btn-danger" id="btn_edit">åˆªé™¤</button></td>
 
             </tr>
 
@@ -126,19 +125,19 @@
     </div>
     <div class="bg"></div>
     <div class="pop">
-        <h2>·|­û¸ê®Æ­×§ï</h2>
+        <h2>æœƒå“¡è³‡æ–™ä¿®æ”¹</h2>
         <div class="formmember">
             <form>
-                <p>·|­û¦WºÙ : <input type="text" name="member_name"></p>
-                <p>·|­û¦a§} : <input type="text" name="member_location"></p>
-                <p>¨­¤ÀÃÒ¦r¸¹: <input type="text" name="member_id"></p>
-                <p>¹q¤l«H½c: <input type="text" name="member_email"></p>
-                <p>¨­¤À: <input type="text" name="member_idenity"></p>
-                <p>ª¬ºA: <input type="text" name="member_status"></p>
+                <p>æœƒå“¡åç¨± : <input type="text" name="member_name"></p>
+                <p>æœƒå“¡åœ°å€ : <input type="text" name="member_location"></p>
+                <p>èº«åˆ†è­‰å­—è™Ÿ: <input type="text" name="member_id"></p>
+                <p>é›»å­ä¿¡ç®±: <input type="text" name="member_email"></p>
+                <p>èº«åˆ†: <input type="text" name="member_idenity"></p>
+                <p>ç‹€æ…‹: <input type="text" name="member_status"></p>
             </form>
             <div class="button">
-                <button class="button_editok">½s¿è§¹¦¨</button>
-                <button class="button_cancle">¨ú®ø</button>
+                <button class="button_editok">ç·¨è¼¯å®Œæˆ</button>
+                <button class="button_cancle">å–æ¶ˆ</button>
             </div>
         </div>
 

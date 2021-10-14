@@ -13,7 +13,7 @@ import java.util.*;
 
 public class ProductJDBCDAO implements Product_interface {
 	public static final String DRIVER = "com.mysql.cj.jdbc.Driver";
-	public static final String URL = "jdbc:mysql://localhost:3306/JDBCSample?serverTimezone=Asia/Taipei";
+	public static final String URL = "jdbc:mysql://localhost:3306/gocamping?serverTimezone=Asia/Taipei";
 	public static final String USER = "David";
 	public static final String PASSWORD = "123456";
 	public static final String INSERT_STMT = "INSERT INTO commodity( product_name, product_sort, price, inventory, situation, descript, picture1, picture2, picture3) VALUES( ?, ?, ?, ?, ?, ?, ?, ?, ?)";

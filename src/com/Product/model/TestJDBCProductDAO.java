@@ -14,36 +14,36 @@ public class TestJDBCProductDAO {
 	public static void main(String[] args) throws IOException {
 		
 		Product_interface dao = new ProductJDBCDAO();
-//		String s1[] = {"316露營杯","316露營杯","316露營杯"};
-//		
-//		// 新增
-//		String path = "C:\\Users\\Tibame_T14\\OneDrive\\桌面\\campbak";
-//		File f = new File(path);
-//		String s[] = f.list();
-//		int k = 0;
-//		for (int j = 0; j < s.length; j+=3) {
-//			ProductVO product1 = new ProductVO();
-//			product1.setPname(s1[k]);
-//			product1.setPsort("露營杯");
-//			product1.setPrice(new Integer(1000));
-//			product1.setInventory(3);
-//			product1.setSituation(new Integer(1));
-//			product1.setDescript("3段試調整杯蓋\r\n" + 
-//					"\r\n" + 
-//					"- 防滑矽膠底座\r\n" + 
-//					"\r\n" + 
-//					"- 真空保冰保溫，採用18/8不鏽鋼製成");
-//			System.out.println(k);
-//			for (int i = 0; i < s.length; i++) {
-//				product1.setPicture1(getPictureByteArray(path + "\\" + s[j]));
-//				product1.setPicture2(getPictureByteArray(path + "\\" + s[j+1]));
-//				product1.setPicture3(getPictureByteArray(path + "\\" + s[j+2]));
-//				
-//			}
-//			
-//			dao.insert(product1);
-//			++k;
-//		}
+		String s1[] = {"316露營杯","316露營杯","316露營杯"};
+		
+		// 新增
+		String path = "C:\\Users\\Tibame_T14\\Desktop\\images";
+		File f = new File(path);
+		String s[] = f.list();
+		int k = 0;
+		for (int j = 0; j < s.length; j+=3) {
+			ProductVO product1 = new ProductVO();
+			product1.setPname(s1[k]);
+			product1.setPsort("露營杯");
+			product1.setPrice(new Integer(1000));
+			product1.setInventory(3);
+			product1.setSituation(new Integer(1));
+			product1.setDescript("3段試調整杯蓋\r\n" + 
+					"\r\n" + 
+					"- 防滑矽膠底座\r\n" + 
+					"\r\n" + 
+					"- 真空保冰保溫，採用18/8不鏽鋼製成");
+			System.out.println(k);
+			for (int i = 0; i < s.length; i++) {
+				product1.setPicture1(getPictureByteArray(path + "\\" + s[j]));
+				product1.setPicture2(getPictureByteArray(path + "\\" + s[j+1]));
+				product1.setPicture3(getPictureByteArray(path + "\\" + s[j+2]));
+				
+			}
+			
+			dao.insert(product1);
+			++k;
+		}
 			
 		
 		

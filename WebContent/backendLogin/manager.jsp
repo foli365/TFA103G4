@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ page import="com.adminList.model.*"%>
@@ -12,7 +11,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="BIG5">
+<meta charset="UTF-8">
 <title>Insert title here</title>
 
 <link
@@ -42,8 +41,8 @@
 						class="fas fa-caret-down second"></span>
 				</a>
 					<ul class="serv-show">
-						<li><a href="#" class="product_up">商品上架</a></li>
-						<li><a href="#" class="product_list">商品資料表</a></li>
+						<li><a href="http://localhost:8081/git/product/PushProduct.jsp" class="product_up">商品上架</a></li>
+						<li><a href="http://localhost:8081/git/product/selectAll.jsp" class="product_list">商品資料表</a></li>
 					</ul></li>
 				<li><a href="#1" class="bom-btn">營地管理 <span
 						class="fas fa-caret-down second_1"></span>
@@ -99,7 +98,7 @@
 					<th>刪除</th>
 				</tr>
 			</thead>
-			<%@ include file="page1.file"%>
+			<%@ include file="page1.jsp"%>
 			<c:forEach var="VO" items="${list}" begin="<%=pageIndex%>"
 				end="<%=pageIndex+rowsPerPage-1%>">
 				<tr>
@@ -130,7 +129,7 @@
 
 			</c:forEach>
 		</table>
-		<%@ include file="page2.file"%>
+		<%@ include file="page2.jsp"%>
 	</div>
 	<input type="hidden" name="no" value="no">
 	
