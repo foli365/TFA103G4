@@ -118,7 +118,15 @@
 		<servlet-name>CampsiteGifReader</servlet-name>
 		<url-pattern>/CampsiteGifReader</url-pattern>
 	</servlet-mapping>
-
+	<!-- 峻華的 -->
+	<servlet>
+		<servlet-name>CampReleaseServlet</servlet-name>
+		<servlet-class>com.camprelease.controller.CampReleaseServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>CampReleaseServlet</servlet-name>
+		<url-pattern>/camprelease/camprelease.do</url-pattern>
+	</servlet-mapping>
 	<filter>
 		<filter-name>loginFilter</filter-name>
 		<filter-class>filters.LoginFilter</filter-class>
