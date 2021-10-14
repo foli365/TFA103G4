@@ -101,7 +101,24 @@
 		<servlet-name>productServlet</servlet-name>
 		<url-pattern>/product/product.do</url-pattern>
 	</servlet-mapping>
-	
+	<!-- 維則的 -->
+	<servlet>
+		<servlet-name>CampsiteServlet</servlet-name>
+		<servlet-class>com.campsite.controller.CampsiteServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>CampsiteServlet</servlet-name>
+		<url-pattern>/campsite/campsite.do</url-pattern>
+	</servlet-mapping>
+	<servlet>
+		<servlet-name>CampsiteGifReader</servlet-name>
+		<servlet-class>com.campsite.model.CampsiteGifReader</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>CampsiteGifReader</servlet-name>
+		<url-pattern>/CampsiteGifReader</url-pattern>
+	</servlet-mapping>
+
 	<filter>
 		<filter-name>loginFilter</filter-name>
 		<filter-class>filters.LoginFilter</filter-class>
