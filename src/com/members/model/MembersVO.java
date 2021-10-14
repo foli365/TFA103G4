@@ -1,10 +1,12 @@
 package com.members.model;
 
 import java.io.Serializable;
+import java.util.Arrays;
 
 public class MembersVO implements Serializable {
 	
 	private Integer memberId;
+	private String password;
 	private String name;
 	private String phone;
 	private String email;
@@ -25,6 +27,12 @@ public class MembersVO implements Serializable {
 	}
 	public void setMemberId(Integer memberId) {
 		this.memberId = memberId;
+	}
+	public String getPassword() {
+		return password;
+	}
+	public void setPassword(String password) {
+		this.password = password;
 	}
 	public String getName() {
 		return name;
@@ -69,6 +77,12 @@ public class MembersVO implements Serializable {
 		this.address = address;
 	}
 	
+	@Override
+	public String toString() {
+		return "MembersVO [memberId=" + memberId + ", password=" + password + ", name=" + name + ", phone=" + phone
+				+ ", email=" + email + ", membership=" + membership + ", memberStatus=" + memberStatus + ", thumbnail="
+				+ Arrays.toString(thumbnail) + ", address=" + address + ", base64Image=" + base64Image + "]";
+	}
 	
 }
 

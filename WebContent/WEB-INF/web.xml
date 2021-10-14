@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd" metadata-complete="false" version="3.0">
+  <display-name>GoCamping</display-name>
+  <welcome-file-list>
+    <welcome-file>index.html</welcome-file>
+    <welcome-file>index.htm</welcome-file>
+    <welcome-file>index.jsp</welcome-file>
+    <welcome-file>default.html</welcome-file>
+    <welcome-file>default.htm</welcome-file>
+    <welcome-file>default.jsp</welcome-file>
+  </welcome-file-list>
+  <resource-ref>
+    <description>DB Connection</description>
+    <res-ref-name>jdbc/TestDB</res-ref-name>
+    <res-type>javax.sql.DataSource</res-type>
+    <res-auth>Container</res-auth>
+  </resource-ref>
+  <servlet>
+    <servlet-name>PostServlet</servlet-name>
+    <servlet-class>com.post.controller.PostServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>PostServlet</servlet-name>
+    <url-pattern>/post/post.do</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>CommentServlet</servlet-name>
+    <servlet-class>com.postComment.controller.PostCommentServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>CommentServlet</servlet-name>
+    <url-pattern>/post/comment.do</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>MemberServlet</servlet-name>
+    <servlet-class>com.members.controller.MemberServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>MemberServlet</servlet-name>
+    <url-pattern>/account/member.do</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>LoginHandler</servlet-name>
+    <servlet-class>com.members.controller.LoginHandler</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>LoginHandler</servlet-name>
+    <url-pattern>/account/login.do</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>Logout</servlet-name>
+    <servlet-class>com.members.controller.Logout</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>Logout</servlet-name>
+    <url-pattern>/account/logout.do</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>Register</servlet-name>
+    <servlet-class>com.members.controller.Register</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>Register</servlet-name>
+    <url-pattern>/account/register.do</url-pattern>
+  </servlet-mapping>
+<!--   <filter> -->
+<!--     <filter-name>loginFilter</filter-name> -->
+<!--     <filter-class>filters.LoginFilter</filter-class> -->
+<!--   </filter> -->
+<!--   <filter-mapping> -->
+<!--     <filter-name>loginFilter</filter-name> -->
+<!--     <url-pattern>/account/*</url-pattern> -->
+<!--     <dispatcher>REQUEST</dispatcher> -->
+<!--     <dispatcher>FORWARD</dispatcher> -->
+<!--     <dispatcher>INCLUDE</dispatcher> -->
+<!--     <dispatcher>ERROR</dispatcher> -->
+<!--     <dispatcher>ASYNC</dispatcher> -->
+<!--   </filter-mapping> -->
+</web-app>

@@ -28,10 +28,11 @@ public class MembersDAO implements MembersDAO_interface {
 		}
 	}
 
-	private static final String INSERT_STMT = "INSERT INTO members (name, email) VALUES (?, ?)";
+	private static final String INSERT_STMT = "INSERT INTO members (name, password, email, thumbnail) VALUES (?, ?, ?, ?)";
 	private static final String GET_ALL_STMT = "SELECT member_id, name, phone, email, membership, member_status, thumbnail, address FROM members order by member_id";
 	private static final String GET_ONE_STMT = "SELECT member_id, name, phone, email, membership, member_status, thumbnail, address FROM members where member_id = ?";
-	private static final String UPDATE = "UPDATE members set name=?, phone=?, email=?, membership=?, member_status=?, thumbnail=?, address=? where member_id = ?";
+	private static final String GET_BY_EMAIL = "SELECT email, member_id, password, name FROM members where email = ?";
+	private static final String UPDATE = "UPDATE members set name=?, phone=?, membership=?, member_status=?, thumbnail=?, address=? where member_id = ?";
 
 	@Override
 	public void insert(MembersVO membersVO) {
@@ -44,13 +45,15 @@ public class MembersDAO implements MembersDAO_interface {
 			pstmt = con.prepareStatement(INSERT_STMT);
 			
 			pstmt.setString(1, membersVO.getName());
-			pstmt.setString(2, membersVO.getEmail());
+			pstmt.setString(2, membersVO.getPassword());
+			pstmt.setString(3, membersVO.getEmail());
+			pstmt.setBytes(4, membersVO.getThumbnail());
 			
 			pstmt.executeUpdate();
 			
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. "
+					+ se.getMessage());
 		} finally {
 			if (pstmt!=null) {
 				try {
@@ -83,18 +86,17 @@ public class MembersDAO implements MembersDAO_interface {
 			
 			pstmt.setString(1, membersVO.getName());
 			pstmt.setString(2, membersVO.getPhone());
-			pstmt.setString(3, membersVO.getEmail());
-			pstmt.setInt(4, membersVO.getMembership());
-			pstmt.setInt(5, membersVO.getMemberStatus());
-			pstmt.setBytes(6, membersVO.getThumbnail());
-			pstmt.setString(7, membersVO.getAddress());
-			pstmt.setInt(8, membersVO.getMemberId());
+			pstmt.setInt(3, membersVO.getMembership());
+			pstmt.setInt(4, membersVO.getMemberStatus());
+			pstmt.setBytes(5, membersVO.getThumbnail());
+			pstmt.setString(6, membersVO.getAddress());
+			pstmt.setInt(7, membersVO.getMemberId());
 			
 			pstmt.executeUpdate();
 			
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. "
+					+ se.getMessage());
 		} finally {
 			if (pstmt!=null) {
 				try {
@@ -148,9 +150,61 @@ public class MembersDAO implements MembersDAO_interface {
 				}
 				
 			}
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. "
+					+ se.getMessage());
+		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+		return membersVO;
+	}
+	
+	@Override
+	public MembersVO findByEmail(String email) {
+		MembersVO membersVO = null;
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		try {
+			
+			con = ds.getConnection();
+			pstmt = con.prepareStatement(GET_BY_EMAIL);
+			
+			pstmt.setString(1, email);
+			
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				membersVO = new MembersVO();
+				membersVO.setMemberId(rs.getInt("member_id"));
+				membersVO.setPassword(rs.getString("password"));
+				membersVO.setName(rs.getString("name"));
+				membersVO.setEmail(rs.getString("email"));
+			}
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. "
+					+ se.getMessage());
 		} finally {
 			if (rs != null) {
 				try {
@@ -209,9 +263,9 @@ public class MembersDAO implements MembersDAO_interface {
 				list.add(memVO);
 			}
 			
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. "
+					+ se.getMessage());
 		} finally {
 			if (rs != null) {
 				try {
@@ -241,23 +295,22 @@ public class MembersDAO implements MembersDAO_interface {
 	public static void main(String[] args) {
 		MembersDAO control = new MembersDAO();
 //		
-//		//��
+//
 //		MembersVO CMPunk = new MembersVO();
 //		CMPunk.setName("CM.Punk");
 //		CMPunk.setEmail("AEW_CM-PUNK@gmail.com");
 //		
 //		control.insert(CMPunk);
 		
-		//��
+		//update
 //		MembersVO sophia = new MembersVO();
 //		sophia.setName("Haru");
 //		sophia.setEmail("haru@gmail.com");
-//		sophia.setAddress("	������, ���������, ��������, 424-5656");
 //		sophia.setPhone("+8151-953-5954");
 //		sophia.setMemberId(1);
 //		byte[] pic = null;
 //		try {
-//			pic = getPictureByteArray("img/haru.jpg");
+//			pic = getPictureByteArray("img/b90tyligr4621.jpg");
 //		} catch (IOException e) {
 //			// TODO Auto-generated catch block
 //			e.printStackTrace();
@@ -267,7 +320,7 @@ public class MembersDAO implements MembersDAO_interface {
 //		sophia.setMemberStatus(2);
 //		control.update(sophia);
 		
-		//�閰�
+		//
 //		MembersVO tar = control.findByPrimaryKey(1);
 //		System.out.print(tar.getName() + ",");
 //		System.out.print(tar.getEmail() + ",");
@@ -278,7 +331,7 @@ public class MembersDAO implements MembersDAO_interface {
 //		System.out.println(tar.getMemberStatus() + ",");
 //		System.out.println("--------------------");
 		
-		//���閰�
+		//
 		List<MembersVO> list = control.getAll();
 		for (MembersVO membersVO : list) {
 			System.out.print(membersVO.getName() + ",");
@@ -299,4 +352,6 @@ public class MembersDAO implements MembersDAO_interface {
 		fis.close();
 		return buffer;
 	}
+
+	
 }

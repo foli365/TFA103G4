@@ -1,18 +1,21 @@
 package com.post.model;
 
-import java.io.FileInputStream;
-import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
+
+import oracle.sql.DATE;
 
 public class PostDAO implements PostDAO_Interface {
 
@@ -26,12 +29,12 @@ public class PostDAO implements PostDAO_Interface {
 		}
 	}
 
-	private static final String INSERT_STMT = "INSERT INTO post (author_id, article, created) VALUES (?, ?, ?)";
-	private static final String UPDATE = "UPDATE post set article=? where ARTICLE_ID = ?";
-	private static final String DELETE = "DELETE FROM post where article_id = ?";
-	private static final String GET_ONE_STMT = "SELECT author_id,article_id,article,created,picture1,picture2,picture3 FROM post where author_id= ?";
-	private static final String GET_ALL_STMT = "SELECT author_id,article_id,article,picture1,picture2,picture3 FROM post order by created";
-
+	private static final String INSERT_STMT = "INSERT INTO post (author_id, title, article, created) VALUES (?, ?, ?, ?)";
+	private static final String UPDATE = "UPDATE post set title=?, article=?, created=? where post_id = ?";
+	private static final String DELETE = "DELETE FROM post where post_id = ?";
+	private static final String GET_ONE_BY_AUTHOR = "SELECT author_id, post_id, title, article, created FROM post where author_id= ?";
+	private static final String GET_ONE_BY_POSTID = "SELECT author_id, post_id, title, article, created FROM post where post_id= ?";
+	private static final String GET_ALL_STMT = "SELECT author_id, post_id, title, article, created FROM post order by created desc";
 
 	@Override
 	public void insert(PostVO postVO) {
@@ -46,8 +49,9 @@ public class PostDAO implements PostDAO_Interface {
 			pstmt = con.prepareStatement(INSERT_STMT);
 
 			pstmt.setInt(1, postVO.getAuthorId());
-			pstmt.setString(2, postVO.getArticle());
-			pstmt.setTimestamp(3, timestamp);
+			pstmt.setString(2, postVO.getTitle());
+			pstmt.setString(3, postVO.getArticle());
+			pstmt.setTimestamp(4, timestamp);
 
 			pstmt.executeUpdate();
 
@@ -80,13 +84,17 @@ public class PostDAO implements PostDAO_Interface {
 		// TODO Auto-generated method stub
 		Connection con = null;
 		PreparedStatement pstmt = null;
+		java.util.Date date = new java.util.Date();
+		java.sql.Timestamp timestamp = new java.sql.Timestamp(date.getTime());
 
 		try {
 			con = ds.getConnection();
 			pstmt = con.prepareStatement(UPDATE);
 
-			pstmt.setString(1, postVO.getArticle());
-			pstmt.setInt(2, postVO.getPostId());
+			pstmt.setString(1, postVO.getTitle());
+			pstmt.setString(2, postVO.getArticle());
+			pstmt.setTimestamp(3, timestamp);
+			pstmt.setInt(4, postVO.getPostId());
 
 			pstmt.executeUpdate();
 		} catch (SQLException e) {
@@ -159,17 +167,19 @@ public class PostDAO implements PostDAO_Interface {
 
 		try {
 			con = ds.getConnection();
-			pstmt = con.prepareStatement(GET_ONE_STMT);
+			pstmt = con.prepareStatement(GET_ONE_BY_AUTHOR);
 
 			pstmt.setInt(1, authorId);
 			rs = pstmt.executeQuery();
 
 			while (rs.next()) {
 				post = new PostVO();
-				post.setPostId(rs.getInt("article_id"));
+				post.setPostId(rs.getInt("post_id"));
 				post.setAuthorId(rs.getInt("author_id"));
+				post.setTitle(rs.getString("title"));
 				post.setArticle(rs.getString("article"));
 				post.setCreated(rs.getTimestamp("created"));
+				post.setPassed(getTimeAgo(rs.getTimestamp("created")));
 				list.add(post);
 			}
 		} catch (SQLException e) {
@@ -202,31 +212,87 @@ public class PostDAO implements PostDAO_Interface {
 		// TODO Auto-generated method stub
 		return list;
 	}
-	
-	public List<PostVO> getAll(){
-		List<PostVO> list = new ArrayList<PostVO>();
-		PostVO postVO = null;
-		
+
+	public PostVO findByPostId(Integer postId) {
+		PostVO post = null;
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		
+
+		try {
+			con = ds.getConnection();
+			pstmt = con.prepareStatement(GET_ONE_BY_POSTID);
+
+			pstmt.setInt(1, postId);
+			rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				post = new PostVO();
+				post.setPostId(rs.getInt("post_id"));
+				post.setAuthorId(rs.getInt("author_id"));
+				post.setTitle(rs.getString("title"));
+				post.setArticle(rs.getString("article"));
+				post.setCreated(rs.getTimestamp("created"));
+				post.setPassed(getTimeAgo(rs.getTimestamp("created")));
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+
+		// TODO Auto-generated method stub
+		return post;
+	}
+
+	@Override
+	public List<PostVO> getAll() {
+		List<PostVO> list = new ArrayList<PostVO>();
+		PostVO postVO = null;
+
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+
 		try {
 			con = ds.getConnection();
 			pstmt = con.prepareStatement(GET_ALL_STMT);
 			rs = pstmt.executeQuery();
-			
+
 			while (rs.next()) {
 				postVO = new PostVO();
-				postVO.setPostId(rs.getInt("article_id"));
+				postVO.setPostId(rs.getInt("post_id"));
 				postVO.setAuthorId(rs.getInt("author_id"));
+				postVO.setTitle(rs.getString("title"));
 				postVO.setArticle(rs.getString("article"));
 				postVO.setCreated(rs.getTimestamp("created"));
+				postVO.setPassed(getTimeAgo(rs.getTimestamp("created")));
 				list.add(postVO);
 			}
 		} catch (Exception e) {
 			// TODO: handle exception
-		}finally {
+		} finally {
 			if (rs != null) {
 				try {
 					rs.close();
@@ -252,55 +318,35 @@ public class PostDAO implements PostDAO_Interface {
 		return list;
 	}
 
-	public static void main(String[] args) {
-
-		PostDAO control = new PostDAO();
-
-		// ï¿½sï¿½W
-//		PostVO ig = new PostVO();
-//		ig.setAuthorId(4);
-//		ig.setArticle(
-//				"Praesent eget enim a odio pretium iaculis. Vestibulum vestibulum est vitae felis malesuada, at mollis ante rhoncus.");
-//		control.insert(ig);
-
-		// ï¿½×§ï¿½
-//		PostVO edit = new PostVO();
-//		edit.setArticle("cool");
-//		edit.setArticleId(3);
-//		byte[] pic1 = null;
-//		try {
-//			pic1 = getPictureByteArray("img/2.jpg");
-//		} catch (IOException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-//		edit.setPic1(pic1);
-//		control.update(edit);
-
-		// ï¿½Rï¿½ï¿½
-//		control.delete(5);
-		
-		//ï¿½ï¿½Û¤vï¿½ï¿½ï¿½å³¹
-		List<PostVO> list = control.findByAuthor(1);
-		for (PostVO postVO : list) {
-			System.out.println("ï¿½å³¹ï¿½sï¿½ï¿½: " + postVO.getPostId());
-			System.out.println("ï¿½@ï¿½ï¿½: " + postVO.getAuthorId());
-			System.out.println("ï¿½ï¿½ï¿½ï¿½: " + postVO.getArticle());
-			System.out.println("ï¿½Ø¥ß®É¶ï¿½: " + postVO.getCreated());
-			System.out.println("==================="); 
+	public String getTimeAgo(Timestamp timestamp) {
+		long created = timestamp.getTime();
+		Date date = new Date();
+		long current = date.getTime();
+		Calendar cal = Calendar.getInstance();
+		cal.setTimeInMillis(created);
+		int calMonth = cal.get(Calendar.MONTH);
+		int calDays = cal.get(Calendar.DATE);
+		int calYears = cal.get(Calendar.YEAR);
+		long diffInSec = (current - created) / 1000;
+		long min = diffInSec / 60;
+		long hrs = diffInSec / 3600;
+		long days = diffInSec / 86400;
+		long years = diffInSec / 31207680;
+		if (diffInSec <= 60) {
+			return diffInSec + "¬í«e";
+		} else if (min <= 60) {
+			return min + "¤ÀÄÁ«e";
+		} else if (hrs <= 24) {
+			return hrs + "¤p®É«e";
+		} else if (days <= 48) {
+			return days + "¤Ñ«e";
+		} else if (days > 48) {
+			return calMonth + "¤ë" + calDays + "¤é";
+		} else {
+			if (years >= 1) {
+				return calYears + "¦~" + calMonth + "¤ë" + calDays + "¤é";
+			}
 		}
-		
-
+		return null;
 	}
-
-	public static byte[] getPictureByteArray(String path) throws IOException {
-		FileInputStream fis = new FileInputStream(path);
-		byte[] buffer = new byte[fis.available()];
-		fis.read(buffer);
-		fis.close();
-		return buffer;
-	}
-	
-
-
 }

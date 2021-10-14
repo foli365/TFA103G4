@@ -1,8 +1,5 @@
 package com.post.model;
 
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.sql.Timestamp;
 import java.util.List;
 
 public class PostService {
@@ -12,9 +9,10 @@ public class PostService {
 		dao = new PostDAO();
 	}
 
-	public PostVO addPost(Integer authorId, String article) {
+	public PostVO addPost(Integer authorId, String title, String article) {
 		PostVO postVO = new PostVO();
 		postVO.setAuthorId(authorId);
+		postVO.setTitle(title);
 		postVO.setArticle(article);
 		java.util.Date date = new java.util.Date();
 		java.sql.Timestamp timestamp = new java.sql.Timestamp(date.getTime());
@@ -23,11 +21,11 @@ public class PostService {
 		return postVO;
 	}
 	
-	public PostVO updatePost(Integer postId, Integer authorId, String article, String pic1, String pic2, String pic3) {
+	public PostVO updatePost(Integer postId, String title, String article) {
 		PostVO postVO = new PostVO();
-		postVO.setAuthorId(authorId);
-		postVO.setArticle(article);
 		postVO.setPostId(postId);
+		postVO.setTitle(title);
+		postVO.setArticle(article);
 		dao.update(postVO);
 		return postVO;
 	}
@@ -36,15 +34,15 @@ public class PostService {
 		dao.delete(articleId);
 	}
 	
+	public PostVO findByPostId(Integer postId) {
+		return dao.findByPostId(postId);
+	}
+	
     public List<PostVO> findByAuthor(Integer authorId){
     	return dao.findByAuthor(authorId);
     }
-	
-	public static byte[] getPictureByteArray(String path) throws IOException {
-		FileInputStream fis = new FileInputStream(path);
-		byte[] buffer = new byte[fis.available()];
-		fis.read(buffer);
-		fis.close();
-		return buffer;
-	}
+    
+    public List<PostVO> getAll(){
+    	return dao.getAll();
+    }
 }

@@ -40,6 +40,7 @@
 					<th scope="col">會員狀態</th>
 					<th scope="col">大頭貼</th>
 					<th scope="col">會員地址</th>
+					<th scope="col">編輯</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -53,6 +54,13 @@
 						<td>${memVO.memberStatus}</td>
 						<td><img src="data:image/jpg;base64,${memVO.base64Image}" /></td>
 						<td>${memVO.address}</td>
+						<td>
+							<form action="<%=request.getContextPath()%>/account/member.do" method="post">
+								<button type="submit">編輯</button>
+								<input type="hidden" name="id" value="${memVO.memberId}">
+								<input type="hidden" name="action" value="getOne_For_Update">
+							</form>
+						</td>
 					</tr>
 				</c:forEach>
 			</tbody>
