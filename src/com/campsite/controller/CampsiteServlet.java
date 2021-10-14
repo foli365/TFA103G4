@@ -26,7 +26,6 @@ public class CampsiteServlet extends HttpServlet {
 	public void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 
 		req.setCharacterEncoding("UTF-8");
-//		res.setContentType("text/html; charset=UTF-8");
 		String action = req.getParameter("action");
 
 		if ("getOne_For_Display".equals(action)) { // 來自select_page.jsp的請求

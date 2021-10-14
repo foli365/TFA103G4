@@ -86,12 +86,16 @@
 						<%-- 錯誤表列 --%>
 						<c:if test="${not empty errorMsgs}">
 							<ul>
-								<!-- 								<script> -->
-								<%--  									alert("${errorMsgs}") --%>
-								<!-- 								</script> -->
-								<c:forEach var="message" items="${errorMsgs}">
-									<li style="color: red; font-weight: bold;">${message}</li>
-								</c:forEach>
+								<%-- 								<c:forEach var="message" items="${errorMsgs}"> --%>
+								<%-- 									<li style="color: red; font-weight: bold;">${message}</li> --%>
+								<%-- 								</c:forEach> --%>
+								<script>
+									alert(`
+										<c:forEach var="message" items="${errorMsgs}">
+											${message}\r
+										</c:forEach>
+									`.replaceAll('\t', '').replaceAll('\n', ''))
+								</script>
 							</ul>
 						</c:if>
 						<div class="col-4">
@@ -100,15 +104,15 @@
 								<p class="fw-bold">目的地?</p>
 								<i class="fas fa-location-arrow form-control-feedback"></i> <input
 									type="text" name="campName" class="form-control has-icon"
-									placeholder="請輸入地點..."> <input type="hidden"
-									name="action" value="getSearchCampsite">
+									placeholder="請輸入營地...">
 							</div>
 						</div>
 						<div class="col-3">
 							<div class="form-group has-search">
 								<p class="fw-bold">選擇日期</p>
-								<i class="fas fa-calendar-alt form-control-feedback"></i>
-								<input type="text" id="date" class="form-control choose-date has-icon" name="datefilter" value="" placeholder="請選擇日期..." />
+								<i class="fas fa-calendar-alt form-control-feedback"></i> <input
+									type="text" id="date" class="form-control choose-date has-icon"
+									name="datefilter" value="" placeholder="請選擇日期..." />
 							</div>
 						</div>
 						<div class="col-2">
@@ -132,6 +136,7 @@
 								</select>
 							</div>
 						</div>
+						<input type="hidden" name="action" value="getSearchCampsite">
 						<div>
 							<button type="submit" class="search-icon">
 								<i class="fas fa-search"></i>
@@ -169,7 +174,7 @@
 								</div>
 								<div class="col-6">
 									<img
-										src="/GoCamping/CampsiteGifReader?column=picture1&camp_id=${campsiteVO.campId}"
+										src="<%=request.getContextPath()%>/CampsiteGifReader?column=picture1&camp_id=${campsiteVO.campId}"
 										class="rounded float-right camp-picture" alt="...">
 								</div>
 							</div>
