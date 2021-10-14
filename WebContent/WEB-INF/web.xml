@@ -92,7 +92,16 @@
 		<servlet-name>AdminLoginServlet</servlet-name>
 		<url-pattern>/backendLogin/backendLogin.do</url-pattern>
 	</servlet-mapping>
-
+	<!-- 志全的 -->
+	<servlet>
+		<servlet-name>productServlet</servlet-name>
+		<servlet-class>com.Product.controller.productServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>productServlet</servlet-name>
+		<url-pattern>/product/product.do</url-pattern>
+	</servlet-mapping>
+	
 	<filter>
 		<filter-name>loginFilter</filter-name>
 		<filter-class>filters.LoginFilter</filter-class>
