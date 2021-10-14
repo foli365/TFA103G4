@@ -14,7 +14,7 @@
 	rel="stylesheet">
 <style type="text/css">
 body {
-	background: url("/TFA103G4/img/login.jpg") no-repeat center center fixed;
+	background: url("<%=request.getContextPath()%>/img/login.jpg") no-repeat center center fixed;
 	-webkit-background-size : cover;
 	-moz-background-size: cover;
 	-o-background-size: cover;
