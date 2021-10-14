@@ -124,10 +124,10 @@ th, td {
 				<td>${campsiteVO.lovedCount}</td>
 				<td>${campsiteVO.reportedCount}</td>
 				<td><img
-					src="/GoCamping/CampsiteGifReader?column=camp_license&camp_id=${campsiteVO.campId}"
+					src="<%=request.getContextPath()%>/CampsiteGifReader?column=camp_license&camp_id=${campsiteVO.campId}"
 					class="pic"></td>
 				<td><img
-					src="/GoCamping/CampsiteGifReader?column=picture1&camp_id=${campsiteVO.campId}"
+					src="<%=request.getContextPath()%>/CampsiteGifReader?column=picture1&camp_id=${campsiteVO.campId}"
 					class="pic"></td>
 				<td>
 					<FORM METHOD="post"
