@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ page import="com.adminList.model.*"%>
@@ -12,7 +11,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="BIG5">
+<meta charset="UTF-8">
 <title>Insert title here</title>
 
 <link
@@ -99,7 +98,7 @@
 					<th>刪除</th>
 				</tr>
 			</thead>
-			<%@ include file="page1.file"%>
+			<%@ include file="page1.jsp"%>
 			<c:forEach var="VO" items="${list}" begin="<%=pageIndex%>"
 				end="<%=pageIndex+rowsPerPage-1%>">
 				<tr>
@@ -130,7 +129,7 @@
 
 			</c:forEach>
 		</table>
-		<%@ include file="page2.file"%>
+		<%@ include file="page2.jsp"%>
 	</div>
 	<input type="hidden" name="no" value="no">
 	

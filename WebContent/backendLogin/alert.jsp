@@ -1,4 +1,4 @@
-	<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="Big5"%>
+	<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
      <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
      <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ page import="com.campAlert.model.*"%>
@@ -11,7 +11,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="BIG5">
+<meta charset="UTF-8">
 <title>Insert title here</title>
  <script src="../js/jquery.js"></script>
     <script src="https://kit.fontawesome.com/a076d05399.js"></script>
@@ -23,88 +23,88 @@
  <div class="container">
         <nav class="sidebar">
             <div class="min_picture">
-                <h1>��O�޲z</h1>
+                <h1>後臺管理</h1>
             </div>
             <ul>
                    <li>
-                    <a href="#" class="feat-btn">�b���޲z
+                    <a href="#" class="feat-btn">帳號管理
                         <span class="fas fa-caret-down first"></span>
                     </a>
                     <ul class="feat-show">
-                        <li><a href="#" class="member_list">�|���b���޲z</a></li>
+                        <li><a href="#" class="member_list">會員帳號管理</a></li>
                     </ul>
                      <ul class="feat-show">
-                        <li><a href="#" class="manager_list">�޲z���b���޲z</a></li>
+                        <li><a href="#" class="manager_list">管理員帳號管理</a></li>
                     </ul>
                 </li>
                 <li>
-                    <a href="#" class="serv-btn">�ӫ~�޲z
+                    <a href="#" class="serv-btn">商品管理
                         <span class="fas fa-caret-down second"></span> 
                     </a>
                     <ul class="serv-show">
-                        <li><a href="http://localhost:8081/git/product/PushProduct.jsp" class="product_up">�ӫ~�W�[</a></li>
-                        <li><a href="http://localhost:8081/git/product/selectAll.jsp" class="product_list">�ӫ~��ƪ�</a></li>
+                        <li><a href="http://localhost:8081/git/product/PushProduct.jsp" class="product_up">商品上架</a></li>
+                        <li><a href="http://localhost:8081/git/product/selectAll.jsp" class="product_list">商品資料表</a></li>
                     </ul>
                 </li>
                 <li>
-                    <a href="#1" class="bom-btn">��a�޲z
+                    <a href="#1" class="bom-btn">營地管理
                         <span class="fas fa-caret-down second_1"></span> 
                         </a>
 
                     <ul class="bom-show">
-                        <li><a href="#" class="camp_list">��a�C��</a></li>
-                        <li><a href="#" class="alert_managament">���|�޲z</a></li>
+                        <li><a href="#" class="camp_list">營地列表</a></li>
+                        <li><a href="#" class="alert_managament">檢舉管理</a></li>
                     </ul>
                 </li>
                 <li>
-                    <a href="#" class="mky-btn">�ӫ��޲z
+                    <a href="#" class="mky-btn">商城管理
                         <span class="fas fa-caret-down second_2"></span> 
                     </a>
                     <ul class="mky-show">
-                        <li><a href="#" class="shopping_list">�ӫ��q��</a></li>
+                        <li><a href="#" class="shopping_list">商城訂單</a></li>
                     </ul>
                 </li>
             </ul>
         </nav>
     </div>
     <div class="rightside">
-        <h2>���|�޲z</h2>
-        <h3>��a��m�G</h3>
+        <h2>檢舉管理</h2>
+        <h3>營地位置：</h3>
         <div class="dropdown">
             <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-             �п��
+             請選擇
             </button>
             <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                <li><a class="dropdown-item" href="#">�_��</a></li>
-                <li><a class="dropdown-item" href="#">����</a></li>
-                <li><a class="dropdown-item" href="#">�n��</a></li>
-                <li><a class="dropdown-item" href="#">�F��</a></li>
+                <li><a class="dropdown-item" href="#">北部</a></li>
+                <li><a class="dropdown-item" href="#">中部</a></li>
+                <li><a class="dropdown-item" href="#">南部</a></li>
+                <li><a class="dropdown-item" href="#">東部</a></li>
             </ul>
         </div>
         <div class="searcher">
             <form action="" class="parent">
-                <input type="text" class="search" placeholder="��a���|�d��">
+                <input type="text" class="search" placeholder="營地檢舉查詢">
                 <input type="button" name="" id="" class="btn_search">
             </form>
 
-            <button type="button" class="btn btn-outline-success">�d��</button>
+            <button type="button" class="btn btn-outline-success">查詢</button>
         </div>
         <table class="rwd-table ">
             <tr>
-                <th>���|�y����</th>
-                <th>���|�H</th>
-                <th>��a�s��</th>
-                <th>���|�ɶ�</th>
-                <th>���|���e</th>
-                <th>���|�Ϥ�1</th>
-                <th>���|�Ϥ�2</th>
-                <th>���|�Ϥ�3</th>
-                <th>���|���A</th>
-                 <th>�ӿ�H</th>
-                <th>�s��</th>
-                <th>�R��</th>
+                <th>檢舉流水號</th>
+                <th>檢舉人</th>
+                <th>營地編號</th>
+                <th>檢舉時間</th>
+                <th>檢舉內容</th>
+                <th>檢舉圖片1</th>
+                <th>檢舉圖片2</th>
+                <th>檢舉圖片3</th>
+                <th>檢舉狀態</th>
+                 <th>承辦人</th>
+                <th>編輯</th>
+                <th>刪除</th>
             </tr>
-            <%@ include file="page1.file" %> 
+            <%@ include file="page1.jsp" %> 
             	<c:forEach var="VO" items="${list}" begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>">
 			<tr>	
 		
@@ -120,13 +120,13 @@
 			<td>${VO.handeler}</td>
 			<td>
 			  <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/backendLogin" style="margin-bottom: 0px;">
-			     <input type="submit" value="�ק�">
+			     <input type="submit" value="修改">
 			     <input type="hidden" name="alertId"  value="${VO.alertId}">
 			     <input type="hidden" name="action"	value="update"></FORM>
 			</td>
 			<td>
 			  <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/backendLogin/CampAlert.do" style="margin-bottom: 0px;">
-			     <input type="submit" value="�R��">
+			     <input type="submit" value="刪除">
 			     <input type="hidden" name="alertId"  value="${VO.alertId}">
 			     <input type="hidden" name="action" value="delete"></FORM>
 			</td>
@@ -135,7 +135,7 @@
 		</c:forEach>	
 
         </table>
-       <%@ include file="page2.file" %>
+       <%@ include file="page2.jsp" %>
        
     </div>
      
