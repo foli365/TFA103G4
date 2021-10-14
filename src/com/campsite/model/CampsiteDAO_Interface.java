@@ -8,5 +8,5 @@ public interface CampsiteDAO_Interface {
 	void delete(Integer campId);
 	CampsiteVO findbyPrimaryKey(Integer campId);
 	List<CampsiteVO> getAll();
-	List<CampsiteVO> getSearchCampsite(String campName);/*先試營地名稱*/
+	List<CampsiteVO> getSearchCampsite(String campName);
 }

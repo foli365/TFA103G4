@@ -31,7 +31,7 @@ public class CampsiteDAO implements CampsiteDAO_Interface {
 			+ "CAMP_DESCRIPTION, CAMP_PRICE, CAMP_LIMIT, LISTED_TIME, SITE_STATE, LOVED_COUNT, REPORTED_COUNT, "
 			+ "CAMP_LICENSE, PICTURE1, PICTURE2, PICTURE3, PICTURE4, PICTURE5 FROM CAMPSITE ORDER BY CAMP_ID";
 	public static final String GET_SEARCH = "SELECT CAMP_ID, CAMP_NAME, LOCATION, CAMP_DESCRIPTION, PICTURE1 "
-			+ "FROM CAMPSITE WHERE CAMP_NAME LIKE ?";
+			+ "FROM CAMPSITE WHERE CAMP_NAME LIKE ? OR LOCATION LIKE ?";
 
 	static { // 一個環境只需要載入一次驅動
 		try {
@@ -325,6 +325,7 @@ public class CampsiteDAO implements CampsiteDAO_Interface {
 			pstmt = con.prepareStatement(GET_SEARCH);
 
 			pstmt.setString(1, "%" + campName + "%");
+			pstmt.setString(2, "%" + campName + "%");
 			rs = pstmt.executeQuery();
 
 			while (rs.next()) {
