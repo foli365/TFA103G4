@@ -16,7 +16,7 @@ import com.Product.model.*;
 import com.Product.model.ProductService;
 import com.Product.model.ProductVO;
 
-
+@MultipartConfig
 public class productServlet extends HttpServlet {
       
 
@@ -30,6 +30,8 @@ public class productServlet extends HttpServlet {
 		
 		req.setCharacterEncoding("UTF-8");		
 		String action = req.getParameter("action");
+		String s = req.getParameter("productno");
+		System.out.println("action="+action);
 		
 		if("search".equals(action)) {
 			
@@ -95,7 +97,7 @@ public class productServlet extends HttpServlet {
 		
 		
 		
-		if("getUpdate".equals(action)) {
+		if("getforUpdate".equals(action)) {
 			
 			List<String> errorMsgs = new LinkedList<String>();
 			// Store this set in the request scope, in case we need to
@@ -125,7 +127,7 @@ public class productServlet extends HttpServlet {
 		}
 
 		if("update".equals(action)) {
-			
+			System.out.println("hello");
 			List<String> errorMsgs = new LinkedList<String>();
 			// Store this set in the request scope, in case we need to
 			// send the ErrorPage view.
@@ -143,8 +145,10 @@ public class productServlet extends HttpServlet {
 				} 
 				
 				Integer price = null;
+				
 			 try { 
 			price = new Integer(req.getParameter("price").trim());
+			System.out.println(price);
 			} catch (NumberFormatException e) {
 				price = 0;
 				errorMsgs.add("請輸入價格");
@@ -153,16 +157,19 @@ public class productServlet extends HttpServlet {
 			 Integer inventory = null;
 			 try {
 			 inventory = new Integer(req.getParameter("inventory").trim());
+			 System.out.println(inventory);
 			 } catch (NumberFormatException e) {
 				 inventory = 0;
 				 errorMsgs.add("請輸入數量");
 			 }
 			 
+			 Integer situation = new Integer(req.getParameter("situation").trim());
+			 
 			 String descript = req.getParameter("descript");
+			 System.out.println(descript);
 			 String descriptReg = "^[(\u4e00-\u9fa5)(a-zA-Z0-9_)]{2,10}$";
 				if (descript == null || descript.trim().length() == 0) {
 //					errorMsgs.add("商品介紹: 請勿空白");
-					System.out.println(descript);
 			 }
 				
 			 String psort  = req.getParameter("psort");
@@ -180,6 +187,8 @@ public class productServlet extends HttpServlet {
 			 
 			 Part part1 = req.getPart("img1");
 			 InputStream in1 = part1.getInputStream();
+			 System.out.println("part1="+part1);
+			 System.out.println("in1="+in1);
 			 if (in1.available() != 0) {
 				 in1.close();
 				 picture1 = new byte[in1.available()];
@@ -216,9 +225,12 @@ public class productServlet extends HttpServlet {
 			 }
 			 
 			 ProductVO productVO = new ProductVO();
+			 productVO.setProductno(productno);
 			 productVO.setPname(pname);
-			 productVO.setPrice(price);
 			 productVO.setPsort(psort);			 
+			 productVO.setPrice(price);
+			 productVO.setInventory(inventory);
+			 productVO.setSituation(situation);
 			 productVO.setDescript(descript);
 			 productVO.setPicture1(picture1);
 			 productVO.setPicture2(picture2);
@@ -234,7 +246,7 @@ public class productServlet extends HttpServlet {
 			
 		/***************************2.開始修改資料*****************************************/
 			ProductService proSvc = new ProductService();
-			productVO = proSvc.updateProduct(productno, pname, psort, price, inventory, descriptReg, picture1, picture2, picture3);
+			productVO = proSvc.updateProduct(productno, pname, psort, price, inventory, situation, descript, picture1, picture2, picture3);
 						
 			req.setAttribute("productVO", productVO);
 			String url = "/product/selectOneproduct.jsp";
@@ -288,6 +300,14 @@ public class productServlet extends HttpServlet {
 				 errorMsgs.add("請輸入數量");
 			 }
 			 
+			 Integer situation = null;
+			 try {
+				 situation = new Integer(req.getParameter("situation").trim());
+			 } catch (NumberFormatException e) {
+				 inventory = 0;
+				 errorMsgs.add("狀態請輸入");
+			 }
+			 
 			 String descript = req.getParameter("descript");
 			 String descriptReg = "^[(\u4e00-\u9fa5)(a-zA-Z0-9_)]{2,10}$";
 				if (descript == null || descript.trim().length() == 0) {
@@ -303,6 +323,9 @@ public class productServlet extends HttpServlet {
 			 
 			 Part part1 = req.getPart("img1");
 			 InputStream in1 = part1.getInputStream();
+			 System.out.println("part1="+part1);
+			 System.out.println("in1="+in1);
+			 System.out.println();
 			 if (in1.available() != 0) {
 				 in1.close();
 				 picture1 = new byte[in1.available()];
@@ -340,8 +363,10 @@ public class productServlet extends HttpServlet {
 			 
 			 ProductVO productVO = new ProductVO();
 			 productVO.setPname(pname);
-			 productVO.setPrice(price);
 			 productVO.setPsort(psort);
+			 productVO.setPrice(price);
+			 productVO.setInventory(inventory);
+			 productVO.setSituation(situation);
 			 productVO.setDescript(descript);
 			 productVO.setPicture1(picture1);
 			 productVO.setPicture2(picture2);
@@ -357,11 +382,11 @@ public class productServlet extends HttpServlet {
 			
 	/***************************2.開始新增資料*****************************************/
 			ProductService proSvc = new ProductService();
-			productVO = proSvc.addProduct(pname, psort, price, inventory, descript, picture1, picture2, picture3);				 
+			productVO = proSvc.addProduct(pname, psort, price, inventory, situation, descript, picture1, picture2, picture3);				 
 		
 					 
 				
-			 String url = "/product/select_product.jsp";
+			 String url = "/product/selectAll.jsp";
 			 RequestDispatcher successView = req.getRequestDispatcher(url);
 				successView.forward(req, res);
 				
@@ -388,7 +413,7 @@ public class productServlet extends HttpServlet {
 
 	/***************************2.開始刪除資料*****************************************/
 				ProductService proSvc = new ProductService();
-				proSvc .deleteProduct(productno);
+				proSvc.deleteProduct(productno);
 				
 				String url = "/product/productAll.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url);
