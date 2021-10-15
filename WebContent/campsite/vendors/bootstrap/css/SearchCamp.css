@@ -29,6 +29,11 @@
 	padding-right: 5px;
 }
 
+.col-4 {
+	padding-left: 5px;
+	padding-right: 5px;
+}
+
 .has-search .has-icon {
 	padding-left: 2.375rem;
 	border-radius: 20px;

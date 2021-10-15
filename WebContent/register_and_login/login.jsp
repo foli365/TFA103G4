@@ -82,7 +82,7 @@ h5 {
 	<div id="main" class="container">
 		<h1 style="padding-top: 30px">歡迎回來</h1>
 		<h5>
-			第一次使用雲露營嗎?<a id="register" href="/TFA103G4/register_and_login/register.jsp">帳號註冊</a>
+			第一次使用雲露營嗎?<a id="register" href="<%=request.getContextPath()%>/register_and_login/register.jsp">帳號註冊</a>
 		</h5>
 		<input type="hidden" id="noPword" value="${noPassword}">
 		<form action="<%=request.getContextPath()%>/account/login.do"
@@ -95,7 +95,7 @@ h5 {
 			<div id="password" class="mb-3">
 				<input type="password" placeholder="密碼" class="form-control"
 					name="password"> <small style="color: red;">${noPassword}<a
-					id="forget" href="/TFA103G4/register_and_login/reset_password.jsp" style="color: red; font-weight: bold;">忘記密碼?</a></small>
+					id="forget" href="/TFA103G4/register_and_login/search_by_email.jsp" style="color: red; font-weight: bold;">忘記密碼?</a></small>
 			</div>
 			<div class="form-check">
 				<input type="checkbox" class="form-check-input" id="exampleCheck1">

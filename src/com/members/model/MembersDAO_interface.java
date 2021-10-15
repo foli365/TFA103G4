@@ -7,5 +7,6 @@ public interface MembersDAO_interface {
     public void update(MembersVO membersVO);
     public MembersVO findByPrimaryKey(Integer memberId);
     public MembersVO findByEmail(String email);
+    public void updatePassword(MembersVO membersVO);
     public List<MembersVO> getAll();
 }
