@@ -14,36 +14,36 @@ public class TestJDBCProductDAO {
 	public static void main(String[] args) throws IOException {
 		
 		Product_interface dao = new ProductJDBCDAO();
-		String s1[] = {"316露營杯","316露營杯","316露營杯"};
-		
-		// 新增
-		String path = "C:\\Users\\Tibame_T14\\OneDrive\\桌面\\campbak";
-		File f = new File(path);
-		String s[] = f.list();
-		int k = 0;
-		for (int j = 0; j < s.length; j+=3) {
-			ProductVO product1 = new ProductVO();
-			product1.setPname(s1[k]);
-			product1.setPsort("露營杯");
-			product1.setPrice(new Integer(2000));
-			product1.setInventory(3);
-			product1.setAdmin_id(new Integer(1001));
-			product1.setSituation(new Integer(1));
-			product1.setDescript("復古煤油燈造型，質感日雜風格\r\n" + 
-					"馬口鐵材質，堅固又耐用\r\n" + 
-					"上方手提式設計，可吊掛於帳篷、家中\r\n" + 
-					"附亮度調節鈕，可多段式調節亮度");
-			System.out.println(k);
-			for (int i = 0; i < s.length; i++) {
-				product1.setPicture1(getPictureByteArray(path + "\\" + s[j]));
-				product1.setPicture2(getPictureByteArray(path + "\\" + s[j+1]));
-				product1.setPicture3(getPictureByteArray(path + "\\" + s[j+2]));
-				
-			}
-			
-			dao.insert(product1);
-			++k;
-		}
+//		String s1[] = {"316露營杯","316露營杯","316露營杯"};
+//		
+//		// 新增
+//		String path = "C:\\Users\\Tibame_T14\\OneDrive\\桌面\\campbak";
+//		File f = new File(path);
+//		String s[] = f.list();
+//		int k = 0;
+//		for (int j = 0; j < s.length; j+=3) {
+//			ProductVO product1 = new ProductVO();
+//			product1.setPname(s1[k]);
+//			product1.setPsort("露營杯");
+//			product1.setPrice(new Integer(2000));
+//			product1.setInventory(3);
+//			product1.setAdmin_id(new Integer(1001));
+//			product1.setSituation(new Integer(1));
+//			product1.setDescript("市面少有316不鏽鋼材質\r\n" + 
+//					"- 真空隔層，保溫又保冰\r\n" + 
+//					"- 單手即可開關杯蓋口\r\n" + 
+//					"- 磨砂杯身材質，好拿好握");
+//			System.out.println(k);
+//			for (int i = 0; i < s.length; i++) {
+//				product1.setPicture1(getPictureByteArray(path + "\\" + s[j]));
+//				product1.setPicture2(getPictureByteArray(path + "\\" + s[j+1]));
+//				product1.setPicture3(getPictureByteArray(path + "\\" + s[j+2]));
+//				
+//			}
+//			
+//			dao.insert(product1);
+//			++k;
+//		}
 			
 		
 		
