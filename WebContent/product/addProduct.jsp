@@ -66,7 +66,7 @@ ProductVO productVO = (ProductVO) request.getAttribute("productVO");
 	</ul>
 </c:if>
 
-<FORM METHOD="post" ACTION="product.do" name="pform" enctype="multipart/form-data">
+<FORM METHOD="post" ACTION="<%=request.getContextPath() %>/product/product.do" enctype="multipart/form-data">
 <table>
 	<tr>
 		<td>商品名稱:</td>
@@ -88,6 +88,13 @@ ProductVO productVO = (ProductVO) request.getAttribute("productVO");
 		<td><input type="TEXT" name="inventory" size="40"
 			 value="<%= (productVO==null)? "" : productVO.getInventory()%>" /></td>
 	</tr>
+	
+	<tr>
+		<td>狀態:</td>
+		<td><input type="TEXT" name="situation" size="40"
+			 value="<%= (productVO==null)? "" : productVO.getSituation()%>" /></td>
+	</tr>
+	
 	<tr>
 		<td>商品介紹:</td>
 		<td><input type="TEXTAREA" name="descript" size="40"

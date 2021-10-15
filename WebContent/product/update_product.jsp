@@ -45,6 +45,7 @@ ProductVO productVO = (ProductVO) request.getAttribute("productVO");
 </head>
 <body bgcolor='burlywood'>
 
+
 <table id="table-2">
 	<tr><td>
 		 <h3>商品資料修改 </h3>
@@ -64,7 +65,7 @@ ProductVO productVO = (ProductVO) request.getAttribute("productVO");
 	</ul>
 </c:if>
 
-<FORM METHOD="post" ACTION="product.do" name="pform" enctype= "multipart/form-data">
+<FORM METHOD="post" ACTION="<%=request.getContextPath() %>/product/product.do" enctype= "multipart/form-data">
 <table>
 	<tr>
 		<td>商品編號:<font color=red><b>*</b></font></td>
@@ -84,6 +85,12 @@ ProductVO productVO = (ProductVO) request.getAttribute("productVO");
 		<td>數量:</td>
 		<td><input type="TEXT" name="inventory" size="45" value="<%=productVO.getInventory()%>" /></td>
 	</tr>
+	
+	<tr>
+		<td>狀態:</td>
+		<td><input type="TEXT" name="situation" size="45" value="<%=productVO.getSituation()%>" /></td>		
+	</tr>
+	
 	<tr>
 		<td>商品介紹:</td>
 		<td><input type="TEXT" name="descript" size="45" value="<%=productVO.getDescript()%>" /></td>
@@ -120,9 +127,10 @@ ProductVO productVO = (ProductVO) request.getAttribute("productVO");
 
 </table>
 <br>
-<input type="hidden" name="action" value="update">
 <input type="hidden" name="productno" value="<%=productVO.getProductno()%>">
-<input type="submit" value="送出修改"></FORM>
+<input type="hidden" name="action" value="update">
+<input type="submit" value="送出修改">
+</FORM>
 </body>
 
 </html>
