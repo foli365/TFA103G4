@@ -1,11 +1,11 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ page language="java" contentType="text/html; charset=BIG5"
-	pageEncoding="BIG5"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
-<meta charset="BIG5">
+<meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Document</title>
@@ -84,38 +84,38 @@ h3 {
 
 <body>
 	<div id="main" class="container">
-		<h1 style="padding-top: 30px">¶³ÅSÀç</h1>
-		<h3>¤@°_¥hÅSÀç§a!</h3>
+		<h1 style="padding-top: 30px">é›²éœ²ç‡Ÿ</h1>
+		<h3>ä¸€èµ·åŽ»éœ²ç‡Ÿå§!</h3>
 		<form action="<%=request.getContextPath()%>/account/register.do"
 			method="post">
 			<div class="mb-3">
-				<input type="text" placeholder="©m¦W" class="form-control" id="name"
+				<input type="text" placeholder="å§“å" class="form-control" id="name"
 					name="name">
 			</div>
 			<div class="mb-3">
-				<input type="email" placeholder="¹q¤l¶l¥ó" class="form-control"
+				<input type="email" placeholder="é›»å­éƒµä»¶" class="form-control"
 					id="email" aria-describedby="emailHelp" name="email">
 			</div>
 			<div class="mb-3">
-				<input type="password" placeholder="±K½X" class="form-control"
+				<input type="password" placeholder="å¯†ç¢¼" class="form-control"
 					id="password" name="password">
 			</div>
 			<div class="mb-3">
-				<input type="password" placeholder="±K½X½T»{" class="form-control"
+				<input type="password" placeholder="å¯†ç¢¼ç¢ºèª" class="form-control"
 					id="password">
 			</div>
 			<div class="mb-3">
-				<input type="text" placeholder="ÅçÃÒ½X" class="form-control"
+				<input type="text" placeholder="é©—è­‰ç¢¼" class="form-control"
 					id="captcha">
 			</div>
 			<div class="d-grid gap-2 col-6 mx-auto">
-				<button id="submit" class="btn btn-success" type="submit">µù¥U</button>
+				<button id="submit" class="btn btn-success" type="submit">è¨»å†Š</button>
 			</div>
 			<input type="hidden" value="register" name="action">
 		</form>
 		<!-- <div style="width: 100%; height: 20px; border-bottom: 1px solid #9C9494; text-align: center">
             <span style="color: #9C9494; font-size: 25px; background-color: #ffffff; padding: 0 10px;">
-                ©Î
+                æˆ–
             </span>
         </div> -->
 		<div class="g-signin2" data-onsuccess="onSignIn"></div>
