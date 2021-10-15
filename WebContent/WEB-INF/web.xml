@@ -127,17 +127,28 @@
 		<servlet-name>CampReleaseServlet</servlet-name>
 		<url-pattern>/camprelease/camprelease.do</url-pattern>
 	</servlet-mapping>
-<!-- 	<filter> -->
-<!-- 		<filter-name>loginFilter</filter-name> -->
-<!-- 		<filter-class>filters.LoginFilter</filter-class> -->
-<!-- 	</filter> -->
-<!-- 	<filter-mapping> -->
-<!-- 		<filter-name>loginFilter</filter-name> -->
-<!-- 		<url-pattern>/account/*</url-pattern> -->
-<!-- 		<dispatcher>REQUEST</dispatcher> -->
-<!-- 		<dispatcher>FORWARD</dispatcher> -->
-<!-- 		<dispatcher>INCLUDE</dispatcher> -->
-<!-- 		<dispatcher>ERROR</dispatcher> -->
-<!-- 		<dispatcher>ASYNC</dispatcher> -->
-<!-- 	</filter-mapping> -->
+
+<!-- 佑叡的 -->
+	<servlet>
+		<servlet-name>EmodrServlet</servlet-name>
+		<servlet-class>com.emodr.controller.EmodrServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>EmodrServlet</servlet-name>
+		<url-pattern>/emodr/emodr.do</url-pattern>
+	</servlet-mapping>
+
+	<!-- <filter> -->
+	<!-- <filter-name>loginFilter</filter-name> -->
+	<!-- <filter-class>filters.LoginFilter</filter-class> -->
+	<!-- </filter> -->
+	<!-- <filter-mapping> -->
+	<!-- <filter-name>loginFilter</filter-name> -->
+	<!-- <url-pattern>/account/*</url-pattern> -->
+	<!-- <dispatcher>REQUEST</dispatcher> -->
+	<!-- <dispatcher>FORWARD</dispatcher> -->
+	<!-- <dispatcher>INCLUDE</dispatcher> -->
+	<!-- <dispatcher>ERROR</dispatcher> -->
+	<!-- <dispatcher>ASYNC</dispatcher> -->
+	<!-- </filter-mapping> -->
 </web-app>
