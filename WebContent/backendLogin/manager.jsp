@@ -98,7 +98,7 @@
 					<th>刪除</th>
 				</tr>
 			</thead>
-			<%@ include file="page1.jsp"%>
+			<%@ include file="page1.file"%>
 			<c:forEach var="VO" items="${list}" begin="<%=pageIndex%>"
 				end="<%=pageIndex+rowsPerPage-1%>">
 				<tr>
@@ -106,6 +106,7 @@
 					<td>${VO.adminId}</td>
 					<td>${VO.adminPwd}</td>
 					<td>${VO.adminName}</td>
+
 					<td>
 						<FORM METHOD="post"
 							ACTION="<%=request.getContextPath()%>/backendLogin/AdminServlet.do"
@@ -129,10 +130,8 @@
 
 			</c:forEach>
 		</table>
-		<%@ include file="page2.jsp"%>
+		<%@ include file="page2.file"%>
 	</div>
-	<input type="hidden" name="no" value="no">
-	
 	<script src="../js/jquery.js"></script>
 	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 	<script src="../js/jquery.table2excel.js"></script>

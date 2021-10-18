@@ -104,7 +104,7 @@
                 <th>編輯</th>
                 <th>刪除</th>
             </tr>
-            <%@ include file="page1.jsp" %> 
+            <%@ include file="page1.file" %> 
             	<c:forEach var="VO" items="${list}" begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>">
 			<tr>	
 		
@@ -135,7 +135,7 @@
 		</c:forEach>	
 
         </table>
-       <%@ include file="page2.jsp" %>
+       <%@ include file="page2.file" %>
        
     </div>
      
