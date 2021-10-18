@@ -1,8 +1,14 @@
+<%@page import="com.campsite.model.CampsiteDAO"%>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="Big5"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="java.util.*"%>
 <%@ page import="com.campsite.model.*"%>
 
+<%
+	CampsiteDAO dao = new CampsiteDAO();
+	List<CampsiteVO> list = dao.getAll();
+	pageContext.setAttribute("list", list);
+%>
 <%
 	List<CampsiteVO> campsiteList = (List<CampsiteVO>) request.getAttribute("campsiteList"); //CampsiteServlet.java(Concroller), 存入req的List<CampsiteVO>物件
 %>
@@ -149,16 +155,112 @@
 		<div class="row row-2">
 			<div class="col-5 map">
 				<div id="map"></div>
+				<script>
+				  var geocoder;
+				  var map;
+				  var addressArray = [];
+				  var campNameArray = [];
+				  <c:set var="i" value="0" scope="page" />
+				  <c:forEach var="campsiteVO" items="${campsiteList}">
+					 addressArray[${i}]='${campsiteVO.location}';
+// 					 console.log(${i}+addressArray[${i}]);
+					<c:set var="i" value="${i + 1}" scope="page"/>
+				  </c:forEach>
+				  <c:set var="i" value="0" scope="page" />
+				  <c:forEach var="campsiteVO" items="${campsiteList}">
+					 campNameArray[${i}]='${campsiteVO.campName}';
+					 console.log(${i}+campNameArray[${i}]);
+					<c:set var="i" value="${i + 1}" scope="page"/>
+				  </c:forEach>
+				  
+// 				  console.log(addressArray);
+				  function initialize() {
+				    geocoder = new google.maps.Geocoder();
+				    var latlng = new google.maps.LatLng(23.612794670237307, 120.88138952653813);
+				    var myOptions = {
+				      zoom: 8,
+				      center: latlng,
+				    gestureHandling: 'cooperative',
+				    mapTypeControl: true,
+				    mapTypeControlOptions: {style: google.maps.MapTypeControlStyle.DROPDOWN_MENU},
+				    navigationControl: true,
+				      mapTypeId: google.maps.MapTypeId.ROADMAP
+				    };
+				    map = new google.maps.Map(document.getElementById("map"), myOptions);
+				    
+				    for (i = 0; i < addressArray.length; i++) {
+				   	let address = addressArray[i];
+				   	let campName = campNameArray[i];
+// 				   	console.log(address);
+				    if (geocoder) {
+				      geocoder.geocode( {'address': address}, function(results, status) {
+// 				   		console.log(address);
+// 				        <c:forEach var="campsiteVO" items="${campsiteList}">
+				        if (status == google.maps.GeocoderStatus.OK) {
+				          if (status != google.maps.GeocoderStatus.ZERO_RESULTS) {
+				          map.setCenter(results[0].geometry.location);
+				            var infowindow = new google.maps.InfoWindow(
 
-				<!-- Async script executes immediately and must be after any DOM elements used in callback. -->
+				                { content: '<b>'+
+				                	campName
+								  +'</b>',
+				                  size: new google.maps.Size(150,50)
+				                });
+
+				            var marker = new google.maps.Marker({
+				                position: results[0].geometry.location,
+				                map: map, 
+				                title:address
+				            }); 
+				            google.maps.event.addListener(marker, 'click', function() {
+				                infowindow.open(map,marker);
+				            });
+
+				          } else {
+				            alert("No results found");
+				          }
+				        } else {
+// 				          alert("Geocode was not successful for the following reason: " + status);
+				        }
+// 				        </c:forEach>
+				      });
+				    }
+				    }
+				  }
+				</script>
 				<script
-					src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB41DRUbKWJHPxaFjMAwdrzWzbVKartNGg&callback=initMap&libraries=&v=weekly&channel=2"
-					async></script>
+					src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBXvwD_h4qVCbRmi7_BkRKrc4ySwpnm604&callback=initialize"
+					async defer></script>
 			</div>
 			<div class="col-7 camp-list">
 				<div class="list-group">
+					<div class="default-list">
+						<c:forEach var="campsiteVO" items="${list}">
+							<a href="#"
+								class="list-group-item list-group-item-action flex-column align-items-start">
+								<div class="row">
+									<div class="col-6">
+										<div class="d-flex w-100 justify-content-between camp-name">
+											<h5>${campsiteVO.campName}</h5>
+										</div>
+										<div class="camp-addr">
+											<p>地址: ${campsiteVO.location}</p>
+										</div>
+										<div class="camp-content">
+											<p>${campsiteVO.campDescription}</p>
+										</div>
+									</div>
+									<div class="col-6 camp-pic-div">
+										<img
+											src="<%=request.getContextPath()%>/CampsiteGifReader?column=picture1&camp_id=${campsiteVO.campId}"
+											class="rounded float-right camp-picture" alt="...">
+									</div>
+								</div>
+							</a>
+						</c:forEach>
+					</div>
 					<c:forEach var="campsiteVO" items="${campsiteList}">
-						<a href="#"
+						<a href="campsite.do?action=getReserveCampsite&campId=${campsiteVO.campId}"
 							class="list-group-item list-group-item-action flex-column align-items-start">
 							<div class="row">
 								<div class="col-6">
@@ -172,21 +274,20 @@
 										<p>${campsiteVO.campDescription}</p>
 									</div>
 								</div>
-								<div class="col-6">
+								<div class="col-6 camp-pic-div">
 									<img
 										src="<%=request.getContextPath()%>/CampsiteGifReader?column=picture1&camp_id=${campsiteVO.campId}"
 										class="rounded float-right camp-picture" alt="...">
 								</div>
 							</div>
 						</a>
+						<script>$(".default-list").attr("style", "display:none")</script>
 					</c:forEach>
 				</div>
 			</div>
 		</div>
-	</div>
-
-	<!-- body 結束標籤之前，載入Bootstrap 的 JS -->
-	<script src="./vendors/bootstrap/js/bootstrap.bundle.min.js"></script>
+		<!-- body 結束標籤之前，載入Bootstrap 的 JS -->
+		<script src="./vendors/bootstrap/js/bootstrap.bundle.min.js"></script>
 </body>
 
 </html>

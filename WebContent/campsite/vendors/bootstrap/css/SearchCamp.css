@@ -113,3 +113,8 @@
 	float: right;
 	width: 350px;
 }
+
+.camp-pic-div {
+	display: flex;
+    align-items: center;
+}
