@@ -71,5 +71,23 @@
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js " integrity="sha384-U1DAWAznBHeqEIlVSCgzq+c9gqGAJn5c/t99JyeKa9xxaYpSvHU5awsuZVVFIhvj " crossorigin="anonymous "></script>
     <script src="../js/home.js "></script>
+    <script>
+    function prohibitpreviouspage(){
+
+    	if(navigator.userAgent.indexOf('Firefox') != -1 && parseFloat(navigator.userAgent.substring(navigator.userAgent.indexOf('Firefox') + 8)) >= 3.6 ){
+
+    	//Firefox
+    	setTimeout("fn_forward()",1);
+    	window.history.go(1);
+    	}else{ //IE.Chrome.Edge
+    	window.history.forward();
+    	}
+    	}
+    	function fn_forward() {
+    	history.forward();
+    	setTimeout("fn_forward()",1)
+    	}
+    </script>
+    <script type="text/javascript">prohibitpreviouspage();</script>
 </body>
 </html>
