@@ -55,7 +55,9 @@
                     </ul>
                 </li>
                 <li>
-                    <a href="#" class="logout-btn">logout</a>
+                <form METHOD="get" ACTION="<%=request.getContextPath()%>/backendLogin/home.do">
+                  <button type="submit" class="btn btn-outline-secondary">logout</button>
+                </form>
                 </li>
             </ul>
         </nav>

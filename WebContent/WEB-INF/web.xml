@@ -92,6 +92,14 @@
 		<servlet-name>AdminLoginServlet</servlet-name>
 		<url-pattern>/backendLogin/backendLogin.do</url-pattern>
 	</servlet-mapping>
+	<servlet>
+		<servlet-name>LogoutServlet</servlet-name>
+		<servlet-class>com.admin.controller.LogoutServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>LogoutServlet</servlet-name>
+		<url-pattern>/backendLogin/home.do</url-pattern>
+	</servlet-mapping>
 	<!-- 志全的 -->
 	<servlet>
 		<servlet-name>productServlet</servlet-name>

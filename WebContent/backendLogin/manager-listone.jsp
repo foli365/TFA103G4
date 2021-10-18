@@ -40,8 +40,8 @@
 						class="fas fa-caret-down second"></span>
 				</a>
 					<ul class="serv-show">
-						<li><a href="#" class="product_up">商品上架</a></li>
-						<li><a href="#" class="product_list">商品資料表</a></li>
+						<li><a href="http://localhost:8081/git/product/PushProduct.jsp" class="product_up">商品上架</a></li>
+						<li><a href="http://localhost:8081/git/product/selectAll.jsp" class="product_list">商品資料表</a></li>
 					</ul></li>
 				<li><a href="#1" class="bom-btn">營地管理 <span
 						class="fas fa-caret-down second_1"></span>
@@ -78,8 +78,6 @@
 					<th>管理員編號</th>
 					<th>管理員密碼</th>
 					<th>姓名</th>
-					<th>編輯</th>
-					<th>刪除</th>
 				</tr>
 			</thead>
 				<tr>
@@ -87,25 +85,6 @@
 					<td><%=VO.getAdminId()%></td>
 					<td><%=VO.getAdminPwd()%></td>
 					<td><%=VO.getAdminName()%></td>
-					<td>
-						<FORM METHOD="post"
-							ACTION="<%=request.getContextPath()%>/backendLogin/AdminServlet.do"
-							style="margin-bottom: 0px;">
-							<input type="submit" value="修改"> <input type="hidden"
-								name="adminId" value="${VO.adminId}"> <input
-								type="hidden" name="action" value="getOne_For_Update">
-						</FORM>
-					</td>
-					<td>
-						<FORM METHOD="post"
-							ACTION="<%=request.getContextPath()%>/backendLogin/AdminServlet.do"
-							style="margin-bottom: 0px;">
-							<input type="submit" value="刪除"> <input type="hidden"
-								name="adminId" value="${VO.adminId}"> <input
-								type="hidden" name="action" value="delete">
-						</FORM>
-					</td>
-
 				</tr>
 		</table>
 	</div>
