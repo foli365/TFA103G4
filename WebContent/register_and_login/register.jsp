@@ -9,15 +9,11 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Document</title>
-<link
-	href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css"
-	rel="stylesheet"
-	integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We"
-	crossorigin="anonymous">
+<%@ include file="/template/navbar.jsp" %>
 <style type="text/css">
 body {
-	background: url("<%=request.getContextPath()%>/img/Hawaii.jpg") no-repeat center center
-		fixed;
+	background: url("<%=request.getContextPath()%>/img/register.jpg")
+		no-repeat center center fixed;
 	-webkit-background-size: cover;
 	-moz-background-size: cover;
 	-o-background-size: cover;
@@ -33,6 +29,12 @@ body {
 	height: 70%;
 }
 
+#form>* {
+	margin-left: auto;
+	margin-right: auto;
+	width: 60%;
+}
+
 h1 {
 	margin-top: 15px;
 	text-align: center;
@@ -45,39 +47,15 @@ h3 {
 	margin-bottom: 40px;
 }
 
-#name {
-	margin-left: auto;
-	margin-right: auto;
-	width: 60%;
-}
-
-#email {
-	margin-left: auto;
-	margin-right: auto;
-	width: 60%;
-}
-
-#password {
-	margin-left: auto;
-	margin-right: auto;
-	width: 60%;
-}
-
 #submit {
-	margin-top: 30px;
+	margin-top: 20px;
 	border-radius: 20px;
 	margin-bottom: 20px;
 }
 
-#phone {
+.invalid-feedback {
 	margin-left: auto;
 	margin-right: auto;
-	width: 60%;
-}
-
-#captcha {
-	margin-left: 115px;
-	width: 30%;
 }
 </style>
 </head>
@@ -86,48 +64,61 @@ h3 {
 	<div id="main" class="container">
 		<h1 style="padding-top: 30px">雲露營</h1>
 		<h3>一起去露營吧!</h3>
-		<form action="<%=request.getContextPath()%>/account/register.do"
-			method="post">
+		<form id="form"
+			action="<%=request.getContextPath()%>/account/register.do"
+			method="post" class="needs-validation" novalidate>
 			<div class="mb-3">
 				<input type="text" placeholder="姓名" class="form-control" id="name"
-					name="name">
+					name="name" value="${name}" required>
+				<div class="invalid-feedback">請輸入使用者名稱</div>
 			</div>
 			<div class="mb-3">
 				<input type="email" placeholder="電子郵件" class="form-control"
-					id="email" aria-describedby="emailHelp" name="email">
+					id="email" aria-describedby="emailHelp" name="email"
+					value="${email}" required> <small style="color: red;">${emailRepeat}</small>
+				<div class="invalid-feedback">請輸入電子信箱地址</div>
 			</div>
 			<div class="mb-3">
 				<input type="password" placeholder="密碼" class="form-control"
-					id="password" name="password">
+					id="password" name="password" required> <small
+					style="color: red;">${pwordTooWeak}</small>
+				<div class="invalid-feedback">請輸入密碼</div>
 			</div>
-			<div class="mb-3">
+			<div class="mb-3" id="password">
 				<input type="password" placeholder="密碼確認" class="form-control"
-					id="password">
-			</div>
-			<div class="mb-3">
-				<input type="text" placeholder="驗證碼" class="form-control"
-					id="captcha">
+					name="passwordConfirm" id="passwordConfirm" required> <small
+					style="color: red;">${passwordDiff}</small>
+				<div class="invalid-feedback">請確認密碼</div>
 			</div>
 			<div class="d-grid gap-2 col-6 mx-auto">
 				<button id="submit" class="btn btn-success" type="submit">註冊</button>
 			</div>
 			<input type="hidden" value="register" name="action">
 		</form>
-		<!-- <div style="width: 100%; height: 20px; border-bottom: 1px solid #9C9494; text-align: center">
-            <span style="color: #9C9494; font-size: 25px; background-color: #ffffff; padding: 0 10px;">
-                或
-            </span>
-        </div> -->
 		<div class="g-signin2" data-onsuccess="onSignIn"></div>
 	</div>
-	<script
-		src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js"
-		integrity="sha384-U1DAWAznBHeqEIlVSCgzq+c9gqGAJn5c/t99JyeKa9xxaYpSvHU5awsuZVVFIhvj"
-		crossorigin="anonymous"></script>
-	<script src="https://code.jquery.com/jquery-3.6.0.js"
-		integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
-		crossorigin="anonymous"></script>
-	<script src="https://apis.google.com/js/platform.js" async defer></script>
+	<%@ include file="/template/script.html" %>
+	<script type="text/javascript">
+		// Example starter JavaScript for disabling form submissions if there are invalid fields
+		(function() {
+			'use strict'
+
+			// Fetch all the forms we want to apply custom Bootstrap validation styles to
+			var forms = document.querySelectorAll('.needs-validation')
+
+			// Loop over them and prevent submission
+			Array.prototype.slice.call(forms).forEach(function(form) {
+				form.addEventListener('submit', function(event) {
+					if (!form.checkValidity()) {
+						event.preventDefault()
+						event.stopPropagation()
+					}
+
+					form.classList.add('was-validated')
+				}, false)
+			})
+		})()
+	</script>
 </body>
 
 </html>

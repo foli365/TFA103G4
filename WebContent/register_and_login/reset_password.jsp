@@ -1,29 +1,94 @@
-<%@ page language="java" contentType="text/html; charset=BIG5"
-    pageEncoding="BIG5"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<%
+	pageContext.setAttribute("token", request.getParameter("token"));
+%>
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="BIG5">
+<meta charset="UTF-8">
 <title>Insert title here</title>
-<link
-	href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
-	rel="stylesheet">
+<%@ include file="/template/navbar.jsp" %>
+<link rel="stylesheet"
+	href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" />
+<style type="text/css">
+body {
+	background: url("<%=request.getContextPath()%>/img/resetPassword.jpg")
+		no-repeat center center fixed;
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover;
+}
+
+.container {
+	box-shadow: 0 1px 2px rgb(0 0 0/ 10%), 0 2px 4px rgb(0 0 0/ 10%);
+}
+
+.container:after {
+	position: absolute;
+	content: "";
+	top: 120px;
+	height: 120px;
+	width: 1px;
+}
+</style>
 </head>
 <body>
+	<input type="hidden" id="invalid" value="${invalid}">
+	<input type="hidden" id="success" value="${success}">
 	<div
-		style="margin-top: 120px;height: 260px; max-width: 550px; background-color: #FBEFE7; border-radius: 8px"
+		style="max-width: 550px; margin-top: 100px; margin-bottom: -100px;"
+		class="alert alert-danger mx-auto d-none" role="alert" id="failNotice">
+		<h4 class="alert-heading">
+			<i class="fas fa-exclamation-triangle"></i>&nbsp;${invalid}!
+		</h4>
+		<hr>
+		請重新<a
+			href="<%=request.getContextPath()%>/register_and_login/search_by_email.jsp"
+			class="alert-link">搜尋郵件。</a>
+	</div>
+	<div
+		style="max-width: 550px; margin-top: 100px; margin-bottom: -100px;"
+		class="d-none alert alert-success mx-auto" role="alert"
+		id="successNotice">
+		<h4 class="alert-heading">
+			<i class="fas fa-check-circle"></i>&nbsp;${success}!
+		</h4>
+		<hr>
+		將於五秒鐘後帶您回到首頁
+	</div>
+	<div
+		style="margin-top: 120px; height: 350px; max-width: 570px; background-color: #FBEFE7; border-radius: 8px"
 		class="container">
-		<h3 class="px-2" style="padding-top: 30px">���]�K�X</h3>
+		<h3 class="px-2" style="padding-top: 30px">重設密碼</h3>
 		<hr>
 		<form class="px-2"
-			action="<%=request.getContextPath()%>/resetPassword.do" method="post">
-			<label for=""></label>
-			<input class="form-control" type="password" name="password" id="password"> <small
-				style="color: red;">${noEmail}</small>
-			<input class="form-control" type="password" id="passwordConfirm">
-			<button type="submit" class="mt-3 float-end btn btn-primary">���]�K�X</button>
+			action="<%=request.getContextPath()%>/passwordReset.do" method="post">
+			<div style="margin-bottom: 20px;">
+				<label style="margin-top: 10px;" for="password"><h5>輸入新密碼</h5></label>
+				<input class="form-control" type="password" name="password"
+					id="password"> <small
+					style="color: red; margin-top: -20px;">${pwordTooWeak}</small>
+			</div>
+			<label for="passwordConfirm"><h5>確認新密碼</h5></label> <input
+				class="form-control" type="password" name="passwordConfirm"
+				id="passwordConfirm"> <small style="color: red;">${passwordDiff}</small>
+			<input type="hidden" name="token" value="${token}">
+			<button type="submit" class="mt-3 float-end btn btn-primary">重設密碼</button>
 		</form>
 	</div>
-<%@ include file="/template/script.html" %>
+	<%@ include file="/template/script.html"%>
+	<script type="text/javascript">
+	$(document).ready(function() {
+		if ($("#invalid").val()) {
+			$("#failNotice").removeClass("d-none");
+		} else if($("#success").val()) {
+			$("#successNotice").removeClass("d-none")
+		}		
+	})
+		if ($("#success").val()) {
+			window.setTimeout(function() {window.location.href = "<%=request.getContextPath()%>/homepage/index.jsp";}, 4000)}
+	</script>
 </body>
 </html>

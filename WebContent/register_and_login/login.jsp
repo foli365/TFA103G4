@@ -9,13 +9,14 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Document</title>
-<link
-	href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css"
-	rel="stylesheet">
+<%@ include file="/template/navbar.jsp" %>
+<link rel="stylesheet"
+	href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.6.0/font/bootstrap-icons.css">
 <style type="text/css">
 body {
-	background: url("<%=request.getContextPath()%>/img/login.jpg") no-repeat center center fixed;
-	-webkit-background-size : cover;
+	background: url("<%=request.getContextPath()%>/img/login.jpg") no-repeat
+		center center fixed;
+	-webkit-background-size: cover;
 	-moz-background-size: cover;
 	-o-background-size: cover;
 	background-size: cover;
@@ -49,14 +50,10 @@ h5 {
 	width: 60%;
 }
 
-#password {
+#passwordDiv {
 	margin-left: auto;
 	margin-right: auto;
 	width: 60%;
-}
-
-.form-check {
-	margin-left: 115px;
 }
 
 #register {
@@ -66,14 +63,19 @@ h5 {
 #forget {
 	text-decoration: none;
 }
-#forget:hover{
+
+#forget:hover {
 	text-decoration: underline;
 }
 
 #submit {
-	margin-top: 30px;
+	margin-top: 25px;
 	border-radius: 20px;
 	margin-bottom: 20px;
+}
+
+form i {
+	cursor: pointer;
 }
 </style>
 </head>
@@ -82,7 +84,8 @@ h5 {
 	<div id="main" class="container">
 		<h1 style="padding-top: 30px">歡迎回來</h1>
 		<h5>
-			第一次使用雲露營嗎?<a id="register" href="<%=request.getContextPath()%>/register_and_login/register.jsp">帳號註冊</a>
+			第一次使用雲露營嗎?<a id="register"
+				href="<%=request.getContextPath()%>/register_and_login/register.jsp">&nbsp;帳號註冊</a>
 		</h5>
 		<input type="hidden" id="noPword" value="${noPassword}">
 		<form action="<%=request.getContextPath()%>/account/login.do"
@@ -92,14 +95,17 @@ h5 {
 					class="form-control" aria-describedby="emailHelp" name="email"
 					value="${email}"> <small style="color: red;">${noEmail}</small>
 			</div>
-			<div id="password" class="mb-3">
+			<div id="passwordDiv" class="mb-3 input-group">
 				<input type="password" placeholder="密碼" class="form-control"
-					name="password"> <small style="color: red;">${noPassword}<a
-					id="forget" href="/TFA103G4/register_and_login/search_by_email.jsp" style="color: red; font-weight: bold;">忘記密碼?</a></small>
+					name="password" required id="password"> <span
+					style="background-color: white; border-left-color: white;"
+					class="input-group-text"><i class="bi bi-eye-slash"
+					id="togglePassword"></i></span>
 			</div>
-			<div class="form-check">
-				<input type="checkbox" class="form-check-input" id="exampleCheck1">
-				<label class="form-check-label" for="exampleCheck1">記住我</label>
+			<div style="margin-left: 115px; margin-top: -13px">
+				<small style="color: red;">${noPassword}<a id="forget"
+					href="/TFA103G4/register_and_login/search_by_email.jsp"
+					style="color: red; font-weight: bold;">忘記密碼?</a></small>
 			</div>
 			<div class="d-grid gap-2 col-6 mx-auto">
 				<button id="submit" class="btn btn-success" type="submit">登入</button>
@@ -109,16 +115,23 @@ h5 {
 
 	</div>
 
-
-	<script
-		src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js"></script>
-	<script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+	<%@ include file="/template/script.html" %>
 	<script type="text/javascript">
-	if (!$("#noPword").val()) {
-		$("#forget").addClass("d-none")
-	} else {
-		$("#forget").removeClass("d-none")
-	}
+		if (!$("#noPword").val()) {
+			$("#forget").addClass("d-none")
+		} else {
+			$("#forget").removeClass("d-none")
+		}
+		const togglePassword = document.querySelector('#togglePassword');
+		const password = document.querySelector('#password');
+		togglePassword.addEventListener('click', function(e) {
+
+			const type = password.getAttribute('type') === 'password' ? 'text'
+					: 'password';
+			password.setAttribute('type', type);
+
+			this.classList.toggle('bi-eye');
+		});
 	</script>
 </body>
 </html>

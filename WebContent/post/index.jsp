@@ -63,7 +63,7 @@
 			}
 
 			#post:hover {
-				border: 0.5px solid black;
+				border: 0.5px solid #8D8D8D;
 				transition: all 0.2s ease-in;
 			}
 

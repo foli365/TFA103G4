@@ -38,6 +38,13 @@ public class MemberService {
 		dao.update(membersVO);
 		return membersVO;
 	}
+	
+	public void updatePassword(String password, String email) {
+		MembersVO membersVO = new MembersVO();
+		membersVO.setEmail(email);
+		membersVO.setPassword(password);
+		dao.updatePassword(membersVO);
+	}
 
 	public MembersVO findByPrimaryKey(Integer memberId) {
 		return dao.findByPrimaryKey(memberId);

@@ -100,9 +100,9 @@
 			</div>
 		</div>
 	</div>
+	<%@ include file="/template/script.html" %>
 	<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 	<script src="./js/flatpickr.js"></script>
-	<%@ include file="/template/script.html" %>
 </body>
 
 </html>

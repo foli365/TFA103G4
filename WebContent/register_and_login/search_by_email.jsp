@@ -5,14 +5,12 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<link
-	href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
-	rel="stylesheet">
+<%@ include file="/template/navbar.jsp" %>
 <link rel="stylesheet"
 	href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"/>
 <style type="text/css">
 body {
-	background: url("<%=request.getContextPath()%>/img/reset.jpg") no-repeat
+	background: url("<%=request.getContextPath()%>/img/searchByEmail.jpg") no-repeat
 		center center fixed;
 	-webkit-background-size: cover;
 	-moz-background-size: cover;
@@ -32,7 +30,7 @@ body {
 }
 </style>
 </head>
-<body style="background-color: #E9EBEE;">
+<body>
 	<input type="hidden" id="success" value="${success}">
 	<div style="max-width: 550px; margin-top: 100px; margin-bottom: -100px;" class="alert alert-success mx-auto" role="alert" id="successNotice">
 		<h4 class="alert-heading">

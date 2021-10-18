@@ -99,7 +99,7 @@
 					aria-labelledby="v-pills-profile-tab">
 					<div class="container">
 						<h2>更改密碼</h2>
-						<form style="border: 1px solid #DEE2E6; padding: 40px;" action="">
+						<form style="border: 1px solid #DEE2E6; padding: 40px;" action="<%=request.getContextPath()%>/account/member.do">
 							<div class="mb-3 mx-auto" style="width: 400px;">
 								<input type="email" placeholder="目前密碼" class="form-control"
 									id="currentPword" aria-describedby="emailHelp">
@@ -111,6 +111,7 @@
 							<div class="mb-3 mx-auto" style="width: 400px;">
 								<input type="password" placeholder="確認更新密碼" class="form-control"
 									id="confirmPword">
+							<input type="hidden" name="action" value="passwordUpdate">
 							</div>
 							<div class="d-grid gap-2 col-6 ms-auto" style="width: 80px">
 								<button id="submitPwordChange" class="btn btn-success"
