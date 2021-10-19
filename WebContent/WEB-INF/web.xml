@@ -100,6 +100,16 @@
 		<servlet-name>LogoutServlet</servlet-name>
 		<url-pattern>/backendLogin/home.do</url-pattern>
 	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>Member</servlet-name>
+		<servlet-class>com.members.controller.updateServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>Member</servlet-name>
+		<url-pattern>/backendLogin/updatemember.do</url-pattern>
+	</servlet-mapping>
+	
 	<!-- 志全的 -->
 	<servlet>
 		<servlet-name>productServlet</servlet-name>

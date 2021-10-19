@@ -79,7 +79,7 @@
 				<li><a class="dropdown-item" href="#">營地業主</a></li>
 			</ul>
 		</div>
-			<div class="searcher">
+		<div class="searcher">
 			<FORM METHOD="post"
 				ACTION="<%=request.getContextPath()%>/backendLogin/AdminServlet.do">
 				<input type="text" class="search" name="adminId"
@@ -111,9 +111,17 @@
 					<td>${VO.phone}</td>
 					<td>${VO.memberStatus}</td>
 					<td>${VO.address}</td>
-					<td data-th="編輯"><button type="button" class="btn btn-primary" id="btn_edit">修改</button>
-					</tr>
-			
+					<td>
+						<FORM METHOD="post"
+							ACTION="<%=request.getContextPath()%>/backendLogin/updatemember.do"
+							style="margin-bottom: 0px;">
+							<input type="submit" value="修改"> <input type="hidden"
+								name="memberId" value="${VO.memberId}"> <input
+								type="hidden" name="action" value="getOne_For_Update">
+						</FORM>
+					</td>
+				</tr>
+
 			</c:forEach>
 		</table>
 
@@ -140,17 +148,18 @@
 		integrity="sha384-U1DAWAznBHeqEIlVSCgzq+c9gqGAJn5c/t99JyeKa9xxaYpSvHU5awsuZVVFIhvj"
 		crossorigin="anonymous"></script>
 	<script src="../js/member.js"></script>
-<script>
-		$(document).ready(function(){			
-		$("#export1").on("click", function() {
-				  $("#myTable").table2excel({
-				    // exclude CSS class
-				    exclude: ".noExl",
-				    name: "Worksheet Name",
-				    filename: "會員清單", //do not include extension
-				    fileext: ".xls" // file extension
-				  }); 
+	<script>
+		$(document).ready(function() {
+			$("#export1").on("click", function() {
+				$("#myTable").table2excel({
+					// exclude CSS class
+					exclude : ".noExl",
+					name : "Worksheet Name",
+					filename : "會員清單", //do not include extension
+					fileext : ".xls" // file extension
+				});
+			});
 		});
-		});
-</body>
-</html>
+		</body>
+		</html>
+	
