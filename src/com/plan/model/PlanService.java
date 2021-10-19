@@ -45,8 +45,8 @@ public class PlanService {
 		dao.delete(planId);
 	}
 
-	public PlanVO getOnePlan(Integer planId) {
-		return dao.findbyPrimaryKey(planId);
+	public List<PlanVO> getOnePlan(Integer campId) {
+		return dao.findbyPrimaryKey(campId);
 	}
 
 	public List<PlanVO> getAll() {

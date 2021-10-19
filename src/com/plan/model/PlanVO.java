@@ -6,6 +6,7 @@ public class PlanVO implements Serializable {
 	private Integer planId;
 	private Integer campId;
 	private String planName;
+	private String planOutline;
 	private Integer planGuestLimit;
 	private Integer planAgeLimit;
 	private Integer planPrice;
@@ -21,6 +22,14 @@ public class PlanVO implements Serializable {
 		this.planGuestLimit = planGuestLimit;
 		this.planAgeLimit = planAgeLimit;
 		this.planPrice = planPrice;
+	}
+
+	public String getPlanOutline() {
+		return planOutline;
+	}
+
+	public void setPlanOutline(String planOutline) {
+		this.planOutline = planOutline;
 	}
 
 	public Integer getPlanId() {
