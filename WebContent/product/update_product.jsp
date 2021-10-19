@@ -1,14 +1,20 @@
-<%@ page contentType="text/html; charset=UTF-8" pageEncoding="Big5"%>
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@page import="com.adminList.model.AdminService"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="com.Product.model.*"%>
+<%@ page import="java.util.*"%>
+
+
 
 <%
 ProductVO productVO = (ProductVO) request.getAttribute("productVO"); 
 %>
 
+
+
 <html>
 <head>
-<title>°Ó«~­×§ï</title>
+<title>å•†å“ä¿®æ”¹</title>
 
 <style>
   table#table-1 {
@@ -48,16 +54,16 @@ ProductVO productVO = (ProductVO) request.getAttribute("productVO");
 
 <table id="table-2">
 	<tr><td>
-		 <h3>°Ó«~¸ê®Æ­×§ï </h3>
-		 <h4><a href='selectAll.jsp'>¦^­º­¶</a></h4>
+		 <h3>å•†å“è³‡æ–™ä¿®æ”¹ </h3>
+		 <h4><a href='selectAll.jsp'>å›é¦–é </a></h4>
 	</td></tr>
 </table>
 
-<h3>¸ê®Æ­×§ï:</h3>
+<h3>è³‡æ–™ä¿®æ”¹:</h3>
 
-<%-- ¿ù»~ªí¦C --%>
+<%-- éŒ¯èª¤è¡¨åˆ— --%>
 <c:if test="${not empty errorMsgs}">
-	<font style="color:red">½Ğ­×¥¿¥H¤U¿ù»~:</font>
+	<font style="color:red">è«‹ä¿®æ­£ä»¥ä¸‹éŒ¯èª¤:</font>
 	<ul>
 		<c:forEach var="message" items="${errorMsgs}">
 			<li style="color:red">${message}</li>
@@ -68,48 +74,53 @@ ProductVO productVO = (ProductVO) request.getAttribute("productVO");
 <FORM METHOD="post" ACTION="<%=request.getContextPath() %>/product/product.do" enctype= "multipart/form-data">
 <table>
 	<tr>
-		<td>°Ó«~½s¸¹:<font color=red><b>*</b></font></td>
+		<td>å•†å“ç·¨è™Ÿ:<font color=red><b>*</b></font></td>
 		<td><%=productVO.getProductno()%></td>
 	</tr>
 	<tr>
-		<td>°Ó«~¦WºÙ:</td>
+		<td>å•†å“åç¨±:</td>
 		<td><input type="TEXT" name="pname" size="45" value="<%=productVO.getPname()%>" /></td>
 	</tr>
 	
 	<tr>
-		<td>»ù®æ:</td>
+		<td>åƒ¹æ ¼:</td>
 		<td><input type="TEXT" name="price" size="45" value="<%=productVO.getPrice()%>" /></td>
 	</tr>
 	
 	<tr>
-		<td>¼Æ¶q:</td>
+		<td>æ•¸é‡:</td>
 		<td><input type="TEXT" name="inventory" size="45" value="<%=productVO.getInventory()%>" /></td>
 	</tr>
 	
 	<tr>
-		<td>ª¬ºA:</td>
+		<td>ä¸Šæ¶äººå“¡:</td>
+		<td><input type="TEXT" name="admin_id" size="45" value="<%=productVO.getAdmin_id()%>" /></td>
+	</tr>
+	
+	<tr>
+		<td>ç‹€æ…‹:</td>
 		<td><input type="TEXT" name="situation" size="45" value="<%=productVO.getSituation()%>" /></td>		
 	</tr>
 	
 	<tr>
-		<td>°Ó«~¤¶²Ğ:</td>
+		<td>å•†å“ä»‹ç´¹:</td>
 		<td><input type="TEXT" name="descript" size="45" value="<%=productVO.getDescript()%>" /></td>
 	</tr>
 	
 	<tr>
-		<td>°Ó«~¹Ï¤ù1:</td>
+		<td>å•†å“åœ–ç‰‡1:</td>
 		<td><input type="file" name="img1"
 			 value="<%= (productVO==null)? "" : productVO.getPicture1()%>" /></td>
 	</tr>
 	
 	<tr>
-		<td>°Ó«~¹Ï¤ù2:</td>
+		<td>å•†å“åœ–ç‰‡2:</td>
 		<td><input type="file" name="img2"
 			 value="<%= (productVO==null)? "" : productVO.getPicture2()%>" /></td>
 	</tr>
 	
 	<tr>
-		<td>°Ó«~¹Ï¤ù3:</td>
+		<td>å•†å“åœ–ç‰‡3:</td>
 		<td><input type="file" name="img3"
 			 value="<%= (productVO==null)? "" : productVO.getPicture3()%>" /></td>
 	</tr>
@@ -117,7 +128,7 @@ ProductVO productVO = (ProductVO) request.getAttribute("productVO");
 	<jsp:useBean id="productSvc" scope="page" class="com.Product.model.ProductService" />
 	
 	<tr>
-		<td>Ãş§O:<font color=red><b>*</b></font></td>
+		<td>é¡åˆ¥:<font color=red><b>*</b></font></td>
 		<td><select size="1" name="psort">
 			<c:forEach var="productVO" items="${productSvc.all}">
 				<option value="${productVO.psort}">${productVO.psort}</option>>
@@ -129,7 +140,7 @@ ProductVO productVO = (ProductVO) request.getAttribute("productVO");
 <br>
 <input type="hidden" name="productno" value="<%=productVO.getProductno()%>">
 <input type="hidden" name="action" value="update">
-<input type="submit" value="°e¥X­×§ï">
+<input type="submit" value="é€å‡ºä¿®æ”¹">
 </FORM>
 </body>
 

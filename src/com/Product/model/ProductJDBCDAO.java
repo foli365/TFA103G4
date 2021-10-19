@@ -17,7 +17,7 @@ public class ProductJDBCDAO implements Product_interface {
 	public static final String USER = "David";
 	public static final String PASSWORD = "123456";
 	public static final String INSERT_STMT = "INSERT INTO commodity( product_name, product_sort, price, inventory, admin_id, situation, descript, picture1, picture2, picture3) VALUES( ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-	public static final String UPDATE = "UPDATE commodity SET product_name=?, product_sort=?, price=?, inventory=?, admin_id=? situation=?, descript=?, picture1=?, picture2=?, picture3=? WHERE product_no=? ";
+	public static final String UPDATE = "UPDATE commodity SET product_name=?, product_sort=?, price=?, inventory=?, admin_id=?, situation=?, descript=?, picture1=?, picture2=?, picture3=? WHERE product_no=? ";
 	public static final String DELETE = "DELETE FROM commodity WHERE product_no=?";
 	public static final String GET_ONE_STMT = "SELECT * FROM commodity WHERE PRODUCT_no=?";
 	public static final String GET_ALL_STMT = "SELECT * FROM commodity ORDER BY PRODUCT_no";

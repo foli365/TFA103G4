@@ -48,22 +48,23 @@ public class TestJDBCProductDAO {
 		
 		
 		// 修改
-//		ProductVO product2 = new ProductVO();
-//		byte[] pic1 = getPictureByteArray("C:\\Users\\Tibame_T14\\OneDrive\\桌面\\imgs\\1881696-1_xxl.jpg");
-//		byte[] pic2 = getPictureByteArray("C:\\Users\\Tibame_T14\\OneDrive\\桌面\\imgs\\1881696-1_xxl.jpg");
-//		byte[] pic3 = getPictureByteArray("C:\\Users\\Tibame_T14\\OneDrive\\桌面\\imgs\\1881696-1_xxl.jpg");
-//		
-//		product2.setPname("五人帳篷");		
-//		product2.setPsort("帳篷");
-//		product2.setPrice(new Integer(7000));
-//		product2.setInventory(2);
-//		product2.setSituation(new Integer(0)); // 1是有上架, 0是沒有
-//		product2.setDescript("防水牛津布 防潮隔寒 加大空間 好寬敞 2窗2門 好透氣" );
-//		product2.setPicture1(pic1);
-//		product2.setPicture2(pic2);
-//		product2.setPicture3(pic3);
-//		product2.setProductno(7003);
-//		dao.update(product2);
+		ProductVO product2 = new ProductVO();
+		byte[] pic1 = getPictureByteArray("C:\\Users\\Tibame_T14\\OneDrive\\桌面\\imgs\\0915_7.jpg");
+		byte[] pic2 = getPictureByteArray("C:\\Users\\Tibame_T14\\OneDrive\\桌面\\imgs\\0915_7.jpg");
+		byte[] pic3 = getPictureByteArray("C:\\Users\\Tibame_T14\\OneDrive\\桌面\\imgs\\0915_7.jpg");
+		
+		product2.setPname("五人帳篷");		
+		product2.setPsort("帳篷");
+		product2.setPrice(new Integer(8000));
+		product2.setInventory(2);
+		product2.setAdmin_id(new Integer(1002));
+		product2.setSituation(1); // 1是有上架, 0是沒有
+		product2.setDescript("防水牛津布 防潮隔寒 加大空間 好寬敞 2窗2門 好透氣");
+		product2.setPicture1(pic1);
+		product2.setPicture2(pic2);
+		product2.setPicture3(pic3);
+		product2.setProductno(7003);
+		dao.update(product2);
 		
 		// 刪除
 //		dao.delete(6);
