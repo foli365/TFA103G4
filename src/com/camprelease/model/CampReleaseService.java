@@ -1,7 +1,5 @@
 package com.camprelease.model;
 
-//import java.io.FileInputStream;
-//import java.io.IOException;
 import java.util.*;
 import java.sql.*;
 
@@ -14,8 +12,8 @@ public class CampReleaseService {
 		dao = new CampReleaseDAO();
 	}
 
-	public CampReleaseVO addCampRelease(String campName, String location, Double latitude, Double longtitude,
-			String campDescription, Integer campPrice, Timestamp listedTime, byte[] picture1, byte[] picture2, byte[] picture3, byte[] picture4, byte[] picture5, Integer memberId) {
+	public CampReleaseVO addCampRelease(Integer memberId, String campName, String location, Double latitude, Double longtitude,
+			String campDescription, Integer campPrice, Timestamp listedTime, byte[] picture1, byte[] picture2, byte[] picture3, byte[] picture4, byte[] picture5) {
 
 		CampReleaseVO campreleaseVO = new CampReleaseVO();
 
@@ -26,12 +24,6 @@ public class CampReleaseService {
 		campreleaseVO.setCampDescription(campDescription);
 		campreleaseVO.setCampPrice(campPrice);
 		campreleaseVO.setListedTime(listedTime);
-//		try {
-//			campaddVO.setPicture1(getPictureByteArray(picture1));
-//		} catch (IOException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
 		campreleaseVO.setPicture1(picture1);
 		campreleaseVO.setPicture2(picture2);
 		campreleaseVO.setPicture3(picture3);
@@ -45,7 +37,7 @@ public class CampReleaseService {
 	}
 
 	public CampReleaseVO updateCampRelease(String campName, String location, Double latitude, Double longtitude,
-			String campDescription, Integer campPrice,Timestamp listedTime, byte[] picture1, byte[] picture2, byte[] picture3, byte[] picture4, byte[] picture5,Integer memberId, Integer campId) {
+			String campDescription, Integer campPrice,Timestamp listedTime, byte[] picture1, byte[] picture2, byte[] picture3, byte[] picture4, byte[] picture5, Integer campId) {
 
 		CampReleaseVO campreleaseVO = new CampReleaseVO();
 
@@ -61,13 +53,8 @@ public class CampReleaseService {
 		campreleaseVO.setPicture3(picture3);
 		campreleaseVO.setPicture4(picture4);
 		campreleaseVO.setPicture5(picture5);
-//		try {
-//			VO.setPicture1(getPictureByteArray(picture1));
-//		} catch (IOException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-		campreleaseVO.setMemberId(memberId);
+		campreleaseVO.setCampId(campId);
+//		campreleaseVO.setMemberId(memberId);
 		
 		dao.update(campreleaseVO);
 		
@@ -86,13 +73,4 @@ public class CampReleaseService {
 	public List<CampReleaseVO> getAll() {
 		return dao.getAll();
 	}
-
-//	public static byte[] getPictureByteArray(String path) throws IOException {
-//		FileInputStream fis = new FileInputStream(path);
-//		byte[] buffer = new byte[fis.available()];
-//		fis.read(buffer);
-//		fis.close();
-//		return buffer;
-//	}
-
 }

@@ -28,9 +28,10 @@ public class FacilitiesDAO implements FacilitiesDAO_interface{
 		}
 	}
 	
-	private static final String INSERT = "INSERT INTO CAMP_FACILITIES (CAMP_ID, FACILITIES) VALUES (?, ?)";
-	private static final String DELETE = "DELETE FROM CAMP_FACILITIES where FACILITIES_ID = ?";
-	private static final String GET_ALL_BY_CAMPID = "SELECT FACILITIES FROM CAMP_FACILITIES WHERE CAMP_ID = ?";
+	private static final String INSERT = "INSERT INTO FACILITIES (FACILITIES_ID, CAMP_ID, BBQ, WIFI, NOSMOKE, PETS) VALUES (?, ?, ?, ?, ?, ?)";
+	private static final String DELETE = "DELETE FROM FACILITIES where FACILITIES_ID = ?";
+	private static final String UPDATE = "UPDATE FACILITIES SET BBQ = ?, WIFI = ?, NOSMOKE = ?, PETS = ? WHERE FACILITIES_ID = ?";
+	private static final String GET_ALL_BY_CAMPID = "SELECT BBQ, WIFI, NOSMOKE, PETS FROM FACILITIES WHERE CAMP_ID = ?";
 
 	@Override
 	public void insert(FacilitiesVO facilitiesVO) {
@@ -43,7 +44,11 @@ public class FacilitiesDAO implements FacilitiesDAO_interface{
 			pstmt = con.prepareStatement(INSERT);
 			
 			pstmt.setInt(1, facilitiesVO.getCampId());
-			pstmt.setBytes(2, facilitiesVO.getFacilities());
+			pstmt.setInt(2, facilitiesVO.getFacilitiesId());
+			pstmt.setInt(3, facilitiesVO.getBbq());
+			pstmt.setInt(4, facilitiesVO.getWifi());
+			pstmt.setInt(5, facilitiesVO.getNosmoke());
+			pstmt.setInt(6, facilitiesVO.getPets());
 			
 			pstmt.executeUpdate();
 			
@@ -121,14 +126,14 @@ public class FacilitiesDAO implements FacilitiesDAO_interface{
 
 					pstmt.setInt(1, campId);
 					rs = pstmt.executeQuery();
+					
 					while (rs.next()) {
 						facilitiesVO = new FacilitiesVO();
-						facilitiesVO.setFacilities(rs.getBytes("FACILITIES"));
-						byte[] imagesBytes = rs.getBytes("FACILITIES");
-						if (imagesBytes != null) {
-							String base64Img = Base64.getEncoder().encodeToString(imagesBytes);
-							facilitiesVO.setBase64Image(base64Img);
-						}
+						facilitiesVO.setCampId(campId);
+						facilitiesVO.setBbq(rs.getInt("BBQ"));
+						facilitiesVO.setNosmoke(rs.getInt("NOSMOKE"));
+						facilitiesVO.setWifi(rs.getInt("WIFI"));
+						facilitiesVO.setPets(rs.getInt("PETS"));
 						list.add(facilitiesVO);
 					}
 				} catch (SQLException e) {
@@ -159,13 +164,44 @@ public class FacilitiesDAO implements FacilitiesDAO_interface{
 				}
 				return list;
 			}
-			
-			public static byte[] getPictureByteArray(String path) throws IOException {
-				FileInputStream fis = new FileInputStream(path);
-				byte[] buffer = new byte[fis.available()];
-				fis.read(buffer);
-				fis.close();
-				return buffer;
+
+			@Override
+			public void update(FacilitiesVO facilitiesVO) {
+				// TODO Auto-generated method stub
+				Connection con = null;
+				PreparedStatement pstmt = null;
+				
+				try {
+					con = ds.getConnection();
+					pstmt = con.prepareStatement(UPDATE);
+					
+					pstmt.setInt(1, facilitiesVO.getBbq());
+					pstmt.setInt(2, facilitiesVO.getWifi());
+					pstmt.setInt(3, facilitiesVO.getNosmoke());
+					pstmt.setInt(4, facilitiesVO.getPets());
+					pstmt.setInt(5, facilitiesVO.getFacilitiesId());
+
+					pstmt.executeUpdate();
+					
+				} catch (SQLException se) {
+					se.printStackTrace();
+				} finally {
+					if (pstmt != null) {
+						try {
+							pstmt.close();
+						} catch (SQLException se) {
+							se.printStackTrace();
+						}
+					}
+
+					if (con != null) {
+						try {
+							con.close();
+						} catch (SQLException se) {
+							se.printStackTrace();
+						}
+					}
+				}
 			}
 			
 		}

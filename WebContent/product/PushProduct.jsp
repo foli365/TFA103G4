@@ -1,13 +1,8 @@
-<%@ page language="java" contentType="text/html; charset=BIG5" pageEncoding="BIG5"%>
+<%@ page language="java" contentType="text/html; charset=BIG5" pageEncoding="UTF-8"%>
 <%@ page import="com.Product.model.*"%>
 <%@ page import="java.util.*"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
-<%
-	ProductJDBCDAO dao = new ProductJDBCDAO();
-	List<ProductVO> list = dao.getAll();
-	pageContext.setAttribute("list", list);
-%>
 
 
 <!DOCTYPE html>
@@ -27,102 +22,111 @@
     <div class="container_1">
         <nav class="sidebar">
             <div class="min_picture">
-                <h1>��O�޲z</h1>
+                <h1>後臺管理</h1>
             </div>
-            <ul>
-                 <li>
-                    <a href="#" class="feat-btn">�b���޲z
-                        <span class="fas fa-caret-down first"></span>
-                    </a>
-                    <ul class="feat-show">
-                        <li><a href="http://localhost:8081/git/backendLogin/member.jsp" class="member_list">�|���b���޲z</a></li>
-                    </ul>
-                     <ul class="feat-show">
-                        <li><a href="http://localhost:8081/git/backendLogin/manager.jsp" class="manager_list">�޲z���b���޲z</a></li>
-                    </ul>
-                </li>
-                <li>
-                    <a href="#" class="serv-btn">�ӫ~�޲z
+          <ul>
+				<li><a href="#" class="feat-btn">帳號管理 <span
+						class="fas fa-caret-down first"></span>
+				</a>
+					<ul class="feat-show">
+						<li><a href="../backendLogin/member.jsp" class="member_list">會員帳號管理</a></li>
+					</ul>
+					<ul class="feat-show">
+						<li><a href="../backendLogin/manager.jsp" class="manager_list">管理員帳號管理</a></li>
+					</ul></li>
+                   <li>
+                    <a href="#" class="serv-btn">商品管理
                         <span class="fas fa-caret-down second"></span> 
                     </a>
                     <ul class="serv-show">
-                        <li><a href="#" class="product_up">�ӫ~�W�[</a></li>
-                        <li><a href="selectAll.jsp" class="product_list">�ӫ~��ƪ�</a></li>
+                        <li><a href="PushProduct.jsp" class="product_up">商品上架</a></li>
+                        <li><a href="selectAll.jsp" class="product_list">商品資料表</a></li>
                     </ul>
                 </li>
                 <li>
-                    <a href="#1" class="bom-btn">��a�޲z
+                    <a href="#1" class="bom-btn">營地管理
                         <span class="fas fa-caret-down second_1"></span> 
                         </a>
 
                     <ul class="bom-show">
-                        <li><a href="http://localhost:8081/git/backendLogin/camp.jsp" class="camp_list">��a�C��</a></li>
-                        <li><a href="http://localhost:8081/git/backendLogin/alert.jsp" class="alert_managament">���|�޲z</a></li>
+                        <li><a href="#" class="camp_list">營地訂單</a></li>
+                        <li><a href="#" class="alert_managament">檢舉管理</a></li>
                     </ul>
                 </li>
                 <li>
-                    <a href="#" class="mky-btn">�ӫ��޲z
+                    <a href="#" class="mky-btn">商城管理
                         <span class="fas fa-caret-down second_2"></span> 
                     </a>
                     <ul class="mky-show">
-                        <li><a href="#" class="shopping_list">�ӫ��q��</a></li>
+                        <li><a href="#" class="shopping_list">商城訂單</a></li>
                     </ul>
                 </li>
             </ul>
         </nav>
     </div>
     <div class="container">
-        <div class="title">�ӫ~�W�[</div>
-        <form action="" method="#" id="mypro">
+        <div class="title">商品上架</div>
+        
+              
+        <%-- 錯誤表列 --%>
+	<c:if test="${not empty errorMsgs}">
+		<font style="color:red">請修正以下錯誤:</font>
+		<ul>
+			<c:forEach var="message" items="${errorMsgs}">
+				<li style="color:red">${message}</li>
+			</c:forEach>
+		</ul>
+	</c:if>
+	    
+        <form action="" method="" id="mypro">
             <div class="user-details">
                 <div class="input-box">
-                    <span class="details">�ӫ~�W��</span>
-                    <input type="text"  name="pname" >
+                    <span class="details">商品名稱</span>
+                    <input type="text" placeholder="" required>
                 </div>
                 <div class="input-box">
-                    <span class="details">���O</span>
+                    <span class="details">類別</span>
                     <select name="#" class="pouct">
 
-                        <option value="">�b�O</option>
-                        <option value="">�S��O</option>
-                        <option value="">�S��M</option>
-                        <option value="">�S�箰</option>
-                        <option value="">�S���</option>
-                        <option value="">�S���</option>
-                        <option value="">�S���\��</option>
-                        <option value="">�S��J</option>
+                        <option value="">帳篷</option>
+                        <option value="">露營燈</option>
+                        <option value="">露營杯</option>
+                        <option value="">露營扇</option>
+                        <option value="">露營椅</option>
+                        <option value="">露營桌</option>
+                        <option value="">露營餐具</option>
+                        <option value="">露營碗</option>
 
                     </select>
                 </div>
                 <div class="input-box">
-                    <span class="details_1">�ӫ~�Ϥ�</span>
-                    <input type="file" id="picture">
+                    <span class="details_1">商品圖片</span>
+                    <input type="file" id="picture" multiple>
                     <div class="br">
-                        <button class="button" id="choose_file" style="width: 80px; height: 30px;">��Ϥ�
+                        <button class="button" id="choose_file" style="width: 80px; height: 30px;">選圖片
                         </button>
                     </div>
                     <div id="preview">
-                        <!-- <span class="text">�w����</span> -->
+                        <!-- <span class="text">預覽圖</span> -->
                     </div>
                 </div>
                 <div class="input-box" id="setcount">
-                    <span class="details">����]�w</span>
+                    <span class="details">價格設定</span>
                     <input type="number">
                     <div class="input-box">
-                        <span class="details_p" id="count_p">�ƶq</span>
+                        <span class="details_p" id="count_p">數量</span>
                         <input type="number" style="width: auto; margin: 3px;">
                     </div>
                 </div>
                 <div class="puct-box">
-                    <span class="details">�ӫ~����</span>
+                    <span class="details">商品介紹</span>
                     <textarea name="introduce" class="text_t" style="width: 620px; height: 118px;"></textarea>
                 </div>
 
             </div>
             <div class="buttn">
-<!--                 <button class="clear" type="button" id="clear_btn" style="width: 80px; height: 30px;">�M��</button> -->
-                <button class="outin" type="submit" id="output" style="width: 80px; height: 30px;">�e�X</button>
-                <input type="hidden" name="action">
+                <button class="clear" type="button" id="clear_btn" style="width: 80px; height: 30px;">清空</button>
+                <button class="outin" type="submit" id="output" style="width: 80px; height: 30px;">送出</button>
             </div>        
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-U1DAWAznBHeqEIlVSCgzq+c9gqGAJn5c/t99JyeKa9xxaYpSvHU5awsuZVVFIhvj" crossorigin="anonymous"></script>
     <script src="productstyle/product.js"></script>
@@ -149,12 +153,12 @@
                 });
                 reader.readAsDataURL(file);
             };
-
+				
             p_file_p1.addEventListener("change", function (e) {
-                if (this.files.length > 0) {
+                if ( this.files.length > 0) {
                     preview_img(this.files[0]);
                 } else {
-                    preview_p1.innerHTML = '<span class="text">�w����</span>';
+                    preview_p1.innerHTML = '<span class="text">預覽圖</span>';
                 }
 
             });

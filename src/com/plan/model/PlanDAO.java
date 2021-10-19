@@ -15,16 +15,16 @@ public class PlanDAO implements PlanDAO_interface {
 	public static final String USER = "David";
 	public static final String PASSWORD = "123456";
 	public static final String INSERT_STMT = "INSERT INTO PLAN (PLAN_ID, CAMP_ID, PLAN_NAME, PLAN_GUEST_LIMIT, "
-			+ "PLAN_AGE_LIMIT, PLAN_PRICE) VALUES (?, ?, ?, ?, ?, ?)";
+			+ "PLAN_AGE_LIMIT, PLAN_PRICE, PlAN_OUTLINE) VALUES (?, ?, ?, ?, ?, ?, ?)";
 	public static final String UPDATE_STMT = "UPDATE PLAN SET PLAN_NAME = ?, PLAN_GUEST_LIMIT = ?, "
-			+ "PLAN_AGE_LIMIT = ?, PLAN_PRICE = ? WHERE PLAN_ID = ?";
+			+ "PLAN_AGE_LIMIT = ?, PLAN_PRICE = ?, PlAN_OUTLINE = ? WHERE PLAN_ID = ?";
 	public static final String DELETE_STMT = "DELETE FROM PLAN WHERE PLAN_ID = ?";
-	public static final String FIND_BY_PK = "SELECT PLAN_ID, CAMP_ID, PLAN_NAME, PLAN_GUEST_LIMIT, PLAN_AGE_LIMIT, "
-			+ "PLAN_PRICE FROM PLAN WHERE PLAN_ID = ?";
-	public static final String GET_ALL = "SELECT PLAN_ID, CAMP_ID, PLAN_NAME, PLAN_GUEST_LIMIT, PLAN_AGE_LIMIT, "
+	public static final String FIND_BY_CAMP_ID = "SELECT PLAN_ID, CAMP_ID, PLAN_NAME, PlAN_OUTLINE, PLAN_GUEST_LIMIT, PLAN_AGE_LIMIT, "
+			+ "PLAN_PRICE FROM PLAN WHERE CAMP_ID = ?";
+	public static final String GET_ALL = "SELECT PLAN_ID, CAMP_ID, PLAN_NAME, PlAN_OUTLINE, PLAN_GUEST_LIMIT, PLAN_AGE_LIMIT, "
 			+ "PLAN_PRICE FROM PLAN ORDER BY PLAN_ID";
 	
-	static { // 一個環境只需要載入一次驅動
+	static {
 		try {
 			Class.forName(DRIVER);
 		} catch (ClassNotFoundException ce) {
@@ -47,6 +47,7 @@ public class PlanDAO implements PlanDAO_interface {
 			pstmt.setInt(4, planVO.getPlanGuestLimit());
 			pstmt.setInt(5, planVO.getPlanAgeLimit());
 			pstmt.setInt(6, planVO.getPlanPrice());
+			pstmt.setString(7, planVO.getPlanOutline());
 			
 			pstmt.executeUpdate();
 			
@@ -84,7 +85,8 @@ public class PlanDAO implements PlanDAO_interface {
 			pstmt.setInt(2, planVO.getPlanGuestLimit());
 			pstmt.setInt(3, planVO.getPlanAgeLimit());
 			pstmt.setInt(4, planVO.getPlanPrice());
-			pstmt.setInt(5, planVO.getPlanId());
+			pstmt.setString(5, planVO.getPlanOutline());
+			pstmt.setInt(6, planVO.getPlanId());
 
 			pstmt.executeUpdate();
 			
@@ -144,7 +146,8 @@ public class PlanDAO implements PlanDAO_interface {
 	}
 
 	@Override
-	public PlanVO findbyPrimaryKey(Integer planId) {
+	public List<PlanVO> findbyPrimaryKey(Integer campId) {
+		List<PlanVO> planList = new ArrayList<>();
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -152,19 +155,22 @@ public class PlanDAO implements PlanDAO_interface {
 
 		try {
 			con = DriverManager.getConnection(URL, USER, PASSWORD);
-			pstmt = con.prepareStatement(FIND_BY_PK);
+			pstmt = con.prepareStatement(FIND_BY_CAMP_ID);
 
-			pstmt.setInt(1, planId);
+			pstmt.setInt(1, campId);
 			rs = pstmt.executeQuery();
 
 			while (rs.next()) {
 				planVO = new PlanVO();
-				planVO.setPlanId(planId);
-				planVO.setCampId(rs.getInt("CAMP_ID"));
+				planVO.setPlanId(rs.getInt("PLAN_ID"));
+				planVO.setCampId(campId);
 				planVO.setPlanName(rs.getString("PLAN_NAME"));
 				planVO.setPlanGuestLimit(rs.getInt("PLAN_GUEST_LIMIT"));
 				planVO.setPlanAgeLimit(rs.getInt("PLAN_AGE_LIMIT"));
 				planVO.setPlanPrice(rs.getInt("PLAN_PRICE"));
+				planVO.setPlanOutline(rs.getString("PLAN_OUTLINE"));
+				
+				planList.add(planVO);
 			}
 		} catch (SQLException se) {
 			se.printStackTrace();
@@ -193,7 +199,7 @@ public class PlanDAO implements PlanDAO_interface {
 				}
 			}
 		}
-		return planVO;
+		return planList;
 	}
 
 	@Override
@@ -218,6 +224,7 @@ public class PlanDAO implements PlanDAO_interface {
 				planVO.setPlanGuestLimit(rs.getInt("PLAN_GUEST_LIMIT"));
 				planVO.setPlanAgeLimit(rs.getInt("PLAN_AGE_LIMIT"));
 				planVO.setPlanPrice(rs.getInt("PLAN_PRICE"));
+				planVO.setPlanOutline(rs.getString("PLAN_OUTLINE"));
 				
 				planList.add(planVO);
 			}

@@ -1,9 +1,12 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="Big5"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="com.camprelease.model.*"%>
+<%@ page import="com.facilities.model.*"%>
 
 <%
 CampReleaseVO campreleaseVO = (CampReleaseVO) request.getAttribute("campreleaseVO");
+FacilitiesVO facilitiesVO = (FacilitiesVO) request.getAttribute("facilitiesVO");
+
 %>
 
 <!DOCTYPE html>
@@ -11,13 +14,11 @@ CampReleaseVO campreleaseVO = (CampReleaseVO) request.getAttribute("campreleaseV
 <head>
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
 <title>Go camping營地刊登</title>
-<%--   <link rel="stylesheet" href="<%=request.getContextPath()%>/camprelease/css/index.css" /> --%>
   <link rel='stylesheet' href='<%=request.getContextPath()%>/camprelease/css/bootstrap.min4.1.3.css' />
   <link rel="stylesheet" href="<%=request.getContextPath()%>/camprelease/css/stepstyle.css">
   <link rel="stylesheet" href="<%=request.getContextPath()%>/camprelease/css/icon.css">
-</head>
+<!-- 以下CSS為網頁樣式 -->
 <style>
-
 body{
   background-color: #FFEEE1;
   background-position: center;
@@ -123,8 +124,9 @@ imput{
         color: white;
       }
 </style>
-<body>
+</head>
 
+<body>
 <%-- 錯誤表列 --%>
 <c:if test="${not empty errorMsgs}">
 	<font style="color:red">請修正以下錯誤:</font>
@@ -141,7 +143,8 @@ imput{
 		 <h4><a href="<%=request.getContextPath()%>/camprelease/Select_Page.jsp"><img src="images/gocamping.jpg" width="500" height="125" border="0"><br>back home</a></h4>
 </table>
 </header>
-<%-- <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/camprelease/camprelease.do" name="form1"> --%>
+
+<!-- 過程按鈕 -->
     <div class="container overflow-hidden">
       <div name="action" action="#"  method="#" class="multisteps-form" id="the_form">
         <div class="row">
@@ -151,64 +154,87 @@ imput{
               <button class="multisteps-form__progress-btn" type="button" title="Address">地點</button>
               <button class="multisteps-form__progress-btn" type="button" title="Picture">營地圖片</button>
               <button class="multisteps-form__progress-btn" type="button" title="Order tirp">配套行程</button>
-              <button class="multisteps-form__progress-btn" type="button" title="Setting">設備與服務</button>
-            
+              <button class="multisteps-form__progress-btn" type="button" title="Setting">設備與服務</button>            
             </div>
           </div>
         </div>
-<%--         <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/camprelease/camprelease.do" name="form1"> --%>
+
+<!-- 新增資訊 -->
+<jsp:useBean id="campreleaseSvc" scope="page" class="com.camprelease.model.CampReleaseService" />
+<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/camprelease/camprelease.do" name="form1" enctype="multipart/form-data">
         <div class="row">
           <div class="col-12 col-lg-8 m-auto">
-            <form class="multisteps-form__form">
+            <div class="multisteps-form__form">
               <div class="multisteps-form__panel shadow p-4 rounded bg-white js-active" data-animation="scaleIn">
                 <h3 class="multisteps-form__title">營地資訊</h3>
-                <div class="multisteps-form__content"> 
+                <div class="multisteps-form__content">
                   <div class="form-row mt-4">
                     <div class="col-12 col-sm-6">
-                      <label for="inputName" class="col-form-label">營地名稱</label>
-                      <input class="multisteps-form__input form-control" type="TEXT" name="campName" size="45" id="c_name" value="<%= (campreleaseVO==null)? "天天營地場" : campreleaseVO.getCampName()%>"/>
+                      <label class="col-form-label">選擇會員編號<font color=red><b>*</b></font>
+                        <select size="1" name="memberId">
+		                <c:forEach var="campreleaseVO" items="${campreleaseSvc.all}">
+		                <option value="${campreleaseVO.memberId}">${campreleaseVO.memberId}</c:forEach>
+		                </select>
+		              </label>
+                    </div>
+                  </div>
+                  <div class="form-row mt-4">
+                    <div class="col-12 col-sm-6">
+                      <label for="inputName" class="col-form-label">營地名稱
+                      <input type="text" name="campName" size="45" class="multisteps-form__input form-control" value="<%=(campreleaseVO == null) ? "歡樂露營地" : campreleaseVO.getCampName()%>"></label>
                     </div>
                   </div>
                   <div class="form-row mt-4">
                       <label for="inputintr" class="col-form-label">營地介紹</label>
-                        <textarea class="multisteps-form__textarea form-control" type="TEXT" id="c_intr" value="<%= (campreleaseVO==null)? "這是營地區,可以露營這樣" : campreleaseVO.getCampDescription()%>" ></textarea>
-
+                        <textarea class="multisteps-form__textarea form-control" id="intr" name="campDescription" 
+                        ></textarea>
                   </div>
                   <div class="form-row mt-4">
                     <div class="col-12 col-sm-6">
-                      <label for="inputprice" class="col-form-label">價格</label>
-                        <input class="multisteps-form__input form-control" type="TEXT" id="c_price" value="<%= (campreleaseVO==null)? "1000" : campreleaseVO.getCampPrice()%>" />
+                      <label for="inputprice" class="col-form-label">價格
+                        <input type="text" class="multisteps-form__input form-control" name="campPrice" id="c_price" 
+                        value="<%=(campreleaseVO == null) ? "500" : campreleaseVO.getCampPrice()%>"></label>
                     </div>
                   </div>
                   <div class="form-row mt-4">
                     <div class="col-12 col-sm-6">
-                  <label for="inputchoose" class="col-form-label">分類</label>
-                    <select class="multisteps-form__select form-control" id="c_choose">
-                      <option selected="selected">分類...</option>
-                      <option>山上</option>
-                      <option>湖邊</option>
-                      <option>森林</option>
-                    </select>
+                      <label for="inputprice" class="col-form-label">日期
+                        <input type="text" class="multisteps-form__input form-control" name="ListedTime" size="45" id="f_date1"
+                        value="<%=(campreleaseVO == null) ? "2021-12-05 12:45:03" : campreleaseVO.getListedTime()%>"></label>
                     </div>
                   </div>
-
+<!--                   分類之後看要不要加 -->
+<!--                   <div class="form-row mt-4"> -->
+<!--                     <div class="col-12 col-sm-6"> -->
+<!--                       <label for="inputchoose" class="col-form-label">分類 -->
+<!--                       <select class="multisteps-form__select form-control" name="campChoose" id="c_choose"> -->
+<!--                           <option disabled required>分類..</option> -->
+<!--                           <option value="0" -->
+<%--                           ${(campreleaseVO.campChoose==0)? "selected":""}>山上</option> --%>
+<!--                           <option selected value="1" -->
+<%--                           ${(campreleaseVO.campChoose==1)? "selected":""}>湖邊</option> --%>
+<!--                           <option value="2" -->
+<%--                           ${(campreleaseVO.campChoose==2)? "selected":""}>森林</option> --%>
+<!--                       </select> -->
+<!--                       </label> -->
+<!--                     </div> -->
+<!--                   </div> -->
                   <div class="button-row d-flex mt-4">
                     <button class="btn btn-primary ml-auto js-btn-next" type="button" title="Next">Next</button>
                   </div>
                 </div>
               </div>
-
+<!-- 地點去抓經緯度 -->
               <div class="multisteps-form__panel shadow p-4 rounded bg-white" data-animation="scaleIn">
                 <h3 class="multisteps-form__title">地點</h3>
                 <div class="multisteps-form__content">
-<!--                     地圖抓經緯施工中 -->
                   <div class="form-row mt-4">
                     <div class="col">
-                      <div id="floating-panel">
-                        <input id="address" type="textbox" value="Sydney, NSW" />
-                        <input id="submit" type="button" value="Geocode" />
-                      </div>
-                      <div id="map"></div>
+                      <div id="webbulutumap" style="height: 280px;"></div>
+                        <input type="text" name="location" value="" size="40" class="wpcf7-form-control wpcf7-text wpcf7-validates-as-required" id="address" aria-required="true" aria-invalid="false" placeholder="Street Address"/>
+                        <input type="text" name="latitude" value="" placeholder="latitude" id="latitude"/>
+                        <input type="text" name="longtitude" value="" placeholder="longtitude" id="longtitude"/>
+                        <a href="#" id="find-address" title="Find Address" class="button">Find Address</a>
                     </div>
                   </div>
                   <div class="button-row d-flex mt-4">
@@ -217,59 +243,54 @@ imput{
                   </div>
                 </div>
               </div>
-
+<!-- 營地圖片新增 -->
               <div class="multisteps-form__panel shadow p-4 rounded bg-white" data-animation="scaleIn">
                 <h3 class="multisteps-form__title">請上傳營地圖片</h3>
                 <div class="multisteps-form__content">
                   <div class="form-row mt-4">
-                    <div class="col" id="preview">
-                      <canvas id="can1"></canvas>
-                        <p>filename:
-                           <input type="file" multiple="false" accept="image/*" id="finput" onchange=upload()>
-                        </p>
-                    </div>
-<table>
-	<tr>
-		<td>Pic1:</td>
-		<td><input type="file" size="50" name="picture1"
-		     value="<%= (campreleaseVO==null)? "" : campreleaseVO.getPicture1()%>" /></td>
-	</tr>
-	<tr>
-		<td>Pic2:</td>
-		<td><input type="file" size="50" name="picture2"
-		     value="<%= (campreleaseVO==null)? "" : campreleaseVO.getPicture2()%>" /></td>
-	</tr>
-	<tr>
-		<td>Pic3:</td>
-		<td><input type="file" size="50" name="picture3"
-		     value="<%= (campreleaseVO==null)? "" : campreleaseVO.getPicture3()%>" /></td>
-	</tr>
-	<tr>
-		<td>Pic4:</td>
-		<td><input type="file" size="50" name="picture4"
-		     value="<%= (campreleaseVO==null)? "" : campreleaseVO.getPicture4()%>" /></td>
-	</tr>
-	<tr>
-		<td>Pic5:</td>
-		<td><input type="file" size="50" name="picture5"
-		     value="<%= (campreleaseVO==null)? "" : campreleaseVO.getPicture5()%>" /></td>
-	</tr>
-	</table>
-                  </div>
+<!--                     <div class="col" id="preview"> -->
+<%--                       <canvas id="can1"></canvas> --%>
+<!--                         <p>filename: -->
+<!--                            <input type="file" multiple="false" accept="image/*" id="finput" onchange=upload()> -->
+<!--                         </p> -->
+<!--                     </div> -->
+
+										<h5>
+											<label>Pic1: <input type="file" accept="image/*"
+												name="picture1"></label>
+										</h5>
+										<h5>
+											<label>Pic2: <input type="file" accept="image/*"
+												name="picture2"></label>
+										</h5>
+										<h5>
+											<label>Pic3: <input type="file" accept="image/*"
+												name="picture3"></label>
+										</h5>
+										<h5>
+											<label>Pic4: <input type="file" accept="image/*"
+												name="picture4"></label>
+										</h5>
+										<h5>
+											<label>Pic5: <input type="file" accept="image/*"
+												name="picture5"></label>
+										</h5>
+									</div>
                   <div class="button-row d-flex mt-4">
                     <button class="btn btn-primary js-btn-prev" type="button" title="Prev">Prev</button>
                     <button class="btn btn-primary ml-auto js-btn-next" type="button" title="Next">Next</button>
                   </div>
                 </div>
               </div>
-
+<!-- 配套行程新增 -->
               <div class="multisteps-form__panel shadow p-4 rounded bg-white" data-animation="scaleIn">
                 <h3 class="multisteps-form__title">配套行程</h3>
                 <div class="multisteps-form__content">
                   <div class="form-row mt-4">
                     <div class="col-12 col-sm-6">
-                      <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo">+開始新增行程</button>
-                    </div>
+                      <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#plans" data-whatever="@mdo">+開始新增行程</button>
+                  </div>
+                  
                   </div>
                   <div class="row">
                     <div class="button-row d-flex mt-4 col-12">
@@ -279,36 +300,35 @@ imput{
                   </div>
                 </div>
               </div>
-
+<!-- 設施服務ICON -->
               <div class="multisteps-form__panel shadow p-4 rounded bg-white" data-animation="scaleIn">
                 <h3 class="multisteps-form__title">設備與服務</h3>
                 <div class="multisteps-form__content">
                   <div class="ws-nowrap camp5">
-                    <label class="setting-label circle-line" for="setting1"><input type="checkbox" name="setting[]" id="setting1" value=""><span class="material-icons md-18">outdoor_grill 烤肉區</span></label><br>
-                    <label class="setting-label circle-line" for="setting2"><input type="checkbox" name="setting[]" id="setting2" value=""><span class="material-icons md-18">pool 泳池</span></label><br>
-                    <label class="setting-label circle-line" for="setting3"><input type="checkbox" name="setting[]" id="setting3" value=""><span class="material-icons md-18">wifi  網路</span></label><br>
-                    <label class="setting-label circle-line" for="setting4"><input type="checkbox" name="setting[]" id="setting4" value=""><span class="material-icons md-18">smoke_free 禁菸</span></label><br>
-                    <label class="setting-label circle-line" for="setting5"><input type="checkbox" name="setting[]" id="setting5" value=""><span class="material-icons md-18">pets 寵物</span></label><br>
-                    <label class="setting-label circle-line" for="setting6"><input type="checkbox" name="setting[]" id="setting6" value=""><span class="material-icons md-18">shower 淋浴</span></label><br>
+                    <label class="setting-label circle-line" for="bbq"><input type="checkbox" name="bbq" id="bbq" value="1" ${facilitiesSvc.getBbq(facilitiesVO.getFacilitiesId()).bbq == '1' ? 'checked' : ''}><span class="material-icons md-18">outdoor_grill</span></label>
+                    <label class="setting-label circle-line" for="wifi"><input type="checkbox" name="wifi" id="wifi" value="1" ${facilitiesSvc.getWifi(facilitiesVO.getFacilitiesId()).wifi == '1' ? 'checked' : ''}><span class="material-icons md-18">wifi</span></label>
+                    <label class="setting-label circle-line" for="nosmoke"><input type="checkbox" name="nosmoke" id="nosmoke" value="1" ${facilitiesSvc.getNosmoke(facilitiesVO.getFacilitiesId()).nosmoke == '1' ? 'checked' : ''}><span class="material-icons md-18">smoke_free</span></label>
+                    <label class="setting-label circle-line" for="pets"><input type="checkbox" name="pets" id="pets" value="1" ${facilitiesSvc.getPets(facilitiesVO.getFacilitiesId()).pets == '1' ? 'checked' : ''}><span class="material-icons md-18">pets</span></label>
                   </div>
                   <div class="button-row d-flex mt-4">
-                    <button class="btn btn-primary js-btn-prev" type="button" title="Prev">Prev</button>
-                    <button class="btn ml-auto" type="reset" title="Reset">Reset</button>
-                    <button class="btn btn-success ml-auto" type="submit" title="Send" id="btn_submit">Send</button>
-                    <input type="hidden" name="action" value="insert">
-                    <input type="submit" value="送出新增">
+                    
+                       <button class="btn btn-primary js-btn-prev" type="button" title="Prev">Prev</button>
+                       <button class="btn ml-auto" type="reset" title="Reset">Reset</button>
+
+                    <div>
+                       <input type="hidden" name="action" value="insert">
+                       <button class="btn btn-success ml-auto" type="submit">Send</button>
+                    </div>
                   </div>
                 </div>
               </div>
- 
-            </form>
+            </div>
           </div>
+        </FORM>
         </div>
-<!--         </FORM> -->
       </div>
-    </div>
-    
-        <!-- 配套彈出視窗 -->
+      
+     <!-- 配套彈出視窗 -->
     <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
       <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -333,6 +353,10 @@ imput{
                 <input type="text" class="form-control" id="recipient-price">
               </div>
               <div class="form-group">
+                <label for="recipient-price" class="col-form-label">年齡限制</label>
+                <input type="text" class="form-control" id="recipient-age">
+              </div>
+              <div class="form-group">
                 <label for="message-text" class="col-form-label">Message:</label>
                 <textarea class="form-control" id="message-text"></textarea>
               </div>
@@ -345,101 +369,202 @@ imput{
         </div>
       </div>
     </div>
-<!--     </FORM> -->
-
+    
+<!-- 老師範例 -->
 <%-- 錯誤表列 --%>
-<c:if test="${not empty errorMsgs}">
-	<font style="color:red">請修正以下錯誤:</font>
-	<ul>
-		<c:forEach var="message" items="${errorMsgs}">
-			<li style="color:red">${message}</li>
-		</c:forEach>
-	</ul>
-</c:if>
-
-<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/camprelease/camprelease.do" name="form1">
-<table>
-	<tr>
-		<td>營地名稱:</td>
-		<td><input type="TEXT" name="campName" size="45" 
-			 value="<%= (campreleaseVO==null)? "天天營地場" : campreleaseVO.getCampName()%>" /></td>
-	</tr>
-	<tr>
-		<td>地點:</td>
-		<td><input type="TEXT" name="location" size="45"
-			 value="<%= (campreleaseVO==null)? "台北市大安區23號" : campreleaseVO.getLocation()%>" /></td>
-	</tr>
-	<tr>
-		<td>經度:</td>
-		<td><input type="TEXT" name="latitude" size="45"
-			 value="<%= (campreleaseVO==null)? "23.567" : campreleaseVO.getLatitude()%>" /></td>
-	</tr>
-	<tr>
-		<td>緯度:</td>
-		<td><input type="TEXT" name="longtitude" size="45"
-			 value="<%= (campreleaseVO==null)? "50.2321" : campreleaseVO.getLongtitude()%>" /></td>
-	</tr>
-	<tr>
-		<td>營地介紹:</td>
-		<td><input type="TEXT" name="campDescription" size="45"
-		     value="<%= (campreleaseVO==null)? "這是營地區,可以露營這樣" : campreleaseVO.getCampDescription()%>" /></td>
-	</tr>
-	<tr>
-		<td>價錢:</td>
-		<td><input type="TEXT" name="campPrice" size="45"
-		     value="<%= (campreleaseVO==null)? "1000" : campreleaseVO.getCampPrice()%>" /></td>
-	</tr>
-	<tr>
-		<td>日期:</td>
-		<td><input type="TEXT" name="listedTime" size="45" id="f_date1"></td>
-	</tr>
-	<tr>
-		<td>Pic1:</td>
-		<td><input type="file" size="50" name="picture1"
-		     value="<%= (campreleaseVO==null)? "" : campreleaseVO.getPicture1()%>" /></td>
-	</tr>
-	<tr>
-		<td>Pic2:</td>
-		<td><input type="file" size="50" name="picture2"
-		     value="<%= (campreleaseVO==null)? "" : campreleaseVO.getPicture2()%>" /></td>
-	</tr>
-	<tr>
-		<td>Pic3:</td>
-		<td><input type="file" size="50" name="picture3"
-		     value="<%= (campreleaseVO==null)? "" : campreleaseVO.getPicture3()%>" /></td>
-	</tr>
-	<tr>
-		<td>Pic4:</td>
-		<td><input type="file" size="50" name="picture4"
-		     value="<%= (campreleaseVO==null)? "" : campreleaseVO.getPicture4()%>" /></td>
-	</tr>
-	<tr>
-		<td>Pic5:</td>
-		<td><input type="file" size="50" name="picture5"
-		     value="<%= (campreleaseVO==null)? "" : campreleaseVO.getPicture5()%>" /></td>
-	</tr>
-	<tr>
-		<td>會員編號:<font color=red><b>*</b></font></td>
-		<td><select size="1" name="memberId">
+<%-- <c:if test="${not empty errorMsgs}"> --%>
+<!-- 	<font style="color:red">請修正以下錯誤:</font> -->
+<!-- 	<ul> -->
+<%-- 		<c:forEach var="message" items="${errorMsgs}"> --%>
+<%-- 			<li style="color:red">${message}</li> --%>
+<%-- 		</c:forEach> --%>
+<!-- 	</ul> -->
+<%-- </c:if> --%>
+<%-- <jsp:useBean id="campreleaseSvc" scope="page" class="com.camprelease.model.CampReleaseService" /> --%>
+<%-- <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/camprelease/camprelease.do" name="form1" enctype="multipart/form-data"> --%>
+<!-- <table> -->
+<!-- <tr> -->
+<!-- 		<td>選擇會員編號:<font color=red><b>*</b></font></td> -->
+<!-- 		<td><select size="1" name="memberId"> -->
+<%-- 		<c:forEach var="campreleaseVO" items="${campreleaseSvc.all}"> --%>
+<%-- 		<option value="${campreleaseVO.memberId}">${campreleaseVO.memberId}</c:forEach> --%>
+<!-- 		</select> -->
+<!-- 		</td> -->
+<!-- 	</tr> -->
+<!-- 	<tr> -->
+<!-- 		<td>營地名稱:</td> -->
+<!-- 		<td><input type="TEXT" name="campName" size="45"  -->
+<%-- 			 value="<%= (campreleaseVO==null)? "天天營地場" : campreleaseVO.getCampName()%>" /></td> --%>
+<!-- 	</tr> -->
+<!-- 	<tr> -->
+<!-- 		<td>地點:</td> -->
+<!-- 		<td><input type="TEXT" name="location" size="45" -->
+<%-- 			 value="<%= (campreleaseVO==null)? "台北市大安區23號" : campreleaseVO.getLocation()%>" /></td> --%>
+<!-- 	</tr> -->
+<!-- 	<tr> -->
+<!-- 		<td>經度:</td> -->
+<!-- 		<td><input type="TEXT" name="latitude" size="45" -->
+<%-- 			 value="<%= (campreleaseVO==null)? "23.567" : campreleaseVO.getLatitude()%>" /></td> --%>
+<!-- 	</tr> -->
+<!-- 	<tr> -->
+<!-- 		<td>緯度:</td> -->
+<!-- 		<td><input type="TEXT" name="longtitude" size="45" -->
+<%-- 			 value="<%= (campreleaseVO==null)? "50.2321" : campreleaseVO.getLongtitude()%>" /></td> --%>
+<!-- 	</tr> -->
+<!-- 	<tr> -->
+<!-- 		<td>營地介紹:</td> -->
+<!-- 		<td><input type="TEXT" name="campDescription" size="45" -->
+<%-- 		     value="<%= (campreleaseVO==null)? "這是營地區,可以露營這樣" : campreleaseVO.getCampDescription()%>" /></td> --%>
+<!-- 	</tr> -->
+<!-- 	<tr> -->
+<!-- 		<td>價錢:</td> -->
+<!-- 		<td><input type="TEXT" name="campPrice" size="45" -->
+<%-- 		     value="<%= (campreleaseVO==null)? "1000" : campreleaseVO.getCampPrice()%>" /></td> --%>
+<!-- 	</tr> -->
+<!-- 	<tr> -->
+<!-- 		<td>日期:</td> -->
+<!-- 		<td><input type="TEXT" name="listedTime" size="45" id="f_date1"></td> -->
+<!-- 	</tr> -->
+<!-- 	<tr> -->
+<!-- 		<td>Pic1:</td> -->
+<!-- 		<td><input type="file" size="50" name="picture1"/></td> -->
+<!-- 	</tr> -->
+<!-- 	<tr> -->
+<!-- 		<td>Pic2:</td> -->
+<!-- 		<td><input type="file" size="50" name="picture2"/></td> -->
+<!-- 	</tr> -->
+<!-- 	<tr> -->
+<!-- 		<td>Pic3:</td> -->
+<!-- 		<td><input type="file" size="50" name="picture3"/></td> -->
+<!-- 	</tr> -->
+<!-- 	<tr> -->
+<!-- 		<td>Pic4:</td> -->
+<!-- 		<td><input type="file" size="50" name="picture4"/></td> -->
+<!-- 	</tr> -->
+<!-- 	<tr> -->
+<!-- 		<td>Pic5:</td> -->
+<!-- 		<td><input type="file" size="50" name="picture5"/></td> -->
+<!-- 	</tr> -->
+<!-- 	<tr> -->
+<!-- 		<td>會員編號:<font color=red><b>*</b></font></td> -->
+<!-- 		<td><select size="1" name="memberId"> -->
 <%-- 		<c:forEach var="campreleaseVO" items="${deptSvc.all}"> --%>
-				<option value="${campreleaseVO.memberId}" >
+<%-- 				<option value="${campreleaseVO.memberId}" > --%>
 <%-- 			</c:forEach> --%>
-		</select></td>
-	</tr>
+<!-- 		</select></td> -->
+<!-- 	</tr> -->
 
-</table>
-<br>
-<input type="hidden" name="action" value="insert">
-<input type="submit" value="送出新增">
-</FORM>
-<script src="<%=request.getContextPath()%>/camprelease/js/popper.min.js"></script>
-<script src="<%=request.getContextPath()%>/camprelease/js/bootstrap.min.4.1.3.js"></script>
+<!-- </table> -->
+<!-- <br> -->
+<!-- <input type="hidden" name="action" value="insert"> -->
+<!-- <input type="submit" value="送出新增"> -->
+<!-- </FORM> -->
+<script src="<%=request.getContextPath()%>/camprelease/js/jquery_3.3.1.slim.min.js"></script>
+<%-- <script src="<%=request.getContextPath()%>/camprelease/js/popper.min.js"></script> --%>
+<script src="<%=request.getContextPath()%>/camprelease/js/bootstrap.min4.1.3.js"></script>
+
 <script src="<%=request.getContextPath()%>/camprelease/vendors/jquery/jquery-3.6.0.min.js"></script>
 <script src="<%=request.getContextPath()%>/camprelease/js/camp.js"></script>
 <script src="<%=request.getContextPath()%>/camprelease/js/stepfunction.js"></script>
 <script src="<%=request.getContextPath()%>/camprelease/js/planAlert.js"></script>
 <script src="<%=request.getContextPath()%>/camprelease/js/photoUpload.js"></script>
-</body>
+
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA1SwBl3CYCg1oon98Lyge8VLpxdcx-RZU"></script>
+<!-- <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script> -->
+<script type="text/javascript">
+    var map;
+    var marker;
+    var myLatlng = new google.maps.LatLng('25.055998', '121.539728');
+    var geocoder = new google.maps.Geocoder();
+    var infowindow = new google.maps.InfoWindow();
+    function initialize() {
+        var mapOptions = {
+        zoom: 10,
+        center: myLatlng,
+        mapTypeId: google.maps.MapTypeId.ROADMAP
+        };
+        map = new google.maps.Map(document.getElementById("webbulutumap"), mapOptions);
+        marker = new google.maps.Marker({
+            map: map,
+            position: myLatlng,
+            draggable: true
+        });
+        google.maps.event.addListener(marker, 'dragend', function() {
+            geocoder.geocode({'latLng': marker.getPosition()}, function(results, status) {
+                if (status == google.maps.GeocoderStatus.OK) {
+                    if (results[0]) {
+                        var address_components = results[0].address_components;
+                        var components={};
+                        jQuery.each(address_components, function(k,v1) {jQuery.each(v1.types, function(k2, v2){components[v2]=v1.long_name});});
+                        $('#latitude').val(marker.getPosition().lat());
+                        $('#longitude').val(marker.getPosition().lng());
+                        infowindow.setContent(results[0].formatted_address);
+                        infowindow.open(map, marker);
+                    }
+                }
+            });
+        });
+    }
+    google.maps.event.addDomListener(window, 'load', initialize);
+</script>
+<script>
+  $("#find-address").click(function(){
+    var apiKey = 'AIzaSyA1SwBl3CYCg1oon98Lyge8VLpxdcx-RZU';
+    var  address =  $('#address').val();
+    var addressClean = address.replace(/\s+/g, '+');
+    var geocoder = new google.maps.Geocoder();
+    geocoder.geocode({
+      address: addressClean 
+    }, function(results, status) {
+      console.log(status);
+      if (status == 'OK') {
+        longitude = results[0].geometry.location.lng();
+        latitude = results[0].geometry.location.lat();
+        document.getElementById("longtitude").value = longitude;
+        document.getElementById("latitude").value = latitude;
+        // geocoder is asynchronous, do this in the callback function
+        longitude = $("input#longtitude").val();
+        latitude = $("input#latitude").val();
+        if (longitude && latitude) {
+          longitude = parseFloat(longitude);
+          latitude = parseFloat(latitude);
+          initMap(longitude, latitude);
+        }
+      } else alert("geocode failed")
+    });
+    function initMap(longitude, latitude) {
+    var myLatlng = new google.maps.LatLng(latitude, longitude);
+    var mapOptions = {
+      zoom: 12,
+      center: myLatlng,
+      mapTypeId: google.maps.MapTypeId.ROADMAP
+    }
+    var map = new google.maps.Map(document.getElementById("webbulutumap"), mapOptions);
+    var marker = new google.maps.Marker({
+      position: myLatlng,
+      map: map,
+      draggable: true,
+      title: "Where's your garden?"
+    });
+    google.maps.event.addListener(marker, 'dragend', function() {
+            geocoder.geocode({'latLng': marker.getPosition()}, function(results, status) {
+                if (status == google.maps.GeocoderStatus.OK) {
+                    if (results[0]) {
+                        var address_components = results[0].address_components;
+                        var components={};
+                        jQuery.each(address_components, function(k,v1) {jQuery.each(v1.types, function(k2, v2){components[v2]=v1.long_name});});
+
+                        $('#latitude').val(marker.getPosition().lat());
+                        $('#longtitude').val(marker.getPosition().lng());
+                        infowindow.setContent(results[0].formatted_address);
+                        infowindow.open(map, marker);
+                    }
+                }
+            });
+        });
+  };
+}) 
+</script>
 <!-------------------datetimepicker------------------------->
 <%
   java.sql.Timestamp listedTime = null;
@@ -477,11 +602,5 @@ $('#f_date1').datetimepicker({
 });
 
 </script>
-<script src="<%=request.getContextPath()%>/camprelease/js/popper.min.js"></script>
-<script src="<%=request.getContextPath()%>/camprelease/js/bootstrap.min4.1.3.js"></script>
-<script src="<%=request.getContextPath()%>/camprelease/vendors/jquery/jquery-3.6.0.min.js"></script>
-<script src="<%=request.getContextPath()%>/camprelease/js/camp.js"></script>
-<script src="<%=request.getContextPath()%>/camprelease/js/stepfunction.js"></script>
-<script src="<%=request.getContextPath()%>/camprelease/js/planAlert.js"></script>
-<script src="<%=request.getContextPath()%>/camprelease/js/photoUpload.js"></script>
+</body>
 </html>

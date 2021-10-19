@@ -28,9 +28,6 @@ $("h1").on("click", function() {
 $(".min_picture").on("click", function() {
     $(window).attr('location', 'home.html');
 });
-$("button.button_editok").on("click", function() {
-//	alert("abc");
-});
 $("button.btny").on("click", function() {
     $("div.pop").show();
 });
@@ -38,9 +35,10 @@ $("button.btny").on("click", function(){
     $("div.bg").toggleClass("-on");
 });
 
-$("button.button_cancle").on("click", function() {
+$("button.button_editok").on("click", function() {
     $("div.pop").hide();
 });
-$("button.button_cancle").on("click", function() {
-    $("div.bg").removeClass("-on");
+$("button.button_editok").on("click", function() {
+//    alert("123");
+	$("div.bg").removeClass("-on");
 });

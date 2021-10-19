@@ -1,4 +1,4 @@
-<%@ page contentType="text/html; charset=UTF-8" pageEncoding="Big5"%>
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="java.util.*"%>
 <%@ page import="com.Product.model.*"%>
@@ -9,7 +9,7 @@ ProductVO productVO = (ProductVO) request.getAttribute("productVO");
 
 <html>
 <head>
-<title>°Ó«~·s¼W - addproduct.jsp</title>
+<title>å•†å“æ–°å¢ - addproduct.jsp</title>
 
 <style>
   table#table-1 {
@@ -49,16 +49,16 @@ ProductVO productVO = (ProductVO) request.getAttribute("productVO");
 
 <table id="table-1">
 	<tr><td>
-		 <h3>°Ó«~·s¼W</h3></td><td>
-		 <h4><a href="selectAll.jsp">¦^­º­¶</a></h4>
+		 <h3>å•†å“æ–°å¢</h3></td><td>
+		 <h4><a href="selectAll.jsp">å›é¦–é </a></h4>
 	</td></tr>
 </table>
 
-<h3>¸ê®Æ·s¼W:</h3>
+<h3>è³‡æ–™æ–°å¢:</h3>
 
-<%-- ¿ù»~ªí¦C --%>
+<%-- éŒ¯èª¤è¡¨åˆ— --%>
 <c:if test="${not empty errorMsgs}">
-	<font style="color:red">½Ğ­×¥¿¥H¤U¿ù»~:</font>
+	<font style="color:red">è«‹ä¿®æ­£ä»¥ä¸‹éŒ¯èª¤:</font>
 	<ul>
 		<c:forEach var="message" items="${errorMsgs}">
 			<li style="color:red">${message}</li>
@@ -69,52 +69,52 @@ ProductVO productVO = (ProductVO) request.getAttribute("productVO");
 <FORM METHOD="post" ACTION="<%=request.getContextPath() %>/product/product.do" enctype="multipart/form-data">
 <table>
 	<tr>
-		<td>°Ó«~¦WºÙ:</td>
+		<td>å•†å“åç¨±:</td>
 		<td><input type="TEXT" name="pname" size="40" 
 			 value="<%= (productVO==null)? "" : productVO.getPname()%>" /></td>
 	</tr>
 	<tr>
-		<td>Ãş§O:</td>
+		<td>é¡åˆ¥:</td>
 		<td><input type="TEXT" name="psort" size="40"
 			 value="<%= (productVO==null)? "" : productVO.getPsort()%>" /></td>
 	</tr>
 	<tr>
-		<td>»ù®æ:</td>
+		<td>åƒ¹æ ¼:</td>
 		<td><input type="TEXT" name="price" size="40" 
 			 value= "<%= (productVO==null)? "" : productVO.getPrice()%>" /></td>
 	</tr>
 	<tr>
-		<td>¼Æ¶q:</td>
+		<td>æ•¸é‡:</td>
 		<td><input type="TEXT" name="inventory" size="40"
 			 value="<%= (productVO==null)? "" : productVO.getInventory()%>" /></td>
 	</tr>
 	
 	<tr>
-		<td>ª¬ºA:</td>
+		<td>ç‹€æ…‹:</td>
 		<td><input type="TEXT" name="situation" size="40"
 			 value="<%= (productVO==null)? "" : productVO.getSituation()%>" /></td>
 	</tr>
 	
 	<tr>
-		<td>°Ó«~¤¶²Ğ:</td>
+		<td>å•†å“ä»‹ç´¹:</td>
 		<td><input type="TEXTAREA" name="descript" size="40"
 			 value="<%= (productVO==null)? "" : productVO.getDescript()%>" /></td>
 	</tr>
 	
 	<tr>
-		<td>°Ó«~¹Ï¤ù1:</td>
+		<td>å•†å“åœ–ç‰‡1:</td>
 		<td><input type="file" name="img1"
 			 value="<%= (productVO==null)? "" : productVO.getPicture1()%>" /></td>
 	</tr>
 	
 	<tr>
-		<td>°Ó«~¹Ï¤ù2:</td>
+		<td>å•†å“åœ–ç‰‡2:</td>
 		<td><input type="file" name="img2"
 			 value="<%= (productVO==null)? "" : productVO.getPicture2()%>" /></td>
 	</tr>
 	
 	<tr>
-		<td>°Ó«~¹Ï¤ù3:</td>
+		<td>å•†å“åœ–ç‰‡3:</td>
 		<td><input type="file" name="img3"
 			 value="<%= (productVO==null)? "" : productVO.getPicture3()%>" /></td>
 	</tr>
@@ -123,12 +123,12 @@ ProductVO productVO = (ProductVO) request.getAttribute("productVO");
 </table>
 <br>
 <input type="hidden" name="action" value="insert">
-<input type="submit" value="°e¥X·s¼W"></FORM>
+<input type="submit" value="é€å‡ºæ–°å¢"></FORM>
 </body>
 
 
 
-<!-- =========================================¥H¤U¬° datetimepicker ¤§¬ÛÃö³]©w========================================== -->
+<!-- =========================================ä»¥ä¸‹ç‚º datetimepicker ä¹‹ç›¸é—œè¨­å®š========================================== -->
 
 
 <style>
@@ -145,20 +145,20 @@ ProductVO productVO = (ProductVO) request.getAttribute("productVO");
 //         $('#f_date1').datetimepicker({
 	       theme: '',              //theme: 'dark',
 // 	       timepicker:false,       //timepicker:true,
-// 	       step: 1,                //step: 60 (³o¬Otimepickerªº¹w³]¶¡¹j60¤ÀÄÁ)
+// 	       step: 1,                //step: 60 (é€™æ˜¯timepickerçš„é è¨­é–“éš”60åˆ†é˜)
 // 	       format:'Y-m-d',         //format:'Y-m-d H:i:s',
 <%-- 		   value: '<%=hiredate%>',  value:   new Date(), --%>
-           //disabledDates:        ['2017/06/08','2017/06/09','2017/06/10'], // ¥h°£¯S©w¤£§t
-           //startDate:	            '2017/07/10',  // °_©l¤é
-           //minDate:               '-1970-01-01', // ¥h°£¤µ¤é(¤£§t)¤§«e
-           //maxDate:               '+1970-01-01'  // ¥h°£¤µ¤é(¤£§t)¤§«á
+           //disabledDates:        ['2017/06/08','2017/06/09','2017/06/10'], // å»é™¤ç‰¹å®šä¸å«
+           //startDate:	            '2017/07/10',  // èµ·å§‹æ—¥
+           //minDate:               '-1970-01-01', // å»é™¤ä»Šæ—¥(ä¸å«)ä¹‹å‰
+           //maxDate:               '+1970-01-01'  // å»é™¤ä»Šæ—¥(ä¸å«)ä¹‹å¾Œ
 //         });
         
         
    
-        // ----------------------------------------------------------¥H¤U¥Î¨Ó±Æ©wµLªk¿ï¾Üªº¤é´Á-----------------------------------------------------------
+        // ----------------------------------------------------------ä»¥ä¸‹ç”¨ä¾†æ’å®šç„¡æ³•é¸æ“‡çš„æ—¥æœŸ-----------------------------------------------------------
 
-        //      1.¥H¤U¬°¬Y¤@¤Ñ¤§«eªº¤é´ÁµLªk¿ï¾Ü
+        //      1.ä»¥ä¸‹ç‚ºæŸä¸€å¤©ä¹‹å‰çš„æ—¥æœŸç„¡æ³•é¸æ“‡
         //      var somedate1 = new Date('2017-06-15');
         //      $('#f_date1').datetimepicker({
         //          beforeShowDay: function(date) {
@@ -172,7 +172,7 @@ ProductVO productVO = (ProductVO) request.getAttribute("productVO");
         //      }});
 
         
-        //      2.¥H¤U¬°¬Y¤@¤Ñ¤§«áªº¤é´ÁµLªk¿ï¾Ü
+        //      2.ä»¥ä¸‹ç‚ºæŸä¸€å¤©ä¹‹å¾Œçš„æ—¥æœŸç„¡æ³•é¸æ“‡
         //      var somedate2 = new Date('2017-06-15');
         //      $('#f_date1').datetimepicker({
         //          beforeShowDay: function(date) {
@@ -186,7 +186,7 @@ ProductVO productVO = (ProductVO) request.getAttribute("productVO");
         //      }});
 
 
-        //      3.¥H¤U¬°¨â­Ó¤é´Á¤§¥~ªº¤é´ÁµLªk¿ï¾Ü (¤]¥i«ö»İ­n´«¦¨¨ä¥L¤é´Á)
+        //      3.ä»¥ä¸‹ç‚ºå…©å€‹æ—¥æœŸä¹‹å¤–çš„æ—¥æœŸç„¡æ³•é¸æ“‡ (ä¹Ÿå¯æŒ‰éœ€è¦æ›æˆå…¶ä»–æ—¥æœŸ)
         //      var somedate1 = new Date('2017-06-15');
         //      var somedate2 = new Date('2017-06-25');
         //      $('#f_date1').datetimepicker({
