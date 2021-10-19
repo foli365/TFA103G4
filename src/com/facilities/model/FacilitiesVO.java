@@ -6,8 +6,10 @@ public class FacilitiesVO implements Serializable{
 	
 	private Integer facilitiesId;
 	private Integer campId;
-	private byte[] facilities;
-	private String base64Image;
+	private Integer bbq;
+	private Integer wifi;
+	private Integer nosmoke;
+	private Integer pets;
 	
 	public Integer getFacilitiesId() {
 		return facilitiesId;
@@ -21,17 +23,33 @@ public class FacilitiesVO implements Serializable{
 	public void setCampId(Integer campId) {
 		this.campId = campId;
 	}
-	public byte[] getFacilities() {
-		return facilities;
+	public Integer getBbq() {
+		return bbq;
 	}
-	public void setFacilities(byte[] facilities) {
-		this.facilities = facilities;
+	public void setBbq(Integer bbq) {
+		this.bbq = bbq;
 	}
-	public String getBase64Image() {
-		return base64Image;
+	public Integer getWifi() {
+		return wifi;
 	}
-	public void setBase64Image(String base64Image) {
-		this.base64Image = base64Image;
+	public void setWifi(Integer wifi) {
+		this.wifi = wifi;
 	}
-	
+	public Integer getNosmoke() {
+		return nosmoke;
+	}
+	public void setNosmoke(Integer nosmoke) {
+		this.nosmoke = nosmoke;
+	}
+	public Integer getPets() {
+		return pets;
+	}
+	public void setPets(Integer pets) {
+		this.pets = pets;
+	}
+	@Override
+	public String toString() {
+		return "FacilitiesVO [facilitiesId=" + facilitiesId + ", campId=" + campId + ", bbq=" + bbq + ", wifi=" + wifi
+				+ ", nosmoke=" + nosmoke + ", pets=" + pets + "]";
+	}
 }

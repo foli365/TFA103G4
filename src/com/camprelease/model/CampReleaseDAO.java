@@ -13,15 +13,15 @@ public class CampReleaseDAO implements CampReleaseDAO_interface {
 	public static final String PASSWORD = "123456";
 
 	private static final String INSERT_STMT = 
-			"INSERT INTO campsite (CAMP_NAME, MEMBER_ID, LOCATION, LATITUDE, LONGTITUDE, CAMP_DESCRIPTION, CAMP_PRICE, LISTED_TIME, PICTURE1, PICTURE2, PICTURE3, PICTURE4, PICTURE5) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+			"INSERT INTO campsite (MEMBER_ID, CAMP_NAME, LOCATION, LATITUDE, LONGTITUDE, CAMP_DESCRIPTION, CAMP_PRICE, LISTED_TIME, PICTURE1, PICTURE2, PICTURE3, PICTURE4, PICTURE5) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 	private static final String GET_ALL_STMT = 
-			"SELECT CAMP_ID, MEMBER_ID, CAMP_NAME, MEMBER_ID, LOCATION, LATITUDE, LONGTITUDE, CAMP_DESCRIPTION, CAMP_PRICE, LISTED_TIME, PICTURE1, PICTURE2, PICTURE3, PICTURE4, PICTURE5, MEMBER_ID FROM campsite order by CAMP_ID";
+			"SELECT CAMP_ID, MEMBER_ID, CAMP_NAME, MEMBER_ID, LOCATION, LATITUDE, LONGTITUDE, CAMP_DESCRIPTION, CAMP_PRICE, LISTED_TIME, PICTURE1, PICTURE2, PICTURE3, PICTURE4, PICTURE5 FROM campsite order by CAMP_ID";
 	private static final String GET_ONE_STMT = 
 			"SELECT CAMP_ID, MEMBER_ID, CAMP_NAME, LOCATION, LATITUDE, LONGTITUDE, CAMP_DESCRIPTION, CAMP_PRICE, LISTED_TIME, PICTURE1, PICTURE2, PICTURE3, PICTURE4, PICTURE5 FROM campsite where CAMP_ID = ?";
 	private static final String DELETE = 
 			"DELETE FROM campsite where CAMP_ID = ?";
 	private static final String UPDATE = 
-			"UPDATE campsite set CAMP_NAME=?, MEMBER_ID=?, LOCATION=?, LATITUDE=?, LONGTITUDE=?, CAMP_DESCRIPTION=?, CAMP_PRICE=?, LISTED_TIME=?,  PICTURE1=?, PICTURE2=?, PICTURE3=?, PICTURE4=?, PICTURE5=? where CAMP_ID = ?";
+			"UPDATE campsite set CAMP_NAME=?, LOCATION=?, LATITUDE=?, LONGTITUDE=?, CAMP_DESCRIPTION=?, CAMP_PRICE=?, LISTED_TIME=?,  PICTURE1=?, PICTURE2=?, PICTURE3=?, PICTURE4=?, PICTURE5=? where CAMP_ID = ?";
 
 	@Override
 	public void insert(CampReleaseVO campreleaseVO) {
@@ -31,27 +31,18 @@ public class CampReleaseDAO implements CampReleaseDAO_interface {
 
 		try {
 
-			con = DriverManager.getConnection("jdbc:mysql://localhost:3306/Gocamping?serverTimezone=Asia/Taipei", "David", "123456");
+			con = DriverManager.getConnection(URL, USER, PASSWORD);
 			pstmt = con.prepareStatement(INSERT_STMT);
 
-			pstmt.setString(1, campreleaseVO.getCampName());
-			pstmt.setInt(2, campreleaseVO.getMemberId());
+			pstmt.setInt(1, campreleaseVO.getMemberId());
+			pstmt.setString(2, campreleaseVO.getCampName());
 			pstmt.setString(3, campreleaseVO.getLocation());
 			pstmt.setDouble(4, campreleaseVO.getLatitude());
 			pstmt.setDouble(5, campreleaseVO.getLongtitude());
 			pstmt.setString(6, campreleaseVO.getCampDescription());
 			pstmt.setInt(7, campreleaseVO.getCampPrice());
 			pstmt.setTimestamp(8, campreleaseVO.getListedTime());
-			pstmt.setBytes(9, campreleaseVO.getPicture1());
-//			byte[] pic1 = null;
-//			String path;
-//			try {
-//				pic1 = getPictureByteArray(path);
-//			} catch (IOException e) {
-//				// TODO Auto-generated catch block
-//				e.printStackTrace();
-//			}
-//			campreleaseVO.setPicture1(pic1);	
+			pstmt.setBytes(9, campreleaseVO.getPicture1());	
 			pstmt.setBytes(10, campreleaseVO.getPicture2());
 			pstmt.setBytes(11, campreleaseVO.getPicture3());
 			pstmt.setBytes(12, campreleaseVO.getPicture4());
@@ -79,7 +70,6 @@ public class CampReleaseDAO implements CampReleaseDAO_interface {
 				}
 			}
 		}
-
 	}
 
 	@Override
@@ -94,19 +84,18 @@ public class CampReleaseDAO implements CampReleaseDAO_interface {
 			pstmt = con.prepareStatement(UPDATE);
 
 			pstmt.setString(1, campreleaseVO.getCampName());
-			pstmt.setInt(2, campreleaseVO.getMemberId());
-			pstmt.setString(3, campreleaseVO.getLocation());
-			pstmt.setDouble(4, campreleaseVO.getLatitude());
-			pstmt.setDouble(5, campreleaseVO.getLongtitude());
-			pstmt.setString(6, campreleaseVO.getCampDescription());
-			pstmt.setInt(7, campreleaseVO.getCampPrice());
-			pstmt.setTimestamp(8, campreleaseVO.getListedTime());
-			pstmt.setBytes(9, campreleaseVO.getPicture1());
-			pstmt.setBytes(10, campreleaseVO.getPicture2());
-			pstmt.setBytes(11, campreleaseVO.getPicture3());
-			pstmt.setBytes(12, campreleaseVO.getPicture4());
-			pstmt.setBytes(13, campreleaseVO.getPicture5());
-			pstmt.setInt(14, campreleaseVO.getCampId());
+			pstmt.setString(2, campreleaseVO.getLocation());
+			pstmt.setDouble(3, campreleaseVO.getLatitude());
+			pstmt.setDouble(4, campreleaseVO.getLongtitude());
+			pstmt.setString(5, campreleaseVO.getCampDescription());
+			pstmt.setInt(6, campreleaseVO.getCampPrice());
+			pstmt.setTimestamp(7, campreleaseVO.getListedTime());
+			pstmt.setBytes(8, campreleaseVO.getPicture1());
+			pstmt.setBytes(9, campreleaseVO.getPicture2());
+			pstmt.setBytes(10, campreleaseVO.getPicture3());
+			pstmt.setBytes(11, campreleaseVO.getPicture4());
+			pstmt.setBytes(12, campreleaseVO.getPicture5());
+			pstmt.setInt(13, campreleaseVO.getCampId());
 
 			pstmt.executeUpdate();
 
@@ -310,6 +299,7 @@ public class CampReleaseDAO implements CampReleaseDAO_interface {
 
 		// 新增
 //		CampReleaseVO VO1 = new CampReleaseVO();
+//		VO1.setMemberId(1);	
 //		VO1.setCampName("空露營場ps");
 //		VO1.setLocation("高雄市XX路1232134");
 //		VO1.setLatitude(new Double(24.24324));
@@ -326,7 +316,6 @@ public class CampReleaseDAO implements CampReleaseDAO_interface {
 //			e.printStackTrace();
 //		}
 //		VO1.setPicture1(pic1);	
-//		VO1.setMemberId(1);	
 //		dao.insert(VO1);
 //		System.out.println("OKKKKKKK");
 //		

@@ -1,11 +1,13 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@page import="com.camprelease.model.CampReleaseDAO"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ page import="java.util.*"%>
 <%@ page import="com.camprelease.model.*"%>
 
 <%
-CampReleaseService campreleaseSvc = new CampReleaseService();
-    List<CampReleaseVO> list = campreleaseSvc.getAll();
+CampReleaseDAO dao = new CampReleaseDAO();
+    List<CampReleaseVO> list = dao.getAll();
     pageContext.setAttribute("list",list);
 %>
 
@@ -50,6 +52,7 @@ CampReleaseService campreleaseSvc = new CampReleaseService();
     <thead>
         <tr>
             <th>營地編號</th>
+            <th>會員編號</th>
             <th>營地名稱</th>
             <th>地點</th>
             <th>經度</th>
@@ -66,7 +69,6 @@ CampReleaseService campreleaseSvc = new CampReleaseService();
             <th>pic4</th>
             <th>pic5</th>
             <th>設施</th>
-            <th>會員編號</th>
             <th>修改</th>
             <th>刪除</th>
         </tr>
@@ -75,23 +77,23 @@ CampReleaseService campreleaseSvc = new CampReleaseService();
     <c:forEach var="campreleaseVO" items="${list}">
         <tr>
             <td>${campreleaseVO.campId}</td>
+			<td>${campreleaseVO.memberId}</td>
 			<td>${campreleaseVO.campName}</td>
 			<td>${campreleaseVO.location}</td>
 			<td>${campreleaseVO.latitude}</td>
 			<td>${campreleaseVO.longtitude}</td>
 			<td>${campreleaseVO.campDescription}</td> 
 			<td>${campreleaseVO.campPrice}</td>
-			<td>${campreleaseVO.listedTime}</td>
+			<td><fmt:formatDate value="${campreleaseVO.listedTime}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
 			<td>配套名稱</td>
             <td>配套價格</td>
             <td>配套搭配人數</td>
-			<td><img src="<%=request.getContextPath() %>/CampReleasePhotoServlet?id=${campreleaseVO.campId}&img=1" width="100">
-			<td><img src="<%=request.getContextPath() %>/CampReleasePhotoServlet?id=${campreleaseVO.campId}&img=2" width="100">
-			<td><img src="<%=request.getContextPath() %>/CampReleasePhotoServlet?id=${campreleaseVO.campId}&img=3" width="100">
-			<td><img src="<%=request.getContextPath() %>/CampReleasePhotoServlet?id=${campreleaseVO.campId}&img=4" width="100">
-			<td><img src="<%=request.getContextPath() %>/CampReleasePhotoServlet?id=${campreleaseVO.campId}&img=5" width="100">
+			<td><img src="<%=request.getContextPath() %>/CampReleasePhotoServlet?id=${campreleaseVO.campId}&img=1" width="100"></td>
+			<td><img src="<%=request.getContextPath() %>/CampReleasePhotoServlet?id=${campreleaseVO.campId}&img=2" width="100"></td>
+			<td><img src="<%=request.getContextPath() %>/CampReleasePhotoServlet?id=${campreleaseVO.campId}&img=3" width="100"></td>
+			<td><img src="<%=request.getContextPath() %>/CampReleasePhotoServlet?id=${campreleaseVO.campId}&img=4" width="100"></td>
+			<td><img src="<%=request.getContextPath() %>/CampReleasePhotoServlet?id=${campreleaseVO.campId}&img=5" width="100"></td>
 			<td>設施</td>
-			<td>${campreleaseVO.memberId}</td>
             <td>
 <!--                   <br>     -->
 <!--                   <p> -->
@@ -128,67 +130,68 @@ CampReleaseService campreleaseSvc = new CampReleaseService();
 
 
 
-<table id="table-1">
-	<tr><td>
-		 <h3>所有營地資料</h3>
-		 <h4><a href="<%=request.getContextPath() %>/camprelease/Select_Page.jsp"><img src="images/gocamping.jpg" width="100" height="32" border="0">back home</a></h4>
-	</td></tr>
-</table>
+<!-- <table id="table-1"> -->
+<!-- 	<tr><td> -->
+<!-- 		 <h3>所有營地資料</h3> -->
+<%-- 		 <h4><a href="<%=request.getContextPath() %>/camprelease/Select_Page.jsp"><img src="images/gocamping.jpg" width="100" height="32" border="0">back home</a></h4> --%>
+<!-- 	</td></tr> -->
+<!-- </table> -->
 
 
-<table>
-	<tr>
-		<th>營地編號</th>
-		<th>營地名稱</th>
-		<th>地點</th>
-		<th>經度</th>
-		<th>緯度</th>
-		<th>營地介紹</th>
-		<th>價錢</th>
-		<th>日期</th>
-		<th>pic1</th>
-		<th>pic2</th>
-		<th>pic3</th>
-		<th>pic4</th>
-		<th>pic5</th>
-		<th>會員編號</th>
-		<th>修改</th>
-		<th>刪除</th>
-	</tr>
-		<%@ include file="/camprelease/pages/page1.file" %> 
-	<c:forEach var="campreleaseVO" items="${list}" begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>">
+<!-- <table> -->
+<!-- 	<tr> -->
+<!-- 		<th width="30px">營地編號</th> -->
+<!-- 		<th width="30px">會員編號</th> -->
+<!-- 		<th width="30px">營地名稱</th> -->
+<!-- 		<th width="100px">地點</th> -->
+<!-- 		<th width="80px">經度</th> -->
+<!-- 		<th width="80px">緯度</th> -->
+<!-- 		<th width="100px">營地介紹</th> -->
+<!-- 		<th width="30px">價錢</th> -->
+<!-- 		<th width="80px">日期</th> -->
+<!-- 		<th width="110px">pic1</th> -->
+<!-- 		<th width="110px">pic2</th> -->
+<!-- 		<th width="110px">pic3</th> -->
+<!-- 		<th width="110px">pic4</th> -->
+<!-- 		<th width="110px">pic5</th> -->
+<!-- 		<th width="40px">修改</th> -->
+<!-- 		<th width="40px">刪除</th> -->
+<!-- 	</tr> -->
+<%-- 		<%@ include file="/camprelease/pages/page1.file" %>  --%>
+<%-- 	<c:forEach var="campreleaseVO" items="${list}" begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>"> --%>
 		
-		<tr>
-			<td>${campreleaseVO.campId}</td>
-			<td>${campreleaseVO.campName}</td>
-			<td>${campreleaseVO.location}</td>
-			<td>${campreleaseVO.latitude}</td>
-			<td>${campreleaseVO.longtitude}</td>
-			<td>${campreleaseVO.campDescription}</td> 
-			<td>${campreleaseVO.campPrice}</td>
-			<td>${campreleaseVO.listedTime}</td>
-			<td><img src="<%=request.getContextPath() %>/CampReleasePhotoServlet?id=${campreleaseVO.campId}&img=1" width="100">
-			<td><img src="<%=request.getContextPath() %>/CampReleasePhotoServlet?id=${campreleaseVO.campId}&img=2" width="100">
-			<td><img src="<%=request.getContextPath() %>/CampReleasePhotoServlet?id=${campreleaseVO.campId}&img=3" width="100">
-			<td><img src="<%=request.getContextPath() %>/CampReleasePhotoServlet?id=${campreleaseVO.campId}&img=4" width="100">
-			<td><img src="<%=request.getContextPath() %>/CampReleasePhotoServlet?id=${campreleaseVO.campId}&img=5" width="100">
-			<td>${campreleaseVO.memberId}</td>
-			<td>
-			  <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/camprelease/camprelease.do" style="margin-bottom: 0px;">
-			     <input type="submit" value="修改">
-			     <input type="hidden" name="campId"  value="${campreleaseVO.campId}">
-			     <input type="hidden" name="action"	value="getOne_For_Update"></FORM>
-			</td>
-			<td>
-			  <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/camprelease/camprelease.do" style="margin-bottom: 0px;">
-			     <input type="submit" value="刪除">
-			     <input type="hidden" name="campId"  value="${campreleaseVO.campId}">
-			     <input type="hidden" name="action" value="delete"></FORM>
-			</td>
-		</tr>
-	</c:forEach>
-</table>
-<%@ include file="/camprelease/pages/page2.file" %>
+<!-- 		<tr> -->
+<%-- 			<td>${campreleaseVO.campId}</td> --%>
+<%-- 			<td>${campreleaseVO.campName}</td> --%>
+<%-- 			<td>${campreleaseVO.location}</td> --%>
+<%-- 			<td>${campreleaseVO.latitude}</td> --%>
+<%-- 			<td>${campreleaseVO.longtitude}</td> --%>
+<%-- 			<td>${campreleaseVO.campDescription}</td>  --%>
+<%-- 			<td>${campreleaseVO.campPrice}</td> --%>
+<%-- 			<td><fmt:formatDate value="${campreleaseVO.listedTime}" --%>
+<%-- 						pattern="yyyy-MM-dd HH:mm:ss"/></td> --%>
+<%-- 			<td><img src="<%=request.getContextPath() %>/CampReleaseGifReader?column=picture1&camp_id=${campreleaseVO.campId}" class="pic"> --%>
+<%-- 			<td><img src="<%=request.getContextPath() %>/CampReleasePhotoServlet?id=${campreleaseVO.campId}&img=2" width="100"> --%>
+<%-- 			<td><img src="<%=request.getContextPath() %>/CampReleasePhotoServlet?id=${campreleaseVO.campId}&img=3" width="100"> --%>
+<%-- 			<td><img src="<%=request.getContextPath() %>/CampReleasePhotoServlet?id=${campreleaseVO.campId}&img=4" width="100"> --%>
+<%-- 			<td><img src="<%=request.getContextPath() %>/CampReleasePhotoServlet?id=${campreleaseVO.campId}&img=5" width="100"> --%>
+<%-- 			<td>${campreleaseVO.memberId}</td> --%>
+<!-- 			<td> -->
+<%-- 			  <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/camprelease/camprelease.do" style="margin-bottom: 0px;"> --%>
+<!-- 			     <input type="submit" value="修改"> -->
+<%-- 			     <input type="hidden" name="campId"  value="${campreleaseVO.campId}"> --%>
+<!-- 			     <input type="hidden" name="action"	value="getOne_For_Update"></FORM> -->
+<!-- 			</td> -->
+<!-- 			<td> -->
+<%-- 			  <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/camprelease/camprelease.do" style="margin-bottom: 0px;"> --%>
+<!-- 			     <input type="submit" value="刪除"> -->
+<%-- 			     <input type="hidden" name="campId"  value="${campreleaseVO.campId}"> --%>
+<!-- 			     <input type="hidden" name="action" value="delete"></FORM> -->
+<!-- 			</td> -->
+<!-- 		</tr> -->
+<%-- 	</c:forEach> --%>
+<!-- </table> -->
+<%-- <%@ include file="/camprelease/pages/page2.file" %> --%>
 
 
 <script src="<%=request.getContextPath()%>/camprelease/js/jquery_3.5.1.js"></script>

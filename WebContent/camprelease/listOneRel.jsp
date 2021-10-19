@@ -1,15 +1,15 @@
-<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="Big5"%>
 <%@ page import="com.camprelease.model.*"%>
 
 <%
-CampReleaseVO campreleaseVO = (CampReleaseVO) request.getAttribute("campreleaseVO"); //CampReleaseServlet.java(Concroller), å­˜å…¥reqçš„campreleaseVOç‰©ä»¶
+CampReleaseVO campreleaseVO = (CampReleaseVO) request.getAttribute("campreleaseVO"); //CampReleaseServlet.java(Concroller), ¦s¤JreqªºcampreleaseVOª«¥ó
 %>
 
 <!DOCTYPE html>
 <html>
 <head>
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
-<title>é¡¯ç¤ºä¸€å€‹ç‡Ÿåœ°è³‡æ–™</title>
+<title>Åã¥Ü¤@­ÓÀç¦a¸ê®Æ</title>
   <link rel='stylesheet' href='<%=request.getContextPath()%>/camprelease/css/jquery.dataTables.min.css' />
   <link rel="stylesheet" href="<%=request.getContextPath()%>/camprelease/css/bootstrap.min5.1.0.css">
 </head>
@@ -32,7 +32,7 @@ text-align: center;
 <body>
 
 <header class="header" >
-  <h1 class="header__title">é¡¯ç¤ºä¸€ç­†è³‡æ–™</h1><br>
+  <h1 class="header__title">Åã¥Ü¤@µ§¸ê®Æ</h1><br>
   <table id="table-1">
 		 <h4><a href="<%=request.getContextPath()%>/camprelease/Select_Page.jsp"><img src="images/gocamping.jpg" width="500" height="125" border="0"><br>back home</a></h4>
 </table>
@@ -41,29 +41,30 @@ text-align: center;
 <table id="example" class="display nowrap" style="width:100%">
     <thead>
 	<tr>
-		<th>ç‡Ÿåœ°ç·¨è™Ÿ</th>
-		<th>ç‡Ÿåœ°åç¨±</th>
-		<th>åœ°é»</th>
-		<th>ç¶“åº¦</th>
-		<th>ç·¯åº¦</th>
-		<th>ç‡Ÿåœ°ä»‹ç´¹</th>
-		<th>åƒ¹éŒ¢</th>
-		<th>æ—¥æœŸ</th>
-		<th>é…å¥—åç¨±</th>
-        <th>é…å¥—åƒ¹æ ¼</th>
-        <th>é…å¥—æ­é…äººæ•¸</th>
+		<th>Àç¦a½s¸¹</th>
+		<th>·|­û½s¸¹</th>
+		<th>Àç¦a¦WºÙ</th>
+		<th>¦aÂI</th>
+		<th>¸g«×</th>
+		<th>½n«×</th>
+		<th>Àç¦a¤¶²Ğ</th>
+		<th>»ù¿ú</th>
+		<th>¤é´Á</th>
+		<th>°t®M¦WºÙ</th>
+        <th>°t®M»ù®æ</th>
+        <th>°t®M·f°t¤H¼Æ</th>
 		<th>pic1</th>
 		<th>pic2</th>
 		<th>pic3</th>
 		<th>pic4</th>
 		<th>pic5</th>
-		<th>è¨­æ–½</th>
-		<th>æœƒå“¡ç·¨è™Ÿ</th>
+		<th>³]¬I</th>
 	</tr>
 	</thead>
 	<tbody>
 	<tr>
 			<td><%=campreleaseVO.getCampId()%></td>
+			<td><%=campreleaseVO.getMemberId()%></td>
 			<td><%=campreleaseVO.getCampName()%></td>
 			<td><%=campreleaseVO.getLocation()%></td>
 			<td><%=campreleaseVO.getLatitude()%></td>
@@ -71,16 +72,15 @@ text-align: center;
 			<td><%=campreleaseVO.getCampDescription()%></td> 
 			<td><%=campreleaseVO.getCampPrice()%></td>
 			<td><%=campreleaseVO.getListedTime()%></td>
-			<td>é…å¥—åç¨±</td>
-            <td>é…å¥—åƒ¹æ ¼</td>
-            <td>é…å¥—æ­é…äººæ•¸</td>
+			<td>°t®M¦WºÙ</td>
+            <td>°t®M»ù®æ</td>
+            <td>°t®M·f°t¤H¼Æ</td>
 			<td><img src="<%=request.getContextPath() %>/CampReleasePhotoServlet?id=${campreleaseVO.campId}&img=1" width="100">
 			<td><img src="<%=request.getContextPath() %>/CampReleasePhotoServlet?id=${campreleaseVO.campId}&img=2" width="100">
 			<td><img src="<%=request.getContextPath() %>/CampReleasePhotoServlet?id=${campreleaseVO.campId}&img=3" width="100">
 			<td><img src="<%=request.getContextPath() %>/CampReleasePhotoServlet?id=${campreleaseVO.campId}&img=4" width="100">
 			<td><img src="<%=request.getContextPath() %>/CampReleasePhotoServlet?id=${campreleaseVO.campId}&img=5" width="100">
-			<td>è¨­æ–½</td>
-			<td><%=campreleaseVO.getMemberId()%></td>
+			<td>³]¬I</td>
 	</tr>
 	</tbody>
 </table>
@@ -92,29 +92,29 @@ text-align: center;
        $(document).ready(function() {
     $('#example').DataTable( {
         "scrollX": true,
-        "searching": false, //æœå°‹åŠŸèƒ½, é è¨­æ˜¯é–‹å•Ÿ
-        "paging": false, //åˆ†é åŠŸèƒ½, é è¨­æ˜¯é–‹å•Ÿ
-        "ordering": false, //æ’åºåŠŸèƒ½, é è¨­æ˜¯é–‹å•Ÿ
+        "searching": false, //·j´M¥\¯à, ¹w³]¬O¶}±Ò
+        "paging": false, //¤À­¶¥\¯à, ¹w³]¬O¶}±Ò
+        "ordering": false, //±Æ§Ç¥\¯à, ¹w³]¬O¶}±Ò
         "lengthMenu": false,
         // "aria": {
-        //     "sortAscending": ": å‡å†ªæ’åˆ—",
-        //     "sortDescending": ": é™å†ªæ’åˆ—"
+        //     "sortAscending": ": ¤É¾­±Æ¦C",
+        //     "sortDescending": ": ­°¾­±Æ¦C"
         // }
         "language": {
-        "processing": "è™•ç†ä¸­...",
-        "loadingRecords": "è¼‰å…¥ä¸­...",
-        "lengthMenu": "é¡¯ç¤º _MENU_ é …çµæœ",
-        "zeroRecords": "æ²’æœ‰ç¬¦åˆçš„çµæœ",
-        "info": "é¡¯ç¤ºç¬¬ _START_ è‡³ _END_ é …çµæœï¼Œå…± _TOTAL_ é …",
-        "infoEmpty": "é¡¯ç¤ºç¬¬ 0 è‡³ 0 é …çµæœï¼Œå…± 0 é …",
-        "infoFiltered": "(å¾ _MAX_ é …çµæœä¸­éæ¿¾)",
+        "processing": "³B²z¤¤...",
+        "loadingRecords": "¸ü¤J¤¤...",
+        "lengthMenu": "Åã¥Ü _MENU_ ¶µµ²ªG",
+        "zeroRecords": "¨S¦³²Å¦Xªºµ²ªG",
+        "info": "Åã¥Ü²Ä _START_ ¦Ü _END_ ¶µµ²ªG¡A¦@ _TOTAL_ ¶µ",
+        "infoEmpty": "Åã¥Ü²Ä 0 ¦Ü 0 ¶µµ²ªG¡A¦@ 0 ¶µ",
+        "infoFiltered": "(±q _MAX_ ¶µµ²ªG¤¤¹LÂo)",
         "infoPostFix": "",
-        "search": "æœå°‹:",
+        "search": "·j´M:",
         "paginate": {
-            "first": "ç¬¬ä¸€é ",
-            "previous": "ä¸Šä¸€é ",
-            "next": "ä¸‹ä¸€é ",
-            "last": "æœ€å¾Œä¸€é "
+            "first": "²Ä¤@­¶",
+            "previous": "¤W¤@­¶",
+            "next": "¤U¤@­¶",
+            "last": "³Ì«á¤@­¶"
         },
     }
     } );

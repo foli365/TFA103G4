@@ -1,23 +1,24 @@
-<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="Big5"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="com.camprelease.model.*"%>
+<%@ page import="com.facilities.model.*"%>
 
 <%
 CampReleaseVO campreleaseVO = (CampReleaseVO) request.getAttribute("campreleaseVO");
+FacilitiesVO facilitiesVO = (FacilitiesVO) request.getAttribute("facilitiesVO");
+
 %>
 
 <!DOCTYPE html>
 <html>
 <head>
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
-<title>Go campingç‡Ÿåœ°åˆŠç™»</title>
-<%--   <link rel="stylesheet" href="<%=request.getContextPath()%>/camprelease/css/index.css" /> --%>
+<title>Go campingÀç¦a¥Zµn</title>
   <link rel='stylesheet' href='<%=request.getContextPath()%>/camprelease/css/bootstrap.min4.1.3.css' />
   <link rel="stylesheet" href="<%=request.getContextPath()%>/camprelease/css/stepstyle.css">
   <link rel="stylesheet" href="<%=request.getContextPath()%>/camprelease/css/icon.css">
-</head>
+<!-- ¥H¤UCSS¬°ºô­¶¼Ë¦¡ -->
 <style>
-
 body{
   background-color: #FFEEE1;
   background-position: center;
@@ -82,7 +83,7 @@ imput{
         white-space: nowrap;
       }
 
-      /* ä»¥ä¸‹è¨­å‚™ */
+      /* ¥H¤U³]³Æ */
       .setting-label{
         position: relative;
         display: inline-block;
@@ -123,11 +124,12 @@ imput{
         color: white;
       }
 </style>
-<body>
+</head>
 
-<%-- éŒ¯èª¤è¡¨åˆ— --%>
+<body>
+<%-- ¿ù»~ªí¦C --%>
 <c:if test="${not empty errorMsgs}">
-	<font style="color:red">è«‹ä¿®æ­£ä»¥ä¸‹éŒ¯èª¤:</font>
+	<font style="color:red">½Ğ­×¥¿¥H¤U¿ù»~:</font>
 	<ul>
 		<c:forEach var="message" items="${errorMsgs}">
 			<li style="color:red">${message}</li>
@@ -136,79 +138,103 @@ imput{
 </c:if>
 
 <header class="header" >
-  <h1 class="header__title">Go campingç‡Ÿåœ°åˆŠç™»</h1><br>
+  <h1 class="header__title">Go campingÀç¦a¥Zµn</h1><br>
   <table id="table-1">
 		 <h4><a href="<%=request.getContextPath()%>/camprelease/Select_Page.jsp"><img src="images/gocamping.jpg" width="500" height="125" border="0"><br>back home</a></h4>
 </table>
 </header>
-<%-- <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/camprelease/camprelease.do" name="form1"> --%>
+
+<!-- ¹Lµ{«ö¶s -->
     <div class="container overflow-hidden">
       <div name="action" action="#"  method="#" class="multisteps-form" id="the_form">
         <div class="row">
           <div class="col-12 col-lg-8 ml-auto mr-auto mb-4">
             <div class="multisteps-form__progress">
-              <button class="multisteps-form__progress-btn js-active" type="button" title="User Info">ç‡Ÿåœ°è³‡è¨Š</button>
-              <button class="multisteps-form__progress-btn" type="button" title="Address">åœ°é»</button>
-              <button class="multisteps-form__progress-btn" type="button" title="Picture">ç‡Ÿåœ°åœ–ç‰‡</button>
-              <button class="multisteps-form__progress-btn" type="button" title="Order tirp">é…å¥—è¡Œç¨‹</button>
-              <button class="multisteps-form__progress-btn" type="button" title="Setting">è¨­å‚™èˆ‡æœå‹™</button>
-            
+              <button class="multisteps-form__progress-btn js-active" type="button" title="User Info">Àç¦a¸ê°T</button>
+              <button class="multisteps-form__progress-btn" type="button" title="Address">¦aÂI</button>
+              <button class="multisteps-form__progress-btn" type="button" title="Picture">Àç¦a¹Ï¤ù</button>
+              <button class="multisteps-form__progress-btn" type="button" title="Order tirp">°t®M¦æµ{</button>
+              <button class="multisteps-form__progress-btn" type="button" title="Setting">³]³Æ»PªA°È</button>            
             </div>
           </div>
         </div>
-<%--         <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/camprelease/camprelease.do" name="form1"> --%>
+
+<!-- ·s¼W¸ê°T -->
+<jsp:useBean id="campreleaseSvc" scope="page" class="com.camprelease.model.CampReleaseService" />
+<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/camprelease/camprelease.do" name="form1" enctype="multipart/form-data">
         <div class="row">
           <div class="col-12 col-lg-8 m-auto">
-            <form class="multisteps-form__form">
+            <div class="multisteps-form__form">
               <div class="multisteps-form__panel shadow p-4 rounded bg-white js-active" data-animation="scaleIn">
-                <h3 class="multisteps-form__title">ç‡Ÿåœ°è³‡è¨Š</h3>
-                <div class="multisteps-form__content"> 
+                <h3 class="multisteps-form__title">Àç¦a¸ê°T</h3>
+                <div class="multisteps-form__content">
                   <div class="form-row mt-4">
                     <div class="col-12 col-sm-6">
-                      <label for="inputName" class="col-form-label">ç‡Ÿåœ°åç¨±</label>
-                      <input class="multisteps-form__input form-control" type="TEXT" name="campName" size="45" id="c_name" value="<%= (campreleaseVO==null)? "å¤©å¤©ç‡Ÿåœ°å ´" : campreleaseVO.getCampName()%>"/>
-                    </div>
-                  </div>
-                  <div class="form-row mt-4">
-                      <label for="inputintr" class="col-form-label">ç‡Ÿåœ°ä»‹ç´¹</label>
-                        <textarea class="multisteps-form__textarea form-control" type="TEXT" id="c_intr" value="<%= (campreleaseVO==null)? "é€™æ˜¯ç‡Ÿåœ°å€,å¯ä»¥éœ²ç‡Ÿé€™æ¨£" : campreleaseVO.getCampDescription()%>" ></textarea>
-
-                  </div>
-                  <div class="form-row mt-4">
-                    <div class="col-12 col-sm-6">
-                      <label for="inputprice" class="col-form-label">åƒ¹æ ¼</label>
-                        <input class="multisteps-form__input form-control" type="TEXT" id="c_price" value="<%= (campreleaseVO==null)? "1000" : campreleaseVO.getCampPrice()%>" />
+                      <label class="col-form-label">¿ï¾Ü·|­û½s¸¹<font color=red><b>*</b></font>
+                        <select size="1" name="memberId">
+		                <c:forEach var="campreleaseVO" items="${campreleaseSvc.all}">
+		                <option value="${campreleaseVO.memberId}">${campreleaseVO.memberId}</c:forEach>
+		                </select>
+		              </label>
                     </div>
                   </div>
                   <div class="form-row mt-4">
                     <div class="col-12 col-sm-6">
-                  <label for="inputchoose" class="col-form-label">åˆ†é¡</label>
-                    <select class="multisteps-form__select form-control" id="c_choose">
-                      <option selected="selected">åˆ†é¡...</option>
-                      <option>å±±ä¸Š</option>
-                      <option>æ¹–é‚Š</option>
-                      <option>æ£®æ—</option>
-                    </select>
+                      <label for="inputName" class="col-form-label">Àç¦a¦WºÙ
+                      <input type="text" name="campName" size="45" class="multisteps-form__input form-control" value="<%=(campreleaseVO == null) ? "Åw¼ÖÅSÀç¦a" : campreleaseVO.getCampName()%>"></label>
                     </div>
                   </div>
-
+                  <div class="form-row mt-4">
+                      <label for="inputintr" class="col-form-label">Àç¦a¤¶²Ğ</label>
+                        <textarea class="multisteps-form__textarea form-control" id="intr" name="campDescription" 
+                        ></textarea>
+                  </div>
+                  <div class="form-row mt-4">
+                    <div class="col-12 col-sm-6">
+                      <label for="inputprice" class="col-form-label">»ù®æ
+                        <input type="text" class="multisteps-form__input form-control" name="campPrice" id="c_price" 
+                        value="<%=(campreleaseVO == null) ? "500" : campreleaseVO.getCampPrice()%>"></label>
+                    </div>
+                  </div>
+                  <div class="form-row mt-4">
+                    <div class="col-12 col-sm-6">
+                      <label for="inputprice" class="col-form-label">¤é´Á
+                        <input type="text" class="multisteps-form__input form-control" name="ListedTime" size="45" id="f_date1"
+                        value="<%=(campreleaseVO == null) ? "2021-12-05 12:45:03" : campreleaseVO.getListedTime()%>"></label>
+                    </div>
+                  </div>
+<!--                   ¤ÀÃş¤§«á¬İ­n¤£­n¥[ -->
+<!--                   <div class="form-row mt-4"> -->
+<!--                     <div class="col-12 col-sm-6"> -->
+<!--                       <label for="inputchoose" class="col-form-label">¤ÀÃş -->
+<!--                       <select class="multisteps-form__select form-control" name="campChoose" id="c_choose"> -->
+<!--                           <option disabled required>¤ÀÃş..</option> -->
+<!--                           <option value="0" -->
+<%--                           ${(campreleaseVO.campChoose==0)? "selected":""}>¤s¤W</option> --%>
+<!--                           <option selected value="1" -->
+<%--                           ${(campreleaseVO.campChoose==1)? "selected":""}>´òÃä</option> --%>
+<!--                           <option value="2" -->
+<%--                           ${(campreleaseVO.campChoose==2)? "selected":""}>´ËªL</option> --%>
+<!--                       </select> -->
+<!--                       </label> -->
+<!--                     </div> -->
+<!--                   </div> -->
                   <div class="button-row d-flex mt-4">
                     <button class="btn btn-primary ml-auto js-btn-next" type="button" title="Next">Next</button>
                   </div>
                 </div>
               </div>
-
+<!-- ¦aÂI¥h§ì¸g½n«× -->
               <div class="multisteps-form__panel shadow p-4 rounded bg-white" data-animation="scaleIn">
-                <h3 class="multisteps-form__title">åœ°é»</h3>
+                <h3 class="multisteps-form__title">¦aÂI</h3>
                 <div class="multisteps-form__content">
-<!--                     åœ°åœ–æŠ“ç¶“ç·¯æ–½å·¥ä¸­ -->
                   <div class="form-row mt-4">
                     <div class="col">
-                      <div id="floating-panel">
-                        <input id="address" type="textbox" value="Sydney, NSW" />
-                        <input id="submit" type="button" value="Geocode" />
-                      </div>
-                      <div id="map"></div>
+                      <div id="webbulutumap" style="height: 280px;"></div>
+                        <input type="text" name="location" value="" size="40" class="wpcf7-form-control wpcf7-text wpcf7-validates-as-required" id="address" aria-required="true" aria-invalid="false" placeholder="Street Address"/>
+                        <input type="text" name="latitude" value="" placeholder="latitude" id="latitude"/>
+                        <input type="text" name="longtitude" value="" placeholder="longtitude" id="longtitude"/>
+                        <a href="#" id="find-address" title="Find Address" class="button">Find Address</a>
                     </div>
                   </div>
                   <div class="button-row d-flex mt-4">
@@ -217,59 +243,54 @@ imput{
                   </div>
                 </div>
               </div>
-
+<!-- Àç¦a¹Ï¤ù·s¼W -->
               <div class="multisteps-form__panel shadow p-4 rounded bg-white" data-animation="scaleIn">
-                <h3 class="multisteps-form__title">è«‹ä¸Šå‚³ç‡Ÿåœ°åœ–ç‰‡</h3>
+                <h3 class="multisteps-form__title">½Ğ¤W¶ÇÀç¦a¹Ï¤ù</h3>
                 <div class="multisteps-form__content">
                   <div class="form-row mt-4">
-                    <div class="col" id="preview">
-                      <canvas id="can1"></canvas>
-                        <p>filename:
-                           <input type="file" multiple="false" accept="image/*" id="finput" onchange=upload()>
-                        </p>
-                    </div>
-<table>
-	<tr>
-		<td>Pic1:</td>
-		<td><input type="file" size="50" name="picture1"
-		     value="<%= (campreleaseVO==null)? "" : campreleaseVO.getPicture1()%>" /></td>
-	</tr>
-	<tr>
-		<td>Pic2:</td>
-		<td><input type="file" size="50" name="picture2"
-		     value="<%= (campreleaseVO==null)? "" : campreleaseVO.getPicture2()%>" /></td>
-	</tr>
-	<tr>
-		<td>Pic3:</td>
-		<td><input type="file" size="50" name="picture3"
-		     value="<%= (campreleaseVO==null)? "" : campreleaseVO.getPicture3()%>" /></td>
-	</tr>
-	<tr>
-		<td>Pic4:</td>
-		<td><input type="file" size="50" name="picture4"
-		     value="<%= (campreleaseVO==null)? "" : campreleaseVO.getPicture4()%>" /></td>
-	</tr>
-	<tr>
-		<td>Pic5:</td>
-		<td><input type="file" size="50" name="picture5"
-		     value="<%= (campreleaseVO==null)? "" : campreleaseVO.getPicture5()%>" /></td>
-	</tr>
-	</table>
-                  </div>
+<!--                     <div class="col" id="preview"> -->
+<%--                       <canvas id="can1"></canvas> --%>
+<!--                         <p>filename: -->
+<!--                            <input type="file" multiple="false" accept="image/*" id="finput" onchange=upload()> -->
+<!--                         </p> -->
+<!--                     </div> -->
+
+										<h5>
+											<label>Pic1: <input type="file" accept="image/*"
+												name="picture1"></label>
+										</h5>
+										<h5>
+											<label>Pic2: <input type="file" accept="image/*"
+												name="picture2"></label>
+										</h5>
+										<h5>
+											<label>Pic3: <input type="file" accept="image/*"
+												name="picture3"></label>
+										</h5>
+										<h5>
+											<label>Pic4: <input type="file" accept="image/*"
+												name="picture4"></label>
+										</h5>
+										<h5>
+											<label>Pic5: <input type="file" accept="image/*"
+												name="picture5"></label>
+										</h5>
+									</div>
                   <div class="button-row d-flex mt-4">
                     <button class="btn btn-primary js-btn-prev" type="button" title="Prev">Prev</button>
                     <button class="btn btn-primary ml-auto js-btn-next" type="button" title="Next">Next</button>
                   </div>
                 </div>
               </div>
-
+<!-- °t®M¦æµ{·s¼W -->
               <div class="multisteps-form__panel shadow p-4 rounded bg-white" data-animation="scaleIn">
-                <h3 class="multisteps-form__title">é…å¥—è¡Œç¨‹</h3>
+                <h3 class="multisteps-form__title">°t®M¦æµ{</h3>
                 <div class="multisteps-form__content">
                   <div class="form-row mt-4">
                     <div class="col-12 col-sm-6">
-                      <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo">+é–‹å§‹æ–°å¢è¡Œç¨‹</button>
-                    </div>
+                      <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#plans" data-whatever="@mdo">+¶}©l·s¼W¦æµ{</button>
+                  </div>
+                  
                   </div>
                   <div class="row">
                     <div class="button-row d-flex mt-4 col-12">
@@ -279,41 +300,40 @@ imput{
                   </div>
                 </div>
               </div>
-
+<!-- ³]¬IªA°ÈICON -->
               <div class="multisteps-form__panel shadow p-4 rounded bg-white" data-animation="scaleIn">
-                <h3 class="multisteps-form__title">è¨­å‚™èˆ‡æœå‹™</h3>
+                <h3 class="multisteps-form__title">³]³Æ»PªA°È</h3>
                 <div class="multisteps-form__content">
                   <div class="ws-nowrap camp5">
-                    <label class="setting-label circle-line" for="setting1"><input type="checkbox" name="setting[]" id="setting1" value=""><span class="material-icons md-18">outdoor_grill çƒ¤è‚‰å€</span></label><br>
-                    <label class="setting-label circle-line" for="setting2"><input type="checkbox" name="setting[]" id="setting2" value=""><span class="material-icons md-18">pool æ³³æ± </span></label><br>
-                    <label class="setting-label circle-line" for="setting3"><input type="checkbox" name="setting[]" id="setting3" value=""><span class="material-icons md-18">wifi  ç¶²è·¯</span></label><br>
-                    <label class="setting-label circle-line" for="setting4"><input type="checkbox" name="setting[]" id="setting4" value=""><span class="material-icons md-18">smoke_free ç¦è¸</span></label><br>
-                    <label class="setting-label circle-line" for="setting5"><input type="checkbox" name="setting[]" id="setting5" value=""><span class="material-icons md-18">pets å¯µç‰©</span></label><br>
-                    <label class="setting-label circle-line" for="setting6"><input type="checkbox" name="setting[]" id="setting6" value=""><span class="material-icons md-18">shower æ·‹æµ´</span></label><br>
+                    <label class="setting-label circle-line" for="bbq"><input type="checkbox" name="bbq" id="bbq" value="1" ${facilitiesSvc.getBbq(facilitiesVO.getFacilitiesId()).bbq == '1' ? 'checked' : ''}><span class="material-icons md-18">outdoor_grill</span></label>
+                    <label class="setting-label circle-line" for="wifi"><input type="checkbox" name="wifi" id="wifi" value="1" ${facilitiesSvc.getWifi(facilitiesVO.getFacilitiesId()).wifi == '1' ? 'checked' : ''}><span class="material-icons md-18">wifi</span></label>
+                    <label class="setting-label circle-line" for="nosmoke"><input type="checkbox" name="nosmoke" id="nosmoke" value="1" ${facilitiesSvc.getNosmoke(facilitiesVO.getFacilitiesId()).nosmoke == '1' ? 'checked' : ''}><span class="material-icons md-18">smoke_free</span></label>
+                    <label class="setting-label circle-line" for="pets"><input type="checkbox" name="pets" id="pets" value="1" ${facilitiesSvc.getPets(facilitiesVO.getFacilitiesId()).pets == '1' ? 'checked' : ''}><span class="material-icons md-18">pets</span></label>
                   </div>
                   <div class="button-row d-flex mt-4">
-                    <button class="btn btn-primary js-btn-prev" type="button" title="Prev">Prev</button>
-                    <button class="btn ml-auto" type="reset" title="Reset">Reset</button>
-                    <button class="btn btn-success ml-auto" type="submit" title="Send" id="btn_submit">Send</button>
-                    <input type="hidden" name="action" value="insert">
-                    <input type="submit" value="é€å‡ºæ–°å¢">
+                    
+                       <button class="btn btn-primary js-btn-prev" type="button" title="Prev">Prev</button>
+                       <button class="btn ml-auto" type="reset" title="Reset">Reset</button>
+
+                    <div>
+                       <input type="hidden" name="action" value="insert">
+                       <button class="btn btn-success ml-auto" type="submit">Send</button>
+                    </div>
                   </div>
                 </div>
               </div>
- 
-            </form>
+            </div>
           </div>
+        </FORM>
         </div>
-<!--         </FORM> -->
       </div>
-    </div>
-    
-        <!-- é…å¥—å½ˆå‡ºè¦–çª— -->
+      
+     <!-- °t®M¼u¥Xµøµ¡ -->
     <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
       <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">è«‹æ–°å¢é…å¥—è¡Œç¨‹</h5>
+            <h5 class="modal-title" id="exampleModalLabel">½Ğ·s¼W°t®M¦æµ{</h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
@@ -321,16 +341,20 @@ imput{
           <div class="modal-body">
             <form>
               <div class="form-group">
-                <label for="recipient-name" class="col-form-label">è¡Œç¨‹åç¨±</label>
+                <label for="recipient-name" class="col-form-label">¦æµ{¦WºÙ</label>
                 <input type="text" class="form-control" id="recipient-name">
               </div>
               <div class="form-group">
-                <label for="recipient-people" class="col-form-label">äººæ•¸</label>
+                <label for="recipient-people" class="col-form-label">¤H¼Æ</label>
                 <input type="text" class="form-control" id="recipient-people">
               </div>
               <div class="form-group">
-                <label for="recipient-price" class="col-form-label">åƒ¹éŒ¢</label>
+                <label for="recipient-price" class="col-form-label">»ù¿ú</label>
                 <input type="text" class="form-control" id="recipient-price">
+              </div>
+              <div class="form-group">
+                <label for="recipient-price" class="col-form-label">¦~ÄÖ­­¨î</label>
+                <input type="text" class="form-control" id="recipient-age">
               </div>
               <div class="form-group">
                 <label for="message-text" class="col-form-label">Message:</label>
@@ -345,101 +369,202 @@ imput{
         </div>
       </div>
     </div>
-<!--     </FORM> -->
-
-<%-- éŒ¯èª¤è¡¨åˆ— --%>
-<c:if test="${not empty errorMsgs}">
-	<font style="color:red">è«‹ä¿®æ­£ä»¥ä¸‹éŒ¯èª¤:</font>
-	<ul>
-		<c:forEach var="message" items="${errorMsgs}">
-			<li style="color:red">${message}</li>
-		</c:forEach>
-	</ul>
-</c:if>
-
-<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/camprelease/camprelease.do" name="form1">
-<table>
-	<tr>
-		<td>ç‡Ÿåœ°åç¨±:</td>
-		<td><input type="TEXT" name="campName" size="45" 
-			 value="<%= (campreleaseVO==null)? "å¤©å¤©ç‡Ÿåœ°å ´" : campreleaseVO.getCampName()%>" /></td>
-	</tr>
-	<tr>
-		<td>åœ°é»:</td>
-		<td><input type="TEXT" name="location" size="45"
-			 value="<%= (campreleaseVO==null)? "å°åŒ—å¸‚å¤§å®‰å€23è™Ÿ" : campreleaseVO.getLocation()%>" /></td>
-	</tr>
-	<tr>
-		<td>ç¶“åº¦:</td>
-		<td><input type="TEXT" name="latitude" size="45"
-			 value="<%= (campreleaseVO==null)? "23.567" : campreleaseVO.getLatitude()%>" /></td>
-	</tr>
-	<tr>
-		<td>ç·¯åº¦:</td>
-		<td><input type="TEXT" name="longtitude" size="45"
-			 value="<%= (campreleaseVO==null)? "50.2321" : campreleaseVO.getLongtitude()%>" /></td>
-	</tr>
-	<tr>
-		<td>ç‡Ÿåœ°ä»‹ç´¹:</td>
-		<td><input type="TEXT" name="campDescription" size="45"
-		     value="<%= (campreleaseVO==null)? "é€™æ˜¯ç‡Ÿåœ°å€,å¯ä»¥éœ²ç‡Ÿé€™æ¨£" : campreleaseVO.getCampDescription()%>" /></td>
-	</tr>
-	<tr>
-		<td>åƒ¹éŒ¢:</td>
-		<td><input type="TEXT" name="campPrice" size="45"
-		     value="<%= (campreleaseVO==null)? "1000" : campreleaseVO.getCampPrice()%>" /></td>
-	</tr>
-	<tr>
-		<td>æ—¥æœŸ:</td>
-		<td><input type="TEXT" name="listedTime" size="45" id="f_date1"></td>
-	</tr>
-	<tr>
-		<td>Pic1:</td>
-		<td><input type="file" size="50" name="picture1"
-		     value="<%= (campreleaseVO==null)? "" : campreleaseVO.getPicture1()%>" /></td>
-	</tr>
-	<tr>
-		<td>Pic2:</td>
-		<td><input type="file" size="50" name="picture2"
-		     value="<%= (campreleaseVO==null)? "" : campreleaseVO.getPicture2()%>" /></td>
-	</tr>
-	<tr>
-		<td>Pic3:</td>
-		<td><input type="file" size="50" name="picture3"
-		     value="<%= (campreleaseVO==null)? "" : campreleaseVO.getPicture3()%>" /></td>
-	</tr>
-	<tr>
-		<td>Pic4:</td>
-		<td><input type="file" size="50" name="picture4"
-		     value="<%= (campreleaseVO==null)? "" : campreleaseVO.getPicture4()%>" /></td>
-	</tr>
-	<tr>
-		<td>Pic5:</td>
-		<td><input type="file" size="50" name="picture5"
-		     value="<%= (campreleaseVO==null)? "" : campreleaseVO.getPicture5()%>" /></td>
-	</tr>
-	<tr>
-		<td>æœƒå“¡ç·¨è™Ÿ:<font color=red><b>*</b></font></td>
-		<td><select size="1" name="memberId">
+    
+<!-- ¦Ñ®v½d¨Ò -->
+<%-- ¿ù»~ªí¦C --%>
+<%-- <c:if test="${not empty errorMsgs}"> --%>
+<!-- 	<font style="color:red">½Ğ­×¥¿¥H¤U¿ù»~:</font> -->
+<!-- 	<ul> -->
+<%-- 		<c:forEach var="message" items="${errorMsgs}"> --%>
+<%-- 			<li style="color:red">${message}</li> --%>
+<%-- 		</c:forEach> --%>
+<!-- 	</ul> -->
+<%-- </c:if> --%>
+<%-- <jsp:useBean id="campreleaseSvc" scope="page" class="com.camprelease.model.CampReleaseService" /> --%>
+<%-- <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/camprelease/camprelease.do" name="form1" enctype="multipart/form-data"> --%>
+<!-- <table> -->
+<!-- <tr> -->
+<!-- 		<td>¿ï¾Ü·|­û½s¸¹:<font color=red><b>*</b></font></td> -->
+<!-- 		<td><select size="1" name="memberId"> -->
+<%-- 		<c:forEach var="campreleaseVO" items="${campreleaseSvc.all}"> --%>
+<%-- 		<option value="${campreleaseVO.memberId}">${campreleaseVO.memberId}</c:forEach> --%>
+<!-- 		</select> -->
+<!-- 		</td> -->
+<!-- 	</tr> -->
+<!-- 	<tr> -->
+<!-- 		<td>Àç¦a¦WºÙ:</td> -->
+<!-- 		<td><input type="TEXT" name="campName" size="45"  -->
+<%-- 			 value="<%= (campreleaseVO==null)? "¤Ñ¤ÑÀç¦a³õ" : campreleaseVO.getCampName()%>" /></td> --%>
+<!-- 	</tr> -->
+<!-- 	<tr> -->
+<!-- 		<td>¦aÂI:</td> -->
+<!-- 		<td><input type="TEXT" name="location" size="45" -->
+<%-- 			 value="<%= (campreleaseVO==null)? "¥x¥_¥«¤j¦w°Ï23¸¹" : campreleaseVO.getLocation()%>" /></td> --%>
+<!-- 	</tr> -->
+<!-- 	<tr> -->
+<!-- 		<td>¸g«×:</td> -->
+<!-- 		<td><input type="TEXT" name="latitude" size="45" -->
+<%-- 			 value="<%= (campreleaseVO==null)? "23.567" : campreleaseVO.getLatitude()%>" /></td> --%>
+<!-- 	</tr> -->
+<!-- 	<tr> -->
+<!-- 		<td>½n«×:</td> -->
+<!-- 		<td><input type="TEXT" name="longtitude" size="45" -->
+<%-- 			 value="<%= (campreleaseVO==null)? "50.2321" : campreleaseVO.getLongtitude()%>" /></td> --%>
+<!-- 	</tr> -->
+<!-- 	<tr> -->
+<!-- 		<td>Àç¦a¤¶²Ğ:</td> -->
+<!-- 		<td><input type="TEXT" name="campDescription" size="45" -->
+<%-- 		     value="<%= (campreleaseVO==null)? "³o¬OÀç¦a°Ï,¥i¥HÅSÀç³o¼Ë" : campreleaseVO.getCampDescription()%>" /></td> --%>
+<!-- 	</tr> -->
+<!-- 	<tr> -->
+<!-- 		<td>»ù¿ú:</td> -->
+<!-- 		<td><input type="TEXT" name="campPrice" size="45" -->
+<%-- 		     value="<%= (campreleaseVO==null)? "1000" : campreleaseVO.getCampPrice()%>" /></td> --%>
+<!-- 	</tr> -->
+<!-- 	<tr> -->
+<!-- 		<td>¤é´Á:</td> -->
+<!-- 		<td><input type="TEXT" name="listedTime" size="45" id="f_date1"></td> -->
+<!-- 	</tr> -->
+<!-- 	<tr> -->
+<!-- 		<td>Pic1:</td> -->
+<!-- 		<td><input type="file" size="50" name="picture1"/></td> -->
+<!-- 	</tr> -->
+<!-- 	<tr> -->
+<!-- 		<td>Pic2:</td> -->
+<!-- 		<td><input type="file" size="50" name="picture2"/></td> -->
+<!-- 	</tr> -->
+<!-- 	<tr> -->
+<!-- 		<td>Pic3:</td> -->
+<!-- 		<td><input type="file" size="50" name="picture3"/></td> -->
+<!-- 	</tr> -->
+<!-- 	<tr> -->
+<!-- 		<td>Pic4:</td> -->
+<!-- 		<td><input type="file" size="50" name="picture4"/></td> -->
+<!-- 	</tr> -->
+<!-- 	<tr> -->
+<!-- 		<td>Pic5:</td> -->
+<!-- 		<td><input type="file" size="50" name="picture5"/></td> -->
+<!-- 	</tr> -->
+<!-- 	<tr> -->
+<!-- 		<td>·|­û½s¸¹:<font color=red><b>*</b></font></td> -->
+<!-- 		<td><select size="1" name="memberId"> -->
 <%-- 		<c:forEach var="campreleaseVO" items="${deptSvc.all}"> --%>
-				<option value="${campreleaseVO.memberId}" >
+<%-- 				<option value="${campreleaseVO.memberId}" > --%>
 <%-- 			</c:forEach> --%>
-		</select></td>
-	</tr>
+<!-- 		</select></td> -->
+<!-- 	</tr> -->
 
-</table>
-<br>
-<input type="hidden" name="action" value="insert">
-<input type="submit" value="é€å‡ºæ–°å¢">
-</FORM>
-<script src="<%=request.getContextPath()%>/camprelease/js/popper.min.js"></script>
-<script src="<%=request.getContextPath()%>/camprelease/js/bootstrap.min.4.1.3.js"></script>
+<!-- </table> -->
+<!-- <br> -->
+<!-- <input type="hidden" name="action" value="insert"> -->
+<!-- <input type="submit" value="°e¥X·s¼W"> -->
+<!-- </FORM> -->
+<script src="<%=request.getContextPath()%>/camprelease/js/jquery_3.3.1.slim.min.js"></script>
+<%-- <script src="<%=request.getContextPath()%>/camprelease/js/popper.min.js"></script> --%>
+<script src="<%=request.getContextPath()%>/camprelease/js/bootstrap.min4.1.3.js"></script>
+
 <script src="<%=request.getContextPath()%>/camprelease/vendors/jquery/jquery-3.6.0.min.js"></script>
 <script src="<%=request.getContextPath()%>/camprelease/js/camp.js"></script>
 <script src="<%=request.getContextPath()%>/camprelease/js/stepfunction.js"></script>
 <script src="<%=request.getContextPath()%>/camprelease/js/planAlert.js"></script>
 <script src="<%=request.getContextPath()%>/camprelease/js/photoUpload.js"></script>
-</body>
+
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA1SwBl3CYCg1oon98Lyge8VLpxdcx-RZU"></script>
+<!-- <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script> -->
+<script type="text/javascript">
+    var map;
+    var marker;
+    var myLatlng = new google.maps.LatLng('25.055998', '121.539728');
+    var geocoder = new google.maps.Geocoder();
+    var infowindow = new google.maps.InfoWindow();
+    function initialize() {
+        var mapOptions = {
+        zoom: 10,
+        center: myLatlng,
+        mapTypeId: google.maps.MapTypeId.ROADMAP
+        };
+        map = new google.maps.Map(document.getElementById("webbulutumap"), mapOptions);
+        marker = new google.maps.Marker({
+            map: map,
+            position: myLatlng,
+            draggable: true
+        });
+        google.maps.event.addListener(marker, 'dragend', function() {
+            geocoder.geocode({'latLng': marker.getPosition()}, function(results, status) {
+                if (status == google.maps.GeocoderStatus.OK) {
+                    if (results[0]) {
+                        var address_components = results[0].address_components;
+                        var components={};
+                        jQuery.each(address_components, function(k,v1) {jQuery.each(v1.types, function(k2, v2){components[v2]=v1.long_name});});
+                        $('#latitude').val(marker.getPosition().lat());
+                        $('#longitude').val(marker.getPosition().lng());
+                        infowindow.setContent(results[0].formatted_address);
+                        infowindow.open(map, marker);
+                    }
+                }
+            });
+        });
+    }
+    google.maps.event.addDomListener(window, 'load', initialize);
+</script>
+<script>
+  $("#find-address").click(function(){
+    var apiKey = 'AIzaSyA1SwBl3CYCg1oon98Lyge8VLpxdcx-RZU';
+    var  address =  $('#address').val();
+    var addressClean = address.replace(/\s+/g, '+');
+    var geocoder = new google.maps.Geocoder();
+    geocoder.geocode({
+      address: addressClean 
+    }, function(results, status) {
+      console.log(status);
+      if (status == 'OK') {
+        longitude = results[0].geometry.location.lng();
+        latitude = results[0].geometry.location.lat();
+        document.getElementById("longtitude").value = longitude;
+        document.getElementById("latitude").value = latitude;
+        // geocoder is asynchronous, do this in the callback function
+        longitude = $("input#longtitude").val();
+        latitude = $("input#latitude").val();
+        if (longitude && latitude) {
+          longitude = parseFloat(longitude);
+          latitude = parseFloat(latitude);
+          initMap(longitude, latitude);
+        }
+      } else alert("geocode failed")
+    });
+    function initMap(longitude, latitude) {
+    var myLatlng = new google.maps.LatLng(latitude, longitude);
+    var mapOptions = {
+      zoom: 12,
+      center: myLatlng,
+      mapTypeId: google.maps.MapTypeId.ROADMAP
+    }
+    var map = new google.maps.Map(document.getElementById("webbulutumap"), mapOptions);
+    var marker = new google.maps.Marker({
+      position: myLatlng,
+      map: map,
+      draggable: true,
+      title: "Where's your garden?"
+    });
+    google.maps.event.addListener(marker, 'dragend', function() {
+            geocoder.geocode({'latLng': marker.getPosition()}, function(results, status) {
+                if (status == google.maps.GeocoderStatus.OK) {
+                    if (results[0]) {
+                        var address_components = results[0].address_components;
+                        var components={};
+                        jQuery.each(address_components, function(k,v1) {jQuery.each(v1.types, function(k2, v2){components[v2]=v1.long_name});});
+
+                        $('#latitude').val(marker.getPosition().lat());
+                        $('#longtitude').val(marker.getPosition().lng());
+                        infowindow.setContent(results[0].formatted_address);
+                        infowindow.open(map, marker);
+                    }
+                }
+            });
+        });
+  };
+}) 
+</script>
 <!-------------------datetimepicker------------------------->
 <%
   java.sql.Timestamp listedTime = null;
@@ -467,21 +592,15 @@ $.datetimepicker.setLocale('zh');
 $('#f_date1').datetimepicker({
    theme: '',              //theme: 'dark',
    timepicker:true,       //timepicker:true,
-   step: 1,                //step: 60 (é€™æ˜¯timepickerçš„é è¨­é–“éš”60åˆ†é˜)
+   step: 1,                //step: 60 (³o¬Otimepickerªº¹w³]¶¡¹j60¤ÀÄÁ)
    format:'Y-m-d H:i:s',         //format:'Y-m-d H:i:s',
    value: '<%=listedTime%>', // value:   new Date(),
-   //disabledDates:        ['2017/06/08','2017/06/09','2017/06/10'], // å»é™¤ç‰¹å®šä¸å«
-   //startDate:	            '2017/07/10',  // èµ·å§‹æ—¥
-   //minDate:               '-1970-01-01', // å»é™¤ä»Šæ—¥(ä¸å«)ä¹‹å‰
-   //maxDate:               '+1970-01-01'  // å»é™¤ä»Šæ—¥(ä¸å«)ä¹‹å¾Œ
+   //disabledDates:        ['2017/06/08','2017/06/09','2017/06/10'], // ¥h°£¯S©w¤£§t
+   //startDate:	            '2017/07/10',  // °_©l¤é
+   //minDate:               '-1970-01-01', // ¥h°£¤µ¤é(¤£§t)¤§«e
+   //maxDate:               '+1970-01-01'  // ¥h°£¤µ¤é(¤£§t)¤§«á
 });
 
 </script>
-<script src="<%=request.getContextPath()%>/camprelease/js/popper.min.js"></script>
-<script src="<%=request.getContextPath()%>/camprelease/js/bootstrap.min4.1.3.js"></script>
-<script src="<%=request.getContextPath()%>/camprelease/vendors/jquery/jquery-3.6.0.min.js"></script>
-<script src="<%=request.getContextPath()%>/camprelease/js/camp.js"></script>
-<script src="<%=request.getContextPath()%>/camprelease/js/stepfunction.js"></script>
-<script src="<%=request.getContextPath()%>/camprelease/js/planAlert.js"></script>
-<script src="<%=request.getContextPath()%>/camprelease/js/photoUpload.js"></script>
+</body>
 </html>
