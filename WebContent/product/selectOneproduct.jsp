@@ -2,12 +2,16 @@
 <%@ page import="com.Product.model.*"%>
 <%@ page import="java.util.*"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-
+<%@ page import="com.adminList.model.*"%>
 
 <%
   ProductVO productVO = (ProductVO) request.getAttribute("productVO"); 
 
 %>
+
+<%-- <% --%>
+<!-- AdminListVO adminlistVO = (AdminListVO) request.getAttribute("adminlistVO");  -->
+<%-- %> --%>
 
 <html>
 <head>
@@ -102,7 +106,7 @@
         </nav>
     </div>
     <div class="rightside" id="rig-1">
-        <h2>商品資料表</h2><br>
+        <h2>商品資料表</h2><h4><a href='selectAll.jsp'>回首頁</a></h4><br>
         <h3>商品類型：</h3>     
         <div class="dropdown">       		
             <div class="wrap">
@@ -127,8 +131,9 @@
 				<th>類別</th>
 				<th>價格</th>
 				<th>商品數量</th>
-				<th>商品介紹</th>
+				<th>上架人員</th>
 				<th>狀態</th>
+				<th>商品介紹</th>
 				<th>商品圖片1</th>
 				<th>商品圖片2</th>
 				<th>商品圖片3</th>
@@ -140,8 +145,9 @@
 		<td><%= productVO.getPsort()%></td>
 		<td><%= productVO.getPrice()%></td>
 		<td><%= productVO.getInventory()%></td>
-		<td><%= productVO.getDescript()%></td>
+		<td><%= productVO.getAdmin_id()%></td>
 		<td><%= productVO.getSituation()%></td>
+		<td><%= productVO.getDescript()%></td>
 		<td><img src="<%=request.getContextPath() %>/PhotoServlet?id=<%= productVO.getProductno()%>&img=1" >
 		<td><img src="<%=request.getContextPath() %>/PhotoServlet?id=<%= productVO.getProductno()%>&img=2" >
 		<td><img src="<%=request.getContextPath() %>/PhotoServlet?id=<%= productVO.getProductno()%>&img=3" >

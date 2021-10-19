@@ -201,7 +201,7 @@ img{
 
 .rwd-table {
     background: #eee;
-    display: block;
+/*     display: block; */
     padding-top: 100px;
     overflow: hidden;
     width: 900px;
@@ -275,7 +275,7 @@ img{
     .rwd-table th,
     .rwd-table td {
         display: table-cell;
-        padding: 0.25em 0.5em;
+/*         padding: 0.25em 0.5em; */
     }
     .rwd-table th:first-child,
     .rwd-table td:first-child {
@@ -283,7 +283,7 @@ img{
     }
     .rwd-table th:last-child,
     .rwd-table td:last-child {
-        padding-right: 0;
+/*         padding-right: 0; */
     }
     
 }
@@ -426,13 +426,10 @@ div.pop {
 /*     margin-left: 55px; */
    
 }
-/* div.button{ */
-/* 	margin-lift: 8rem; */
-/* } */
 
-/* button.button_editok{ */
-/* 	margin-lift: 20px; */
-/* } */
+button.button_editok{
+	margin-left: 40px;
+}
 .alert{
     	position: relative;
     	padding: 1rem 1rem;
