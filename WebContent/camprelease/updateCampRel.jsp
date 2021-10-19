@@ -1,9 +1,13 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="Big5"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="com.camprelease.model.*"%>
+<%@ page import="com.facilities.model.*"%>
+<%@ page import="java.util.List.*"%>
+
 
 <%
 CampReleaseVO campreleaseVO = (CampReleaseVO) request.getAttribute("campreleaseVO"); //CampReleaseServlet.java (Concroller) 存入req的empVO物件 (包括幫忙取出的campreleaseVO, 也包括輸入資料錯誤時的campreleaseVO物件)
+// List<facilitiesVO> facilitieslist = facilitiesSvc.getFacilitiesVO(facilitiesVO.getfacilitiesId());
 %>
 
 <!DOCTYPE html>
@@ -65,8 +69,8 @@ CampReleaseVO campreleaseVO = (CampReleaseVO) request.getAttribute("campreleaseV
 		</c:forEach>
 	</ul>
 </c:if>
-
-<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/camprelease/camprelease.do" name="form1">
+<jsp:useBean id="campreleaseSvc" scope="page" class="com.camprelease.model.CampReleaseService" />
+<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/camprelease/camprelease.do" name="form1" enctype="multipart/form-data">
 <table>
 	<tr>
 		<td>營地編號:<font color=red><b>*</b></font></td>
@@ -75,9 +79,10 @@ CampReleaseVO campreleaseVO = (CampReleaseVO) request.getAttribute("campreleaseV
 	<tr>
 		<td>會員編號:<font color=red><b>*</b></font></td>
 		<td><%=campreleaseVO.getMemberId()%></td>
+	</tr>
 	<tr>
 		<td>營地名稱:</td>
-		<td><input type="TEXT" name="campName" size="45" value="<%=campreleaseVO.getCampName()%>" /></td>
+		<td><input type="TEXT" name="campName" size="45" value="${campreleaseVO.campName}" ></td>
 	</tr>
 	<tr>
 		<td>地址:</td>
@@ -104,30 +109,51 @@ CampReleaseVO campreleaseVO = (CampReleaseVO) request.getAttribute("campreleaseV
 		<td><input name="listedTime" id="f_date1" type="text" ></td>
 	</tr>
 	<tr>
-		<td>Pic1:</td>
-		<td><input type="file" size="50" name="picture1"
-		     value="<%= (campreleaseVO==null)? "" : campreleaseVO.getPicture1()%>" /></td>
+		<td>pic1:</td>
+		<td><input type="file" name="picture1" /></td>
 	</tr>
 	<tr>
-		<td>Pic2:</td>
-		<td><input type="file" size="50" name="picture2"
-		     value="<%= (campreleaseVO==null)? "" : campreleaseVO.getPicture2()%>" /></td>
+		<td>pic2:</td>
+		<td><input type="file" name="picture2" /></td>
 	</tr>
 	<tr>
-		<td>Pic3:</td>
-		<td><input type="file" size="50" name="picture3"
-		     value="<%= (campreleaseVO==null)? "" : campreleaseVO.getPicture3()%>" /></td>
+		<td>pic3:</td>
+		<td><input type="file" name="picture3" /></td>
 	</tr>
 	<tr>
-		<td>Pic4:</td>
-		<td><input type="file" size="50" name="picture4"
-		     value="<%= (campreleaseVO==null)? "" : campreleaseVO.getPicture4()%>" /></td>
+		<td>pic4:</td>
+		<td><input type="file" name="picture4" /></td>
 	</tr>
 	<tr>
-		<td>Pic5:</td>
-		<td><input type="file" size="50" name="picture5"
-		     value="<%= (campreleaseVO==null)? "" : campreleaseVO.getPicture5()%>" /></td>
+		<td>pic5:</td>
+		<td><input type="file" name="picture5" /></td>
 	</tr>
+	
+<!-- 	<tr> -->
+<!-- 		<td>Pic1:</td> -->
+<!-- 		<td><input type="file" size="50" name="picture1" -->
+<%-- 		     value="<%= (campreleaseVO==null)? "" : campreleaseVO.getPicture1()%>" /></td> --%>
+<!-- 	</tr> -->
+<!-- 	<tr> -->
+<!-- 		<td>Pic2:</td> -->
+<!-- 		<td><input type="file" size="50" name="picture2" -->
+<%-- 		     value="<%= (campreleaseVO==null)? "" : campreleaseVO.getPicture2()%>" /></td> --%>
+<!-- 	</tr> -->
+<!-- 	<tr> -->
+<!-- 		<td>Pic3:</td> -->
+<!-- 		<td><input type="file" size="50" name="picture3" -->
+<%-- 		     value="<%= (campreleaseVO==null)? "" : campreleaseVO.getPicture3()%>" /></td> --%>
+<!-- 	</tr> -->
+<!-- 	<tr> -->
+<!-- 		<td>Pic4:</td> -->
+<!-- 		<td><input type="file" size="50" name="picture4" -->
+<%-- 		     value="<%= (campreleaseVO==null)? "" : campreleaseVO.getPicture4()%>" /></td> --%>
+<!-- 	</tr> -->
+<!-- 	<tr> -->
+<!-- 		<td>Pic5:</td> -->
+<!-- 		<td><input type="file" size="50" name="picture5" -->
+<%-- 		     value="<%= (campreleaseVO==null)? "" : campreleaseVO.getPicture5()%>" /></td> --%>
+<!-- 	</tr> -->
 
 
 </table>

@@ -4,10 +4,12 @@ import java.io.*;
 import java.util.*;
 
 import javax.servlet.*;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.http.*;
 
 import com.camprelease.model.*;
 
+@MultipartConfig
 public class CampReleaseServlet extends HttpServlet {
 
 	public void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
@@ -107,6 +109,35 @@ public class CampReleaseServlet extends HttpServlet {
 				failureView.forward(req, res);
 			}
 		}
+		
+//	if("getUpdate".equals(action)) {
+//			
+//			List<String> errorMsgs = new LinkedList<String>();
+//			// Store this set in the request scope, in case we need to
+//			// send the ErrorPage view.
+//			req.setAttribute("errorMsgs", errorMsgs);
+//			
+//			try {
+//				Integer productno = new Integer(req.getParameter("productno"));
+//				
+//				ProductService proSvc = new ProductService();
+//				ProductVO productVO = proSvc.getOneproduct(productno);
+//				
+//
+//				req.setAttribute("productVO", productVO);
+//				
+//				String url = "/product/update_product.jsp";
+//				RequestDispatcher successView = req.getRequestDispatcher(url);
+//				successView.forward(req, res);
+//				
+//			} catch (Exception e) {
+//				errorMsgs.add("無法取得要修改的資料:" + e.getMessage());
+//				RequestDispatcher failureView = req
+//						.getRequestDispatcher("/product/selectAll.jsp");
+//				failureView.forward(req, res);
+//			}
+//			
+//		}
 
 		if ("update".equals(action)) { // 來自updateCampRel.jsp的請求
 
@@ -119,6 +150,8 @@ public class CampReleaseServlet extends HttpServlet {
 				/*************************** 1.接收請求參數 - 輸入格式的錯誤處理 **********************/
 				Integer campId = new Integer(req.getParameter("campId").trim());
 
+//				Integer memberId = new Integer(req.getParameter("memberId").trim());
+				
 				String campName = req.getParameter("campName");
 				String campNameReg = "^[(\u4e00-\u9fa5)(a-zA-Z0-9_)]{2,10}$";
 				if (campName == null || campName.trim().length() == 0) {
@@ -154,7 +187,7 @@ public class CampReleaseServlet extends HttpServlet {
 				String campDescription = req.getParameter("campDescription").trim();
 				if (campDescription == null || campDescription.trim().length() == 0) {
 					errorMsgs.add("營地介紹請填寫");
-				}
+				} 
 
 				Integer campPrice = null;
 				try {
@@ -171,15 +204,18 @@ public class CampReleaseServlet extends HttpServlet {
 					listedTime = new java.sql.Timestamp(System.currentTimeMillis());
 					errorMsgs.add("請輸入日期!");
 				}
-
-//				// Handle with byte array data
-//				public static void readPicture(byte[] bytes) throws IOException {
-//					FileOutputStream fos = new FileOutputStream("PICTURE1");
-//					fos.write(bytes);
-//					fos.flush();
-//					fos.close();
+				
+//				InputStream in1 = req.getPart("picture1").getInputStream();
+//				byte[] picture1 = null;
+//				if (in1.available() != 0) {
+//					picture1 = new byte[in1.available()];
+//					in1.read(picture1);
+//					in1.close();
+//				} else {
+//					CampsiteService campsiteSvc = new CampsiteService();
+//					picture1 = campsiteSvc.getOneCampsite(campId).getPicture1();
 //				}
-				Integer memberId = new Integer(req.getParameter("memberId").trim());
+
 				
 				Collection<Part> parts = req.getParts();
 				for (Part part : parts) {
@@ -236,22 +272,98 @@ public class CampReleaseServlet extends HttpServlet {
 						} else {
 							picture5 = null;
 						}
+						
+//				Part part1 = req.getPart("picture1");
+//				InputStream in1 = part1.getInputStream();
+//				byte[] picture1 = new byte[in1.available()];
+//				in1.read(picture1);
+//				in1.close();
+////					picture1 = new byte[in1.available()];
+////					in1.read(picture1);
+////					in1.close();
+////				} else {
+////					CampReleaseService campreleaseSvc = new CampReleaseService();
+////					picture1 = campreleaseSvc.getOneCampRelease(campId).getPicture1();
+////				}
+//				Part part2 = req.getPart("picture2");
+//				InputStream in2 = part2.getInputStream();
+//				byte[] picture2 = new byte[in2.available()];
+//				in2.read(picture2);
+//				in2.close();
+////				if (in2.available() != 0) {
+////					picture2 = new byte[in2.available()];
+////					in2.read(picture2);
+////					in2.close();
+////				} else {
+////					CampReleaseService campreleaseSvc = new CampReleaseService();
+////					picture2 = campreleaseSvc.getOneCampRelease(campId).getPicture2();
+////				}
+//				Part part3 = req.getPart("picture3");
+//				InputStream in3 = part3.getInputStream();
+//				byte[] picture3 = new byte[in3.available()];
+//				in3.read(picture3);
+//				in3.close();
+//				
+//				Part part4 = req.getPart("picture4");
+//				InputStream in4 = part4.getInputStream();
+//				byte[] picture4 = new byte[in4.available()];
+//				in4.read(picture4);
+//				in4.close();
+//				
+//				Part part5 = req.getPart("picture5");
+//				InputStream in5 = part5.getInputStream();
+//				byte[] picture5 = new byte[in5.available()];
+//				in5.read(picture5);
+//				in5.close();
+//				
+//				InputStream in3 = req.getPart("picture3").getInputStream();
+//				byte[] picture3 = null;
+//				if (in3.available() != 0) {
+//					picture3 = new byte[in3.available()];
+//					in3.read(picture3);
+//					in3.close();
+//				} else {
+//					CampReleaseService campreleaseSvc = new CampReleaseService();
+//					picture3 = campreleaseSvc.getOneCampRelease(campId).getPicture3();
+//				}
+//				InputStream in4 = req.getPart("picture4").getInputStream();
+//				byte[] picture4 = null;
+//				if (in4.available() != 0) {
+//					picture4 = new byte[in4.available()];
+//					in4.read(picture4);
+//					in4.close();
+//				} else {
+//					CampReleaseService campreleaseSvc = new CampReleaseService();
+//					picture4 = campreleaseSvc.getOneCampRelease(campId).getPicture4();
+//				}
+//				InputStream in5 = req.getPart("picture5").getInputStream();
+//				byte[] picture5 = null;
+//				if (in5.available() != 0) {
+//					picture5 = new byte[in1.available()];
+//					in5.read(picture5);
+//					in5.close();
+//				} else {
+//					CampReleaseService campreleaseSvc = new CampReleaseService();
+//					picture5 = campreleaseSvc.getOneCampRelease(campId).getPicture5();
+//				}
+				
+				CampReleaseVO campreleaseVO = new CampReleaseVO();
+				campreleaseVO.setCampId(campId);
+//				campreleaseVO.setMemberId(memberId);
+				campreleaseVO.setCampName(campName);
+				campreleaseVO.setLocation(location);
+				campreleaseVO.setLatitude(latitude);
+				campreleaseVO.setLongtitude(longtitude);
+				campreleaseVO.setCampDescription(campDescription);
+				campreleaseVO.setCampPrice(campPrice);
+				campreleaseVO.setListedTime(listedTime);
+				campreleaseVO.setPicture1(picture1);
+				campreleaseVO.setPicture2(picture2);
+				campreleaseVO.setPicture3(picture3);
+				campreleaseVO.setPicture4(picture4);
+				campreleaseVO.setPicture5(picture5);
+				
 
-						CampReleaseVO campreleaseVO = new CampReleaseVO();
-						campreleaseVO.setCampId(campId);
-						campreleaseVO.setCampName(campName);
-						campreleaseVO.setLocation(location);
-						campreleaseVO.setLatitude(latitude);
-						campreleaseVO.setLongtitude(longtitude);
-						campreleaseVO.setCampDescription(campDescription);
-						campreleaseVO.setCampPrice(campPrice);
-						campreleaseVO.setListedTime(listedTime);
-						campreleaseVO.setPicture1(picture1);
-						campreleaseVO.setPicture2(picture2);
-						campreleaseVO.setPicture3(picture3);
-						campreleaseVO.setPicture4(picture4);
-						campreleaseVO.setPicture5(picture5);
-						campreleaseVO.setMemberId(memberId);
 
 //				try {
 //					campaddVO.setPicture1(getPictureByteArray(picture1));
@@ -272,7 +384,7 @@ public class CampReleaseServlet extends HttpServlet {
 						CampReleaseService campreleaseSvc = new CampReleaseService();
 						campreleaseVO = campreleaseSvc.updateCampRelease(campName, location, latitude, longtitude,
 								campDescription, campPrice, listedTime, picture1, picture2, picture3, picture4,
-								picture5, memberId, campId);
+								picture5,campId);
 
 						/*************************** 3.修改完成,準備轉交(Send the Success view) *************/
 						req.setAttribute("campreleaseVO", campreleaseVO); // 資料庫update成功後,正確的的campaddVO物件,存入req
@@ -298,6 +410,8 @@ public class CampReleaseServlet extends HttpServlet {
 
 			try {
 				/*************************** 1.接收請求參數 - 輸入格式的錯誤處理 **********************/
+				Integer memberId = new Integer(req.getParameter("memberId").trim());
+				
 				String campName = req.getParameter("campName");
 				String campNameReg = "^[(\u4e00-\u9fa5)(a-zA-Z0-9_)]{2,10}$";
 				if (campName == null || campName.trim().length() == 0) {
@@ -333,7 +447,7 @@ public class CampReleaseServlet extends HttpServlet {
 				String campDescription = req.getParameter("campDescription").trim();
 				if (campDescription == null || campDescription.trim().length() == 0) {
 					errorMsgs.add("營地介紹請填寫");
-				}
+				} 
 
 				Integer campPrice = null;
 				try {
@@ -352,65 +466,192 @@ public class CampReleaseServlet extends HttpServlet {
 					listedTime = new java.sql.Timestamp(System.currentTimeMillis());
 					errorMsgs.add("請勿空白");
 				}
+
+//				Collection<Part> parts = req.getParts();
+//				for (Part part : parts) {
+//					String filename = getFileNameFromPart(part);
+//					if (filename != null && part.getContentType() != null) {
+//						InputStream in1 = req.getPart("picture1").getInputStream();
+//						byte[] picture1 = null;
+//
+//						if (in1.available() != 0) {
+//							picture1 = new byte[in1.available()];
+//							in1.read(picture1);
+//							in1.close();
+//						} else {
+//							picture1 = null;
+//						}
+//						InputStream in2 = req.getPart("picture2").getInputStream();
+//						byte[] picture2 = null;
+//
+//						if (in2.available() != 0) {
+//							picture2 = new byte[in2.available()];
+//							in2.read(picture2);
+//							in2.close();
+//						} else {
+//							picture2 = null;
+//						}
+//						InputStream in3 = req.getPart("picture3").getInputStream();
+//						byte[] picture3 = null;
+//
+//						if (in3.available() != 0) {
+//							picture3 = new byte[in3.available()];
+//							in3.read(picture3);
+//							in3.close();
+//						} else {
+//							picture3 = null;
+//						}
+//						InputStream in4 = req.getPart("picture4").getInputStream();
+//						byte[] picture4 = null;
+//
+//						if (in4.available() != 0) {
+//							picture4 = new byte[in4.available()];
+//							in4.read(picture4);
+//							in4.close();
+//						} else {
+//							picture4 = null;
+//						}
+//						InputStream in5 = req.getPart("picture5").getInputStream();
+//						byte[] picture5 = null;
+//
+//						if (in5.available() != 0) {
+//							picture5 = new byte[in5.available()];
+//							in5.read(picture5);
+//							in5.close();
+//						} else {
+//							picture5 = null;
+//						}
 				
-				Integer memberId = new Integer(req.getParameter("memberId").trim());
-
-				Collection<Part> parts = req.getParts();
-				for (Part part : parts) {
-					String filename = getFileNameFromPart(part);
-					if (filename != null && part.getContentType() != null) {
-						InputStream in1 = req.getPart("picture1").getInputStream();
-						byte[] picture1 = null;
-
-						if (in1.available() != 0) {
-							picture1 = new byte[in1.available()];
-							in1.read(picture1);
-							in1.close();
-						} else {
-							picture1 = null;
-						}
-						InputStream in2 = req.getPart("picture2").getInputStream();
-						byte[] picture2 = null;
-
-						if (in2.available() != 0) {
-							picture2 = new byte[in2.available()];
-							in2.read(picture2);
-							in2.close();
-						} else {
-							picture2 = null;
-						}
-						InputStream in3 = req.getPart("picture3").getInputStream();
-						byte[] picture3 = null;
-
-						if (in3.available() != 0) {
-							picture3 = new byte[in3.available()];
-							in3.read(picture3);
-							in3.close();
-						} else {
-							picture3 = null;
-						}
-						InputStream in4 = req.getPart("picture4").getInputStream();
-						byte[] picture4 = null;
-
-						if (in4.available() != 0) {
-							picture4 = new byte[in4.available()];
-							in4.read(picture4);
-							in4.close();
-						} else {
-							picture4 = null;
-						}
-						InputStream in5 = req.getPart("picture5").getInputStream();
-						byte[] picture5 = null;
-
-						if (in5.available() != 0) {
-							picture5 = new byte[in5.available()];
-							in5.read(picture5);
-							in5.close();
-						} else {
-							picture5 = null;
-						}
+				
+//				InputStream in1 = req.getPart("picture1").getInputStream();
+//				byte[] picture1 = null;
+//				if (in1.available() != 0) {
+//					picture1 = new byte[in1.available()];
+//					in1.read(picture1);
+//					in1.close();
+//				} else {
+//					picture1 = null;
+//				}
+				
+//				 byte[] picture1 = null;
+//				 byte[] picture2 = null;
+//				 byte[] picture3 = null;
+//				 byte[] picture4 = null;
+//				 byte[] picture5 = null;
+//				
+//				try {
+//					 Collection<Part> parts = req.getParts();						 						 
+//					 
+//					 Part part1 = req.getPart("img1");
+//					 InputStream in1 = part1.getInputStream();
+//					 if (in1.available() != 0) {
+//						 in1.close();
+//						 picture1 = new byte[in1.available()];
+//						 in1.read(picture1);
+//						 in1.close();				 
+//					 } else {
+//						 errorMsgs.add("圖片1: 請勿空白");
+//					 }
+//					 
+//					 Part part2 = req.getPart("img2");
+//					 InputStream in2 = part2.getInputStream();
+//					 if(in2.available() != 0) {
+//						 in2.close();
+//						 picture2 = new byte[in2.available()];
+//						 in2.read(picture2);
+//						 in2.close();				 
+//					 } else {
+//						 errorMsgs.add("圖片2: 請勿空白");
+//					 }
+//					 
+//					 Part part3 = req.getPart("img3");
+//					 InputStream in3 = part3.getInputStream();
+//					 if(in3.available() != 0) {
+//						 in3.close();
+//						 picture3 = new byte[in3.available()];
+//						 in3.read(picture3);
+//						 in3.close();				 
+//					 } else {
+//						 errorMsgs.add("圖片3: 請勿空白");
+//					 }
+//					 
+//					 Part part4 = req.getPart("img4");
+//					 InputStream in4 = part4.getInputStream();
+//					 if(in4.available() != 0) {
+//						 in4.close();
+//						 picture4 = new byte[in4.available()];
+//						 in4.read(picture4);
+//						 in4.close();				 
+//					 } else {
+//						 errorMsgs.add("圖片4: 請勿空白");
+//					 }
+//					 Part part5 = req.getPart("img5");
+//					 InputStream in5 = part5.getInputStream();
+//					 if(in5.available() != 0) {
+//						 in5.close();
+//						 picture5 = new byte[in5.available()];
+//						 in5.read(picture5);
+//						 in5.close();				 
+//					 } else {
+//						 errorMsgs.add("圖片5: 請勿空白");
+//					 }
+//					 
+//					 } catch(Exception e) {
+//						 e.printStackTrace();
+//					 }
+				
+				InputStream in1 = req.getPart("picture1").getInputStream();
+				byte[] picture1 = null;
+				if (in1.available() != 0) {
+					picture1 = new byte[in1.available()];
+					in1.read(picture1);
+					in1.close();
+				} else {
+					picture1 = null;
+				}
+				
+				InputStream in2 = req.getPart("picture2").getInputStream();
+				byte[] picture2 = null;
+				if (in2.available() != 0) {
+					picture2 = new byte[in2.available()];
+					in2.read(picture2);
+					in2.close();
+				} else {
+					picture2 = null;
+				}
+				
+				InputStream in3 = req.getPart("picture3").getInputStream();
+				byte[] picture3 = null;
+				if (in3.available() != 0) {
+					picture3 = new byte[in3.available()];
+					in3.read(picture3);
+					in3.close();
+				} else {
+					picture3 = null;
+				}
+				
+				InputStream in4 = req.getPart("picture4").getInputStream();
+				byte[] picture4 = null;
+				if (in4.available() != 0) {
+					picture4 = new byte[in4.available()];
+					in4.read(picture4);
+					in4.close();
+				} else {
+					picture4 = null;
+				}
+				
+				InputStream in5 = req.getPart("picture5").getInputStream();
+				byte[] picture5 = null;
+				if (in5.available() != 0) {
+					picture5 = new byte[in5.available()];
+					in5.read(picture5);
+					in5.close();
+				} else {
+					picture5 = null;
+				}
 
 						CampReleaseVO campreleaseVO = new CampReleaseVO();
+						campreleaseVO.setMemberId(memberId);
 						campreleaseVO.setCampName(campName);
 						campreleaseVO.setLocation(location);
 						campreleaseVO.setLatitude(latitude);
@@ -423,7 +664,6 @@ public class CampReleaseServlet extends HttpServlet {
 						campreleaseVO.setPicture3(picture3);
 						campreleaseVO.setPicture4(picture4);
 						campreleaseVO.setPicture5(picture5);
-						campreleaseVO.setMemberId(memberId);
 						
 //				try {
 //					campaddVO.setPicture1(getPictureByteArray(picture1));
@@ -442,16 +682,15 @@ public class CampReleaseServlet extends HttpServlet {
 
 						/*************************** 2.開始新增資料 ***************************************/
 						CampReleaseService campreleaseSvc = new CampReleaseService();
-						campreleaseVO = campreleaseSvc.addCampRelease(campName, location, latitude, longtitude,
+						campreleaseVO = campreleaseSvc.addCampRelease(memberId, campName, location, latitude, longtitude,
 								campDescription, campPrice, listedTime, picture1, picture2, picture3, picture4,
-								picture5, memberId);
+								picture5);
 
 						/*************************** 3.新增完成,準備轉交(Send the Success view) ***********/
 						String url = "/camprelease/listCampRel.jsp";
 						RequestDispatcher successView = req.getRequestDispatcher(url); // 新增成功後轉交listAddCamp.jsp
 						successView.forward(req, res);
-					}
-				}
+
 				/*************************** 其他可能的錯誤處理 **********************************/
 			} catch (Exception e) {
 				errorMsgs.add(e.getMessage());
@@ -498,8 +737,8 @@ public class CampReleaseServlet extends HttpServlet {
 //	}
 
 	// 取出上傳的檔案名稱 (因為API未提供method,所以必須自行撰寫)
-	public String getFileNameFromPart(Part part) {
-		String header = part.getHeader("content-disposition");
+	public String getFileNameFromPart(Part parts) {
+		String header = parts.getHeader("content-disposition");
 		System.out.println("header=" + header); // 測試用
 		String filename = new File(header.substring(header.lastIndexOf("=") + 2, header.length() - 1)).getName();
 		System.out.println("filename=" + filename); // 測試用

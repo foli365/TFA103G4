@@ -42,6 +42,7 @@ text-align: center;
     <thead>
 	<tr>
 		<th>營地編號</th>
+		<th>會員編號</th>
 		<th>營地名稱</th>
 		<th>地點</th>
 		<th>經度</th>
@@ -58,12 +59,12 @@ text-align: center;
 		<th>pic4</th>
 		<th>pic5</th>
 		<th>設施</th>
-		<th>會員編號</th>
 	</tr>
 	</thead>
 	<tbody>
 	<tr>
 			<td><%=campreleaseVO.getCampId()%></td>
+			<td><%=campreleaseVO.getMemberId()%></td>
 			<td><%=campreleaseVO.getCampName()%></td>
 			<td><%=campreleaseVO.getLocation()%></td>
 			<td><%=campreleaseVO.getLatitude()%></td>
@@ -80,7 +81,6 @@ text-align: center;
 			<td><img src="<%=request.getContextPath() %>/CampReleasePhotoServlet?id=${campreleaseVO.campId}&img=4" width="100">
 			<td><img src="<%=request.getContextPath() %>/CampReleasePhotoServlet?id=${campreleaseVO.campId}&img=5" width="100">
 			<td>設施</td>
-			<td><%=campreleaseVO.getMemberId()%></td>
 	</tr>
 	</tbody>
 </table>
