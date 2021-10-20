@@ -31,39 +31,46 @@
 	</c:if>
 	<FORM METHOD="post"
 		ACTION="<%=request.getContextPath()%>/backendLogin/updatemember.do"
+		enctype="multipart/form-data"
 		name="form1">
+		<input type="hidden" name="photo" value="">
+		<input type="hidden" name="memberStatus" value="">
 		<table>
 			<tr>
 				<td>會員編號:<font color=red><b>*</b></font></td>
 				<td><%=membersVO.getMemberId() %></td>
 			</tr>
 			<tr>
-				<td>會員姓名:</td>
+				<td>會員姓名:<font color=red><b>*</b></font></td>
 				<td><%=membersVO.getName() %></td>
 			</tr>
 			<tr>
-				<td>會員信箱:</td>
-				<td><input type="TEXT" name="adminName" size="45"
-					value="<%=membersVO.getEmail()%>" /></td>
+				<td>會員信箱:<font color=red><b>*</b></font></td>
+				<td><%=membersVO.getEmail()%></td>
 						
 			</tr>
 			<tr>
-				<td>會員地址:</td>
-				<td><input type="TEXT" name="adminName" size="45"
-					value="<%=membersVO.getAddress() %>" /></td>
+				<td>會員地址:<font color=red><b>*</b></font></td>
+				<td><%=membersVO.getAddress()%></td>
 						
 			</tr>
 			<tr>
-				<td>會員連絡電話:</td>
-				<td><input type="TEXT" name="adminName" size="45"
-					value="<%=membersVO.getPhone() %>" /></td>
+				<td>會員連絡電話:<font color=red><b>*</b></font></td>
+				<td><%=membersVO.getPhone()%></td>
 						
 			</tr>
+<!-- 			<tr> -->
+<!-- 				<td>會員狀態:</td> -->
+<!-- 				<td><input type="TEXT" name="adminName" size="45" -->
+<%-- 					value="<%=membersVO.getMemberStatus() %>" /></td> --%>
+<!-- 			</tr> -->
 			<tr>
-				<td>會員身分:</td>
-				<td><input type="TEXT" name="adminName" size="45"
-					value="<%=membersVO.getMemberStatus() %>" /></td>
-						
+				<td>會員狀態:</td>
+				<td><select size="1" name="membership">
+						<option value="0" ${membersVO.getMembership()==0?'selected':''}>一般會員</option>
+						<option value="1" ${membersVO.getMembership()==1?'selected':''}>營地業主</option>
+				</select></td>
+				
 			</tr>
 		</table>
 		<br> <input type="hidden" name="id"

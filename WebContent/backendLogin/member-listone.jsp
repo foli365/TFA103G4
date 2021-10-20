@@ -1,10 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-<%@ page import="com.adminList.model.*"%>
+<%@ page import="com.members.model.*"%>
 <%@ page import="java.util.*"%>
 <%
-	AdminListVO VO = (AdminListVO) request.getAttribute("adminListVO");
+// 	MembersVO vo =(MembersVO) request.getAttribute("MembersVO");
+// 	System.out.println(vo);
+//  	pageContext.setAttribute("vo", vo);
 %>
 <!DOCTYPE html>
 <html>
@@ -61,28 +63,35 @@
 		</nav>
 	</div>
 	<div class="rightside">
-		<h2>管理員帳號單筆查詢</h2>
+		<h2>會員帳號單筆查詢</h2>
 		<br>
 		<div class="searcher">
 			<form action="" class="parent">
-				<input type="text" class="search" placeholder="管理員查詢"> <input
+				<input type="text" class="search" placeholder="會員編號查詢"> <input
 					type="button" name="" id="" class="btn_search">
 			</form>
-			<button type="submit" class="btn btn-outline-success">查詢</button>
+
+			<button type="button" class="btn btn-outline-success">查詢</button>
 		</div>
 		<table id="myTable" class="tablesorter">
 			<thead>
 				<tr>
-					<th>管理員編號</th>
-					<th>管理員密碼</th>
+					<th>會員編號</th>
 					<th>姓名</th>
+					<th>電子信箱</th>
+					<th>連絡電話</th>
+					<th>身分狀態</th>
+					<th width=300px>地址</th>
 				</tr>
 			</thead>
 				<tr>
-
-					<td><%=VO.getAdminId()%></td>
-					<td><%=VO.getAdminPwd()%></td>
-					<td><%=VO.getAdminName()%></td>
+					<td>${MembersVO.memberId}</td>
+					<td>${MembersVO.name}</td>
+					<td>${MembersVO.email}</td>
+					<td>${MembersVO.phone}</td>
+					<td>${MembersVO.membership == 1 ? "營地業主":"一般會員"}</td>
+<%-- 					<td>${VO.memberStatus}</td> --%>
+					<td>${MembersVO.address}</td>
 				</tr>
 		</table>
 	</div>

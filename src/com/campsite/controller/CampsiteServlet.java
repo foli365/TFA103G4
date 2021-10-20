@@ -17,7 +17,7 @@ import com.campsite.model.CampsiteService;
 import com.campsite.model.CampsiteVO;
 
 @MultipartConfig
-public class CampsiteServlet extends HttpServlet {
+public class CampsiteServlet  extends HttpServlet {
 
 	public void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		doPost(req, res);
