@@ -27,6 +27,8 @@ i:hover {
 </style>
 </head>
 <body>
+	<input type="hidden" value="${campOrderVO.guestNumber}" id="maxPerson">
+	<input type="hidden" value="${campOrderVO.orderTotal}" id="totalPrice">
 	<div class="container my-3">
 		<div class="row">
 			<div class="col-8"
@@ -37,14 +39,16 @@ i:hover {
 					<div class="card">
 						<div class="card-body">
 							<h5 class="card-title">${campPlanVO.planName}</h5>
-							<h6 class="card-subtitle mb-2 text-muted">${campPlanVO.planPrice}/每人</h6>
+							<h6 class="card-subtitle mb-2 text-muted">${campPlanVO.planPrice}<span>/每人</span></h6>
+							<input type="hidden" id="plan${campPlanVO.planId}planPrice" value="${campPlanVO.planPrice}">
 							<p class="card-text">${campPlanVO.planOutline}</p>
-							<div class="btn btn-primary add">加至行程</div>
+							<div class="btn btn-success add">加至行程</div>
 							<div class="adjustPlan" style="display: none;">
 								<button class="remove" style="border: 0px; background: white; color: gray">移除</button>
-								<i class="fas fa-minus-circle fa-2x minus" style="color: green;"></i>
-								<span style="font-size: 2rem" class="total" id="${campPlanVO.planId}">0</span>
-								<i class="fas fa-plus-circle fa-2x plus" style="color: green;"></i>
+								<i class="btn fas fa-minus-circle fa-2x minus" style="color: green;"></i>
+								<span style="font-size: 2rem" class="total">0</span>
+								<i class="btn fas fa-plus-circle fa-2x plus" style="color: green;"></i>
+								<input type="hidden" class="planId" value="${campPlanVO.planId}">
 							</div>
 						</div>
 					</div>
@@ -59,12 +63,12 @@ i:hover {
 							card title and make up the bulk of the card's content.</p>
 					</div>
 					<ul class="list-group list-group-flush">
-						<li class="list-group-item">入住日期: ${campOrderVO.checkInDate}</li>
-						<li class="list-group-item">退住日期: ${campOrderVO.checkOutDate}</li>
-						<li class="list-group-item">人數: ${campOrderVO.guestNumber}</li>
+						<li class="list-group-item">入住日期: <span class="float-end">${campOrderVO.checkInDate}</span></li>
+						<li class="list-group-item">退住日期: <span class="float-end">${campOrderVO.checkOutDate}</span></li>
+						<li id="afterHere" class="list-group-item">人數: <span class="float-end">${campOrderVO.guestNumber}</span></li>
 						<li class="list-group-item">
 							<h5 style="display: inline;">總價:</h5>
-							<h5 style="display: inline;">${campOrderVO.orderTotal}</h5>
+							<h5 style="display: inline;"><span class="float-end total">${campOrderVO.orderTotal}</span></h5>
 						</li>
 					</ul>
 				</div>
@@ -75,6 +79,9 @@ i:hover {
 		src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js"></script>
 	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 	<script type="text/javascript">
+	let max = $("#maxPerson").val();
+	let totalPrice = $("#totalPrice").val();
+	console.log($("#totalPrice").val());
 		$(".card-body").on("click", ".add", function() {
 			let add = $(this).closest(".add");
 			let adjust = $(add).next(".adjustPlan");
@@ -83,16 +90,48 @@ i:hover {
 		})
 		$(".adjustPlan").on("click", ".remove", function() {
 			let adjustPlan = $(this).parent();
-			let add = adjustPlan.prev(".add")
-			$(adjustPlan).hide()
-			$(add).toggleClass("d-none")
+			let add = adjustPlan.prev(".add");
+			let planId = $(this).siblings(".planId").val();
+			$(this).siblings(".total").text("0");
+			$(adjustPlan).hide();
+			$(add).toggleClass("d-none");
+			$("#" + planId).parent().remove();
 		})
 		$(".adjustPlan").on("click", ".plus", function() {
-			let count = 0;
-			let adjustPlan = $(this).parent();
-			let add = adjustPlan.prev(".add")
-			$(adjustPlan).hide()
-			$(add).toggleClass("d-none")
+			let planId = $(this).siblings(".planId").val();
+			let value = parseInt($(this).prev().text())
+			let plus1 = value + 1;
+			if(plus1 > max){
+				plus1 = max;
+			}
+			$(this).prev().text(plus1);
+			let planName = $(this).parent().siblings('.card-title').text();
+			let planPrice = $("#plan" + planId +"planPrice").val();
+			let total = planPrice * plus1;
+			if(plus1 === 1){				
+				let li = '<li class="list-group-item">' + planName + '<small id="'+planId+'">/1位</small><span class="float-end '+ planId +'">' + total + '</span></li>';
+				$("#afterHere").after(li);
+				$(".float-end .total").text(totalPrice + total)
+			} else if (plus1 > 1) {
+				$("#" + planId).text("/" + plus1 + "位");
+				$(".float-end" +"." +  planId).text(total);
+			}
+		})
+		$(".adjustPlan").on("click", ".minus", function() {
+			let planId = $(this).siblings(".planId").val();
+			let value = parseInt($(this).next().text());
+			let planPrice = $("#plan" + planId +"planPrice").val();
+			let minus1 = value - 1;
+			let total = planPrice * minus1;
+			if(minus1 > 0){				
+				$(this).next().text(minus1);
+				$("#" + planId).text("/" + minus1 + "位");
+				$(".float-end" +"." +  planId).text(total);
+				$(".float-end .total").text(totalPrice - total)
+			} else if (minus1 === 0){
+				$(this).next().text(minus1);
+				$("#" + planId).parent().remove();
+			}
 		})
 	</script>
 </body>
