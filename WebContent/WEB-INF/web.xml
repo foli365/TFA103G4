@@ -109,6 +109,14 @@
 		<servlet-name>Member</servlet-name>
 		<url-pattern>/backendLogin/updatemember.do</url-pattern>
 	</servlet-mapping>
+	<servlet>
+		<servlet-name>CampsearchServlet</servlet-name>
+		<servlet-class>com.admin.controller.CampsearchServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>CampsearchServlet</servlet-name>
+		<url-pattern>/backendLogin/camplistone.do</url-pattern>
+	</servlet-mapping>
 	
 	<!-- 志全的 -->
 	<servlet>

@@ -63,6 +63,7 @@
 	<div class="rightside">
 		<h2>管理員帳號單筆查詢</h2>
 		<br>
+		<h3><a href='manager.jsp'>回管理員帳號管理</a></h3>
 		<div class="searcher">
 			<form action="" class="parent">
 				<input type="text" class="search" placeholder="管理員查詢"> <input

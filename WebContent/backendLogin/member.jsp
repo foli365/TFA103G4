@@ -69,16 +69,16 @@
 	<div class="rightside">
 		<h2>會員管理</h2>
 		<br>
-		<h3>會員類型：</h3>
-		<div class="dropdown">
-			<button class="btn btn-secondary dropdown-toggle" type="button"
-				id="dropdownMenuButton1" data-bs-toggle="dropdown"
-				aria-expanded="false">請選擇</button>
-			<ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-				<li><a class="dropdown-item" href="#">一般會員</a></li>
-				<li><a class="dropdown-item" href="#">營地業主</a></li>
+		<c:if test="${not empty errorMsgs}">
+			<font style="color: red">請修正以下錯誤:</font>
+			<ul>
+				<c:forEach var="message" items="${errorMsgs}">
+					<li style="color: red">${message}</li>
+				</c:forEach>
 			</ul>
-		</div>
+		</c:if>
+		<br>
+		
 		<div class="searcher">
 			<FORM METHOD="post"
 				ACTION="<%=request.getContextPath()%>/backendLogin/updatemember.do">

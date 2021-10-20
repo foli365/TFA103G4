@@ -2,6 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ page import="com.members.model.*"%>
+<%@ page import="com.campsite.model.*"%>
 <%@ page import="java.util.*"%>
 <%
 // 	MembersVO vo =(MembersVO) request.getAttribute("MembersVO");
@@ -10,6 +11,12 @@
 %>
 <!DOCTYPE html>
 <html>
+<style>
+img {
+	width: 100px;
+	height: 100px;
+}
+</style>
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
@@ -63,12 +70,12 @@
 		</nav>
 	</div>
 	<div class="rightside">
-		<h2>會員帳號單筆查詢</h2>
+		<h2>營地單筆查詢</h2>
 		<br>
-		<h3><a href='menber.jsp'>回會員帳號管理</a></h3>
+		<h3><a href='camp.jsp'>回營地列表</a></h3>
 		<div class="searcher">
 			<form action="" class="parent">
-				<input type="text" class="search" placeholder="會員編號查詢"> <input
+				<input type="text" class="search" placeholder="營地編號查詢"> <input
 					type="button" name="" id="" class="btn_search">
 			</form>
 
@@ -77,22 +84,27 @@
 		<table id="myTable" class="tablesorter">
 			<thead>
 				<tr>
-					<th>會員編號</th>
-					<th>姓名</th>
-					<th>電子信箱</th>
-					<th>連絡電話</th>
-					<th>身分狀態</th>
-					<th width=300px>地址</th>
+					<th>營地編號</th>
+					<th>營地業主</th>
+					<th>營地名稱</th>
+					<th>營地位置</th>
+					<th>營地上架日期</th>
+					<th>營地審核狀態</th>
+					<th>營地檢舉次數</th>
+					<th>營地營業許可證</th>
 				</tr>
 			</thead>
 				<tr>
-					<td>${MembersVO.memberId}</td>
-					<td>${MembersVO.name}</td>
-					<td>${MembersVO.email}</td>
-					<td>${MembersVO.phone}</td>
-					<td>${MembersVO.membership == 1 ? "營地業主":"一般會員"}</td>
-<%-- 					<td>${VO.memberStatus}</td> --%>
-					<td>${MembersVO.address}</td>
+					<td>${CampsiteVO.campId}</td>
+					<td>${memSvc.findByPrimaryKey(CampsiteVO.memberId).name}</td>
+					<td>${CampsiteVO.campName}</td>
+					<td>${CampsiteVO.location}</td>
+					<td>${CampsiteVO.listedTime}</td>
+					<td>${CampsiteVO.siteState}</td>
+					<td>${CampsiteVO.reportedCount}</td>
+					<td><img
+						src="<%=request.getContextPath()%>/CampsiteGifReader?column=camp_license&camp_id=${CampsiteVO.campId}"
+						class="pic"></td>
 				</tr>
 		</table>
 	</div>

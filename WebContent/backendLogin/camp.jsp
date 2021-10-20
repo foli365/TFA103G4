@@ -3,11 +3,16 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ page import="com.campsite.model.*"%>
+<%@ page import="com.members.model.*"%>
 <%@ page import="java.util.*"%>
 <%
 	CampsiteService dao = new CampsiteService();
 	List<CampsiteVO> list = dao.getAll();
 	pageContext.setAttribute("list", list);
+%>
+<%
+	MemberService memSvc = new MemberService();
+	pageContext.setAttribute("memSvc", memSvc);
 %>
 <!DOCTYPE html>
 <html>
@@ -73,31 +78,31 @@ img {
 	</div>
 	<div class="rightside">
 		<h2>營地列表</h2>
-		<h3>營地位置：</h3>
-		<div class="dropdown">
-			<button class="btn btn-secondary dropdown-toggle" type="button"
-				id="dropdownMenuButton1" data-bs-toggle="dropdown"
-				aria-expanded="false">請選擇</button>
-			<ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-				<li><a class="dropdown-item" href="#">北部</a></li>
-				<li><a class="dropdown-item" href="#">中部</a></li>
-				<li><a class="dropdown-item" href="#">南部</a></li>
-				<li><a class="dropdown-item" href="#">東部</a></li>
+		<br><br><br>
+		<c:if test="${not empty errorMsgs}">
+			<font style="color: red">請修正以下錯誤:</font>
+			<ul>
+				<c:forEach var="message" items="${errorMsgs}">
+					<li style="color: red">${message}</li>
+				</c:forEach>
 			</ul>
-		</div>
+		</c:if>
+		<br>
 		<div class="searcher">
-			<form action="" class="parent">
-				<input type="text" class="search" placeholder="營地查詢"> <input
-					type="button" name="" id="" class="btn_search">
-			</form>
-
-			<button type="button" class="btn btn-outline-success">查詢</button>
+			<FORM METHOD="post"
+				ACTION="<%=request.getContextPath()%>/backendLogin/camplistone.do">
+				<input type="text" class="search" name="campId" placeholder="營地編號查詢">
+				<input type="hidden" name="action" id="" class="btn_search"
+					value="getOne_For_Display">
+				<button type="submit" class="btn btn-outline-success">查詢</button>
+				<button type="button" class="btn btn-outline-success" id="export">匯出</button>
+			</Form>
 		</div>
 		<table id="myTable" class="tablesorter">
 			<thead>
 				<tr>
 					<th>營地編號</th>
-					<th>會員編號</th>
+					<th>營地業主</th>
 					<th>營地名稱</th>
 					<th>營地位置</th>
 					<th>營地上架日期</th>
@@ -105,7 +110,6 @@ img {
 					<th>營地檢舉次數</th>
 					<th>營地營業許可證</th>
 					<th>修改</th>
-					<th>移除</th>
 
 				</tr>
 			</thead>
@@ -115,7 +119,7 @@ img {
 				<tr>
 
 					<td>${VO.campId}</td>
-					<td>${VO.memberId}</td>
+					<td>${memSvc.findByPrimaryKey(VO.memberId).name}</td>
 					<td>${VO.campName}</td>
 					<td>${VO.location}</td>
 					<td>${VO.listedTime}</td>
@@ -123,28 +127,17 @@ img {
 					<td>${VO.reportedCount}</td>
 					<td><img
 						src="<%=request.getContextPath()%>/CampsiteGifReader?column=camp_license&camp_id=${VO.campId}"
-						class="pic"></td>9
+						class="pic"></td>
 					<td>
 						<FORM METHOD="post"
 							ACTION="<%=request.getContextPath()%>/backendLogin/AdminServlet.do"
 							style="margin-bottom: 0px;">
 							<input type="submit" value="修改"> <input type="hidden"
-								name="campId" value="${VO.campId}"> <input
-								type="hidden" name="action" value="getOne_For_Update">
+								name="campId" value="${VO.campId}"> <input type="hidden"
+								name="action" value="getOne_For_Update">
 						</FORM>
 					</td>
-					<td>
-						<FORM METHOD="post"
-							ACTION="<%=request.getContextPath()%>/backendLogin/AdminServlet.do"
-							style="margin-bottom: 0px;">
-							<input type="submit" value="刪除"> <input type="hidden"
-								name="campId" value="${VO.campId}"> <input
-								type="hidden" name="action" value="delete">
-						</FORM>
-					</td>
-
 				</tr>
-
 			</c:forEach>
 		</table>
 		<%@ include file="page2.file"%>
