@@ -126,47 +126,47 @@
 
 
 
-<ul>
-  <li><a href='listCampRel.jsp'>List</a> all Camps.  <br><br></li>
+<!-- <ul> -->
+<!--   <li><a href='listCampRel.jsp'>List</a> all Camps.  <br><br></li> -->
   
 
 <%--   <jsp:useBean id="campreleaseSvc" scope="page" class="com.camprelease.model.CampReleaseService" /> --%>
 <%--   <c:forEach var="campaddVO" items="${list}"></c:forEach>  --%>
 
-  <li>
-     <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/camprelease/camprelease.do" >
-       <b>選擇營地編號:</b>
-       <select size="1" name="campId">          
-         <c:forEach var="campreleaseVO" items="${campreleaseSvc.all}" > 
-          <option value="${campreleaseVO.campId}">${campreleaseVO.campId}
-         </c:forEach>   
-       </select>
-       <input type="hidden" name="action" value="getOne_For_Display">
-       <input type="submit" value="送出">
-    </FORM>
-  </li>
+<!--   <li> -->
+<%--      <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/camprelease/camprelease.do" > --%>
+<!--        <b>選擇營地編號:</b> -->
+<!--        <select size="1" name="campId">           -->
+<%--          <c:forEach var="campreleaseVO" items="${campreleaseSvc.all}" >  --%>
+<%--           <option value="${campreleaseVO.campId}">${campreleaseVO.campId} --%>
+<%--          </c:forEach>    --%>
+<!--        </select> -->
+<!--        <input type="hidden" name="action" value="getOne_For_Display"> -->
+<!--        <input type="submit" value="送出"> -->
+<!--     </FORM> -->
+<!--   </li> -->
 
-  <li>
-     <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/camprelease/camprelease.do" >
-       <b>選擇營地名稱:</b>
-       <select size="1" name="campId">
-         <c:forEach var="campreleaseVO" items="${campreleaseSvc.all}" > 
-          <option value="${campreleaseVO.campId}">${campreleaseVO.campName}
-         </c:forEach>   
-       </select>
-       <input type="hidden" name="action" value="getOne_For_Display">
-       <input type="submit" value="送出">
-     </FORM>
-  </li>
+<!--   <li> -->
+<%--      <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/camprelease/camprelease.do" > --%>
+<!--        <b>選擇營地名稱:</b> -->
+<!--        <select size="1" name="campId"> -->
+<%--          <c:forEach var="campreleaseVO" items="${campreleaseSvc.all}" >  --%>
+<%--           <option value="${campreleaseVO.campId}">${campreleaseVO.campName} --%>
+<%--          </c:forEach>    --%>
+<!--        </select> -->
+<!--        <input type="hidden" name="action" value="getOne_For_Display"> -->
+<!--        <input type="submit" value="送出"> -->
+<!--      </FORM> -->
+<!--   </li> -->
 
-</ul>
+<!-- </ul> -->
 
 
-<h3>營地資料管理</h3>
+<!-- <h3>營地資料管理</h3> -->
 
-<ul>
-  <li><a href='<%=request.getContextPath()%>/camprelease/addCampRel.jsp'>Add</a> a new Camp.</li>
-</ul>
+<!-- <ul> -->
+<%--   <li><a href='<%=request.getContextPath()%>/camprelease/addCampRel.jsp'>Add</a> a new Camp.</li> --%>
+<!-- </ul> -->
 
 
 <script src="<%=request.getContextPath()%>/camprelease/js/popper.min.2.10.2.js"></script>

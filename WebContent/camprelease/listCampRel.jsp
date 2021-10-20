@@ -4,6 +4,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ page import="java.util.*"%>
 <%@ page import="com.camprelease.model.*"%>
+<%@ page import="com.facilities.model.*"%>
 
 <%
 CampReleaseDAO dao = new CampReleaseDAO();
@@ -19,7 +20,7 @@ CampReleaseDAO dao = new CampReleaseDAO();
 <title>All營地資料</title>
   <link rel='stylesheet' href='<%=request.getContextPath()%>/camprelease/css/jquery.dataTables.min.css' />
   <link rel="stylesheet" href="<%=request.getContextPath()%>/camprelease/css/bootstrap.min5.1.0.css">
-
+  <link rel="stylesheet" href="<%=request.getContextPath()%>/camprelease/css/icon.css">
     <style>
         div.dataTables_wrapper {
         background-color: whitesmoke;
@@ -27,12 +28,53 @@ CampReleaseDAO dao = new CampReleaseDAO();
         margin: 0 auto;
     }
     body{
-        background-color: #FFEEE1;
+        background-color: #7B7571; 
     }
+    
+         /* 以下設備 */
+      .setting-label{
+        position: relative;
+        display: inline-block;
+        line-height: 1em;
+        overflow: hidden;
+        margin: 0 5px 5px 0;
+        cursor: pointer;
+      }
+      .setting-label > input{
+        position: absolute;
+        top: -20px;
+        left: -20px;
+      }
+      .setting-label > span{
+        position: relative;
+        display: block;
+        padding: 10px 12px 10px 10px;
+        color: #000;
+        font-weight: 500;
+        background-color: lightgray;
+        /* white-space: nowrap;
+        border-radius: 2em; */
+        -webkit-border-radius: 2em;
+        -moz-border-radius: 2em;
+      }
+      .setting-label > span > i{
+        opacity: 1;
+      }
+      .setting-label:hover > span{
+        color:#fff;
+        background-color: #F4A249;
+      }
+      .setting-label:hover >span.male{
+        background-color: #F4A249;
+      }
+      .setting-label input:checked + span{
+        background-color: #f23557;
+        color: white;
+      }
     </style>
     
 </head>
-    <body style="background-color: #7B7571;">
+    <body>
 <%-- 錯誤表列 --%>
 <c:if test="${not empty errorMsgs}">
 	<font style="color:red">請修正以下錯誤:</font>
@@ -93,7 +135,14 @@ CampReleaseDAO dao = new CampReleaseDAO();
 			<td><img src="<%=request.getContextPath() %>/CampReleasePhotoServlet?id=${campreleaseVO.campId}&img=3" width="100"></td>
 			<td><img src="<%=request.getContextPath() %>/CampReleasePhotoServlet?id=${campreleaseVO.campId}&img=4" width="100"></td>
 			<td><img src="<%=request.getContextPath() %>/CampReleasePhotoServlet?id=${campreleaseVO.campId}&img=5" width="100"></td>
-			<td>設施</td>
+			<td>
+			      <div>
+                    <label class="setting-label circle-line" for="setting[]"><input type="checkbox" name="bbq" id="bbq" value="1" ${facilitiesSvc.findByCampId(facilitiesVO.getCampId()).bbq == '1' ? 'checked' : ''}><span class="material-icons md-18">outdoor_grill</span></label>
+                    <label class="setting-label circle-line" for="setting[]"><input type="checkbox" name="wifi" id="wifi" value="1" ${facilitiesSvc.findByCampId(facilitiesVO.getCampId()).wifi == '1' ? 'checked' : ''}><span class="material-icons md-18">wifi</span></label>
+                    <label class="setting-label circle-line" for="setting[]"><input type="checkbox" name="nosmoke" id="nosmoke" value="1" ${facilitiesSvc.findByCampId(facilitiesVO.getCampId()).nosmoke == '1' ? 'checked' : ''}><span class="material-icons md-18">smoke_free</span></label>
+                    <label class="setting-label circle-line" for="setting[]"><input type="checkbox" name="pets" id="pets" value="1" ${facilitiesSvc.findByCampId(facilitiesVO.getCampId()).pets == '1' ? 'checked' : ''}><span class="material-icons md-18">pets</span></label>
+                  </div>
+			</td>
             <td>
 <!--                   <br>     -->
 <!--                   <p> -->
