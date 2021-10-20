@@ -9,6 +9,7 @@
 	CampOrderVO campOrderVO = (CampOrderVO) request.getAttribute("campOrderVO");
 	List<PlanVO> planList = planSvc.getOnePlan(campOrderVO.getCampId());
 	pageContext.setAttribute("list", planList);
+	System.out.println(planList);
 %>
 <!DOCTYPE html>
 <html>
@@ -31,8 +32,8 @@ i:hover {
 	<input type="hidden" value="${campOrderVO.orderTotal}" id="totalPrice">
 	<div class="container my-3">
 		<div class="row">
-			<div class="col-8"
-				style="padding: 35px 50px; width: 800px; border: 1px solid #EBEBEB;">
+			<div class="col-6"
+				style="padding: 35px 50px; border: 1px solid #EBEBEB;">
 				<h3>讓露營不再只是露營</h3>
 				<P>加選以下的配套活動讓旅程更添風味</P>
 				<c:forEach var="campPlanVO" items="${list}">
@@ -54,7 +55,7 @@ i:hover {
 					</div>
 				</c:forEach>
 			</div>
-			<div class="col-4 d-flex justify-content-center">
+			<div class="col-6 d-flex justify-content-center">
 				<div class="card" style="width: 16rem;">
 					<img src="" class="card-img-top" alt="camp-site-image">
 					<div class="card-body">

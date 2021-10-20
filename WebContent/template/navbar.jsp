@@ -9,7 +9,7 @@
 <nav class="navbar navbar-expand-md navbar-light sticky-top"
 	style="background-color: #fbefe7;">
 	<div class="container-fluid">
-		<a class="navbar-brand ms-lg-5" href="../homepage/index.jsp"
+		<a class="navbar-brand ms-lg-5" href="<%=request.getContextPath()%>/homepage/index.jsp"
 			style="font-size: 1.25em;">GoCamping</a>
 		<button class="navbar-toggler" type="button" data-bs-toggle="collapse"
 			data-bs-target="#navbarSupportedContent"
@@ -26,7 +26,7 @@
 				</button>
 			</form>
 			<ul class="navbar-nav ms-auto mb-2 mb-lg-0 me-xl-5">
-				<li class="nav-item"><a id="hosting" class="nav-link" href="#"
+				<li class="nav-item"><a id="hosting" class="nav-link" href="<%=request.getContextPath()%>/camprelease/addCampRel.jsp"
 					style="color: green;">上架營地</a></li>
 				<li class="nav-item"><a class="nav-link" href="#"
 					style="color: #E40580;">商城</a></li>
@@ -43,9 +43,11 @@
 					<ul class="dropdown-menu dropdown-menu-end "
 						aria-labelledby="navbarDropdown">
 						<li><a class="dropdown-item"
-							href="../account/account_center.jsp">會員中心</a></li>
+							href="<%=request.getContextPath()%>/account/account_center.jsp">會員中心</a></li>
 						<li><a class="dropdown-item"
-							href="../account/edit_profile.jsp">編輯會員資料</a></li>
+							href="<%=request.getContextPath()%>/account/camp_management.jsp">營地管理</a></li>
+						<li><a class="dropdown-item"
+							href="<%=request.getContextPath()%>/account/edit_profile.jsp">編輯會員資料</a></li>
 						<li>
 							<hr class="dropdown-divider">
 						</li>

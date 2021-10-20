@@ -1,7 +1,9 @@
 package com.camprelease.model;
 
-import java.util.*;
-import java.sql.*;
+import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class CampReleaseService {
 	
@@ -72,5 +74,13 @@ public class CampReleaseService {
 	
 	public List<CampReleaseVO> getAll() {
 		return dao.getAll();
+	}
+	
+	public List<CampReleaseVO> getAllforMember(Integer memberId){
+		List<CampReleaseVO> list = dao.getAll();
+		List<CampReleaseVO> newList = list.stream()
+				.filter(e -> e.getMemberId().equals(memberId))
+				.collect(Collectors.toList());
+		return newList;
 	}
 }
