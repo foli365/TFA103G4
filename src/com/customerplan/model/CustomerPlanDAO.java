@@ -5,10 +5,10 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.plan.model.PlanVO;
 
 public class CustomerPlanDAO implements CustomerPlanDAO_interface{
 	
@@ -26,7 +26,7 @@ public class CustomerPlanDAO implements CustomerPlanDAO_interface{
 	public static final String GET_ALL = "SELECT CAMP_ORDER_ID, PLAN_ID, PLAN_GUEST_NUMBER, PLAN_BATCH, "
 			+ "PLAN_ORDER_PRICE FROM CUSTOMER_PLAN ORDER BY CAMP_ORDER_ID && PLAN_ID";
 	
-	static { // 一個環境只需要載入一次驅動
+	static { // 銝��憓��閬�銝�甈⊿���
 		try {
 			Class.forName(DRIVER);
 		} catch (ClassNotFoundException ce) {
@@ -251,5 +251,51 @@ public class CustomerPlanDAO implements CustomerPlanDAO_interface{
 			}
 		}
 		return customerPlanList;
+	}
+	public void insert2 (CustomerPlanVO customerPlanVO , Connection con) {
+
+		PreparedStatement pstmt = null;
+
+		try {
+
+     		pstmt = con.prepareStatement(INSERT_STMT);
+
+     		pstmt.setInt(1, customerPlanVO.getCampOrderId());
+			pstmt.setInt(2, customerPlanVO.getPlanId());
+			pstmt.setInt(3, customerPlanVO.getPlanGuestNumber());
+			pstmt.setString(4, customerPlanVO.getPlanBatch());
+			pstmt.setInt(5, customerPlanVO.getPlanOrderPrice());
+
+			Statement stmt=	con.createStatement();
+			//stmt.executeUpdate("set auto_increment_offset=7001;"); //自增主鍵-初始值
+			stmt.executeUpdate("set auto_increment_increment=1;");   //自增主鍵-遞增
+			pstmt.executeUpdate();
+
+			// Handle any SQL errors
+		} catch (SQLException se) {
+			if (con != null) {
+				try {
+					// 3●設定於當有exception發生時之catch區塊內
+					System.err.print("Transaction is being ");
+					System.err.println("rolled back-由-emp");
+					con.rollback();
+				} catch (SQLException excep) {
+					throw new RuntimeException("rollback error occured. "
+							+ excep.getMessage());
+				}
+			}
+			throw new RuntimeException("A database error occured. "
+					+ se.getMessage());
+			// Clean up JDBC resources
+		} finally {
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+		}
+
 	}
 }

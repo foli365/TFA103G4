@@ -5,13 +5,15 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<%@ include file="/template/navbar.jsp" %>
+<link
+		href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css"
+		rel="stylesheet">
 <link rel="stylesheet"
-	href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"/>
+	href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" />
 <style type="text/css">
 body {
-	background: url("<%=request.getContextPath()%>/img/searchByEmail.jpg") no-repeat
-		center center fixed;
+	background: url("<%=request.getContextPath()%>/img/searchByEmail.jpg")
+		no-repeat center center fixed;
 	-webkit-background-size: cover;
 	-moz-background-size: cover;
 	-o-background-size: cover;
@@ -21,18 +23,36 @@ body {
 .container {
 	box-shadow: 0 1px 2px rgb(0 0 0/ 10%), 0 2px 4px rgb(0 0 0/ 10%);
 }
+
 .container:after {
 	position: absolute;
 	content: "";
-	top:120px;
+	top: 120px;
 	height: 120px;
 	width: 1px;
 }
 </style>
 </head>
 <body>
+	<nav class="navbar navbar-expand-md navbar-light sticky-top"
+		style="background-color: #7E8B66;">
+		<div class="container-fluid">
+			<a class="navbar-brand ms-lg-5"
+				href="<%=request.getContextPath()%>/homepage/index.jsp"
+				style="font-size: 1.25em; color: #FBEFE7;">GoCamping</a>
+			<button class="navbar-toggler" type="button"
+				data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+				aria-controls="navbarSupportedContent" aria-expanded="false"
+				aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+		</div>
+		<input type="hidden" id="account" value="${name}">
+	</nav>
 	<input type="hidden" id="success" value="${success}">
-	<div style="max-width: 550px; margin-top: 100px; margin-bottom: -100px;" class="alert alert-success mx-auto" role="alert" id="successNotice">
+	<div
+		style="max-width: 550px; margin-top: 100px; margin-bottom: -100px;"
+		class="alert alert-success mx-auto" role="alert" id="successNotice">
 		<h4 class="alert-heading">
 			<i class="fas fa-check-circle"></i>&nbsp;寄送成功!
 		</h4>
@@ -40,7 +60,7 @@ body {
 		${success}
 	</div>
 	<div
-		style="margin-top: 120px;height: 260px; max-width: 550px; background-color: #FBEFE7; border-radius: 8px"
+		style="margin-top: 120px; height: 260px; max-width: 550px; background-color: #FBEFE7; border-radius: 8px"
 		class="container">
 		<h3 class="px-2" style="padding-top: 30px">尋找您的帳號</h3>
 		<hr>

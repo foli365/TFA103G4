@@ -6,10 +6,9 @@
 <%@ page import="com.plan.model.*"%>
 <%
 	PlanService planSvc = new PlanService();
-	CampOrderVO campOrderVO = (CampOrderVO) request.getAttribute("campOrderVO");
-	List<PlanVO> planList = planSvc.getOnePlan(campOrderVO.getCampId());
+	Integer campId = ((CampOrderVO)session.getAttribute("campOrderVO")).getCampId();
+	List<PlanVO> planList = planSvc.getOnePlan(campId);
 	pageContext.setAttribute("list", planList);
-	System.out.println(planList);
 %>
 <!DOCTYPE html>
 <html>
@@ -32,7 +31,7 @@ i:hover {
 	<input type="hidden" value="${campOrderVO.orderTotal}" id="totalPrice">
 	<div class="container my-3">
 		<div class="row">
-			<div class="col-6"
+			<div class="col-md-7"
 				style="padding: 35px 50px; border: 1px solid #EBEBEB;">
 				<h3>讓露營不再只是露營</h3>
 				<P>加選以下的配套活動讓旅程更添風味</P>
@@ -55,7 +54,7 @@ i:hover {
 					</div>
 				</c:forEach>
 			</div>
-			<div class="col-6 d-flex justify-content-center">
+			<div class="col-md-5 d-flex justify-content-center">
 				<div class="card" style="width: 16rem;">
 					<img src="" class="card-img-top" alt="camp-site-image">
 					<div class="card-body">
@@ -72,6 +71,7 @@ i:hover {
 							<h5 style="display: inline;"><span class="float-end total">${campOrderVO.orderTotal}</span></h5>
 						</li>
 					</ul>
+					<button id="submit" type="button" class="btn btn-primary" style="border: 0px; color: white; height: 45px; margin-top: 8px;">確定</button>
 				</div>
 			</div>
 		</div>
@@ -81,8 +81,8 @@ i:hover {
 	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 	<script type="text/javascript">
 	let max = $("#maxPerson").val();
-	let totalPrice = $("#totalPrice").val();
-	console.log($("#totalPrice").val());
+	let iniPrice = parseInt($("#totalPrice").val());
+	let campId = parseInt($("#campId").val());
 		$(".card-body").on("click", ".add", function() {
 			let add = $(this).closest(".add");
 			let adjust = $(add).next(".adjustPlan");
@@ -93,46 +93,91 @@ i:hover {
 			let adjustPlan = $(this).parent();
 			let add = adjustPlan.prev(".add");
 			let planId = $(this).siblings(".planId").val();
-			$(this).siblings(".total").text("0");
+			let currTotal = parseInt($(".float-end.total").text());
+			let removedTotal = parseInt($(".float-end" +"." +  planId).text());
+			if($(this).siblings(".total").text() == 0){
+				$("#" + planId).parent().remove();
+				$(".float-end.total").text(currTotal);
+			} else{
+				$(this).siblings(".total").text("0");
+				$("#" + planId).parent().remove();
+				$(".float-end.total").text(currTotal - removedTotal)
+			}
 			$(adjustPlan).hide();
 			$(add).toggleClass("d-none");
-			$("#" + planId).parent().remove();
 		})
 		$(".adjustPlan").on("click", ".plus", function() {
 			let planId = $(this).siblings(".planId").val();
 			let value = parseInt($(this).prev().text())
 			let plus1 = value + 1;
 			if(plus1 > max){
-				plus1 = max;
+				return
 			}
 			$(this).prev().text(plus1);
 			let planName = $(this).parent().siblings('.card-title').text();
-			let planPrice = $("#plan" + planId +"planPrice").val();
+			let planPrice = parseInt($("#plan" + planId +"planPrice").val());
 			let total = planPrice * plus1;
+			let currTotal = parseInt($(".float-end.total").text());
+			let endPrice = currTotal + planPrice;
 			if(plus1 === 1){				
-				let li = '<li class="list-group-item">' + planName + '<small id="'+planId+'">/1位</small><span class="float-end '+ planId +'">' + total + '</span></li>';
+				let li = '<li class="list-group-item">' + planName + '<span class="selectedPlan" id="'+planId+'">/1位</span><span class="float-end '+ planId +'">' + total + '</span></li>';
+				let planIdInput = '<input type="hidden" name="planId" value="'+ planId +'">';
 				$("#afterHere").after(li);
-				$(".float-end .total").text(totalPrice + total)
+				$("#action").after(planIdInput);
+				$(".float-end.total").text(endPrice);
 			} else if (plus1 > 1) {
 				$("#" + planId).text("/" + plus1 + "位");
 				$(".float-end" +"." +  planId).text(total);
+				$(".float-end.total").text(endPrice);
 			}
 		})
 		$(".adjustPlan").on("click", ".minus", function() {
 			let planId = $(this).siblings(".planId").val();
 			let value = parseInt($(this).next().text());
-			let planPrice = $("#plan" + planId +"planPrice").val();
+			let planPrice = parseInt($("#plan" + planId +"planPrice").val());
 			let minus1 = value - 1;
+			if(minus1 < 0){
+				return
+			}
 			let total = planPrice * minus1;
+			let currTotal = parseInt($(".float-end.total").text());
+			let endPrice = currTotal - planPrice;
 			if(minus1 > 0){				
 				$(this).next().text(minus1);
 				$("#" + planId).text("/" + minus1 + "位");
 				$(".float-end" +"." +  planId).text(total);
-				$(".float-end .total").text(totalPrice - total)
+				$(".float-end.total").text(endPrice);
 			} else if (minus1 === 0){
 				$(this).next().text(minus1);
 				$("#" + planId).parent().remove();
+				$(".float-end.total").text(endPrice);
 			}
+		})
+		$("#submit").on("click", function() {
+			let selectedPlan = [];
+			let finalTotal = $(".float-end.total").text()
+			$(".selectedPlan", $(".list-group.list-group-flush")).each(function() {
+				let planId = parseInt($(this).attr("id"));
+				let orderPrice = parseInt($(this).next().text());
+				let str = $(this).text();
+				let guestCount = parseInt(str.substring(1,2));
+				let planJson = {
+						"planId": planId,
+						"planGuestNumber" : guestCount,
+						"planOrderPrice" : orderPrice
+				};
+				selectedPlan.push(planJson);
+			})
+			$.ajax({
+	            type: "post",
+	            url: "<%=request.getContextPath()%>/plan_selected",
+	            contentType: "application/json",
+	            data: JSON.stringify(selectedPlan),
+	            success: function (response) {
+	            	console.log("true");
+	            	window.location.href = "<%=request.getContextPath()%>/bookings/creditcard.jsp?finalPrice=" + finalTotal ;
+	             },
+	        });
 		})
 	</script>
 </body>

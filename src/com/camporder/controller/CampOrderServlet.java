@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -11,8 +12,11 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
+import com.camporder.model.CampOrderDAO;
 import com.camporder.model.CampOrderVO;
+import com.customerplan.model.CustomerPlanVO;
 
 @WebServlet("/campOrder.do")
 public class CampOrderServlet extends HttpServlet {
@@ -88,10 +92,9 @@ public class CampOrderServlet extends HttpServlet {
 				campOrderVO.setOrderDate(orderDate);
 				campOrderVO.setPaymentDeadline(expired);
 				campOrderVO.setOrderTotal(price);
-				req.setAttribute("campOrderVO", campOrderVO);
-				String url = "/bookings/extra_flavour.jsp";
-				RequestDispatcher successView = req.getRequestDispatcher(url);
-				successView.forward(req, res);
+				HttpSession session = req.getSession();
+				session.setAttribute("campOrderVO", campOrderVO);
+				res.sendRedirect("bookings/extra_flavour.jsp");
 			} catch (NumberFormatException NFE) {
 				req.setAttribute("missing", "請先填寫所有欄位後再預定");
 				String url = "/campsite/camp_shopping_cart.jsp";
@@ -101,6 +104,22 @@ public class CampOrderServlet extends HttpServlet {
 			
 		}
 		
+		if ("createOrder".equals(action)) {
+			Integer finalPrice = new Integer(req.getParameter("finalPrice"));
+			HttpSession session = req.getSession();
+			CampOrderVO campOrderVO = (CampOrderVO) session.getAttribute("campOrderVO");
+			List<CustomerPlanVO> list = (List<CustomerPlanVO>) session.getAttribute("planList");
+			campOrderVO.setOrderTotal(finalPrice);
+			CampOrderDAO dao = new CampOrderDAO();
+			try {
+				dao.insertWithPlans(campOrderVO, list);
+				session.removeAttribute("campOrderVO");
+				session.removeAttribute("planList");
+			} catch (ClassNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 		
 	}
 }

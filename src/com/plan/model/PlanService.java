@@ -1,6 +1,7 @@
 package com.plan.model;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class PlanService {
 
@@ -47,6 +48,14 @@ public class PlanService {
 
 	public List<PlanVO> getOnePlan(Integer campId) {
 		return dao.findbyPrimaryKey(campId);
+	}
+	
+	public PlanVO getOnePlanByPlanId(Integer planId) {
+		List<PlanVO> list = dao.getAll();
+		List<PlanVO> planVO = list.stream()
+				.filter(e -> e.getPlanId().equals(planId))
+				.collect(Collectors.toList());
+		return planVO.get(0);
 	}
 
 	public List<PlanVO> getAll() {

@@ -2,10 +2,14 @@ package com.customerplan.model;
 
 import java.io.Serializable;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 public class CustomerPlanVO implements Serializable {
+	@JsonIgnoreProperties(ignoreUnknown = true)
 	private Integer campOrderId;
 	private Integer planId;
 	private Integer planGuestNumber;
+	@JsonIgnoreProperties(ignoreUnknown = true)
 	private String planBatch;
 	private Integer planOrderPrice;
 	

@@ -19,7 +19,7 @@ public class CampsiteTentStatusService {
 		campsiteTentStatusVO.setCampOpeningTime(campOpeningTime);
 		campsiteTentStatusVO.setEmptyCampLeft(emptyCampLeft);
 		dao.add(campsiteTentStatusVO);
-
+		
 		return campsiteTentStatusVO;
 	}
 

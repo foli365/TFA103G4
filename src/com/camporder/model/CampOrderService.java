@@ -4,6 +4,8 @@ import java.sql.Date;
 import java.sql.Timestamp;
 import java.util.List;
 
+import com.customerplan.model.CustomerPlanVO;
+
 public class CampOrderService {
 
 	private CampOrderDAO_interface dao;
@@ -15,9 +17,9 @@ public class CampOrderService {
 	public CampOrderVO addCampOrder(Integer campId, Integer memberId, Integer guestNumber, Date checkInDate,
 			Date checkOutDate, Timestamp orderDate, Timestamp paymentDeadline, String orderStatus, Integer orderTotal,
 			String comment, byte[] picture1, byte[] picture2, byte[] picture3) {
-		
+
 		CampOrderVO campOrderVO = new CampOrderVO();
-		
+
 		campOrderVO.setCampId(campId);
 		campOrderVO.setMemberId(memberId);
 		campOrderVO.setGuestNumber(guestNumber);
@@ -32,16 +34,16 @@ public class CampOrderService {
 		campOrderVO.setPicture2(picture2);
 		campOrderVO.setPicture3(picture3);
 		dao.add(campOrderVO);
-		
+
 		return campOrderVO;
 	}
-	
-	public CampOrderVO updateCampOrder(Integer memberId, Integer guestNumber, Date checkInDate,
-			Date checkOutDate, Timestamp orderDate, Timestamp paymentDeadline, String orderStatus, Integer orderTotal,
-			String comment, byte[] picture1, byte[] picture2, byte[] picture3, Integer campOrderId) {
-		
+
+	public CampOrderVO updateCampOrder(Integer memberId, Integer guestNumber, Date checkInDate, Date checkOutDate,
+			Timestamp orderDate, Timestamp paymentDeadline, String orderStatus, Integer orderTotal, String comment,
+			byte[] picture1, byte[] picture2, byte[] picture3, Integer campOrderId) {
+
 		CampOrderVO campOrderVO = new CampOrderVO();
-		
+
 		campOrderVO.setMemberId(memberId);
 		campOrderVO.setGuestNumber(guestNumber);
 		campOrderVO.setCheckInDate(checkInDate);
@@ -56,19 +58,48 @@ public class CampOrderService {
 		campOrderVO.setPicture3(picture3);
 		campOrderVO.setCampOrderId(campOrderId);
 		dao.update(campOrderVO);
-		
+
 		return campOrderVO;
 	}
-	
+
 	public void deleteCampOrder(Integer campOrderId) {
 		dao.delete(campOrderId);
 	}
-	
+
 	public CampOrderVO getOneCampOrder(Integer campOrderId) {
 		return dao.findbyPrimaryKey(campOrderId);
 	}
-	
+
 	public List<CampOrderVO> getAll() {
 		return dao.getAll();
+	}
+
+	public CampOrderVO insertWithPlan(Integer campId, Integer memberId, Integer guestNumber, Date checkInDate,
+			Date checkOutDate, Timestamp orderDate, Timestamp paymentDeadline, String orderStatus, Integer orderTotal,
+			String comment, byte[] picture1, byte[] picture2, byte[] picture3, List<CustomerPlanVO> list) {
+		
+		CampOrderVO campOrderVO = new CampOrderVO();
+
+		campOrderVO.setCampId(campId);
+		campOrderVO.setMemberId(memberId);
+		campOrderVO.setGuestNumber(guestNumber);
+		campOrderVO.setCheckInDate(checkInDate);
+		campOrderVO.setCheckOutDate(checkOutDate);
+		campOrderVO.setOrderDate(orderDate);
+		campOrderVO.setPaymentDeadline(paymentDeadline);
+		campOrderVO.setOrderStatus(orderStatus);
+		campOrderVO.setOrderTotal(orderTotal);
+		campOrderVO.setComment(comment);
+		campOrderVO.setPicture1(picture1);
+		campOrderVO.setPicture2(picture2);
+		campOrderVO.setPicture3(picture3);
+		try {
+			dao.insertWithPlans(campOrderVO, list);
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return campOrderVO;
 	}
 }
