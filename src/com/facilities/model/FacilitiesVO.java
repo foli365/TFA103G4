@@ -47,9 +47,5 @@ public class FacilitiesVO implements Serializable{
 	public void setPets(Integer pets) {
 		this.pets = pets;
 	}
-	@Override
-	public String toString() {
-		return "FacilitiesVO [facilitiesId=" + facilitiesId + ", campId=" + campId + ", bbq=" + bbq + ", wifi=" + wifi
-				+ ", nosmoke=" + nosmoke + ", pets=" + pets + "]";
-	}
+
 }

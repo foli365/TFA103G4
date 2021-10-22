@@ -3,10 +3,19 @@
 <%@ page import="java.util.*"%>
 <%@ page import="com.camprelease.model.*"%>
 <%@ page import="com.facilities.model.*"%>
+<%@ page import="com.plan.model.*"%>
 
 <%
 CampReleaseVO campreleaseVO = (CampReleaseVO) request.getAttribute("campreleaseVO"); //CampReleaseServlet.java(Concroller), 存入req的campreleaseVO物件
 FacilitiesVO facilitiesVO = (FacilitiesVO) request.getAttribute("facilitiesVO");
+%>
+<%
+PlanVO planVO = (PlanVO) request.getAttribute("planVO");
+%>
+<%
+// CampReleaseService campreleaseSvc = new CampReleaseService();
+// List<CampReleaseVO> list = campreleaseSvc.getAll();
+// pageContext.setAttribute("list",list);
 %>
 
 <!DOCTYPE html>
@@ -95,37 +104,36 @@ text-align: center;
 		<th>營地介紹</th>
 		<th>價錢</th>
 		<th>日期</th>
-		<th>配套名稱</th>
-        <th>配套價格</th>
-        <th>配套搭配人數</th>
 		<th>pic1</th>
 		<th>pic2</th>
 		<th>pic3</th>
 		<th>pic4</th>
 		<th>pic5</th>
+		<th>配套</th>
 		<th>設施</th>
+		<th>修改</th>
+		<th>刪除</th>
 	</tr>
 	</thead>
 	<tbody>
+	<jsp:useBean id="planSvc" scope="page" class="com.plan.model.PlanService" />
 	<tr>
-			<td>${campreleaseVO.campId}</td>
-			<td>${campreleaseVO.memberId}</td>
-			<td>${campreleaseVO.campName}</td>
-			<td>${campreleaseVO.location}</td>
-			<td>${campreleaseVO.latitude}</td>
-			<td>${campreleaseVO.longtitude}</td>
-			<td>${campreleaseVO.campDescription}</td> 
-			<td>${campreleaseVO.campPrice}</td>
-		    <td><fmt:formatDate value="${campreleaseVO.listedTime}"
-					pattern="yyyy-MM-dd HH:mm:ss" /></td>
-			<td>配套名稱</td>
-            <td>配套價格</td>
-            <td>配套搭配人數</td>
+			 <td>【${campreleaseVO.campId}】</td>
+			<td>【${campreleaseVO.memberId}】</td>
+			<td>【${campreleaseVO.campName}】</td>
+			<td>【${campreleaseVO.location}】</td>
+			<td>【${campreleaseVO.latitude}】</td>
+			<td>【${campreleaseVO.longtitude}】</td>
+			<td>【${campreleaseVO.campDescription}】</td> 
+			<td>【${campreleaseVO.campPrice}元】</td>
+		    <td>【<fmt:formatDate value="${campreleaseVO.listedTime}"
+					pattern="yyyy-MM-dd HH:mm:ss" />】</td>
 			<td><img src="<%=request.getContextPath() %>/CampReleasePhotoServlet?id=${campreleaseVO.campId}&img=1" width="100"></td>
 			<td><img src="<%=request.getContextPath() %>/CampReleasePhotoServlet?id=${campreleaseVO.campId}&img=2" width="100"></td>
 			<td><img src="<%=request.getContextPath() %>/CampReleasePhotoServlet?id=${campreleaseVO.campId}&img=3" width="100"></td>
 			<td><img src="<%=request.getContextPath() %>/CampReleasePhotoServlet?id=${campreleaseVO.campId}&img=4" width="100"></td>
 			<td><img src="<%=request.getContextPath() %>/CampReleasePhotoServlet?id=${campreleaseVO.campId}&img=5" width="100"></td>
+            <td>【${planVO.planName}】【${planVO.planGuestLimit}人】【${planVO.planAgeLimit}歲以下】【${planVO.planPrice}元】<br></td>
 			<td>			      
 			      <div>
                     <label class="setting-label circle-line" for="setting[]"><input type="checkbox" name="bbq" id="bbq" value="1" ${facilitiesSvc.findByCampId(facilitiesVO.getCampId()).bbq == '1' ? 'checked' : ''}><span class="material-icons md-18">outdoor_grill</span></label>
@@ -134,6 +142,18 @@ text-align: center;
                     <label class="setting-label circle-line" for="setting[]"><input type="checkbox" name="pets" id="pets" value="1" ${facilitiesSvc.findByCampId(facilitiesVO.getCampId()).pets == '1' ? 'checked' : ''}><span class="material-icons md-18">pets</span></label>
                   </div>
             </td>
+                       <td>
+                  			  <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/camprelease/camprelease.do" style="margin-bottom: 0px;"> 
+			     <input type="submit" value="修改">
+			     <input type="hidden" name="campId"  value="${campreleaseVO.campId}">
+			     <input type="hidden" name="action"	value="getOne_For_Update"></FORM>
+              </td>
+              <td>
+                  <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/camprelease/camprelease.do" style="margin-bottom: 0px;">
+			     <input type="submit" value="刪除">
+			     <input type="hidden" name="campId"  value="${campreleaseVO.campId}">
+			     <input type="hidden" name="action" value="delete"></FORM>
+              </td>
 	</tr>
 	</tbody>
 </table>

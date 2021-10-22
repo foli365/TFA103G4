@@ -10,9 +10,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.camprelease.model.CampReleaseDAO;
-import com.camprelease.model.CampReleaseService;
-import com.camprelease.model.CampReleaseVO;
+import com.camprelease.model.*;
 
 @WebServlet("/CampReleasePhotoServlet")
 public class CampReleasePhotoServlet extends HttpServlet {

@@ -5,14 +5,32 @@
 <%@ page import="java.util.*"%>
 <%@ page import="com.camprelease.model.*"%>
 <%@ page import="com.facilities.model.*"%>
+<%@ page import="com.plan.model.*"%>
 
 <%
-CampReleaseDAO dao = new CampReleaseDAO();
-    List<CampReleaseVO> list = dao.getAll();
+// CampReleaseDAO dao = new CampReleaseDAO();
+//     List<CampReleaseVO> list = dao.getAll();
+//     pageContext.setAttribute("list",list);
+    
+    CampReleaseService campreleaseSvc = new CampReleaseService();
+    List<CampReleaseVO> list = campreleaseSvc.getAll();
     pageContext.setAttribute("list",list);
 %>
+<%
+//     FacilitiesService facilitiesSvc = new FacilitiesService();
+//     List<FacilitiesVO> listfacilities = facilitiesSvc.getAll();
+//     pageContext.setAttribute("listfacilities",listfacilities);
+//     session.setAttribute("facilitiesId", 1);
+//     session.getAttribute("facilitiesId");
+        
+%>
+<%-- <c:if test="${facilitiesId == 1}"> --%>
+<%-- <c:set var="states" value="true"></c:set> --%>
+<%-- </c:if> --%>
 
-
+<%-- <jsp:useBean id="planSvc" scope="page" class="com.plan.model.PlanService" /> --%>
+<%-- <jsp:useBean id="CampreleaseSvc" scope="page" class="com.camprelease.model.CampReleaseService" /> --%>
+<jsp:useBean id="FacilitiesSvc" scope="page" class="com.facilities.model.FacilitiesService" />
 <!DOCTYPE html>
 <html>
 <head>
@@ -102,45 +120,42 @@ CampReleaseDAO dao = new CampReleaseDAO();
             <th>營地介紹</th>
             <th>價錢</th>
             <th>日期</th>
-            <th>配套名稱</th>
-            <th>配套價格</th>
-            <th>配套搭配人數</th>
             <th>pic1</th>
             <th>pic2</th>
             <th>pic3</th>
             <th>pic4</th>
             <th>pic5</th>
+            <th>配套方案</th>
             <th>設施</th>
             <th>修改</th>
             <th>刪除</th>
         </tr>
     </thead>
+    <jsp:useBean id="planSvc" scope="page" class="com.plan.model.PlanService" />
+    <c:forEach var="campreleaseVO"  items="${list}">
     <tbody>
-    <c:forEach var="campreleaseVO" items="${list}">
         <tr>
-            <td>${campreleaseVO.campId}</td>
-			<td>${campreleaseVO.memberId}</td>
-			<td>${campreleaseVO.campName}</td>
-			<td>${campreleaseVO.location}</td>
-			<td>${campreleaseVO.latitude}</td>
-			<td>${campreleaseVO.longtitude}</td>
-			<td>${campreleaseVO.campDescription}</td> 
-			<td>${campreleaseVO.campPrice}</td>
-			<td><fmt:formatDate value="${campreleaseVO.listedTime}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
-			<td>配套名稱</td>
-            <td>配套價格</td>
-            <td>配套搭配人數</td>
+            <td>【${campreleaseVO.campId}】</td>
+			<td>【${campreleaseVO.memberId}】</td>
+			<td>【${campreleaseVO.campName}】</td>
+			<td>【${campreleaseVO.location}】</td>
+			<td>【${campreleaseVO.latitude}】</td>
+			<td>【${campreleaseVO.longtitude}】</td>
+			<td>【${campreleaseVO.campDescription}】</td> 
+			<td>【${campreleaseVO.campPrice}元】</td>
+			<td>【<fmt:formatDate value="${campreleaseVO.listedTime}" pattern="yyyy-MM-dd HH:mm:ss"/>】</td>
 			<td><img src="<%=request.getContextPath() %>/CampReleasePhotoServlet?id=${campreleaseVO.campId}&img=1" width="100"></td>
 			<td><img src="<%=request.getContextPath() %>/CampReleasePhotoServlet?id=${campreleaseVO.campId}&img=2" width="100"></td>
 			<td><img src="<%=request.getContextPath() %>/CampReleasePhotoServlet?id=${campreleaseVO.campId}&img=3" width="100"></td>
 			<td><img src="<%=request.getContextPath() %>/CampReleasePhotoServlet?id=${campreleaseVO.campId}&img=4" width="100"></td>
 			<td><img src="<%=request.getContextPath() %>/CampReleasePhotoServlet?id=${campreleaseVO.campId}&img=5" width="100"></td>
+			<td><c:forEach var="planVO" items="${planSvc.all}"><c:if test="${campreleaseVO.campId == planVO.campId}">【${planVO.planName}】【${planVO.planGuestLimit}人】【${planVO.planAgeLimit}歲以下】【${planVO.planPrice}元】<br></c:if></c:forEach></td>
 			<td>
 			      <div>
-                    <label class="setting-label circle-line" for="setting[]"><input type="checkbox" name="bbq" id="bbq" value="1" ${facilitiesSvc.findByCampId(facilitiesVO.getCampId()).bbq == '1' ? 'checked' : ''}><span class="material-icons md-18">outdoor_grill</span></label>
-                    <label class="setting-label circle-line" for="setting[]"><input type="checkbox" name="wifi" id="wifi" value="1" ${facilitiesSvc.findByCampId(facilitiesVO.getCampId()).wifi == '1' ? 'checked' : ''}><span class="material-icons md-18">wifi</span></label>
-                    <label class="setting-label circle-line" for="setting[]"><input type="checkbox" name="nosmoke" id="nosmoke" value="1" ${facilitiesSvc.findByCampId(facilitiesVO.getCampId()).nosmoke == '1' ? 'checked' : ''}><span class="material-icons md-18">smoke_free</span></label>
-                    <label class="setting-label circle-line" for="setting[]"><input type="checkbox" name="pets" id="pets" value="1" ${facilitiesSvc.findByCampId(facilitiesVO.getCampId()).pets == '1' ? 'checked' : ''}><span class="material-icons md-18">pets</span></label>
+                    <label class="setting-label circle-line" for="setting[]"><input type="checkbox" name="bbq" id="bbq" value="1" ${facilitiesSvc.getByCampId(facilitiesVO.getCampId()).bbq == '1' ? 'checked' : ''}><span class="material-icons md-18">outdoor_grill</span></label>
+                    <label class="setting-label circle-line" for="setting[]"><input type="checkbox" name="wifi" id="wifi" value="1" ${facilitiesSvc.getByCampId(facilitiesVO.getCampId()).wifi == '1' ? 'checked' : ''}><span class="material-icons md-18">wifi</span></label>
+                    <label class="setting-label circle-line" for="setting[]"><input type="checkbox" name="nosmoke" id="nosmoke" value="1" ${facilitiesSvc.getByCampId(facilitiesVO.getCampId()).nosmoke == '1' ? 'checked' : ''}><span class="material-icons md-18">smoke_free</span></label>
+                    <label class="setting-label circle-line" for="setting[]"><input type="checkbox" name="pets" id="pets" value="1" ${facilitiesSvc.getByCampId(facilitiesVO.getCampId()).pets == '1' ? 'checked' : ''}><span class="material-icons md-18">pets</span></label>
                   </div>
 			</td>
             <td>
@@ -167,8 +182,8 @@ CampReleaseDAO dao = new CampReleaseDAO();
 			     <input type="hidden" name="action" value="delete"></FORM>
               </td>
         </tr>
-        </c:forEach>
     </tbody>
+        </c:forEach>
     </table>
 </div>
 
