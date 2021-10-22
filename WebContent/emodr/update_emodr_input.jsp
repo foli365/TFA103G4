@@ -1,15 +1,15 @@
-<%@ page contentType="text/html; charset=UTF-8" pageEncoding="Big5"%>
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="com.emodr.model.*"%>
 
 <%
-  EmodrVO emodrVO = (EmodrVO) request.getAttribute("emodrVO"); //EmpServlet.java (Concroller) ¦s¤JreqªºempVOª«¥ó (¥]¬AÀ°¦£¨ú¥XªºempVO, ¤]¥]¬A¿é¤J¸ê®Æ¿ù»~®ÉªºempVOª«¥ó)
+  EmodrVO emodrVO = (EmodrVO) request.getAttribute("emodrVO"); //EmpServlet.java (Concroller) å­˜å…¥reqçš„empVOç‰©ä»¶ (åŒ…æ‹¬å¹«å¿™å–å‡ºçš„empVO, ä¹ŸåŒ…æ‹¬è¼¸å…¥è³‡æ–™éŒ¯èª¤æ™‚çš„empVOç‰©ä»¶)
 %>
 
 <html>
 <head>
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
-<title>­q³æ¸ê®Æ­×§ï - update_emodr_input.jsp</title>
+<title>è¨‚å–®è³‡æ–™ä¿®æ”¹ - update_emodr_input.jsp</title>
 
 <style>
   table#table-1 {
@@ -48,16 +48,16 @@
 
 <table id="table-1">
 	<tr><td>
-		 <h3>­q³æ¸ê®Æ­×§ï - update_emodr_input.jsp</h3>
-		 <h4><a href="select_page.jsp"><img src="images/back1.gif" width="100" height="32" border="0">¦^­º­¶</a></h4>
+		 <h3>è¨‚å–®è³‡æ–™ä¿®æ”¹ - update_emodr_input.jsp</h3>
+		 <h4><a href="select_page.jsp"><img src="images/back1.gif" width="100" height="32" border="0">å›é¦–é </a></h4>
 	</td></tr>
 </table>
 
-<h3>¸ê®Æ­×§ï:</h3>
+<h3>è³‡æ–™ä¿®æ”¹:</h3>
 
-<%-- ¿ù»~ªí¦C --%>
+<%-- éŒ¯èª¤è¡¨åˆ— --%>
 <c:if test="${not empty errorMsgs}">
-	<font style="color:red">½Ğ­×¥¿¥H¤U¿ù»~:</font>
+	<font style="color:red">è«‹ä¿®æ­£ä»¥ä¸‹éŒ¯èª¤:</font>
 	<ul>
 		<c:forEach var="message" items="${errorMsgs}">
 			<li style="color:red">${message}</li>
@@ -68,41 +68,41 @@
 <FORM METHOD="post" ACTION="emodr.do" name="form1">
 <table>
 	<tr>
-		<td>­q³æ½s¸¹:<font color=red><b>*</b></font></td>
+		<td>è¨‚å–®ç·¨è™Ÿ:<font color=red><b>*</b></font></td>
 		<td><%=emodrVO.getEmodr_id()%></td>
 	</tr>
 	
-	<jsp:useBean id="membersSvc" scope="page" class="com.members.model.MemberService" />
+	<jsp:useBean id="membersSvcrex" scope="page" class="com.members.model.MemberService" />
 	<tr>
-		<td>¶R¤è·|­û:<font color=red><b>*</b></font></td>
+		<td>è²·æ–¹æœƒå“¡:<font color=red><b>*</b></font></td>
 		<td><select size="1" name="member_id">
-			<c:forEach var="membersVO" items="${membersSvc.all}">
+			<c:forEach var="membersVO" items="${membersSvcrex.all}">
 				<option value="${membersVO.memberId}" ${(emodrVO.member_id==membersVO.memberId)?'selected':'' } >${membersVO.name}
 			</c:forEach>
 		</select></td>
 	</tr>
 	<tr>
-		<td>­q³æ¤é´Á:</td>
+		<td>è¨‚å–®æ—¥æœŸ:</td>
 		<td><input type="TEXT" name="emodr_date" size="45"	value="<%=emodrVO.getEmodr_date()%>" /></td>
 	</tr>
 	<tr>
-		<td>¦¬³f¤H:</td>
+		<td>æ”¶è²¨äºº:</td>
 		<td><input type="TEXT" name="receipient" size="45"	value="<%=emodrVO.getReceipient()%>" /></td>
 	</tr>
 	<tr>
-		<td>¦¬³f¦a§}:</td>
+		<td>æ”¶è²¨åœ°å€:</td>
 		<td><input type="TEXT" name="addr" size="45"	value="<%=emodrVO.getAddr()%>" /></td>
 	</tr>
 	<tr>
-		<td>¦¬³f¹q¸Ü:</td>
+		<td>æ”¶è²¨é›»è©±:</td>
 		<td><input type="TEXT" name="mobile" size="45" value="<%=emodrVO.getMobile()%>" /></td>
 	</tr>
 	<tr>
-		<td>Á`»ù:</td>
+		<td>ç¸½åƒ¹:</td>
 		<td><input type="TEXT" name="totalprice" size="45" value="<%=emodrVO.getTotalprice()%>" /></td>
 	</tr>
 	<tr>
-		<td>­q³æª¬ºA:</td>
+		<td>è¨‚å–®ç‹€æ…‹:</td>
 		<td><input type="TEXT" name="emodr_status" size="45" value="<%=emodrVO.getEmodr_status()%>" /></td>
 	</tr>
 
@@ -110,11 +110,10 @@
 
 </table>
 <br>
-<input type="hidden" name="action" value="update">
-<input type="hidden" name="emodr_id" value="<%=emodrVO.getEmodr_id()%>">
-<input type="submit" value="°e¥X­×§ï">
+<input type="hidden" name="action" value="update">  <!-- é€å‡ºupdateå­—ä¸²è®“servletå»æ¥ï¼Œå‘Šè¨´servletè¦åšçš„äº‹æ˜¯update -->
+<input type="hidden" name="emodr_id" value="<%=emodrVO.getEmodr_id()%>"> <!-- é€å‡º<%=emodrVO.getEmodr_id()%>è®“servletå»æ¥ï¼Œå‘Šè¨´servlet emodr_idå­—ä¸²-->
+<input type="submit" value="é€å‡ºä¿®æ”¹">
 </FORM>
 </body>
 
-</script>
 </html>

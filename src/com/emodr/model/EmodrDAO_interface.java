@@ -8,6 +8,8 @@ public interface EmodrDAO_interface {
 	public void update(EmodrVO emodrVO);
 
 	public void delete(Integer emodrid);
+	
+	public List<EmodrVO> notDisplay(Integer emodrid);//此方法為不顯示不要的資料
 
 	public EmodrVO findByPrimaryKey(Integer emodrid);
 

@@ -4,17 +4,16 @@
 <%@ page import="com.emodr.model.*"%>
 <%-- 此頁練習採用 EL 的寫法取值 --%>
 
+<%-- 取出 Concroller EmpServlet.java已存入request的EmodrVO物件--%>
 <%
-	EmodrService emodrSvc = new EmodrService();
-	List<EmodrVO> list = emodrSvc.getAll();
-	pageContext.setAttribute("list", list);
+	pageContext.setAttribute("list", request.getAttribute("list"));
 %>
-<jsp:useBean id="membersSvcrex" scope="page"
+<jsp:useBean id="membersSvc" scope="page"
 	class="com.members.model.MemberService" />
 
 <html>
 <head>
-<title>所有訂單資料 - listAllEmodr.jsp</title>
+<title>資料 - listWantEmodr.jsp</title>
 
 <style>
 table#table-1 {
@@ -91,17 +90,18 @@ th, td {
 			<th>總價</th>
 			<th>訂單狀態</th>
 			<th>修改</th>
-			<th>刪除</th>
+<!-- 			<th>刪除</th> -->
 		</tr>
-		<%@ include file="pages/page1.file"%>
-		<c:forEach var="emodrVO" items="${list}" begin="<%=pageIndex%>"
-			end="<%=pageIndex+rowsPerPage-1%>">
+		<%-- 		<%@ include file="pages/page1.file"%> --%>
+		<%-- 		<c:forEach var="emodrVO" items="${list}" begin="<%=pageIndex%>" --%>
+		<%-- 			end="<%=pageIndex+rowsPerPage-1%>"> --%>
+		<c:forEach var="emodrVO" items="${list}">
 
 			<tr>
 				<td>${emodrVO.emodr_id}</td>
 
-<%-- 		    <td>${emodrVO.member_id}</td> --%>
-				<td>${emodrVO.member_id}【${membersSvcrex.findByPrimaryKey(emodrVO.member_id).name}】</td>
+				<%-- 		    <td>${emodrVO.member_id}</td> --%>
+				<td>${emodrVO.member_id}【${membersSvc.findByPrimaryKey(emodrVO.member_id).name}】</td>
 
 				<td>${emodrVO.emodr_date}</td>
 				<td>${emodrVO.receipient}</td>
@@ -119,19 +119,19 @@ th, td {
 							type="hidden" name="action" value="getOne_For_Update">
 					</FORM>
 				</td>
-				<td>
-					<FORM METHOD="post"
-						ACTION="<%=request.getContextPath()%>/emodr/emodr.do"
-						style="margin-bottom: 0px;">
-						<input type="submit" value="刪除"> <input type="hidden"
-							name="emodr_id" value="${emodrVO.emodr_id}"> <input
-							type="hidden" name="action" value="delete">
-					</FORM>
-				</td>
+				<!-- 				<td> -->
+				<!-- 					<FORM METHOD="post" -->
+				<%-- 						ACTION="<%=request.getContextPath()%>/emodr/emodr.do" --%>
+				<!-- 						style="margin-bottom: 0px;"> -->
+				<!-- 						<input type="submit" value="刪除"> <input type="hidden" -->
+				<%-- 							name="emodr_id" value="${emodrVO.emodr_id}"> <input --%>
+				<!-- 							type="hidden" name="action" value="delete"> -->
+				<!-- 					</FORM> -->
+				<!-- 				</td> -->
 			</tr>
 		</c:forEach>
 	</table>
-	<%@ include file="pages/page2.file"%>
+<%-- 	<%@ include file="pages/page2.file"%> --%>
 
 </body>
 </html>

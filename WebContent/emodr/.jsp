@@ -2,19 +2,18 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="java.util.*"%>
 <%@ page import="com.emodr.model.*"%>
-<%-- 此頁練習採用 EL 的寫法取值 --%>
 
 <%
 	EmodrService emodrSvc = new EmodrService();
 	List<EmodrVO> list = emodrSvc.getAll();
 	pageContext.setAttribute("list", list);
 %>
-<jsp:useBean id="membersSvcrex" scope="page"
+<jsp:useBean id="membersSvc" scope="page"
 	class="com.members.model.MemberService" />
 
 <html>
 <head>
-<title>所有訂單資料 - listAllEmodr.jsp</title>
+<title>所有訂單資料</title>
 
 <style>
 table#table-1 {
@@ -63,7 +62,7 @@ th, td {
 			<td>
 				<h3>所有訂單資料</h3>
 				<h4>
-					<a href="<%=request.getContextPath()%>/emodr/select_page.jsp"><img
+					<a href="<%=request.getContextPath()%>/eshop/pages/EShop.jsp"><img
 						src="images/back1.gif" width="100" height="32" border="0">回首頁</a>
 				</h4>
 			</td>
@@ -101,7 +100,7 @@ th, td {
 				<td>${emodrVO.emodr_id}</td>
 
 <%-- 		    <td>${emodrVO.member_id}</td> --%>
-				<td>${emodrVO.member_id}【${membersSvcrex.findByPrimaryKey(emodrVO.member_id).name}】</td>
+				<td>${emodrVO.member_id}【${membersSvc.findByPrimaryKey(emodrVO.member_id).name}】</td>
 
 				<td>${emodrVO.emodr_date}</td>
 				<td>${emodrVO.receipient}</td>

@@ -136,7 +136,15 @@
 		<url-pattern>/camprelease/camprelease.do</url-pattern>
 	</servlet-mapping>
 
-<!-- 佑叡的 -->
+	<!-- 佑叡的 -->
+	<resource-ref>
+		<description>DB Connection</description>
+		<res-ref-name>jdbc/camping</res-ref-name>
+		<res-type>javax.sql.DataSource</res-type>
+		<res-auth>Container</res-auth>
+	</resource-ref>
+
+	<!-- 以下是servlet的明確對應 -->
 	<servlet>
 		<servlet-name>EmodrServlet</servlet-name>
 		<servlet-class>com.emodr.controller.EmodrServlet</servlet-class>
@@ -145,6 +153,25 @@
 		<servlet-name>EmodrServlet</servlet-name>
 		<url-pattern>/emodr/emodr.do</url-pattern>
 	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>ShoppingServlet</servlet-name>
+		<servlet-class>com.eshop.controller.ShoppingServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>ShoppingServlet</servlet-name>
+		<url-pattern>/eshop/Shopping.html</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>PictureServlet</servlet-name>
+		<servlet-class>com.eshop.controller.PictureServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>PictureServlet</servlet-name>
+		<url-pattern>/eshop/PictureServlet</url-pattern>
+	</servlet-mapping>
+
 
 	<!-- <filter> -->
 	<!-- <filter-name>loginFilter</filter-name> -->

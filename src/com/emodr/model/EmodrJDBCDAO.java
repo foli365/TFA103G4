@@ -281,4 +281,12 @@ public class EmodrJDBCDAO implements EmodrDAO_interface {
 
 	}
 
+	@Override
+	public List<EmodrVO> notDisplay(Integer emodrid) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+
 }

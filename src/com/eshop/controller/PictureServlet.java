@@ -1,4 +1,4 @@
-package com.Product.controller;
+package com.eshop.controller;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -6,7 +6,6 @@ import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.ServletOutputStream;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -14,8 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.Product.model.ProductJDBCDAO;
 import com.Product.model.ProductVO;
 
-@WebServlet("/PhotoServlet")
-public class PhotoServlet extends HttpServlet {
+public class PictureServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	ProductJDBCDAO dao = new ProductJDBCDAO();
@@ -30,27 +28,20 @@ public class PhotoServlet extends HttpServlet {
 		res.setContentType("image/gif");
 		ServletOutputStream out = res.getOutputStream();
 		Integer id = Integer.parseInt(req.getParameter("id"));
-		Integer imgid = Integer.parseInt(req.getParameter("img"));
 
 		ProductVO vo1 = dao.findByPrimaryKey(id);
-
-
-		try {
-			switch (imgid) {
-			case 1:
-				out.write(vo1.getPicture1());
-				break;
-			case 2:
-				out.write(vo1.getPicture2());
-				break;
-			default:
-				out.write(vo1.getPicture3());
+//REX  此段用來測試在ProductVO物件中的哪一個picture有值	=======
+		List<byte[]> picList = new ArrayList<byte[]>();
+		picList.add(vo1.getPicture1());
+		picList.add(vo1.getPicture2());
+		picList.add(vo1.getPicture3());
+		int index = 0;
+		for (int i = 0; i < picList.size(); i++) {
+			if (picList.get(i) != null) {
+				index = i;
+				out.write(picList.get(index));
 			}
-
-		} catch (Exception e) {
-
 		}
-
 	}
 
 }
