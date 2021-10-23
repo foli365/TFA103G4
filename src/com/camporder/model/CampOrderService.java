@@ -3,7 +3,9 @@ package com.camporder.model;
 import java.sql.Date;
 import java.sql.Timestamp;
 import java.util.List;
+import java.util.stream.Collectors;
 
+import com.camprelease.model.CampReleaseVO;
 import com.customerplan.model.CustomerPlanVO;
 
 public class CampOrderService {
@@ -72,6 +74,14 @@ public class CampOrderService {
 
 	public List<CampOrderVO> getAll() {
 		return dao.getAll();
+	}
+	
+	public List<CampOrderVO> getByMemberId(Integer memberId) {
+		List<CampOrderVO> list = dao.getAll(); 
+		List<CampOrderVO> newList = list.stream()
+				.filter(e -> e.getMemberId().equals(memberId))
+				.collect(Collectors.toList());
+		return newList;
 	}
 
 	public CampOrderVO insertWithPlan(Integer campId, Integer memberId, Integer guestNumber, Date checkInDate,

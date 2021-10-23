@@ -92,6 +92,7 @@
 				</div>
 				<div class="mt-4 mb-4 d-flex justify-content-between">
 					<span>Previous step</span>
+					<span style="color: red;">${repeat}</span>
 				</div>
 			</div>
 			<div class="col-md-5 d-flex justify-content-center">

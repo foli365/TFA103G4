@@ -31,11 +31,11 @@
 				<li class="nav-item"><a class="nav-link" href="#"
 					style="color: #E40580;">商城</a></li>
 				<li class="nav-item"><a class="nav-link"
-					href="../post/index.jsp" style="color: #0B83ED;">論壇</a></li>
+					href="<%=request.getContextPath()%>/post/index.jsp" style="color: #0B83ED;">論壇</a></li>
 				<li class="nav-item" id="register"><a class="nav-link"
-					href="../register_and_login/register.jsp">註冊</a></li>
+					href="<%=request.getContextPath()%>/register_and_login/register.jsp">註冊</a></li>
 				<li class="nav-item" id="login"><a class="nav-link"
-					href="../register_and_login/login.jsp">登入</a></li>
+					href="<%=request.getContextPath()%>/register_and_login/login.jsp">登入</a></li>
 				<li class="nav-item dropdown" id="accountName"><a
 					style="font-weight: bold;" class="nav-link dropdown-toggle"
 					href="#" id="navbarDropdown" role="button"
