@@ -117,6 +117,14 @@
 		<servlet-name>CampsearchServlet</servlet-name>
 		<url-pattern>/backendLogin/camplistone.do</url-pattern>
 	</servlet-mapping>
+	<servlet>
+		<servlet-name>CampOrderBackendServlet</servlet-name>
+		<servlet-class>com.camporder.controller.CampOrderBackendServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>CampOrderBackendServlet</servlet-name>
+		<url-pattern>/backendLogin/CampOrderBackendServlet.do</url-pattern>
+	</servlet-mapping>
 	
 	<!-- 志全的 -->
 	<servlet>

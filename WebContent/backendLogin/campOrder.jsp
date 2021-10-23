@@ -1,11 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-<%@ page import="com.adminList.model.*"%>
+<%@ page import="com.camporder.model.*"%>
 <%@ page import="java.util.*"%>
-<%
-	AdminService dao = new AdminService();
-	List<AdminListVO> list = dao.getAll();
+<%	
+	CampOrderService dao = new CampOrderService();
+	List<CampOrderVO> list = dao.getAll();
 	pageContext.setAttribute("list", list);
 %>
 <!DOCTYPE html>
@@ -50,7 +50,7 @@
 
 					<ul class="bom-show">
 						<li><a href="#" class="camp_list">營地列表</a></li>
-						  <li><a href='campOrder.jsp'class="camp_order">營地訂單</a></li>
+						 <li><a href='campOrder.jsp'class="camp_order">營地訂單</a></li>
 						<li><a href="#" class="alert_managament">檢舉管理</a></li>
 					</ul></li>
 				<li><a href="#" class="mky-btn">商城管理 <span
@@ -63,7 +63,7 @@
 		</nav>
 	</div>
 	<div class="rightside">
-		<h2>管理員帳號管理</h2>
+		<h2>營地訂單管理管理</h2>
 		<c:if test="${not empty errorMsgs}">
 			<font style="color: red">請修正以下錯誤:</font>
 			<ul>
@@ -75,15 +75,15 @@
 		<br>
 		<div class="searcher">
 			<FORM METHOD="post"
-				ACTION="<%=request.getContextPath()%>/backendLogin/AdminServlet.do">
-				<input type="text" class="search" name="adminId"
+				ACTION="<%=request.getContextPath()%>/backendLogin/CampOrderBackendServlet.do">
+				<input type="text" class="search" name="campOrderId"
 					placeholder="管理員編號查詢"> <input type="hidden" name="action"
 					id="" class="btn_search" value="getOne_For_Display">
 				<button type="submit" class="btn btn-outline-success">查詢</button>
-				<button type="button" class="btn btn-outline-success"
-					onclick="location.href='<%=request.getContextPath()%>/backendLogin/addAdmin.jsp'">新增管理員</button>
-				<button type="button" class="btn btn-outline-success" id="export">匯出</button>
-			</Form>
+<!-- 				<button type="button" class="btn btn-outline-success" -->
+<%-- 					onclick="location.href='<%=request.getContextPath()%>/backendLogin/addAdmin.jsp'">新增管理員</button> --%>
+<!-- 				<button type="button" class="btn btn-outline-success" id="export">匯出</button> -->
+
 
 
 			<!-- 			<button type="button" class="btn btn-outline-success" -->
@@ -92,11 +92,17 @@
 		<table id="myTable" class="tablesorter">
 			<thead>
 				<tr>
-					<th>管理員編號</th>
-					<th>管理員密碼</th>
-					<th>姓名</th>
-					<th>編輯</th>
-					<th>刪除</th>
+					<th>露營訂單編號</th>
+					<th>營地編號</th>
+					<th>會員編號</th>
+					<th>預定人數</th>
+					<th>入住日期</th>
+					<th>退房日期</th>
+					<th>營地下訂時間</th>
+					<th>營地付款截止時間</th>
+					<th>訂單總金額</th>
+					<th>訂單狀態</th>
+<!-- 					<th>修改</th> -->
 				</tr>
 			</thead>
 			<%@ include file="page1.file"%>
@@ -104,28 +110,34 @@
 				end="<%=pageIndex+rowsPerPage-1%>">
 				<tr>
 
-					<td>${VO.adminId}</td>
-					<td>${VO.adminPwd}</td>
-					<td>${VO.adminName}</td>
-
-					<td>
-						<FORM METHOD="post"
-							ACTION="<%=request.getContextPath()%>/backendLogin/AdminServlet.do"
-							style="margin-bottom: 0px;">
-							<input type="submit" value="修改"> <input type="hidden"
-								name="adminId" value="${VO.adminId}"> <input
-								type="hidden" name="action" value="getOne_For_Update">
-						</FORM>
-					</td>
-					<td>
-						<FORM METHOD="post"
-							ACTION="<%=request.getContextPath()%>/backendLogin/AdminServlet.do"
-							style="margin-bottom: 0px;">
-							<input type="submit" value="刪除"> <input type="hidden"
-								name="adminId" value="${VO.adminId}"> <input
-								type="hidden" name="action" value="delete">
-						</FORM>
-					</td>
+					<td>${VO.campOrderId}</td>
+					<td>${VO.campId}</td>
+					<td>${VO.memberId}</td>
+					<td>${VO.guestNumber}</td>
+					<td>${VO.checkInDate}</td>
+					<td>${VO.checkOutDate}</td>
+					<td>${VO.orderDate}</td>
+					<td>${VO.paymentDeadline}</td>
+					<td>${VO.orderTotal}</td>
+					<td>${VO.orderStatus}</td>
+<!-- 					<td> -->
+<!-- 						<FORM METHOD="post" -->
+<%-- 							ACTION="<%=request.getContextPath()%>/backendLogin/AdminServlet.do" --%>
+<!-- 							style="margin-bottom: 0px;"> -->
+<!-- 							<input type="submit" value="修改"> <input type="hidden" -->
+<%-- 								name="adminId" value="${VO.adminId}"> <input --%>
+<!-- 								type="hidden" name="action" value="getOne_For_Update"> -->
+<!-- 						</FORM> -->
+<!-- 					</td> -->
+<!-- 					<td> -->
+<!-- 						<FORM METHOD="post" -->
+<%-- 							ACTION="<%=request.getContextPath()%>/backendLogin/AdminServlet.do" --%>
+<!-- 							style="margin-bottom: 0px;"> -->
+<!-- 							<input type="submit" value="刪除"> <input type="hidden" -->
+<%-- 								name="adminId" value="${VO.adminId}"> <input --%>
+<!-- 								type="hidden" name="action" value="delete"> -->
+<!-- 						</FORM> -->
+<!-- 					</td> -->
 
 				</tr>
 
@@ -151,7 +163,7 @@
 		src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js"
 		integrity="sha384-U1DAWAznBHeqEIlVSCgzq+c9gqGAJn5c/t99JyeKa9xxaYpSvHU5awsuZVVFIhvj"
 		crossorigin="anonymous"></script>
-	<script src="../js/manager.js"></script>
+	<script src="../js/camporder.js"></script>
 	<script>
 		$(document).ready(function(){			
 		$("#export").on("click", function() {

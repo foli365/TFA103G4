@@ -26,4 +26,7 @@ $(".min_picture").on("click", function() {
 $("a.alert_managament").on("click", function() {
     $(window).attr('location', 'alert.jsp');
 });
+$("a.camp_order").on("click", function(){
+	$(window).attr('location', 'campOrder.jsp');
+});
 

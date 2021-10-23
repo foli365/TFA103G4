@@ -1,4 +1,4 @@
-package com.camporder.controller;
+	package com.camporder.controller;
 
 import java.io.IOException;
 import java.sql.Timestamp;
@@ -26,7 +26,7 @@ public class CampOrderServlet extends HttpServlet {
 		String action = req.getParameter("action");
 		if ("book".equals(action)) {
 			try {
-				//¤J¦í¤é´Á
+				//ï¿½Jï¿½ï¿½ï¿½ï¿½
 				String from = req.getParameter("from");
 				java.sql.Date checkedIn = null;
 				try {
@@ -37,7 +37,7 @@ public class CampOrderServlet extends HttpServlet {
 					// TODO: handle exception
 					e.printStackTrace();
 				}
-				//°h¦í¤é´Á
+				//ï¿½hï¿½ï¿½ï¿½ï¿½
 				String to = req.getParameter("to");
 				java.sql.Date checkedOut = null;
 				try {
@@ -48,15 +48,15 @@ public class CampOrderServlet extends HttpServlet {
 					// TODO: handle exception
 					e.printStackTrace();
 				}
-				//Á`¤H¼Æ
+				//ï¿½`ï¿½Hï¿½ï¿½
 				Integer headCount = new Integer(req.getParameter("headCount"));
-				//Á`»ù¿ú
+				//ï¿½`ï¿½ï¿½ï¿½ï¿½
 				Integer price = new Integer(req.getParameter("price"));
-				//·|­ûID
+				//ï¿½|ï¿½ï¿½ID
 				Integer memberId = new Integer(req.getParameter("memberId"));
-				//Àç¦aID
+				//ï¿½ï¿½aID
 				Integer campId = new Integer(req.getParameter("campId"));
-				//¤U©w®É¶¡
+				//ï¿½Uï¿½wï¿½É¶ï¿½
 				String today = req.getParameter("orderDate");
 				Timestamp orderDate = null;
 				try {
@@ -67,7 +67,7 @@ public class CampOrderServlet extends HttpServlet {
 					// TODO: handle exception
 					e.printStackTrace();
 				}
-				//¥I´Ú´Á­­
+				//ï¿½Iï¿½Ú´ï¿½ï¿½ï¿½
 				String deadline = req.getParameter("deadline");
 				Timestamp expired = null;
 				try {
@@ -78,7 +78,7 @@ public class CampOrderServlet extends HttpServlet {
 					// TODO: handle exception
 					e.printStackTrace();
 				}
-				//±N¥H¤WÄÝ©Ê·s¼W¦Ü·sªºÀç¦a­q³æª«¥ó
+				//ï¿½Nï¿½Hï¿½Wï¿½Ý©Ê·sï¿½Wï¿½Ü·sï¿½ï¿½ï¿½ï¿½aï¿½qï¿½æª«ï¿½ï¿½
 				CampOrderVO campOrderVO = new CampOrderVO();
 				campOrderVO.setCampId(campId);
 				campOrderVO.setGuestNumber(headCount);
@@ -93,7 +93,7 @@ public class CampOrderServlet extends HttpServlet {
 				RequestDispatcher successView = req.getRequestDispatcher(url);
 				successView.forward(req, res);
 			} catch (NumberFormatException NFE) {
-				req.setAttribute("missing", "½Ð¥ý¶ñ¼g©Ò¦³Äæ¦ì«á¦A¹w©w");
+				req.setAttribute("missing", "ï¿½Ð¥ï¿½ï¿½ï¿½gï¿½Ò¦ï¿½ï¿½ï¿½ï¿½ï¿½Aï¿½wï¿½w");
 				String url = "/campsite/camp_shopping_cart.jsp";
 				RequestDispatcher failedView = req.getRequestDispatcher(url);
 				failedView.forward(req, res);

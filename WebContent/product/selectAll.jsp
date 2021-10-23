@@ -81,6 +81,7 @@ ProductVO productVO = (ProductVO) request.getAttribute("productVO");
 
 					<ul class="bom-show">
 						<li><a href="#" class="camp_list">營地列表</a></li>
+						  <li><a href="#" class="camp_order">營地訂單</a></li>
 						<li><a href="#" class="alert_managament">檢舉管理</a></li>
 					</ul></li>
                 <li>
