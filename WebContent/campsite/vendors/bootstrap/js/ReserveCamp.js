@@ -1,34 +1,41 @@
-let items = document.querySelectorAll('.carousel .carousel-item')
+$(function() {
+	var date = new Date();
+	$('input[name="datefilter"]').daterangepicker(
+			{
+				autoUpdateInput : false,
+				"alwaysShowCalendars" : true,
+				opens : "right",
+				startDate : date,
+				endDate : moment(date).add(2, 'days'),
+				minDate : date,
+				maxDate : moment(date).add(60, 'days'),
+				autoApply : true,
+				locale : {
+					format : "YYYY/MM/DD",
+					separator : " ~ ",
+					applyLabel : "確定",
+					cancelLabel : "清除",
+					fromLabel : "開始日期",
+					toLabel : "結束日期",
+					daysOfWeek : [ "日", "一", "二", "三", "四", "五", "六" ],
+					monthNames : [ "1月", "2月", "3月", "4月", "5月", "6月", "7月",
+							"8月", "9月", "10月", "11月", "12月" ],
+					firstDay : 1
+				}
 
-items.forEach((el) => {
-    const minPerSlide = 3
-    let next = el.nextElementSibling
-    for (var i = 1; i < minPerSlide; i++) {
-        if (!next) {
-            // wrap carousel by using first child
-            next = items[0]
-        }
-        let cloneChild = next.cloneNode(true)
-        el.appendChild(cloneChild.children[0])
-        next = next.nextElementSibling
-    }
-})
+			});
 
-window.onload =
-    function() {
-        var omDiv = document.getElementsByClassName("order-menu")[0],
-            H = 0,
-            Y = omDiv
-        while (Y) {
-            H += Y.offsetTop;
-            Y = Y.offsetParent;
-        }
-        window.onscroll = function() {
-            var s = document.body.scrollTop || document.documentElement.scrollTop
-            if (s > H) {
-                omDiv.style = "position:fixed;top:0;right:113px"
-            } else {
-                omDiv.style = ""
-            }
-        }
-    }
+	$('input[name="datefilter"]').on(
+			'apply.daterangepicker',
+			function(ev, picker) {
+				$(this).val(
+						picker.startDate.format('YYYY/MM/DD') + ' - '
+								+ picker.endDate.format('YYYY/MM/DD'));
+			});
+
+	$('input[name="datefilter"]').on('cancel.daterangepicker',
+			function(ev, picker) {
+				$(this).val('');
+			});
+
+});

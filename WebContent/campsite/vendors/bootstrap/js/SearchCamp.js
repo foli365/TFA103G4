@@ -1,6 +1,6 @@
 $(function() {
 	var date = new Date();
-	$('input[name="datefilter"]').daterangepicker(
+	$('input[name="CAMP_OPENING_TIME"]').daterangepicker(
 			{
 				autoUpdateInput : false,
 				"alwaysShowCalendars" : true,
@@ -25,17 +25,16 @@ $(function() {
 
 			});
 
-	$('input[name="datefilter"]').on(
+	$('input[name="CAMP_OPENING_TIME"]').on(
 			'apply.daterangepicker',
 			function(ev, picker) {
 				$(this).val(
-						picker.startDate.format('YYYY/MM/DD') + ' - '
-								+ picker.endDate.format('YYYY/MM/DD'));
+						picker.startDate.format('YYYY-MM-DD') + ' ~ '
+								+ picker.endDate.format('YYYY-MM-DD'));
 			});
 
-	$('input[name="datefilter"]').on('cancel.daterangepicker',
+	$('input[name="CAMP_OPENING_TIME"]').on('cancel.daterangepicker',
 			function(ev, picker) {
 				$(this).val('');
 			});
-
 });

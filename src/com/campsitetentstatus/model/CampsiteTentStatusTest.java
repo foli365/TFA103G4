@@ -8,22 +8,22 @@ import java.util.List;
 public class CampsiteTentStatusTest {
 	public static void main(String[] args) {
 		
-		// æ–°å¢ž
-		CampsiteTentStatusVO campsiteTentStatusVO = new CampsiteTentStatusVO();
-		
-		campsiteTentStatusVO.setCampId(5002);
-		
-		Date campOpeningTime = getDate("2021-09-07");
-		campsiteTentStatusVO.setCampOpeningTime(campOpeningTime);
-		
-		campsiteTentStatusVO.setEmptyCampLeft(60);
-		
-		CampsiteTentStatusDAO_interface cpts = new CampsiteTentStatusDAO();
-		cpts.add(campsiteTentStatusVO);
+		// ·s¼W
+//		CampsiteTentStatusVO campsiteTentStatusVO = new CampsiteTentStatusVO();
+//		
+//		campsiteTentStatusVO.setCampId(5002);
+//		
+//		Date campOpeningTime = getDate("2021-09-07");
+//		campsiteTentStatusVO.setCampOpeningTime(campOpeningTime);
+//		
+//		campsiteTentStatusVO.setEmptyCampLeft(60);
+//		
+//		CampsiteTentStatusDAO_interface cpts = new CampsiteTentStatusDAO();
+//		cpts.add(campsiteTentStatusVO);
 		
 		//==============================================================
 		
-		// ä¿®æ”¹
+		// ­×§ï
 		/*CampsiteTentStatusVO campsiteTentStatusVO = new CampsiteTentStatusVO();
 		
 		campsiteTentStatusVO.setEmptyCampLeft(44);
@@ -37,7 +37,7 @@ public class CampsiteTentStatusTest {
 		
 		//==============================================================
 		
-		// åˆªé™¤
+		// §R°£
 		/*CampsiteTentStatusVO campsiteTentStatusVO = new CampsiteTentStatusVO();
 
 		Date campOpeningTime = getDate("2021-09-07");
@@ -47,19 +47,29 @@ public class CampsiteTentStatusTest {
 		
 		//==============================================================
 		
-		// æŸ¥è©¢å–®ç­†
-		/*CampsiteTentStatusDAO_interface cpts = new CampsiteTentStatusDAO();
+		// ¬d¸ß³æµ§
+		CampsiteTentStatusDAO_interface cpts = new CampsiteTentStatusDAO();
 		Date campOpeningTime = getDate("2021-09-07");
 		CampsiteTentStatusVO campsiteTentStatusVO = cpts.findbyPrimaryKey(5001, campOpeningTime);
 		
-		System.out.println(campsiteTentStatusVO);*/
+		System.out.println(campsiteTentStatusVO);
 		
 		//==============================================================
 		
-		// æŸ¥è©¢å¤šç­†
+		// ¬d¸ß¦hµ§
 		/*CampsiteTentStatusDAO_interface cpts = new CampsiteTentStatusDAO();
 		List<CampsiteTentStatusVO> campsiteTentStatusList = cpts.getAll();
 		
+		for(CampsiteTentStatusVO campsiteTentStatusVO : campsiteTentStatusList) {
+			System.out.println(campsiteTentStatusVO);
+		}*/
+		
+		//==============================================================
+		
+		// ¬d¸ß¦hµ§
+		/*CampsiteTentStatusDAO_interface cpts = new CampsiteTentStatusDAO();
+		List<CampsiteTentStatusVO> campsiteTentStatusList = cpts.getAllOfOne(5001);
+
 		for(CampsiteTentStatusVO campsiteTentStatusVO : campsiteTentStatusList) {
 			System.out.println(campsiteTentStatusVO);
 		}*/

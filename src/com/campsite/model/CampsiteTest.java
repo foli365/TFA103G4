@@ -10,12 +10,12 @@ import java.io.InputStream;
 public class CampsiteTest {
 	public static void main(String args[]) throws IOException {
 		
-		// Êñ∞Â¢û
+		// ∑sºW
 		/*CampsiteVO campsiteVO = new CampsiteVO();
 		
 		campsiteVO.setMemberId(4);
 		campsiteVO.setCampName("Tibame");
-		campsiteVO.setLocation("Âçó‰∫¨Âæ©Ëàà");
+		campsiteVO.setLocation("´n® ¥_ø≥");
 		campsiteVO.setLatitude(24.444);
 		campsiteVO.setLongtitude(120.444);
 		campsiteVO.setCampDescription("Tibame");
@@ -40,12 +40,12 @@ public class CampsiteTest {
 		
 		//==============================================================
 		
-		// ‰øÆÊîπÓúñ
+		// ≠◊ßÔîπ
 		/*CampsiteVO campsiteVO = new CampsiteVO();
 		
 		campsiteVO.setMemberId(1);
 		campsiteVO.setCampName("Tibame1");
-		campsiteVO.setLocation("Âçó‰∫¨Âæ©Ëàà");
+		campsiteVO.setLocation("´n® ¥_ø≥");
 		campsiteVO.setLatitude(24.4445);
 		campsiteVO.setLongtitude(120.4445);
 		campsiteVO.setCampDescription("Tibame1");
@@ -72,13 +72,13 @@ public class CampsiteTest {
 		
 		//==============================================================
 		
-		// Âà™Èô§
+		// ßR∞£
 		/*CampsiteDAO_Interface cpst = new CampsiteDAO();
 		cpst.delete(5004);*/
 		
 		//==============================================================
 		
-		// Êü•Ë©¢ÂñÆÁ≠Ü
+		// ¨d∏ﬂ≥Êµß
 		/*CampsiteDAO_Interface cpst = new CampsiteDAO();
 		CampsiteVO campsiteVO = cpst.findbyPrimaryKey(5003);
 		
@@ -86,7 +86,7 @@ public class CampsiteTest {
 
 		//==============================================================
 		
-		// Êü•Ë©¢Â§öÁ≠Ü
+		// ¨d∏ﬂ¶hµß
 		/*CampsiteDAO_Interface cpst = new CampsiteDAO();
 		List<CampsiteVO> campsiteList = cpst.getAll();
 				  
@@ -98,7 +98,7 @@ public class CampsiteTest {
 		
 		// 
 		CampsiteDAO_Interface cpst = new CampsiteDAO();
-		List<CampsiteVO> campsiteList = cpst.getSearchCampsite("Â®ÅÂ∞ºÊñØ");
+		List<CampsiteVO> campsiteList = cpst.getSearchCampsite("´¬•ß¥µ");
 				  
 		for (CampsiteVO campsiteVO : campsiteList) {
 			System.out.println(campsiteVO); 

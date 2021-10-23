@@ -1,8 +1,13 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="BIG5"%>
 <%@ page import="com.campsite.model.*"%>
+<%@ page import="com.members.model.*"%>
 
 <%
 	CampsiteVO campsiteVO = (CampsiteVO) request.getAttribute("campsiteVO"); //CampsiteServlet.java(Concroller), 存入req的campsiteVO物件
+%>
+<%
+	MemberService memberService = new MemberService();
+	MembersVO membersVO = memberService.findByPrimaryKey(campsiteVO.getMemberId());
 %>
 
 <!DOCTYPE html>
@@ -14,9 +19,20 @@
 
 <!-- Bootstrap 的 CSS -->
 <link rel="stylesheet" href="./vendors/bootstrap/css/bootstrap.min.css">
+<!-- 日期選擇器 的 CSS & JS -->
+<script type="text/javascript"
+	src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
+<script type="text/javascript"
+	src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+<script type="text/javascript"
+	src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+<link rel="stylesheet" type="text/css"
+	href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
 <!-- 載入 Font Awesome -->
 <script src="https://kit.fontawesome.com/846e361093.js"
 	crossorigin="anonymous"></script>
+<!-- 載入 CSS & JS -->
+<script src="./vendors/bootstrap/js/ReserveCamp.js"></script>
 <link rel="stylesheet" href="./vendors/bootstrap/css/ReserveCamp.css">
 </head>
 
@@ -74,10 +90,10 @@
 						<div class="col-md-3">
 							<div class="card">
 								<div class="card-img">
-									<img src="//via.placeholder.com/500x400/31f?text=1"
+									<img
+										src="<%=request.getContextPath()%>/CampsiteGifReader?column=picture1&camp_id=${campsiteVO.campId}"
 										class="img-fluid">
 								</div>
-								<div class="card-img-overlay">Slide 1</div>
 							</div>
 						</div>
 					</div>
@@ -85,10 +101,10 @@
 						<div class="col-md-3">
 							<div class="card">
 								<div class="card-img">
-									<img src="//via.placeholder.com/500x400/e66?text=2"
+									<img
+										src="<%=request.getContextPath()%>/CampsiteGifReader?column=picture2&camp_id=${campsiteVO.campId}"
 										class="img-fluid">
 								</div>
-								<div class="card-img-overlay">Slide 2</div>
 							</div>
 						</div>
 					</div>
@@ -96,10 +112,10 @@
 						<div class="col-md-3">
 							<div class="card">
 								<div class="card-img">
-									<img src="//via.placeholder.com/500x400/7d2?text=3"
+									<img
+										src="<%=request.getContextPath()%>/CampsiteGifReader?column=picture3&camp_id=${campsiteVO.campId}"
 										class="img-fluid">
 								</div>
-								<div class="card-img-overlay">Slide 3</div>
 							</div>
 						</div>
 					</div>
@@ -107,10 +123,10 @@
 						<div class="col-md-3">
 							<div class="card">
 								<div class="card-img">
-									<img src="//via.placeholder.com/500x400?text=4"
+									<img
+										src="<%=request.getContextPath()%>/CampsiteGifReader?column=picture4&camp_id=${campsiteVO.campId}"
 										class="img-fluid">
 								</div>
-								<div class="card-img-overlay">Slide 4</div>
 							</div>
 						</div>
 					</div>
@@ -118,10 +134,10 @@
 						<div class="col-md-3">
 							<div class="card">
 								<div class="card-img">
-									<img src="//via.placeholder.com/500x400/aba?text=5"
+									<img
+										src="<%=request.getContextPath()%>/CampsiteGifReader?column=picture5&camp_id=${campsiteVO.campId}"
 										class="img-fluid">
 								</div>
-								<div class="card-img-overlay">Slide 5</div>
 							</div>
 						</div>
 					</div>
@@ -141,11 +157,13 @@
 			<div class="col-8 camp-content">
 				<div class="camp-title">
 					<h2 class="camp-name ">${campsiteVO.campName}</h2>
-					<p class="addr ">地址</p>
-					<p class="cel ">電話</p>
+					<p class="addr ">地址: ${campsiteVO.location}</p>
+					<p class="cel ">
+						電話:
+						<%=membersVO.getPhone()%></p>
 				</div>
 				<div class="camp-detail">
-					<p>營地內容</p>
+					<p>${campsiteVO.campDescription}</p>
 				</div>
 				<div class="camp-comment">
 					<p>營地評論</p>
@@ -155,12 +173,16 @@
 				<form action="">
 					<div class="row">
 						<div class="col ">
-							<p>平均每晚一人</p>
+							<p class="camp-price">$${campsiteVO.campPrice}</p>
+							<p class="avg-person">平均每晚一人</p>
 						</div>
 					</div>
 					<div class="row">
 						<div class="col-6 ">
 							<p>入住日期</p>
+							<input type="text" id="date"
+								class="form-control choose-date has-icon" name="datefilter"
+								value="" placeholder="請選擇日期..." />
 						</div>
 						<div class="col-6 ">
 							<p>退房日期</p>
@@ -193,7 +215,42 @@
 	<!-- body 結束標籤之前，載入Bootstrap 的 JS -->
 	<script src="./vendors/bootstrap/js/bootstrap.bundle.min.js "></script>
 	<!-- body 結束標籤之前，載入Slider 的 JS -->
-	<script src="./vendors/bootstrap/js/ReserveCamp.js "></script>
+	<script>
+	let items = document.querySelectorAll('.carousel .carousel-item')
+
+	items.forEach((el) => {
+	    const minPerSlide = 3
+	    let next = el.nextElementSibling
+	    for (var i = 1; i < minPerSlide; i++) {
+	        if (!next) {
+	            // wrap carousel by using first child
+	            next = items[0]
+	        }
+	        let cloneChild = next.cloneNode(true)
+	        el.appendChild(cloneChild.children[0])
+	        next = next.nextElementSibling
+	    }
+	})
+
+	window.onload =
+	    function() {
+	        var omDiv = document.getElementsByClassName("order-menu")[0],
+	            H = 0,
+	            Y = omDiv
+	        while (Y) {
+	            H += Y.offsetTop;
+	            Y = Y.offsetParent;
+	        }
+	        window.onscroll = function() {
+	            var s = document.body.scrollTop || document.documentElement.scrollTop
+	            if (s > H) {
+	                omDiv.style = "position:fixed;top:0;right:113px"
+	            } else {
+	                omDiv.style = ""
+	            }
+	        }
+	    }
+	</script>
 </body>
 
 </html>

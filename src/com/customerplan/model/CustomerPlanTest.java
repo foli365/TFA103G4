@@ -5,7 +5,7 @@ import java.util.List;
 public class CustomerPlanTest {
 	public static void main(String[] args) {
 		
-		// æ–°å¢ž
+		// ·s¼W
 		/*CustomerPlanVO customerPlanVO = new CustomerPlanVO();
 		
 		customerPlanVO.setCampOrderId(1002);
@@ -19,7 +19,7 @@ public class CustomerPlanTest {
 		
 		//==============================================================
 		
-		// ä¿®æ”¹
+		// ­×§ï
 		/*CustomerPlanVO customerPlanVO = new CustomerPlanVO();
 		
 		customerPlanVO.setPlanGuestNumber(4);
@@ -33,13 +33,13 @@ public class CustomerPlanTest {
 		
 		//==============================================================
 		
-		// åˆªé™¤
+		// §R°£
 		/*CustomerPlanDAO_interface ctpn = new CustomerPlanDAO();
 		ctpn.delete(1002, 201);*/
 		
 		//==============================================================
 		
-		// æŸ¥è©¢å–®ç­†
+		// ¬d¸ß³æµ§
 		/*CustomerPlanDAO_interface ctpn = new CustomerPlanDAO();
 		CustomerPlanVO customerPlanVO = ctpn.findbyPrimaryKey(1001, 101);
 		
@@ -47,7 +47,7 @@ public class CustomerPlanTest {
 		
 		//==============================================================
 		
-		// æŸ¥è©¢å¤šç­†
+		// ¬d¸ß¦hµ§
 		/*CustomerPlanDAO_interface ctpn = new CustomerPlanDAO();
 		List<CustomerPlanVO> customerPlanList = ctpn.getAll();
 		

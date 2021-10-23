@@ -24,6 +24,7 @@ public class PlanDAO implements PlanDAO_interface {
 	public static final String GET_ALL = "SELECT PLAN_ID, CAMP_ID, PLAN_NAME, PlAN_OUTLINE, PLAN_GUEST_LIMIT, PLAN_AGE_LIMIT, "
 			+ "PLAN_PRICE FROM PLAN ORDER BY PLAN_ID";
 	
+
 	static {
 		try {
 			Class.forName(DRIVER);

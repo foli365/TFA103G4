@@ -1,12 +1,19 @@
 package com.campsite.model;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
+import jdbc.util.CompositeQuery.jdbcUtil_CompositeQuery_Campsite;
 
 public class CampsiteDAO implements CampsiteDAO_Interface {
 	public static final String DRIVER = "com.mysql.cj.jdbc.Driver";
@@ -30,10 +37,16 @@ public class CampsiteDAO implements CampsiteDAO_Interface {
 	public static final String GET_ALL = "SELECT CAMP_ID, MEMBER_ID, CAMP_NAME, LOCATION, LATITUDE, LONGTITUDE, "
 			+ "CAMP_DESCRIPTION, CAMP_PRICE, CAMP_LIMIT, LISTED_TIME, SITE_STATE, LOVED_COUNT, REPORTED_COUNT, "
 			+ "CAMP_LICENSE, PICTURE1, PICTURE2, PICTURE3, PICTURE4, PICTURE5 FROM CAMPSITE ORDER BY CAMP_ID";
-	public static final String GET_SEARCH = "SELECT CAMP_ID, CAMP_NAME, LOCATION, CAMP_DESCRIPTION, PICTURE1 "
+	public static final String GET_SEARCH = "SELECT CAMP_ID, MEMBER_ID, CAMP_NAME, LOCATION, CAMP_DESCRIPTION, PICTURE1 "
 			+ "FROM CAMPSITE WHERE CAMP_NAME LIKE ? OR LOCATION LIKE ?";
+//	public static final String GET_MULTI_SEARCH = "SELECT c.CAMP_ID, CAMP_NAME, LOCATION, CAMP_DESCRIPTION, CAMP_OPENING_TIME, EMPTY_CAMP_LEFT, PICTURE1 "
+//			+ "FROM CAMPSITE c LEFT JOIN CAMPSITE_TENT_STATUS cts on c.CAMP_ID = cts.CAMP_ID "
+//			+ "WHERE (CAMP_NAME LIKE ? OR LOCATION LIKE ?) "
+//			+ "AND CAMP_OPENING_TIME BETWEEN ? AND ? "
+//			+ "AND CAMP_PRICE BETWEEN ? AND ? "
+//			+ "AND EMPTY_CAMP_LEFT > ?";
 
-	static { // ‰∏ÄÂÄãÁí∞Â¢ÉÂè™ÈúÄË¶ÅËºâÂÖ•‰∏ÄÊ¨°È©ÖÂãï
+	static { // §@≠”¿Ùπ“•uª›≠n∏¸§J§@¶∏≈X∞ 
 		try {
 			Class.forName(DRIVER);
 		} catch (ClassNotFoundException ce) {
@@ -335,6 +348,8 @@ public class CampsiteDAO implements CampsiteDAO_Interface {
 				campsiteVO.setCampDescription(rs.getString("CAMP_DESCRIPTION"));
 				campsiteVO.setPicture1(rs.getBytes("PICTURE1"));
 				campsiteVO.setCampId(rs.getInt("CAMP_ID"));
+				campsiteVO.setMemberId(rs.getInt("MEMBER_ID"));
+				;
 
 				campsiteList.add(campsiteVO);
 			}
@@ -366,6 +381,159 @@ public class CampsiteDAO implements CampsiteDAO_Interface {
 			}
 		}
 		return campsiteList;
+	}
+
+	@Override
+	public List<CampsiteVO> getMultiSearchCampsite(String campName, Date strDate, Date endDate, Integer customerNum,
+			Integer campPriceL, Integer campPriceH) {
+		List<CampsiteVO> campsiteList = new ArrayList<>();
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		CampsiteVO campsiteVO = null;
+
+		String condition = "";
+		String sql = "SELECT c.CAMP_ID, MEMBER_ID, CAMP_NAME, LOCATION, CAMP_DESCRIPTION, CAMP_PRICE, CAMP_OPENING_TIME, EMPTY_CAMP_LEFT, PICTURE1 "
+				+ "FROM CAMPSITE c LEFT JOIN CAMPSITE_TENT_STATUS cts on c.CAMP_ID = cts.CAMP_ID " + "WHERE {criteria}";
+
+		if (campName != null && campName != "") {
+			condition = condition + "(CAMP_NAME LIKE '%" + campName + "%' OR LOCATION LIKE '%" + campName + "%') ";
+		}
+		if (strDate != null && endDate != null) {
+			condition = condition + "AND CAMP_OPENING_TIME BETWEEN '" + strDate + "' AND '" + endDate + "' ";
+		}
+		if (campPriceL != null && campPriceH != null) {
+			condition = condition + "AND CAMP_PRICE BETWEEN '" + campPriceL + "' AND '" + campPriceH + "' ";
+		}
+		if (customerNum != null) {
+			condition = condition + "AND EMPTY_CAMP_LEFT > " + customerNum;
+		}
+		sql = sql.replace("{criteria}", condition);
+		System.out.println(sql);
+
+		try {
+			con = DriverManager.getConnection(URL, USER, PASSWORD);
+			pstmt = con.prepareStatement(sql);
+
+			rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				campsiteVO = new CampsiteVO();
+				campsiteVO.setCampName(rs.getString("CAMP_NAME"));
+				campsiteVO.setLocation(rs.getString("LOCATION"));
+				campsiteVO.setCampDescription(rs.getString("CAMP_DESCRIPTION"));
+				campsiteVO.setPicture1(rs.getBytes("PICTURE1"));
+				campsiteVO.setCampId(rs.getInt("CAMP_ID"));
+				campsiteVO.setMemberId(rs.getInt("MEMBER_ID"));
+
+				campsiteList.add(campsiteVO);
+			}
+		} catch (SQLException se) {
+			se.printStackTrace();
+		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException se) {
+					se.printStackTrace();
+				}
+			}
+
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace();
+				}
+			}
+
+			if (con != null) {
+				try {
+					con.close();
+				} catch (SQLException se) {
+					se.printStackTrace();
+				}
+			}
+		}
+		return campsiteList;
+	}
+
+	@Override
+	public List<CampsiteVO> getAll(Map<String, String[]> map) {
+		List<CampsiteVO> list = new ArrayList<>();
+
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		CampsiteVO campsiteVO = null;
+
+		try {
+
+			con = DriverManager.getConnection(URL, USER, PASSWORD);
+			String finalSQL = "SELECT c.CAMP_ID, MEMBER_ID, CAMP_NAME, LOCATION, "
+					+ "CAMP_DESCRIPTION, CAMP_PRICE, CAMP_OPENING_TIME, EMPTY_CAMP_LEFT, PICTURE1 "
+					+ "FROM CAMPSITE c LEFT JOIN CAMPSITE_TENT_STATUS cts on c.CAMP_ID = cts.CAMP_ID"
+					+ jdbcUtil_CompositeQuery_Campsite.get_WhereCondition(map);
+
+			String value = "";
+			Set<String> keys = map.keySet();
+			z: for (String key : keys) {
+				while ("CAMP_OPENING_TIME".equals(key)) {
+					value = map.get(key)[0];
+					break z;
+				}
+			}
+			String strDateString = value.substring(0, 10);
+			String endDateString = value.substring(13);
+			Date strDate = StringToSQLDate.convert(strDateString);
+			Date endDate = StringToSQLDate.convert(endDateString);
+			
+			pstmt = con.prepareStatement(finalSQL);
+			System.out.println("°¥°¥finalSQL(by DAO) = " + finalSQL);
+			rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				campsiteVO = new CampsiteVO();
+				campsiteVO.setCampName(rs.getString("CAMP_NAME"));
+				campsiteVO.setLocation(rs.getString("LOCATION"));
+				campsiteVO.setCampDescription(rs.getString("CAMP_DESCRIPTION"));
+				campsiteVO.setPicture1(rs.getBytes("PICTURE1"));
+				campsiteVO.setCampId(rs.getInt("CAMP_ID"));
+				campsiteVO.setMemberId(rs.getInt("MEMBER_ID"));
+				campsiteVO.setStrDate(strDate);
+				campsiteVO.setEndDate(endDate);
+
+				list.add(campsiteVO); // Store the row in the List
+			}
+			System.out.println(list);
+
+			// Handle any SQL errors
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. " + se.getMessage());
+		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+		return list;
 	}
 
 }

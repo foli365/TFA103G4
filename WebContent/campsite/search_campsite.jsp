@@ -109,7 +109,7 @@
 							<div class="form-group has-search">
 								<p class="fw-bold">目的地?</p>
 								<i class="fas fa-location-arrow form-control-feedback"></i> <input
-									type="text" name="campName" class="form-control has-icon"
+									type="text" name="CAMP_NAME" class="form-control has-icon"
 									placeholder="請輸入營地...">
 							</div>
 						</div>
@@ -118,14 +118,14 @@
 								<p class="fw-bold">選擇日期</p>
 								<i class="fas fa-calendar-alt form-control-feedback"></i> <input
 									type="text" id="date" class="form-control choose-date has-icon"
-									name="datefilter" value="" placeholder="請選擇日期..." />
+									name="CAMP_OPENING_TIME" value="" placeholder="請選擇日期..." />
 							</div>
 						</div>
 						<div class="col-2">
 							<div class="form-group has-search">
 								<p class="fw-bold">顧客人數</p>
 								<i class="fas fa-user-friends form-control-feedback"></i> <input
-									type="text" class="form-control has-icon"
+									type="text" name="EMPTY_CAMP_LEFT" class="form-control has-icon"
 									placeholder="請輸入人數...">
 							</div>
 						</div>
@@ -133,16 +133,19 @@
 							<div class="has-search">
 								<p class="fw-bold">價格範圍</p>
 								<i class="fas fa-wallet form-control-feedback"></i> <select
+									name="CAMP_PRICE"
 									class="form-select has-icon"
 									aria-label="Default select example">
-									<option selected>請選擇價格</option>
-									<option value="1">1000~2000</option>
-									<option value="2">2001~3000</option>
-									<option value="3">3001~4000</option>
+									<option value="" selected>請選擇價格...</option>
+									<option value="300~1000">300~1000</option>
+									<option value="1001~2000">1001~2000</option>
+									<option value="2001~3000">2001~3000</option>
+									<option value="3001~4000">3001~4000</option>
+									<option value="4001~5000">4001~5000</option>
 								</select>
 							</div>
 						</div>
-						<input type="hidden" name="action" value="getSearchCampsite">
+						<input type="hidden" name="action" value="listCampsites_ByCompositeQuery">
 						<div>
 							<button type="submit" class="search-icon">
 								<i class="fas fa-search"></i>
@@ -169,7 +172,7 @@
 				  <c:set var="i" value="0" scope="page" />
 				  <c:forEach var="campsiteVO" items="${campsiteList}">
 					 campNameArray[${i}]='${campsiteVO.campName}';
-					 console.log(${i}+campNameArray[${i}]);
+// 					 console.log(${i}+campNameArray[${i}]);
 					<c:set var="i" value="${i + 1}" scope="page"/>
 				  </c:forEach>
 				  
@@ -195,7 +198,6 @@
 				    if (geocoder) {
 				      geocoder.geocode( {'address': address}, function(results, status) {
 // 				   		console.log(address);
-// 				        <c:forEach var="campsiteVO" items="${campsiteList}">
 				        if (status == google.maps.GeocoderStatus.OK) {
 				          if (status != google.maps.GeocoderStatus.ZERO_RESULTS) {
 				          map.setCenter(results[0].geometry.location);
@@ -222,7 +224,6 @@
 				        } else {
 // 				          alert("Geocode was not successful for the following reason: " + status);
 				        }
-// 				        </c:forEach>
 				      });
 				    }
 				    }
@@ -236,7 +237,8 @@
 				<div class="list-group">
 					<div class="default-list">
 						<c:forEach var="campsiteVO" items="${list}">
-							<a href="#"
+							<a
+								href="campsite.do?action=getReserveCampsite&campId=${campsiteVO.campId}"
 								class="list-group-item list-group-item-action flex-column align-items-start">
 								<div class="row">
 									<div class="col-6">
@@ -260,7 +262,8 @@
 						</c:forEach>
 					</div>
 					<c:forEach var="campsiteVO" items="${campsiteList}">
-						<a href="campsite.do?action=getReserveCampsite&campId=${campsiteVO.campId}"
+						<a
+							href="campsite.do?action=getReserveCampsite&campId=${campsiteVO.campId}"
 							class="list-group-item list-group-item-action flex-column align-items-start">
 							<div class="row">
 								<div class="col-6">
