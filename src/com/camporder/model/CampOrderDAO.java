@@ -22,7 +22,7 @@ public class CampOrderDAO implements CampOrderDAO_interface {
 	public static final String UPDATE_STMT = "UPDATE CAMP_ORDER SET MEMBER_ID = ?, "
 			+ "GUEST_NUMBER = ?, CHECK_IN_DATE = ?, CHECK_OUT_DATE = ?, ORDER_DATE = ?, PAYMENT_DEADLINE = ?, "
 			+ "ORDER_STATUS = ?, ORDER_TOTAL = ?, COMMENT = ?, PICTURE1 = ?, PICTURE2 = ?, PICTURE3 = ? "
-			+ "WHERE CAMP_ORDER_ID = ?"; // Foreign Key‰∏çËÉΩupdate
+			+ "WHERE CAMP_ORDER_ID = ?"; // Foreign Key§£Ø‡update
 	public static final String DELETE_STMT = "DELETE FROM CAMP_ORDER WHERE CAMP_ORDER_ID = ?";
 	public static final String FIND_BY_PK = "SELECT CAMP_ORDER_ID, CAMP_ID, MEMBER_ID, GUEST_NUMBER, "
 			+ "CHECK_IN_DATE, CHECK_OUT_DATE, ORDER_DATE, PAYMENT_DEADLINE, ORDER_STATUS, ORDER_TOTAL, COMMENT "
@@ -31,7 +31,7 @@ public class CampOrderDAO implements CampOrderDAO_interface {
 			+ "CHECK_IN_DATE, CHECK_OUT_DATE, ORDER_DATE, PAYMENT_DEADLINE, ORDER_STATUS, ORDER_TOTAL, COMMENT "
 			+ "FROM CAMP_ORDER ORDER BY CAMP_ORDER_ID";
 
-	static { // ‰∏ÄÂÄãÁí∞Â¢ÉÂè™ÈúÄË¶ÅËºâÂÖ•‰∏ÄÊ¨°È©ÖÂãï
+	static { // §@≠”¿Ùπ“•uª›≠n∏¸§J§@¶∏≈X∞ 
 		try {
 			Class.forName(DRIVER);
 		} catch (ClassNotFoundException ce) {

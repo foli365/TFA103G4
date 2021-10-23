@@ -111,6 +111,14 @@
 		<url-pattern>/campsite/campsite.do</url-pattern>
 	</servlet-mapping>
 	<servlet>
+		<servlet-name>CampsiteTentStatusServlet</servlet-name>
+		<servlet-class>com.campsitetentstatus.controller.CampsiteTentStatusServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>CampsiteTentStatusServlet</servlet-name>
+		<url-pattern>/campsitetentstatus/campsitetentstatus.do</url-pattern>
+	</servlet-mapping>
+	<servlet>
 		<servlet-name>CampsiteGifReader</servlet-name>
 		<servlet-class>com.campsite.model.CampsiteGifReader</servlet-class>
 	</servlet>

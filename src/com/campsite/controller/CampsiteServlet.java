@@ -2,9 +2,13 @@ package com.campsite.controller;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.sql.Timestamp;
+import java.sql.Date;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -87,8 +91,58 @@ public class CampsiteServlet extends HttpServlet {
 				failureView.forward(req, res);
 			}
 		}
-		
-		if ("getSearchCampsite".equals(action)) { // 來自search_campsite.jsp的請求
+
+//		if ("getSearchCampsite".equals(action)) { // 來自search_campsite.jsp的請求
+//
+//			List<String> errorMsgs = new LinkedList<String>();
+//			// Store this set in the request scope, in case we need to
+//			// send the ErrorPage view.
+//			req.setAttribute("errorMsgs", errorMsgs);
+//
+//			try {
+//				/*************************** 1.接收請求參數 - 輸入格式的錯誤處理 **********************/
+//				
+//				String campName = req.getParameter("campName");
+//				if (campName == null || campName.trim().length() == 0) {
+//					errorMsgs.add("請輸入營地名稱");
+//				}
+//				
+//				// Send the use back to the form, if there were errors
+//				if (!errorMsgs.isEmpty()) {
+//					RequestDispatcher failureView = req.getRequestDispatcher("/campsite/search_campsite.jsp");
+//					failureView.forward(req, res);
+//					return;// 程式中斷
+//				}
+//
+//				/*************************** 2.開始查詢資料 *****************************************/
+//				CampsiteService campsiteSvc = new CampsiteService();
+//				List<CampsiteVO> campsiteList = campsiteSvc.getSearchCampsite(campName);
+////				System.out.println(campsiteList);
+//				if (campsiteList.isEmpty()) {
+//					errorMsgs.add("查無資料");
+//				}
+//				// Send the use back to the form, if there were errors
+//				if (!errorMsgs.isEmpty()) {
+//					RequestDispatcher failureView = req.getRequestDispatcher("/campsite/search_campsite.jsp");
+//					failureView.forward(req, res);
+//					return;// 程式中斷
+//				}
+//
+//				/*************************** 3.查詢完成,準備轉交(Send the Success view) *************/
+//				req.setAttribute("campsiteList", campsiteList); // 資料庫取出的List<CampsiteVO>物件,存入req
+//				String url = "/campsite/search_campsite.jsp";
+//				RequestDispatcher successView = req.getRequestDispatcher(url); // 成功轉交 search_campsite.jsp
+//				successView.forward(req, res);
+//
+//				/*************************** 其他可能的錯誤處理 *************************************/
+//			} catch (Exception e) {
+//				errorMsgs.add("無法取得資料:" + e.getMessage());
+//				RequestDispatcher failureView = req.getRequestDispatcher("/campsite/search_campsite.jsp");
+//				failureView.forward(req, res);
+//			}
+//		}
+
+		if ("getMultiSearchCampsite".equals(action)) { // 來自search_campsite.jsp的請求
 
 			List<String> errorMsgs = new LinkedList<String>();
 			// Store this set in the request scope, in case we need to
@@ -97,12 +151,69 @@ public class CampsiteServlet extends HttpServlet {
 
 			try {
 				/*************************** 1.接收請求參數 - 輸入格式的錯誤處理 **********************/
-				
+
 				String campName = req.getParameter("campName");
 				if (campName == null || campName.trim().length() == 0) {
 					errorMsgs.add("請輸入營地名稱");
 				}
-				
+
+				String dateRange = req.getParameter("datefilter");
+				Date strDate;
+				Date endDate;
+				if (dateRange == null || dateRange.trim().length() == 0) {
+					strDate = null;
+					endDate = null;
+				} else {
+					String dateRangeArray[] = dateRange.split(" ~ ");
+					SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+					java.util.Date strD = null;
+					java.util.Date endD = null;
+					try {
+						strD = format.parse(dateRangeArray[0]);
+						endD = format.parse(dateRangeArray[1]);
+					} catch (ParseException e) {
+						e.printStackTrace();
+					}
+					strDate = new java.sql.Date(strD.getTime());
+					endDate = new java.sql.Date(endD.getTime());
+				}
+
+				Integer customerNum = null;
+				try {
+					customerNum = new Integer(req.getParameter("customerNum").trim());
+				} catch (NumberFormatException e) {
+					customerNum = null;
+				}
+
+				Integer priceRange = new Integer(req.getParameter("priceRange").trim());
+				Integer campPriceL = 0;
+				Integer campPriceH = 0;
+				switch (priceRange) {
+				case 1:
+					campPriceL = 300;
+					campPriceH = 1000;
+					break;
+				case 2:
+					campPriceL = 1002;
+					campPriceH = 2000;
+					break;
+				case 3:
+					campPriceL = 2001;
+					campPriceH = 3000;
+					break;
+				case 4:
+					campPriceL = 3001;
+					campPriceH = 4000;
+					break;
+				case 5:
+					campPriceL = 4001;
+					campPriceH = 5000;
+					break;
+				default:
+					campPriceL = null;
+					campPriceH = null;
+				}
+
 				// Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
 					RequestDispatcher failureView = req.getRequestDispatcher("/campsite/search_campsite.jsp");
@@ -112,8 +223,8 @@ public class CampsiteServlet extends HttpServlet {
 
 				/*************************** 2.開始查詢資料 *****************************************/
 				CampsiteService campsiteSvc = new CampsiteService();
-				List<CampsiteVO> campsiteList = campsiteSvc.getSearchCampsite(campName);
-//				System.out.println(campsiteList);
+				List<CampsiteVO> campsiteList = campsiteSvc.getMultiSearchCampsite(campName, strDate, endDate,
+						customerNum, campPriceL, campPriceH);
 				if (campsiteList.isEmpty()) {
 					errorMsgs.add("查無資料");
 				}
@@ -137,7 +248,41 @@ public class CampsiteServlet extends HttpServlet {
 				failureView.forward(req, res);
 			}
 		}
-		
+
+		if ("listCampsites_ByCompositeQuery".equals(action)) { // 來自search_campsite.jsp的複合查詢請求
+			List<String> errorMsgs = new LinkedList<String>();
+			// Store this set in the request scope, in case we need to
+			// send the ErrorPage view.
+			req.setAttribute("errorMsgs", errorMsgs);
+
+			try {
+
+				/*************************** 1.將輸入資料轉為Map **********************************/
+				// 採用Map<String,String[]> getParameterMap()的方法
+				// 注意:an immutable java.util.Map
+				Map<String, String[]> map = req.getParameterMap();
+				Set<String> keys = map.keySet();
+				for (String key : keys) {
+					String value = map.get(key)[0];
+					System.out.println(key + " : " + value);
+				}
+				/*************************** 2.開始複合查詢 ***************************************/
+				CampsiteService campsiteSvc = new CampsiteService();
+				List<CampsiteVO> list = campsiteSvc.getAll(map);
+				
+				/*************************** 3.查詢完成,準備轉交(Send the Success view) ************/
+				req.setAttribute("campsiteList", list); // 資料庫取出的list物件,存入request
+				RequestDispatcher successView = req.getRequestDispatcher("/campsite/search_campsite.jsp"); // 成功轉交search_campsite.jsp
+				successView.forward(req, res);
+
+				/*************************** 其他可能的錯誤處理 **********************************/
+			} catch (Exception e) {
+				errorMsgs.add(e.getMessage());
+				RequestDispatcher failureView = req.getRequestDispatcher("/campsite/search_campsite.jsp");
+				failureView.forward(req, res);
+			}
+		}
+
 		if ("getReserveCampsite".equals(action)) { // 來自select_page.jsp的請求
 
 			List<String> errorMsgs = new LinkedList<String>();
@@ -337,7 +482,7 @@ public class CampsiteServlet extends HttpServlet {
 				campsiteVO.setReportedCount(reportedCount);
 				campsiteVO.setCampLicense(campLicense); // :(
 				campsiteVO.setPicture1(picture1); // :(
-				
+
 				// Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
 					req.setAttribute("campsiteVO", campsiteVO); // 含有輸入格式錯誤的empVO物件,也存入req
@@ -404,7 +549,7 @@ public class CampsiteServlet extends HttpServlet {
 			try {
 				/*************************** 1.接收請求參數 - 輸入格式的錯誤處理 **********************/
 				Integer campId = new Integer(req.getParameter("campId").trim());
-				
+
 				Integer memberId = new Integer(req.getParameter("memberId").trim());
 
 				String campName = req.getParameter("campName");
@@ -541,17 +686,15 @@ public class CampsiteServlet extends HttpServlet {
 				// Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
 					req.setAttribute("campsiteVO", campsiteVO); // 含有輸入格式錯誤的empVO物件,也存入req
-					RequestDispatcher failureView = req
-							.getRequestDispatcher("/campsite/update_campsite_input.jsp");
+					RequestDispatcher failureView = req.getRequestDispatcher("/campsite/update_campsite_input.jsp");
 					failureView.forward(req, res);
-					return; //程式中斷
+					return; // 程式中斷
 				}
 				/*************************** 2.開始修改資料 *****************************************/
 				CampsiteService campsiteSvc = new CampsiteService();
-				campsiteVO = campsiteSvc.updateCampsite(memberId, campName, location, latitude,
-						longtitude, campDescription, campPrice, campLimit, listedTime,
-						siteState, lovedCount, reportedCount, campLicense, picture1,
-						picture2, picture3, picture4, picture5, campId);
+				campsiteVO = campsiteSvc.updateCampsite(memberId, campName, location, latitude, longtitude,
+						campDescription, campPrice, campLimit, listedTime, siteState, lovedCount, reportedCount,
+						campLicense, picture1, picture2, picture3, picture4, picture5, campId);
 
 				/*************************** 3.修改完成,準備轉交(Send the Success view) *************/
 				req.setAttribute("campsiteVO", campsiteVO); // 資料庫update成功後,正確的的campsiteVO物件,存入req

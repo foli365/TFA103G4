@@ -27,8 +27,10 @@ public class CampsiteTentStatusDAO implements CampsiteTentStatusDAO_interface{
 			+ "FROM CAMPSITE_TENT_STATUS WHERE CAMP_ID = ? && CAMP_OPENING_TIME = ?";
 	public static final String GET_ALL = "SELECT CAMP_ID, CAMP_OPENING_TIME, EMPTY_CAMP_LEFT "
 			+ "FROM CAMPSITE_TENT_STATUS ORDER BY CAMP_ID && CAMP_OPENING_TIME";
+	public static final String GET_ALL_OF_ONE = "SELECT CAMP_ID, CAMP_OPENING_TIME, EMPTY_CAMP_LEFT "
+			+ "FROM CAMPSITE_TENT_STATUS WHERE CAMP_ID = ?";
 	
-	static { // ‰∏ÄÂÄãÁí∞Â¢ÉÂè™ÈúÄË¶ÅËºâÂÖ•‰∏ÄÊ¨°È©ÖÂãï
+	static { // §@≠”¿Ùπ“•uª›≠n∏¸§J§@¶∏≈X∞ 
 		try {
 			Class.forName(DRIVER);
 		} catch (ClassNotFoundException ce) {
@@ -212,6 +214,60 @@ public class CampsiteTentStatusDAO implements CampsiteTentStatusDAO_interface{
 			while (rs.next()) {
 				campsiteTentStatusVO = new CampsiteTentStatusVO();
 				campsiteTentStatusVO.setCampId(rs.getInt("CAMP_ID"));
+				campsiteTentStatusVO.setCampOpeningTime(rs.getDate("CAMP_OPENING_TIME"));
+				campsiteTentStatusVO.setEmptyCampLeft(rs.getInt("EMPTY_CAMP_LEFT"));
+				
+				campsiteTentStatusList.add(campsiteTentStatusVO);
+			}
+		} catch (SQLException se) {
+			se.printStackTrace();
+		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException se) {
+					se.printStackTrace();
+				}
+			}
+
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace();
+				}
+			}
+
+			if (con != null) {
+				try {
+					con.close();
+				} catch (SQLException se) {
+					se.printStackTrace();
+				}
+			}
+		}
+		return campsiteTentStatusList;
+	}
+
+	@Override
+	public List<CampsiteTentStatusVO> getAllOfOne(Integer campId) {
+		List<CampsiteTentStatusVO> campsiteTentStatusList = new ArrayList<>();
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		CampsiteTentStatusVO campsiteTentStatusVO = null;
+
+		try {
+			con = DriverManager.getConnection(URL, USER, PASSWORD);
+			pstmt = con.prepareStatement(GET_ALL_OF_ONE);
+
+			pstmt.setInt(1, campId);
+			
+			rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				campsiteTentStatusVO = new CampsiteTentStatusVO();
+				campsiteTentStatusVO.setCampId(campId);
 				campsiteTentStatusVO.setCampOpeningTime(rs.getDate("CAMP_OPENING_TIME"));
 				campsiteTentStatusVO.setEmptyCampLeft(rs.getInt("EMPTY_CAMP_LEFT"));
 				

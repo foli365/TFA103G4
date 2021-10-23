@@ -11,7 +11,7 @@ import java.util.List;
 public class CampOrderTest {
 	public static void main(String args[]) throws IOException {
 		
-		// æ–°å¢ž
+		// ·s¼W
 		/*CampOrderVO campOrderVO = new CampOrderVO();
 
 		campOrderVO.setCampId(5001);
@@ -30,9 +30,9 @@ public class CampOrderTest {
 		Timestamp paymentDeadline = getTimestamp("2021-12-22 20:35:46");
 		campOrderVO.setPaymentDeadline(paymentDeadline);
 		
-		campOrderVO.setOrderStatus("å·²ä»˜æ¬¾");
+		campOrderVO.setOrderStatus("¤w¥I´Ú");
 		campOrderVO.setOrderTotal(5000);
-		campOrderVO.setComment("éœ²ç‡Ÿå¥½è®š4");
+		campOrderVO.setComment("ÅSÀç¦nÆg4");
 
 		byte[] picPicture1 = getPictureByteArray("items/picture1.jpg");
 
@@ -43,7 +43,7 @@ public class CampOrderTest {
 		
 		//==============================================================
 		
-		// ä¿®æ”¹
+		// ­×§ï
 		/*CampOrderVO campOrderVO = new CampOrderVO();
 		
 		campOrderVO.setMemberId(4);
@@ -61,9 +61,9 @@ public class CampOrderTest {
 		Timestamp paymentDeadline = getTimestamp("2021-09-22 20:35:46");
 		campOrderVO.setPaymentDeadline(paymentDeadline);
 		
-		campOrderVO.setOrderStatus("æœªä»˜æ¬¾");
+		campOrderVO.setOrderStatus("¥¼¥I´Ú");
 		campOrderVO.setOrderTotal(5250);
-		campOrderVO.setComment("éœ²ç‡Ÿå¥½è®š4");
+		campOrderVO.setComment("ÅSÀç¦nÆg4");
 
 		byte[] picPicture1 = getPictureByteArray("items/picture2.jpg");
 
@@ -76,13 +76,13 @@ public class CampOrderTest {
 		
 		//==============================================================
 		
-		// åˆªé™¤
+		// §R°£
 		/*CampOrderDAO_interface cpod = new CampOrderDAO();
 		cpod.delete(1004);*/
 		
 		//==============================================================
 		
-		// æŸ¥è©¢å–®ç­†
+		// ¬d¸ß³æµ§
 		/*CampOrderDAO_interface cpod = new CampOrderDAO();
 		CampOrderVO campOrderVO = cpod.findbyPrimaryKey(1002);
 		
@@ -90,7 +90,7 @@ public class CampOrderTest {
 		
 		//==============================================================
 		
-		// æŸ¥è©¢å¤šç­†
+		// ¬d¸ß¦hµ§
 		/*CampOrderDAO_interface cpod = new CampOrderDAO();
 		List<CampOrderVO> campOrderList = cpod.getAll();
 		

@@ -1,8 +1,8 @@
 package com.campsite.model;
 
 import java.io.Serializable;
+import java.sql.Date;
 import java.sql.Timestamp;
-import java.util.Arrays;
 
 public class CampsiteVO implements Serializable {
 	private Integer campId;
@@ -24,7 +24,9 @@ public class CampsiteVO implements Serializable {
 	private byte[] picture3;
 	private byte[] picture4;
 	private byte[] picture5;
-	
+	private Date strDate;
+	private Date endDate;
+
 	public CampsiteVO() {
 	}
 
@@ -204,6 +206,22 @@ public class CampsiteVO implements Serializable {
 	public void setPicture5(byte[] picture5) {
 		this.picture5 = picture5;
 	}
+	
+	public Date getStrDate() {
+		return strDate;
+	}
+
+	public void setStrDate(Date strDate) {
+		this.strDate = strDate;
+	}
+
+	public Date getEndDate() {
+		return endDate;
+	}
+
+	public void setEndDate(Date endDate) {
+		this.endDate = endDate;
+	}
 
 	@Override
 	public String toString() {
@@ -211,7 +229,7 @@ public class CampsiteVO implements Serializable {
 				+ location + ", latitude=" + latitude + ", longtitude=" + longtitude + ", campDescription="
 				+ campDescription + ", campPrice=" + campPrice + ", campLimit=" + campLimit + ", listedTime="
 				+ listedTime + ", siteState=" + siteState + ", lovedCount=" + lovedCount + ", reportedCount="
-				+ reportedCount + "]";
+				+ reportedCount + ", strDate=" + strDate + ", endDate=" + endDate + "]";
 	}
 	
 }

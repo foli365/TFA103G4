@@ -46,4 +46,8 @@ public class CampsiteTentStatusService {
 	public List<CampsiteTentStatusVO> getAll() {
 		return dao.getAll();
 	}
+	
+	public List<CampsiteTentStatusVO> getAllOfOne(Integer campId) {
+		return dao.getAllOfOne(campId);
+	}
 }

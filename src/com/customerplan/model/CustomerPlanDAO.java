@@ -26,7 +26,7 @@ public class CustomerPlanDAO implements CustomerPlanDAO_interface{
 	public static final String GET_ALL = "SELECT CAMP_ORDER_ID, PLAN_ID, PLAN_GUEST_NUMBER, PLAN_BATCH, "
 			+ "PLAN_ORDER_PRICE FROM CUSTOMER_PLAN ORDER BY CAMP_ORDER_ID && PLAN_ID";
 	
-	static { // ä¸€å€‹ç’°å¢ƒåªéœ€è¦è¼‰å…¥ä¸€æ¬¡é©…å‹•
+	static { // ¤@­ÓÀô¹Ò¥u»İ­n¸ü¤J¤@¦¸ÅX°Ê
 		try {
 			Class.forName(DRIVER);
 		} catch (ClassNotFoundException ce) {
