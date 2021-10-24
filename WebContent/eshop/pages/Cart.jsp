@@ -3,8 +3,7 @@
 <html>
 <head>
 <title>購物車</title>
-<link rel="stylesheet" type="text/css"
-	href="<%=request.getContextPath()%>/css/ShoppingCart.css">
+<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/css/ShoppingCart.css">
 </head>
 <body>
 	<br>
@@ -23,8 +22,6 @@
 			<th width="120">數量</th>
 			<th width="120">刪除</th>
 		</tr>
-		<!-- 	</table> -->
-		<!-- 	<table> -->
 
 		<%
 			for (int index = 0; index < buylist.size(); index++) {

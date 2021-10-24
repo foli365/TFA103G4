@@ -19,8 +19,7 @@
 <html>
 <head>
 <title>結帳</title>
-<link rel="stylesheet" type="text/css"
-	href="<%=request.getContextPath()%>/css/ShoppingCart.css">
+<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/css/ShoppingCart.css">
 </head>
 <body>
 	<font size="+3">結帳</font>
@@ -33,9 +32,9 @@
 			<th width="120">數量</th>
 			<th width="120"><h3>總價</h3></th>
 		</tr>
-	</table>
+<!-- 	</table> -->
 
-	<table style="margin: auto;">
+<!-- 	<table style="margin: auto;"> -->
 
 		<%
 			@SuppressWarnings("unchecked")
@@ -80,8 +79,8 @@
 	</c:if>
 
 	<FORM METHOD="post"
-		ACTION="<%=request.getContextPath()%>/emodr/emodr.do" name="ckform">
-		<table>
+		ACTION="<%=request.getContextPath()%>/emodr/emodr.do" name="ckform" >
+		<table style="margin: auto;">
 			<tr>
 				<td>購買人:</td>
 				<td><%=memberVO.getName()%><input type="hidden"
@@ -114,8 +113,8 @@
 			</tr>
 
 		</table>
-		<br> <input type="hidden" name="action" value="insert"> <input
-			type="submit" value="成立訂單">
+		<br> <input type="hidden" name="action" value="insert"> <input 
+			type="submit" class="buttonok" value="成立訂單" >
 	</FORM>
 
 	<p>
