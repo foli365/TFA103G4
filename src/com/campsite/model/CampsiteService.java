@@ -4,6 +4,7 @@ import java.sql.Date;
 import java.sql.Timestamp;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class CampsiteService {
 
@@ -98,4 +99,13 @@ public class CampsiteService {
 	public List<CampsiteVO> getAll(Map<String, String[]> map) {
 		return dao.getAll(map);
 	}
+	
+//	public List<CampsiteVO> sortCampsiteVO(List<CampsiteVO> list) {
+//		System.out.println("123");
+//		List<CampsiteVO> sortedList = list.stream()
+//						.sorted((o1, o2)->o2.getCampPrice().compareTo(o1.getCampPrice()))
+//						.collect(Collectors.toList());
+//		System.out.println("sortedList= " + sortedList);
+//		return sortedList;
+//	}
 }

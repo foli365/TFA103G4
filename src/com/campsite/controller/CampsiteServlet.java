@@ -5,10 +5,13 @@ import java.io.InputStream;
 import java.sql.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -17,8 +20,11 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.jasper.tagplugins.jstl.core.ForEach;
+
 import com.campsite.model.CampsiteService;
 import com.campsite.model.CampsiteVO;
+import com.campsitetentstatus.model.CampsiteTentStatusService;
 
 @MultipartConfig
 public class CampsiteServlet extends HttpServlet {
@@ -142,112 +148,112 @@ public class CampsiteServlet extends HttpServlet {
 //			}
 //		}
 
-		if ("getMultiSearchCampsite".equals(action)) { // 來自search_campsite.jsp的請求
-
-			List<String> errorMsgs = new LinkedList<String>();
-			// Store this set in the request scope, in case we need to
-			// send the ErrorPage view.
-			req.setAttribute("errorMsgs", errorMsgs);
-
-			try {
-				/*************************** 1.接收請求參數 - 輸入格式的錯誤處理 **********************/
-
-				String campName = req.getParameter("campName");
-				if (campName == null || campName.trim().length() == 0) {
-					errorMsgs.add("請輸入營地名稱");
-				}
-
-				String dateRange = req.getParameter("datefilter");
-				Date strDate;
-				Date endDate;
-				if (dateRange == null || dateRange.trim().length() == 0) {
-					strDate = null;
-					endDate = null;
-				} else {
-					String dateRangeArray[] = dateRange.split(" ~ ");
-					SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-					java.util.Date strD = null;
-					java.util.Date endD = null;
-					try {
-						strD = format.parse(dateRangeArray[0]);
-						endD = format.parse(dateRangeArray[1]);
-					} catch (ParseException e) {
-						e.printStackTrace();
-					}
-					strDate = new java.sql.Date(strD.getTime());
-					endDate = new java.sql.Date(endD.getTime());
-				}
-
-				Integer customerNum = null;
-				try {
-					customerNum = new Integer(req.getParameter("customerNum").trim());
-				} catch (NumberFormatException e) {
-					customerNum = null;
-				}
-
-				Integer priceRange = new Integer(req.getParameter("priceRange").trim());
-				Integer campPriceL = 0;
-				Integer campPriceH = 0;
-				switch (priceRange) {
-				case 1:
-					campPriceL = 300;
-					campPriceH = 1000;
-					break;
-				case 2:
-					campPriceL = 1002;
-					campPriceH = 2000;
-					break;
-				case 3:
-					campPriceL = 2001;
-					campPriceH = 3000;
-					break;
-				case 4:
-					campPriceL = 3001;
-					campPriceH = 4000;
-					break;
-				case 5:
-					campPriceL = 4001;
-					campPriceH = 5000;
-					break;
-				default:
-					campPriceL = null;
-					campPriceH = null;
-				}
-
-				// Send the use back to the form, if there were errors
-				if (!errorMsgs.isEmpty()) {
-					RequestDispatcher failureView = req.getRequestDispatcher("/campsite/search_campsite.jsp");
-					failureView.forward(req, res);
-					return;// 程式中斷
-				}
-
-				/*************************** 2.開始查詢資料 *****************************************/
-				CampsiteService campsiteSvc = new CampsiteService();
-				List<CampsiteVO> campsiteList = campsiteSvc.getMultiSearchCampsite(campName, strDate, endDate,
-						customerNum, campPriceL, campPriceH);
-				if (campsiteList.isEmpty()) {
-					errorMsgs.add("查無資料");
-				}
-				// Send the use back to the form, if there were errors
-				if (!errorMsgs.isEmpty()) {
-					RequestDispatcher failureView = req.getRequestDispatcher("/campsite/search_campsite.jsp");
-					failureView.forward(req, res);
-					return;// 程式中斷
-				}
-
-				/*************************** 3.查詢完成,準備轉交(Send the Success view) *************/
-				req.setAttribute("campsiteList", campsiteList); // 資料庫取出的List<CampsiteVO>物件,存入req
-				String url = "/campsite/search_campsite.jsp";
-				RequestDispatcher successView = req.getRequestDispatcher(url); // 成功轉交 search_campsite.jsp
-				successView.forward(req, res);
-
-				/*************************** 其他可能的錯誤處理 *************************************/
-			} catch (Exception e) {
-				errorMsgs.add("無法取得資料:" + e.getMessage());
-				RequestDispatcher failureView = req.getRequestDispatcher("/campsite/search_campsite.jsp");
-				failureView.forward(req, res);
-			}
-		}
+//		if ("getMultiSearchCampsite".equals(action)) { // 來自search_campsite.jsp的請求
+//
+//			List<String> errorMsgs = new LinkedList<String>();
+//			// Store this set in the request scope, in case we need to
+//			// send the ErrorPage view.
+//			req.setAttribute("errorMsgs", errorMsgs);
+//
+//			try {
+//				/*************************** 1.接收請求參數 - 輸入格式的錯誤處理 **********************/
+//
+//				String campName = req.getParameter("campName");
+//				if (campName == null || campName.trim().length() == 0) {
+//					errorMsgs.add("請輸入營地名稱");
+//				}
+//
+//				String dateRange = req.getParameter("datefilter");
+//				Date strDate;
+//				Date endDate;
+//				if (dateRange == null || dateRange.trim().length() == 0) {
+//					strDate = null;
+//					endDate = null;
+//				} else {
+//					String dateRangeArray[] = dateRange.split(" ~ ");
+//					SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+//					java.util.Date strD = null;
+//					java.util.Date endD = null;
+//					try {
+//						strD = format.parse(dateRangeArray[0]);
+//						endD = format.parse(dateRangeArray[1]);
+//					} catch (ParseException e) {
+//						e.printStackTrace();
+//					}
+//					strDate = new java.sql.Date(strD.getTime());
+//					endDate = new java.sql.Date(endD.getTime());
+//				}
+//
+//				Integer customerNum = null;
+//				try {
+//					customerNum = new Integer(req.getParameter("customerNum").trim());
+//				} catch (NumberFormatException e) {
+//					customerNum = null;
+//				}
+//
+//				Integer priceRange = new Integer(req.getParameter("priceRange").trim());
+//				Integer campPriceL = 0;
+//				Integer campPriceH = 0;
+//				switch (priceRange) {
+//				case 1:
+//					campPriceL = 300;
+//					campPriceH = 1000;
+//					break;
+//				case 2:
+//					campPriceL = 1002;
+//					campPriceH = 2000;
+//					break;
+//				case 3:
+//					campPriceL = 2001;
+//					campPriceH = 3000;
+//					break;
+//				case 4:
+//					campPriceL = 3001;
+//					campPriceH = 4000;
+//					break;
+//				case 5:
+//					campPriceL = 4001;
+//					campPriceH = 5000;
+//					break;
+//				default:
+//					campPriceL = null;
+//					campPriceH = null;
+//				}
+//
+//				// Send the use back to the form, if there were errors
+//				if (!errorMsgs.isEmpty()) {
+//					RequestDispatcher failureView = req.getRequestDispatcher("/campsite/search_campsite.jsp");
+//					failureView.forward(req, res);
+//					return;// 程式中斷
+//				}
+//
+//				/*************************** 2.開始查詢資料 *****************************************/
+//				CampsiteService campsiteSvc = new CampsiteService();
+//				List<CampsiteVO> campsiteList = campsiteSvc.getMultiSearchCampsite(campName, strDate, endDate,
+//						customerNum, campPriceL, campPriceH);
+//				if (campsiteList.isEmpty()) {
+//					errorMsgs.add("查無資料");
+//				}
+//				// Send the use back to the form, if there were errors
+//				if (!errorMsgs.isEmpty()) {
+//					RequestDispatcher failureView = req.getRequestDispatcher("/campsite/search_campsite.jsp");
+//					failureView.forward(req, res);
+//					return;// 程式中斷
+//				}
+//
+//				/*************************** 3.查詢完成,準備轉交(Send the Success view) *************/
+//				req.setAttribute("campsiteList", campsiteList); // 資料庫取出的List<CampsiteVO>物件,存入req
+//				String url = "/campsite/search_campsite.jsp";
+//				RequestDispatcher successView = req.getRequestDispatcher(url); // 成功轉交 search_campsite.jsp
+//				successView.forward(req, res);
+//
+//				/*************************** 其他可能的錯誤處理 *************************************/
+//			} catch (Exception e) {
+//				errorMsgs.add("無法取得資料:" + e.getMessage());
+//				RequestDispatcher failureView = req.getRequestDispatcher("/campsite/search_campsite.jsp");
+//				failureView.forward(req, res);
+//			}
+//		}
 
 		if ("listCampsites_ByCompositeQuery".equals(action)) { // 來自search_campsite.jsp的複合查詢請求
 			List<String> errorMsgs = new LinkedList<String>();
@@ -258,6 +264,11 @@ public class CampsiteServlet extends HttpServlet {
 			try {
 
 				/*************************** 1.將輸入資料轉為Map **********************************/
+//				String dateRange = req.getParameter("datefilter");
+//				if (dateRange == null || dateRange.trim().length() == 0) {
+//					errorMsgs.add("請選擇日期!");
+//				}
+
 				// 採用Map<String,String[]> getParameterMap()的方法
 				// 注意:an immutable java.util.Map
 				Map<String, String[]> map = req.getParameterMap();
@@ -269,15 +280,38 @@ public class CampsiteServlet extends HttpServlet {
 				/*************************** 2.開始複合查詢 ***************************************/
 				CampsiteService campsiteSvc = new CampsiteService();
 				List<CampsiteVO> list = campsiteSvc.getAll(map);
+				System.out.println("Servlet list= " + list);
+//				List<CampsiteVO> sortedList = campsiteSvc.sortCampsiteVO(list);
+//				System.out.println("Servlet sortedList= " + sortedList);
+				
+//				Integer customerNum = new Integer(req.getParameter("EMPTY_CAMP_LEFT"));
+//				CampsiteTentStatusService campsiteTentStatusSvc = new CampsiteTentStatusService();
+//				ArrayList<CampsiteVO> filterList = new ArrayList<CampsiteVO>();
+//				for (CampsiteVO campsiteVO : list) {
+//					if (campsiteVO.getStrDate() != null && campsiteVO.getEndDate() != null) {
+//						if (campsiteTentStatusSvc.isCampAvailible(campsiteVO.getCampId(), campsiteVO.getStrDate(),
+//								campsiteVO.getEndDate(), customerNum)) {
+//							filterList.add(campsiteVO);
+//						}
+//					}
+//					if (campsiteVO.getStrDate() != null && campsiteVO.getEndDate() != null && customerNum != null) {
+//						if (campsiteTentStatusSvc.isCampAvailible(campsiteVO.getCampId(), campsiteVO.getStrDate(),
+//								campsiteVO.getEndDate(), customerNum)) {
+//							filterList.add(campsiteVO);
+//						}
+//					}
+//				}
+				
 				
 				/*************************** 3.查詢完成,準備轉交(Send the Success view) ************/
-				req.setAttribute("campsiteList", list); // 資料庫取出的list物件,存入request
+			
+				req.setAttribute("campsiteList", list); // 資料庫取出的filterList物件,存入request
 				RequestDispatcher successView = req.getRequestDispatcher("/campsite/search_campsite.jsp"); // 成功轉交search_campsite.jsp
 				successView.forward(req, res);
 
 				/*************************** 其他可能的錯誤處理 **********************************/
 			} catch (Exception e) {
-				errorMsgs.add(e.getMessage());
+//				errorMsgs.add(e.getMessage());
 				RequestDispatcher failureView = req.getRequestDispatcher("/campsite/search_campsite.jsp");
 				failureView.forward(req, res);
 			}
@@ -738,4 +772,19 @@ public class CampsiteServlet extends HttpServlet {
 			}
 		}
 	}
+	
+//	public static void main(String[] args) {
+//		CampsiteService csvc = new CampsiteService();
+//		CampsiteVO vo1 = new CampsiteVO();
+//		CampsiteVO vo2 = new CampsiteVO();
+//		CampsiteVO vo3 = new CampsiteVO();
+//		vo1.setCampPrice(100);
+//		vo2.setCampPrice(200);
+//		vo3.setCampPrice(300);
+//		List<CampsiteVO> voList = new ArrayList<CampsiteVO>();
+//		voList.add(vo3);
+//		voList.add(vo1);
+//		voList.add(vo2);
+//		System.out.println("大到小= " + csvc.sortCampsiteVO(voList));
+//	}
 }

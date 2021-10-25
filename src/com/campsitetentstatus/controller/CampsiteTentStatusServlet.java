@@ -55,7 +55,7 @@ public class CampsiteTentStatusServlet extends HttpServlet {
 
 				/*************************** 2.開始查詢資料 *****************************************/
 				CampsiteTentStatusService campsiteTentStatusSvc = new CampsiteTentStatusService();
-				List<CampsiteTentStatusVO> campsiteTentStatusList = campsiteTentStatusSvc.getAllOfOne(campId);
+				List<CampsiteTentStatusVO> campsiteTentStatusList = campsiteTentStatusSvc.getAllCampStatusofOneCamp(campId);
 //				System.out.println(campsiteTentStatusList);
 				if (campsiteTentStatusList.isEmpty()) {
 					errorMsgs.add("查無資料");
