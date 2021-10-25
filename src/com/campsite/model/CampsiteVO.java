@@ -229,7 +229,7 @@ public class CampsiteVO implements Serializable {
 				+ location + ", latitude=" + latitude + ", longtitude=" + longtitude + ", campDescription="
 				+ campDescription + ", campPrice=" + campPrice + ", campLimit=" + campLimit + ", listedTime="
 				+ listedTime + ", siteState=" + siteState + ", lovedCount=" + lovedCount + ", reportedCount="
-				+ reportedCount + ", strDate=" + strDate + ", endDate=" + endDate + "]";
+				+ reportedCount + ", strDate=" + strDate + ", endDate=" + endDate + "]" + "\n";
 	}
 	
 }

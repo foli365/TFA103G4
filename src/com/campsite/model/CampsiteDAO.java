@@ -13,6 +13,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import com.sun.org.apache.regexp.internal.recompile;
+
 import jdbc.util.CompositeQuery.jdbcUtil_CompositeQuery_Campsite;
 
 public class CampsiteDAO implements CampsiteDAO_Interface {
@@ -39,12 +41,6 @@ public class CampsiteDAO implements CampsiteDAO_Interface {
 			+ "CAMP_LICENSE, PICTURE1, PICTURE2, PICTURE3, PICTURE4, PICTURE5 FROM CAMPSITE ORDER BY CAMP_ID";
 	public static final String GET_SEARCH = "SELECT CAMP_ID, MEMBER_ID, CAMP_NAME, LOCATION, CAMP_DESCRIPTION, PICTURE1 "
 			+ "FROM CAMPSITE WHERE CAMP_NAME LIKE ? OR LOCATION LIKE ?";
-//	public static final String GET_MULTI_SEARCH = "SELECT c.CAMP_ID, CAMP_NAME, LOCATION, CAMP_DESCRIPTION, CAMP_OPENING_TIME, EMPTY_CAMP_LEFT, PICTURE1 "
-//			+ "FROM CAMPSITE c LEFT JOIN CAMPSITE_TENT_STATUS cts on c.CAMP_ID = cts.CAMP_ID "
-//			+ "WHERE (CAMP_NAME LIKE ? OR LOCATION LIKE ?) "
-//			+ "AND CAMP_OPENING_TIME BETWEEN ? AND ? "
-//			+ "AND CAMP_PRICE BETWEEN ? AND ? "
-//			+ "AND EMPTY_CAMP_LEFT > ?";
 
 	static { // 一個環境只需要載入一次驅動
 		try {
@@ -470,10 +466,11 @@ public class CampsiteDAO implements CampsiteDAO_Interface {
 		try {
 
 			con = DriverManager.getConnection(URL, USER, PASSWORD);
-			String finalSQL = "SELECT c.CAMP_ID, MEMBER_ID, CAMP_NAME, LOCATION, "
-					+ "CAMP_DESCRIPTION, CAMP_PRICE, CAMP_OPENING_TIME, EMPTY_CAMP_LEFT, PICTURE1 "
+			String finalSQL = "SELECT DISTINCT c.CAMP_ID, MEMBER_ID, CAMP_NAME, LOCATION, "
+					+ "CAMP_DESCRIPTION, CAMP_PRICE, PICTURE1 "
 					+ "FROM CAMPSITE c LEFT JOIN CAMPSITE_TENT_STATUS cts on c.CAMP_ID = cts.CAMP_ID"
-					+ jdbcUtil_CompositeQuery_Campsite.get_WhereCondition(map);
+					+ jdbcUtil_CompositeQuery_Campsite.get_WhereCondition(map)
+					+ "ORDER BY CAMP_PRICE"; //DESC
 
 			String value = "";
 			Set<String> keys = map.keySet();
@@ -483,10 +480,17 @@ public class CampsiteDAO implements CampsiteDAO_Interface {
 					break z;
 				}
 			}
-			String strDateString = value.substring(0, 10);
-			String endDateString = value.substring(13);
-			Date strDate = StringToSQLDate.convert(strDateString);
-			Date endDate = StringToSQLDate.convert(endDateString);
+			Date strDate;
+			Date endDate;
+			try {
+				String strDateString = value.substring(0, 10);
+				String endDateString = value.substring(13);
+				strDate = StringToSQLDate.convert(strDateString);
+				endDate = StringToSQLDate.convert(endDateString);
+			} catch (Exception e) {
+				strDate = null;
+				endDate = null;
+			}
 			
 			pstmt = con.prepareStatement(finalSQL);
 			System.out.println("●●finalSQL(by DAO) = " + finalSQL);
@@ -497,6 +501,7 @@ public class CampsiteDAO implements CampsiteDAO_Interface {
 				campsiteVO.setCampName(rs.getString("CAMP_NAME"));
 				campsiteVO.setLocation(rs.getString("LOCATION"));
 				campsiteVO.setCampDescription(rs.getString("CAMP_DESCRIPTION"));
+				campsiteVO.setCampPrice(rs.getInt("CAMP_PRICE"));
 				campsiteVO.setPicture1(rs.getBytes("PICTURE1"));
 				campsiteVO.setCampId(rs.getInt("CAMP_ID"));
 				campsiteVO.setMemberId(rs.getInt("MEMBER_ID"));
@@ -505,7 +510,7 @@ public class CampsiteDAO implements CampsiteDAO_Interface {
 
 				list.add(campsiteVO); // Store the row in the List
 			}
-			System.out.println(list);
+			System.out.println("DAO list= " + list);
 
 			// Handle any SQL errors
 		} catch (SQLException se) {
