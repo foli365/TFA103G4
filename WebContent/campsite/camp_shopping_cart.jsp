@@ -14,7 +14,7 @@
 		guestCount = null;
 	}
 	CampsiteTentStatusService CTSSvc = new CampsiteTentStatusService();
-	pageContext.setAttribute("unavilibleList", CTSSvc.unavailibleDate(5001, 1));
+	pageContext.setAttribute("unavilibleList", CTSSvc.getUnavailibleDatewithGuestNumberOnly(5001, 1));
 %>
 <!DOCTYPE html>
 <html>
@@ -34,14 +34,7 @@
 			<small>每人每晚</small>
 			<hr>
 			<p>人數:</p>
-			<select class="form-select rounded-pill" aria-label="Last name"
-				id="headCount">
-				<option value="1">1</option>
-				<option value="2">2</option>
-				<option value="3">3</option>
-				<option value="4">4</option>
-				<option value="5+">5+</option>
-			</select> <input type="hidden" name="headCount" id="headCounts" value="">
+			<input type="text" class="form-control" name="headCount" id="headCount" value="">
 			<hr>
 			<p>入住時間:</p>
 			<input class="flatpickr flatpickr-input active" id="selectDate"
@@ -165,7 +158,6 @@
 			let price = daysBetween * $("#headCount").val() * 1350;
 			$("#price").text(price);
 			$("[name='price']").val(price);
-			$("#headCounts").val($("#headCount").val());
 			}
 		let campId = $("[name='campId']").val();
 		let totalGuest = $("#headCount").val();

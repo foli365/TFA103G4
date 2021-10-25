@@ -15,35 +15,38 @@ import javax.servlet.http.Part;
 import com.members.model.MemberService;
 import com.members.model.MembersVO;
 
+import at.favre.lib.crypto.bcrypt.BCrypt;
+
 @MultipartConfig(fileSizeThreshold = 1024 * 1024, maxFileSize = 5 * 1024 * 1024, maxRequestSize = 5 * 5 * 1024 * 1024)
 public class MemberServlet extends HttpServlet {
-	
+
 	protected void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		doPost(req, res);
 	}
+
 	protected void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		req.setCharacterEncoding("UTF-8");
 		String action = req.getParameter("action");
-		
+		String url = "/account/edit_profile.jsp";
+
 		if ("update".equals(action)) {
-			
-			try {	
+			try {
 				Integer id = new Integer(req.getParameter("id").trim());
 				MemberService memSvc = new MemberService();
 				MembersVO memVO = memSvc.findByPrimaryKey(id);
-				
+
 				InputStream in = req.getPart("photo").getInputStream();
 				byte[] buf = null;
-				if(in.available() != 0) {					
+				if (in.available() != 0) {
 					buf = new byte[in.available()];
 					in.read(buf);
 					in.close();
 				} else {
 					buf = memVO.getThumbnail();
 				}
-				
+
 				String name = req.getParameter("name");
 				if (name == null || name.trim().length() == 0) {
 					name = memVO.getName();
@@ -62,28 +65,74 @@ public class MemberServlet extends HttpServlet {
 				} catch (Exception e) {
 					membership = memVO.getMembership();
 				}
-				
+
 				Integer memberStatus = null;
 				try {
 					memberStatus = new Integer(req.getParameter("memberStatus"));
 				} catch (Exception e) {
 					memberStatus = memVO.getMembership();
 				}
-			
+
 				MembersVO updatedMemVO = memSvc.updateMembers(id, name, phone, membership, memberStatus, buf, address);
 				req.setAttribute("memVO", updatedMemVO);
 				HttpSession session = req.getSession();
 				session.setAttribute("account", updatedMemVO.getName());
-				String url = "/account/edit_profile.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url);
 				successView.forward(req, res);
-				
+
 			} catch (Throwable e) {
 				e.printStackTrace();
 			}
-			
+
 		}
-		
+
+		if ("passwordUpdate".equals(action)) {
+			RequestDispatcher View = req.getRequestDispatcher(url);
+			MemberService memSvc = new MemberService();
+			String currentPassword = req.getParameter("currentPword");
+			String newPassword = req.getParameter("newPword");
+			String confirmNewPword = req.getParameter("confirmNewPword");
+			if (currentPassword.trim().length() == 0 || newPassword.trim().length() == 0
+					|| confirmNewPword.trim().length() == 0) {
+				req.setAttribute("invalid", "請輸入所有欄位");
+				return;
+			}
+			HttpSession session = req.getSession();
+			Integer id = (Integer) session.getAttribute("id");
+			String bcryptHashString = memSvc.findByPrimaryKey(id).getPassword();
+			BCrypt.Result result = BCrypt.verifyer().verify(currentPassword.toCharArray(), bcryptHashString);
+			if (!result.verified) {
+				req.setAttribute("wrongPword", "密碼或確認密碼輸入錯誤，請重新檢查");
+				req.setAttribute("index", "2");
+				View.forward(req, res);
+				return;
+			} else {
+				String passwordReg = "^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{8,}$";
+				if (!newPassword.matches(passwordReg)) {
+					req.setAttribute("pwordTooWeak", "密碼長度不得小於8且至少須有一字母");
+					req.setAttribute("index", "2");
+					View.forward(req, res);
+					return;
+				} else if (newPassword.equals(currentPassword)) {
+					req.setAttribute("samePword", "新密碼請勿與舊密碼相同");
+					req.setAttribute("index", "2");
+					View.forward(req, res);
+					return;
+				} else if (!newPassword.equals(confirmNewPword)) {
+					req.setAttribute("wrongPword", "密碼或確認密碼輸入錯誤，請重新檢查");
+					req.setAttribute("index", "2");
+					View.forward(req, res);
+					return;
+				} else {
+					String hashedPassword = BCrypt.withDefaults().hashToString(12, newPassword.toCharArray());
+					memSvc.updatePassword(hashedPassword, memSvc.findByPrimaryKey(id).getEmail());
+					req.setAttribute("success", "密碼更新成功");
+					req.setAttribute("index", "2");
+					View.forward(req, res);
+				}
+			}
+		}
+
 	}
 
 	// 取出上傳的檔案名稱 (因為API未提供method,所以必須自行撰寫)
@@ -97,5 +146,5 @@ public class MemberServlet extends HttpServlet {
 		}
 		return filename;
 	}
-	
+
 }

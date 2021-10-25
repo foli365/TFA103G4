@@ -1,9 +1,8 @@
 package com.campsitetentstatus.model;
 
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.List;
-
-import com.campsite.model.CampsiteVO;
 
 public interface CampsiteTentStatusDAO_interface {
 	void add(CampsiteTentStatusVO campsiteTentStatusVO);

@@ -9,10 +9,8 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-
 import com.customerplan.model.CustomerPlanDAO;
 import com.customerplan.model.CustomerPlanVO;
-import com.mysql.cj.jdbc.CallableStatement;
 
 
 public class CampOrderDAO implements CampOrderDAO_interface {
@@ -293,7 +291,7 @@ public class CampOrderDAO implements CampOrderDAO_interface {
 
 		Connection con = null;
 		PreparedStatement pstmt = null;
-		java.sql.CallableStatement cs;
+		java.sql.CallableStatement cs = null;
 
 		try {
 
@@ -370,6 +368,13 @@ public class CampOrderDAO implements CampOrderDAO_interface {
 					+ se.getMessage());
 			// Clean up JDBC resources
 		} finally {
+			if (cs != null) {
+				try {
+					cs.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
 			if (pstmt != null) {
 				try {
 					pstmt.close();

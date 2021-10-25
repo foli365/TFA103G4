@@ -2,6 +2,7 @@ package com.camporder.controller;
 
 import java.io.IOException;
 import java.sql.Timestamp;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -94,17 +95,23 @@ public class CampOrderServlet extends HttpServlet {
 				}
 				//檢查預訂期間剩餘空位
 				CampsiteTentStatusService CTSSvc = new CampsiteTentStatusService();
-				if (!CTSSvc.isCampAvailible(campId, checkedIn, checkedOut, headCount)) {
-					req.setAttribute("noSpace", "此營地在您的指定時段中沒有空位");
-					RequestDispatcher failedView = req.getRequestDispatcher(url);
-					failedView.forward(req, res);
-					return;
+				try {
+					if (!CTSSvc.isTentAvailiblewithGuestNumberandTimeRange(campId, headCount, checkedIn, checkedOut)) {
+						req.setAttribute("noSpace", "此營地在您的指定時段中沒有空位");
+						RequestDispatcher failedView = req.getRequestDispatcher(url);
+						failedView.forward(req, res);
+						return;
+					}
+				} catch (ParseException | ServletException | IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
 				}
 				CampOrderService COSvc = new CampOrderService();
 				// 檢查同區間同會員之重複訂單
 				List<CampOrderVO> orderList = COSvc.getByMemberId(memberId);
 				for (CampOrderVO order : orderList) {
-					while (checkedIn.compareTo(checkedOut) <= 0) {
+					java.sql.Date confirmDate = checkedIn;
+					while (confirmDate.compareTo(checkedOut) <= 0) {
 						Date usedCheckedInday = order.getCheckInDate();
 						Date usedCheckedOutday = order.getCheckOutDate();
 						if (isWithinRange(checkedIn, usedCheckedInday, usedCheckedOutday)) {
@@ -114,9 +121,9 @@ public class CampOrderServlet extends HttpServlet {
 							return;
 						}
 						Calendar c = Calendar.getInstance();
-						c.setTime(checkedIn);
+						c.setTime(confirmDate);
 						c.add(Calendar.DATE, 1);
-						checkedIn = new java.sql.Date(c.getTimeInMillis());
+						confirmDate = new java.sql.Date(c.getTimeInMillis());
 					}
 				}
 				// 將以上屬性新增至新的營地訂單物件

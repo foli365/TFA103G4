@@ -30,7 +30,7 @@ public class MembersDAO implements MembersDAO_interface {
 
 	private static final String INSERT_STMT = "INSERT INTO members (name, password, email, thumbnail) VALUES (?, ?, ?, ?)";
 	private static final String GET_ALL_STMT = "SELECT member_id, name, phone, email, membership, member_status, thumbnail, address FROM members order by member_id";
-	private static final String GET_ONE_STMT = "SELECT member_id, name, phone, email, membership, member_status, thumbnail, address FROM members where member_id = ?";
+	private static final String GET_ONE_STMT = "SELECT member_id, name, phone, email, membership, member_status, thumbnail, address, password FROM members where member_id = ?";
 	private static final String GET_BY_EMAIL = "SELECT email, member_id, password, name FROM members where email = ?";
 	private static final String UPDATE = "UPDATE members set name=?, phone=?, membership=?, member_status=?, thumbnail=?, address=? where member_id = ?";
 	private static final String UPDATE_PASSWORD = "UPDATE members set password=? where email=?";
@@ -145,6 +145,7 @@ public class MembersDAO implements MembersDAO_interface {
 				membersVO.setName(rs.getString("name"));
 				membersVO.setPhone(rs.getString("phone"));
 				membersVO.setThumbnail(rs.getBytes("thumbnail"));
+				membersVO.setPassword(rs.getString("password"));
 				byte[] imagesBytes = rs.getBytes("thumbnail");
 				if (imagesBytes != null) {
 					String base64Img = Base64.getEncoder().encodeToString(imagesBytes);

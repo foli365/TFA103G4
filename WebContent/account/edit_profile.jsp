@@ -39,14 +39,14 @@
 			<div style="border: 0px; width: 175px;"
 				class="nav flex-column nav-tabs me-3" id="v-pills-tab"
 				role="tablist" aria-orientation="vertical">
-				<button class="nav-link mb-3 active" id="v-pills-home-tab"
+				<button class="nav-link mb-3 active" id="1"
 					data-bs-toggle="pill" data-bs-target="#v-pills-home" type="button"
 					role="tab" aria-controls="v-pills-home" aria-selected="true">編輯個人資料</button>
-				<button class="nav-link mb-3" id="v-pills-profile-tab"
+				<button class="nav-link mb-3" id="2"
 					data-bs-toggle="pill" data-bs-target="#v-pills-profile"
 					type="button" role="tab" aria-controls="v-pills-profile"
 					aria-selected="false">更改密碼</button>
-				<button class="nav-link mb-3" id="v-pills-messages-tab"
+				<button class="nav-link mb-3" id="3"
 					data-bs-toggle="pill" data-bs-target="#v-pills-messages"
 					type="button" role="tab" aria-controls="v-pills-messages"
 					aria-selected="false">通知選項</button>
@@ -99,24 +99,29 @@
 					aria-labelledby="v-pills-profile-tab">
 					<div class="container">
 						<h2>更改密碼</h2>
-						<form style="border: 1px solid #DEE2E6; padding: 40px;" action="<%=request.getContextPath()%>/account/member.do">
+						<form method="post" style="border: 1px solid #DEE2E6; padding: 40px;" action="<%=request.getContextPath()%>/account/member.do">
 							<div class="mb-3 mx-auto" style="width: 400px;">
-								<input type="email" placeholder="目前密碼" class="form-control"
-									id="currentPword" aria-describedby="emailHelp">
+								<input type="password" placeholder="目前密碼" class="form-control"
+									id="currentPword" aria-describedby="passwordHelp" name="currentPword">
 							</div>
 							<div class="mb-3 mx-auto" style="width: 400px;">
 								<input type="password" placeholder="更新密碼" class="form-control"
-									id="newPword">
+									id="newPword" name="newPword">
 							</div>
 							<div class="mb-3 mx-auto" style="width: 400px;">
 								<input type="password" placeholder="確認更新密碼" class="form-control"
-									id="confirmPword">
+									id="confirmPword" name="confirmNewPword">
 							<input type="hidden" name="action" value="passwordUpdate">
 							</div>
 							<div class="d-grid gap-2 col-6 ms-auto" style="width: 80px">
 								<button id="submitPwordChange" class="btn btn-success"
 									type="submit">儲存</button>
 							</div>
+							<small class="text-center" style="color: green;">${success}</small>
+							<small class="text-center" style="color: red;">${wrongPword}</small>
+							<small class="text-center" style="color: red;">${samePword}</small>
+							<small class="text-center" style="color: red;">${pwordTooWeak}</small>
+							<small class="text-center" style="color: red;">${invalid}</small>
 						</form>
 					</div>
 				</div>
@@ -126,6 +131,14 @@
 		</div>
 	</div>
 	<%@ include file="/template/script.html"%>
+	<script type="text/javascript">
+	$(function () {
+	    // Select the tab
+	    // $('#profile-tab a:last').tab('show');
+	    var tab = new bootstrap.Tab($("#"+ ${index}));
+	    tab.show();
+	});
+	</script>
 </body>
 
 </html>

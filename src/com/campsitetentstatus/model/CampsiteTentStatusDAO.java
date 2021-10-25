@@ -302,4 +302,5 @@ public class CampsiteTentStatusDAO implements CampsiteTentStatusDAO_interface{
 		}
 		return campsiteTentStatusList;
 	}
+
 }

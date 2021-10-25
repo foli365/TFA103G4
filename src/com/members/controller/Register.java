@@ -43,13 +43,13 @@ public class Register extends HttpServlet {
 			req.setAttribute("name", name);
 			RequestDispatcher failed = req.getRequestDispatcher("/register_and_login/register.jsp");
 			failed.forward(req, res);
-		} else if (!password.trim().matches(passwordReg)) {
+		} else if (!password.matches(passwordReg)) {
 			req.setAttribute("pwordTooWeak", "密碼長度不得小於8且至少須有一字母");
 			req.setAttribute("name", name);
 			req.setAttribute("email", email);
 			RequestDispatcher failed = req.getRequestDispatcher("/register_and_login/register.jsp");
 			failed.forward(req, res);
-		} else if (!password.trim().equals(passwordConfirm.trim())) {
+		} else if (!password.equals(passwordConfirm.trim())) {
 			req.setAttribute("passwordDiff", "請檢查密碼與確認密碼是否相同");
 			req.setAttribute("name", name);
 			req.setAttribute("email", email);

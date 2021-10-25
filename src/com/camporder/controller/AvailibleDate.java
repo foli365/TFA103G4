@@ -3,8 +3,10 @@ package com.camporder.controller;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.sql.Date;
 import java.text.ParseException;
 import java.util.ArrayList;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -31,18 +33,19 @@ public class AvailibleDate extends HttpServlet{
 		if (br != null) {
 			json = br.readLine();
 		}
-		int dateList[] = objectMapper.readValue(json, int[].class);
+		Integer dateList[] = objectMapper.readValue(json, Integer[].class);
 		CampsiteTentStatusService CTSSvc = new CampsiteTentStatusService();
+		ArrayList<String> unavilibleDate = new ArrayList<String>();
 		try {
-			ArrayList<String> unavilibleDate = CTSSvc.unavailibleDate(dateList[0], dateList[1]);
-			String unavilibleDateString = unavilibleDate.toString();
-			resp.setContentType("text/plain");
-			resp.setCharacterEncoding("UTF-8");
-			resp.getWriter().write(unavilibleDateString);
+			unavilibleDate = CTSSvc.getUnavailibleDatewithGuestNumberOnly(dateList[0], dateList[1]);
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		String unavilibleDateString = unavilibleDate.toString();
+		resp.setContentType("text/plain");
+		resp.setCharacterEncoding("UTF-8");
+		resp.getWriter().write(unavilibleDateString);
 		
 	}
 }

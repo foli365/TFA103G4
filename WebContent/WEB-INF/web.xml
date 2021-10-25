@@ -10,7 +10,7 @@
 		<welcome-file>index.jsp</welcome-file>
 		<welcome-file>default.html</welcome-file>
 		<welcome-file>default.htm</welcome-file>
-		<welcome-file>default.jsp</welcome-file>
+		<welcome-file>/TFA103G4/WebContent/homepage/index.jsp</welcome-file>
 	</welcome-file-list>
 	<!-- 逸文的 -->
 	<resource-ref>
