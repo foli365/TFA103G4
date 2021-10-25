@@ -15,6 +15,8 @@
     CampReleaseService campreleaseSvc = new CampReleaseService();
     List<CampReleaseVO> list = campreleaseSvc.getAll();
     pageContext.setAttribute("list",list);
+    
+    FacilitiesVO facilitiesVO = (FacilitiesVO) request.getAttribute("facilitiesVO");
 %>
 <%
 //     FacilitiesService facilitiesSvc = new FacilitiesService();
@@ -127,10 +129,12 @@
             <th>pic5</th>
             <th>配套方案</th>
             <th>設施</th>
-            <th>修改</th>
+            <th>營地資料修改</th>
+            <th>Plan修改</th>
             <th>刪除</th>
         </tr>
     </thead>
+    <jsp:useBean id="facilitiesSvc" scope="page" class="com.facilities.model.FacilitiesService" />
     <jsp:useBean id="planSvc" scope="page" class="com.plan.model.PlanService" />
     <c:forEach var="campreleaseVO"  items="${list}">
     <tbody>
@@ -152,10 +156,10 @@
 			<td><c:forEach var="planVO" items="${planSvc.all}"><c:if test="${campreleaseVO.campId == planVO.campId}">【${planVO.planName}】【${planVO.planGuestLimit}人】【${planVO.planAgeLimit}歲以下】【${planVO.planPrice}元】<br></c:if></c:forEach></td>
 			<td>
 			      <div>
-                    <label class="setting-label circle-line" for="setting[]"><input type="checkbox" name="bbq" id="bbq" value="1" ${facilitiesSvc.getByCampId(facilitiesVO.getCampId()).bbq == '1' ? 'checked' : ''}><span class="material-icons md-18">outdoor_grill</span></label>
-                    <label class="setting-label circle-line" for="setting[]"><input type="checkbox" name="wifi" id="wifi" value="1" ${facilitiesSvc.getByCampId(facilitiesVO.getCampId()).wifi == '1' ? 'checked' : ''}><span class="material-icons md-18">wifi</span></label>
-                    <label class="setting-label circle-line" for="setting[]"><input type="checkbox" name="nosmoke" id="nosmoke" value="1" ${facilitiesSvc.getByCampId(facilitiesVO.getCampId()).nosmoke == '1' ? 'checked' : ''}><span class="material-icons md-18">smoke_free</span></label>
-                    <label class="setting-label circle-line" for="setting[]"><input type="checkbox" name="pets" id="pets" value="1" ${facilitiesSvc.getByCampId(facilitiesVO.getCampId()).pets == '1' ? 'checked' : ''}><span class="material-icons md-18">pets</span></label>
+<%--                     <label class="setting-label circle-line" for="setting[]"><input type="checkbox" name="bbq" id="bbq" value= ${facilitiesSvc.getByCampId(facilitiesVO.getCampId()).bbq == '1' ? 'checked' : ''}><span class="material-icons md-18">outdoor_grill</span></label> --%>
+<%--                     <label class="setting-label circle-line" for="setting[]"><input type="checkbox" name="wifi" id="wifi" value="1" ${facilitiesSvc.getByCampId(facilitiesVO.getCampId()).wifi == '1' ? 'checked' : ''}><span class="material-icons md-18">wifi</span></label> --%>
+<%--                     <label class="setting-label circle-line" for="setting[]"><input type="checkbox" name="nosmoke" id="nosmoke" value="1" ${facilitiesSvc.getByCampId(facilitiesVO.getCampId()).nosmoke == '1' ? 'checked' : ''}><span class="material-icons md-18">smoke_free</span></label> --%>
+<%--                     <label class="setting-label circle-line" for="setting[]"><input type="checkbox" name="pets" id="pets" value="1" ${facilitiesSvc.getByCampId(facilitiesVO.getCampId()).pets == '1' ? 'checked' : ''}><span class="material-icons md-18">pets</span></label> --%>
                   </div>
 			</td>
             <td>
@@ -167,10 +171,17 @@
 <!--  			     <input type="hidden" name="action"	value="getOne_For_Update" > -->
 <!--                   </FORM></p> -->
                   			  <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/camprelease/camprelease.do" style="margin-bottom: 0px;"> 
-			     <input type="submit" value="修改">
+			     <input type="submit" value="營地資料修改">
 			     <input type="hidden" name="campId"  value="${campreleaseVO.campId}">
 			     <input type="hidden" name="action"	value="getOne_For_Update"></FORM>
               </td>
+                          <td>
+                  			  <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/plan/plan.do" style="margin-bottom: 0px;"> 
+			     <input type="submit" value="Plan修改">
+			     <input type="hidden" name="planId"  value="${planVO.planId}">
+			     <input type="hidden" name="action"	value="getOnePlan_For_Update"></FORM>
+              </td>
+              
               <td>
 <!--                   <br> -->
 <!--                   <p> -->

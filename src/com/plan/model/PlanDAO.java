@@ -16,7 +16,7 @@ public class PlanDAO implements PlanDAO_interface {
 	public static final String PASSWORD = "123456";
 	public static final String INSERT_STMT = "INSERT INTO PLAN (PLAN_ID, CAMP_ID, PLAN_NAME, PLAN_GUEST_LIMIT, "
 			+ "PLAN_AGE_LIMIT, PLAN_PRICE) VALUES (?, ?, ?, ?, ?, ?)";
-	public static final String UPDATE_STMT = "UPDATE PLAN SET PLAN_NAME = ?, PLAN_GUEST_LIMIT = ?, "
+	public static final String UPDATE_STMT = "UPDATE PLAN SET CAMP_ID=?, PLAN_NAME = ?, PLAN_GUEST_LIMIT = ?, "
 			+ "PLAN_AGE_LIMIT = ?, PLAN_PRICE = ? WHERE PLAN_ID = ?";
 	public static final String DELETE_STMT = "DELETE FROM PLAN WHERE PLAN_ID = ?";
 	public static final String FIND_BY_PK = "SELECT PLAN_ID, CAMP_ID, PLAN_NAME, PLAN_GUEST_LIMIT, PLAN_AGE_LIMIT, "
@@ -24,7 +24,11 @@ public class PlanDAO implements PlanDAO_interface {
 	public static final String GET_ALL = "SELECT PLAN_ID, CAMP_ID, PLAN_NAME, PLAN_GUEST_LIMIT, PLAN_AGE_LIMIT, "
 			+ "PLAN_PRICE FROM PLAN ORDER BY PLAN_ID";
 	
-	static { // 一個環境只需要載入一次驅動
+	private static final String GET_ONE_CAMPID = "SELECT PLAN_ID, CAMP_ID, PLAN_NAME, PLAN_GUEST_LIMIT, PLAN_AGE_LIMIT, PLAN_PRICE FROM PLAN WHERE CAMP_ID = ?";
+	private static final String DELETE_ONE_CAMPID = "DELETE FROM PLAN WHERE CAMP_ID = ?";
+	
+	
+	static { 
 		try {
 			Class.forName(DRIVER);
 		} catch (ClassNotFoundException ce) {
@@ -80,11 +84,13 @@ public class PlanDAO implements PlanDAO_interface {
 			con = DriverManager.getConnection(URL, USER, PASSWORD);
 			pstmt = con.prepareStatement(UPDATE_STMT);
 
-			pstmt.setString(1, planVO.getPlanName());
-			pstmt.setInt(2, planVO.getPlanGuestLimit());
-			pstmt.setInt(3, planVO.getPlanAgeLimit());
-			pstmt.setInt(4, planVO.getPlanPrice());
-			pstmt.setInt(5, planVO.getPlanId());
+			
+			pstmt.setInt(1, planVO.getCampId());
+			pstmt.setString(2, planVO.getPlanName());
+			pstmt.setInt(3, planVO.getPlanGuestLimit());
+			pstmt.setInt(4, planVO.getPlanAgeLimit());
+			pstmt.setInt(5, planVO.getPlanPrice());
+			pstmt.setInt(6, planVO.getPlanId());
 
 			pstmt.executeUpdate();
 			
@@ -250,5 +256,156 @@ public class PlanDAO implements PlanDAO_interface {
 		}
 		return planList;
 	}
-	
+
+	@Override
+	public List<PlanVO> findbyCampId(Integer campId) {
+		// TODO Auto-generated method stub
+		List<PlanVO> planlist = new ArrayList<PlanVO>();
+		PlanVO planVO = null;
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		try {
+			Class.forName(DRIVER);
+			con = DriverManager.getConnection(URL, USER, PASSWORD);
+			pstmt = con.prepareStatement(GET_ONE_CAMPID);
+			
+			pstmt.setInt(1, campId);
+			
+			rs = pstmt.executeQuery();
+			
+			while (rs.next()) {
+				planVO = new PlanVO();
+				planVO.setPlanId(rs.getInt("PLAN_ID"));
+				planVO.setCampId(rs.getInt("CAMP_ID"));
+				planVO.setPlanName(rs.getString("PLAN_NAME"));
+				planVO.setPlanGuestLimit(rs.getInt("PLAN_GUEST_LIMIT"));
+				planVO.setPlanAgeLimit(rs.getInt("PLAN_AGE_LIMIT"));
+				planVO.setPlanPrice(rs.getInt("PLAN_PRICE"));
+				planlist.add(planVO);
+			}
+			// Handle any driver errors
+			
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. " + se.getMessage());
+			// Clean up JDBC resources
+		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+		return planlist;
+	}
+
+	@Override
+	public void deletebyCampId(Integer campId) {
+		// TODO Auto-generated method stub
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		
+		try {
+			Class.forName(DRIVER);
+			con = DriverManager.getConnection(URL, USER, PASSWORD);
+			pstmt = con.prepareStatement(DELETE_ONE_CAMPID);
+			
+			pstmt.setInt(1, campId);
+			
+			pstmt.executeUpdate();
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			if(pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		}
+	}
+
+	@Override
+	public PlanVO getCampId(Integer campId) {
+		// TODO Auto-generated method stub
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		PlanVO planVO = null;
+
+		try {
+			con = DriverManager.getConnection(URL, USER, PASSWORD);
+			pstmt = con.prepareStatement(GET_ONE_CAMPID);
+
+			pstmt.setInt(1, campId);
+			
+			rs = pstmt.executeQuery();
+			
+			while (rs.next()) {
+				planVO = new PlanVO();
+				planVO.setPlanId(rs.getInt("PLAN_ID"));
+				planVO.setCampId(rs.getInt("CAMP_ID"));
+				planVO.setPlanName(rs.getString("PLAN_NAME"));
+				planVO.setPlanGuestLimit(rs.getInt("PLAN_GUEST_LIMIT"));
+				planVO.setPlanAgeLimit(rs.getInt("PLAN_AGE_LIMIT"));
+				planVO.setPlanPrice(rs.getInt("PLAN_PRICE"));
+			}
+			// Handle any driver errors
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. " + se.getMessage());
+			// Clean up JDBC resources
+		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+		return planVO;
+	}
 }

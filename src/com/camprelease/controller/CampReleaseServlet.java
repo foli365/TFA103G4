@@ -9,6 +9,7 @@ import javax.servlet.http.*;
 
 import com.camprelease.model.*;
 import com.facilities.model.*;
+import com.plan.model.*;
 
 @MultipartConfig
 public class CampReleaseServlet extends HttpServlet {
@@ -62,6 +63,12 @@ public class CampReleaseServlet extends HttpServlet {
 				if (campreleaseVO == null) {
 					errorMsgs.add("查無資料");
 				}
+				
+				PlanService planSvc = new PlanService();
+				PlanVO planVO = planSvc.getCampId(campId);
+				if (planVO == null) {
+					errorMsgs.add("查無資料");
+				}
 				// Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
 					RequestDispatcher failureView = req.getRequestDispatcher("/camprelease/Select_Page.jsp");
@@ -71,6 +78,8 @@ public class CampReleaseServlet extends HttpServlet {
 
 				/*************************** 3.查詢完成,準備轉交(Send the Success view) *************/
 				req.setAttribute("campreleaseVO", campreleaseVO); // 資料庫取出的campreleaseVO物件,存入req
+				req.setAttribute("planVO", planVO); // 資料庫取出的campreleaseVO物件,存入req
+				
 				String url = "/camprelease/listOneRel.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url); // 成功轉交 listOneRel.jsp
 				successView.forward(req, res);
@@ -416,6 +425,7 @@ public class CampReleaseServlet extends HttpServlet {
 						// Send the use back to the form, if there were errors
 						if (!errorMsgs.isEmpty()) {
 							req.setAttribute("campreleaseVO", campreleaseVO); // 含有輸入格式錯誤的campreleaseVO物件,也存入req
+							
 							req.setAttribute("facilitiesVO", facilitiesVO);
 							RequestDispatcher failureView = req.getRequestDispatcher("/camprelease/updateCampRel.jsp");
 							failureView.forward(req, res);
@@ -434,7 +444,7 @@ public class CampReleaseServlet extends HttpServlet {
 								picture5);
 						
 						FacilitiesService facilitiesSvc = new FacilitiesService();
-						facilitiesVO = facilitiesSvc.updateFacilities(campId, bbq, wifi, nosmoke, pets);
+						facilitiesVO = facilitiesSvc.updateFacilities(campId, bbq, wifi, nosmoke, pets, facilitiesId);
 
 						/*************************** 3.修改完成,準備轉交(Send the Success view) *************/
 						req.setAttribute("campreleaseVO", campreleaseVO); // 資料庫update成功後,正確的的campaddVO物件,存入req
@@ -814,6 +824,12 @@ public class CampReleaseServlet extends HttpServlet {
 				/*************************** 2.開始刪除資料 ***************************************/
 				CampReleaseService campreleaseSvc = new CampReleaseService();
 				campreleaseSvc.deleteCampRelease(campId);
+				
+				PlanService planSvc = new PlanService();
+				planSvc.deletebyCampId(campId);
+				
+				FacilitiesService facilitiesSvc = new FacilitiesService();
+				facilitiesSvc.deletebyCampId(campId);
 
 				/*************************** 3.刪除完成,準備轉交(Send the Success view) ***********/
 				String url = "/camprelease/listCampRel.jsp";

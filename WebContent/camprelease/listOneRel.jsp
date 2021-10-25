@@ -6,16 +6,12 @@
 <%@ page import="com.plan.model.*"%>
 
 <%
-CampReleaseVO campreleaseVO = (CampReleaseVO) request.getAttribute("campreleaseVO"); //CampReleaseServlet.java(Concroller), 存入req的campreleaseVO物件
-FacilitiesVO facilitiesVO = (FacilitiesVO) request.getAttribute("facilitiesVO");
-%>
-<%
-PlanVO planVO = (PlanVO) request.getAttribute("planVO");
-%>
-<%
-// CampReleaseService campreleaseSvc = new CampReleaseService();
-// List<CampReleaseVO> list = campreleaseSvc.getAll();
-// pageContext.setAttribute("list",list);
+// CampReleaseVO campreleaseVO = (CampReleaseVO) request.getAttribute("campreleaseVO"); //CampReleaseServlet.java(Concroller), 存入req的campreleaseVO物件
+// PlanService planSvc = new PlanService();
+// CampReleaseVO campreleaseVO = (CampReleaseVO) session.getAttribute("campreleaseVO");
+// Integer campId = campreleaseVO.getCampId();
+// List<PlanVO> list = planSvc.getByCampId(campId);
+// pageContext.setAttribute("list", list);
 %>
 
 <!DOCTYPE html>
@@ -111,12 +107,11 @@ text-align: center;
 		<th>pic5</th>
 		<th>配套</th>
 		<th>設施</th>
-		<th>修改</th>
-		<th>刪除</th>
 	</tr>
 	</thead>
 	<tbody>
-	<jsp:useBean id="planSvc" scope="page" class="com.plan.model.PlanService" />
+	<jsp:useBean id="facilitiesSvc" scope="page" class="com.facilities.model.FacilitiesService" />
+<%-- 	<jsp:useBean id="planSvc" scope="page" class="com.plan.model.PlanService" /> --%>
 	<tr>
 			 <td>【${campreleaseVO.campId}】</td>
 			<td>【${campreleaseVO.memberId}】</td>
@@ -136,24 +131,12 @@ text-align: center;
             <td>【${planVO.planName}】【${planVO.planGuestLimit}人】【${planVO.planAgeLimit}歲以下】【${planVO.planPrice}元】<br></td>
 			<td>			      
 			      <div>
-                    <label class="setting-label circle-line" for="setting[]"><input type="checkbox" name="bbq" id="bbq" value="1" ${facilitiesSvc.findByCampId(facilitiesVO.getCampId()).bbq == '1' ? 'checked' : ''}><span class="material-icons md-18">outdoor_grill</span></label>
-                    <label class="setting-label circle-line" for="setting[]"><input type="checkbox" name="wifi" id="wifi" value="1" ${facilitiesSvc.findByCampId(facilitiesVO.getCampId()).wifi == '1' ? 'checked' : ''}><span class="material-icons md-18">wifi</span></label>
-                    <label class="setting-label circle-line" for="setting[]"><input type="checkbox" name="nosmoke" id="nosmoke" value="1" ${facilitiesSvc.findByCampId(facilitiesVO.getCampId()).nosmoke == '1' ? 'checked' : ''}><span class="material-icons md-18">smoke_free</span></label>
-                    <label class="setting-label circle-line" for="setting[]"><input type="checkbox" name="pets" id="pets" value="1" ${facilitiesSvc.findByCampId(facilitiesVO.getCampId()).pets == '1' ? 'checked' : ''}><span class="material-icons md-18">pets</span></label>
+<%--                     <label class="setting-label circle-line" for="setting[]"><input type="checkbox" name="bbq" id="bbq" value="1" ${facilitiesSvc.getByCampId(facilitiesVO.getCampId()).bbq == '1' ? 'checked' : ''}><span class="material-icons md-18">outdoor_grill</span></label> --%>
+<%--                     <label class="setting-label circle-line" for="setting[]"><input type="checkbox" name="wifi" id="wifi" value="1" ${facilitiesSvc.getByCampId(facilitiesVO.getCampId()).wifi == '1' ? 'checked' : ''}><span class="material-icons md-18">wifi</span></label> --%>
+<%--                     <label class="setting-label circle-line" for="setting[]"><input type="checkbox" name="nosmoke" id="nosmoke" value="1" ${facilitiesSvc.getByCampId(facilitiesVO.getCampId()).nosmoke == '1' ? 'checked' : ''}><span class="material-icons md-18">smoke_free</span></label> --%>
+<%--                     <label class="setting-label circle-line" for="setting[]"><input type="checkbox" name="pets" id="pets" value="1" ${facilitiesSvc.getByCampId(facilitiesVO.getCampId()).pets == '1' ? 'checked' : ''}><span class="material-icons md-18">pets</span></label> --%>
                   </div>
             </td>
-                       <td>
-                  			  <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/camprelease/camprelease.do" style="margin-bottom: 0px;"> 
-			     <input type="submit" value="修改">
-			     <input type="hidden" name="campId"  value="${campreleaseVO.campId}">
-			     <input type="hidden" name="action"	value="getOne_For_Update"></FORM>
-              </td>
-              <td>
-                  <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/camprelease/camprelease.do" style="margin-bottom: 0px;">
-			     <input type="submit" value="刪除">
-			     <input type="hidden" name="campId"  value="${campreleaseVO.campId}">
-			     <input type="hidden" name="action" value="delete"></FORM>
-              </td>
 	</tr>
 	</tbody>
 </table>

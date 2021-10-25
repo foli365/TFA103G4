@@ -23,7 +23,7 @@ public class FacilitiesService {
 		return facilitiesVO;
 	}
 	
-	public FacilitiesVO updateFacilities(Integer campId, Integer bbq, Integer wifi, Integer nosmoke, Integer pets) {
+	public FacilitiesVO updateFacilities(Integer campId, Integer bbq, Integer wifi, Integer nosmoke, Integer pets, Integer facilitiesId) {
 
 		FacilitiesVO facilitiesVO = new FacilitiesVO();
 
@@ -32,24 +32,33 @@ public class FacilitiesService {
 		facilitiesVO.setWifi(wifi);
 		facilitiesVO.setNosmoke(nosmoke);
 		facilitiesVO.setPets(pets);
+		facilitiesVO.setFacilitiesId(facilitiesId);
 		dao.update(facilitiesVO);
 
 		return facilitiesVO;
 	}
-	
-	public void delete(Integer campId) {
-		dao.delete(campId);
-	};
-	
-	public FacilitiesVO getOneCamp(Integer facilitiesId) {
-		return dao.findByPrimaryKey(facilitiesId);
+	public void deleteFacilities(Integer facilitiesId) {
+		dao.delete(facilitiesId);
 	}
 	
-	public FacilitiesVO getByCampId(Integer campId) {
-		return dao.findbyCampId(campId);
+	public FacilitiesVO getOneFacilities(Integer facilitiesId) {
+		return dao.findbyPrimaryKey(facilitiesId);
 	}
+	
 	public List<FacilitiesVO> getAll(){
 		return dao.getAll();
 	};
+	
+	public List<FacilitiesVO> getByCampId(Integer campId) {
+		return dao.findbyCampId(campId);
+	}
+	
+	public void deletebyCampId(Integer campId) {
+		dao.deletebyCampId(campId);
+	};
+	
+	public FacilitiesVO getCampId(Integer campId) {
+		return dao.getCampId(campId);
+	}
 	
 }

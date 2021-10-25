@@ -24,7 +24,7 @@ public class CampReleaseDAO implements CampReleaseDAO_interface {
 	private static final String DELETE = 
 			"DELETE FROM campsite where CAMP_ID = ?";
 	private static final String UPDATE = 
-			"UPDATE campsite set CAMP_NAME=?, LOCATION=?, LATITUDE=?, LONGTITUDE=?, CAMP_DESCRIPTION=?, CAMP_PRICE=?, LISTED_TIME=?,  PICTURE1=?, PICTURE2=?, PICTURE3=?, PICTURE4=?, PICTURE5=? where CAMP_ID = ?";
+			"UPDATE campsite set MEMBER_ID, CAMP_NAME=?, LOCATION=?, LATITUDE=?, LONGTITUDE=?, CAMP_DESCRIPTION=?, CAMP_PRICE=?, LISTED_TIME=?,  PICTURE1=?, PICTURE2=?, PICTURE3=?, PICTURE4=?, PICTURE5=? where CAMP_ID = ?";
 
 	@Override
 	public void insert(CampReleaseVO campreleaseVO) {
@@ -87,18 +87,19 @@ public class CampReleaseDAO implements CampReleaseDAO_interface {
 			pstmt = con.prepareStatement(UPDATE);
 
 			pstmt.setString(1, campreleaseVO.getCampName());
-			pstmt.setString(2, campreleaseVO.getLocation());
-			pstmt.setDouble(3, campreleaseVO.getLatitude());
-			pstmt.setDouble(4, campreleaseVO.getLongtitude());
-			pstmt.setString(5, campreleaseVO.getCampDescription());
-			pstmt.setInt(6, campreleaseVO.getCampPrice());
-			pstmt.setTimestamp(7, campreleaseVO.getListedTime());
-			pstmt.setBytes(8, campreleaseVO.getPicture1());
-			pstmt.setBytes(9, campreleaseVO.getPicture2());
-			pstmt.setBytes(10, campreleaseVO.getPicture3());
-			pstmt.setBytes(11, campreleaseVO.getPicture4());
-			pstmt.setBytes(12, campreleaseVO.getPicture5());
-			pstmt.setInt(13, campreleaseVO.getCampId());
+			pstmt.setString(2, campreleaseVO.getCampName());
+			pstmt.setString(3, campreleaseVO.getLocation());
+			pstmt.setDouble(4, campreleaseVO.getLatitude());
+			pstmt.setDouble(5, campreleaseVO.getLongtitude());
+			pstmt.setString(6, campreleaseVO.getCampDescription());
+			pstmt.setInt(7, campreleaseVO.getCampPrice());
+			pstmt.setTimestamp(8, campreleaseVO.getListedTime());
+			pstmt.setBytes(9, campreleaseVO.getPicture1());
+			pstmt.setBytes(10, campreleaseVO.getPicture2());
+			pstmt.setBytes(11, campreleaseVO.getPicture3());
+			pstmt.setBytes(12, campreleaseVO.getPicture4());
+			pstmt.setBytes(13, campreleaseVO.getPicture5());
+			pstmt.setInt(14, campreleaseVO.getCampId());
 
 			pstmt.executeUpdate();
 
