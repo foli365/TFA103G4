@@ -62,8 +62,7 @@ th, td {
 			<td>
 				<h3>所有訂單資料</h3>
 				<h4>
-					<a href="<%=request.getContextPath()%>/emodr/select_page.jsp"><img
-						src="images/back1.gif" width="100" height="32" border="0">回首頁</a>
+					<a href="<%=request.getContextPath()%>/emodr/listAllEmodr.jsp">回首頁</a>
 				</h4>
 			</td>
 		</tr>
