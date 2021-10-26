@@ -6,14 +6,11 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import com.sun.org.apache.regexp.internal.recompile;
 
 import jdbc.util.CompositeQuery.jdbcUtil_CompositeQuery_Campsite;
 

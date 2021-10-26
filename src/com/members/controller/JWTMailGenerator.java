@@ -47,7 +47,7 @@ public class JWTMailGenerator extends HttpServlet {
 		cal.add(Calendar.MINUTE, 10);
 		java.util.Date exp = cal.getTime();
 		if (!emailConfirm(email)) {
-			req.setAttribute("noEmail", "寄送失敗，請重新輸入信箱地址");
+			req.setAttribute("noEmail", "寄送失敗，請輸入正確信箱地址");
 			RequestDispatcher noEmail = req.getRequestDispatcher("/register_and_login/search_by_email.jsp");
 			noEmail.forward(req, res);
 		} else {
@@ -56,7 +56,7 @@ public class JWTMailGenerator extends HttpServlet {
 			try {
 				Algorithm algorithm = Algorithm.HMAC256(SECRET);
 				String token = JWT.create()
-						.withKeyId(email)
+						.withKeyId(memVO.getMemberId().toString())
 						.withIssuer(ISSUER)
 						.withSubject(SUB)
 						.withClaim("password", password.substring(7))
@@ -67,7 +67,7 @@ public class JWTMailGenerator extends HttpServlet {
 				String content = memVO.getName() + "您好:\n\t請在10分鐘內透過此連結重設密碼:\n\n"+
 				"http://localhost:8081"+req.getContextPath()+"/register_and_login/reset_password.jsp?token="+token;
 				mailService.sendMail(email, "重設密碼", content);
-				req.setAttribute("success", "請於10分鐘內點擊郵件中的網址");
+				req.setAttribute("success", "註冊成功，請於10分鐘內點擊郵件中的網址");
 				RequestDispatcher success = req.getRequestDispatcher("/register_and_login/search_by_email.jsp");
 				success.forward(req, res);
 			} catch (JWTCreationException e) {

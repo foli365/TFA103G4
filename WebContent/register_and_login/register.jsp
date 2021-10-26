@@ -89,6 +89,7 @@ h3 {
 					name="passwordConfirm" id="passwordConfirm" required> <small
 					style="color: red;">${passwordDiff}</small>
 				<div class="invalid-feedback">請確認密碼</div>
+			<small style="color: green;">${success}</small>
 			</div>
 			<div class="d-grid gap-2 col-6 mx-auto">
 				<button id="submit" class="btn btn-success" type="submit">註冊</button>

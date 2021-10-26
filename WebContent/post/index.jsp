@@ -5,20 +5,20 @@
 <%@ page import="java.util.*"%>
 
 <%
-	response.setHeader("Cache-Control", "no-store");
-	response.setHeader("Pragma", "no-cache");
-	response.setDateHeader("Expires", 0);
-	PostService postSvc = new PostService();
-	List<PostVO> list = postSvc.getAll();
-	pageContext.setAttribute("list", list);
-	Object account = session.getAttribute("account");
+ 	response.setHeader("Cache-Control", "no-store");
+ 	response.setHeader("Pragma", "no-cache");
+ 	response.setDateHeader("Expires", 0);
+ 	PostService postSvc = new PostService();
+ 	List<PostVO> list = postSvc.getAll();
+ 	pageContext.setAttribute("list", list);
+ 	Object account = session.getAttribute("account");
 	MembersDAO dao = new MembersDAO();
 	if (session.getAttribute("id") != null) {
-		MembersVO memVO = dao.findByPrimaryKey((Integer) session.getAttribute("id"));
-		pageContext.setAttribute("memberVO", memVO);
-	} else {
-		session.setAttribute("location", request.getRequestURI());
-	}
+ 		MembersVO memVO = dao.findByPrimaryKey((Integer)session.getAttribute("id"));
+ 		pageContext.setAttribute("memberVO", memVO);
+ 	} else {
+ 		session.setAttribute("location", request.getRequestURI());
+ 	}
 %>
 <jsp:useBean id="memSvc" class="com.members.model.MemberService" scope="request"></jsp:useBean>
 <!DOCTYPE html>

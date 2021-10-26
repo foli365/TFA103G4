@@ -12,6 +12,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Document</title>
+<%@ include file="/template/navbar.jsp" %>
 <link rel="stylesheet" href="./index.css">
 <link rel="stylesheet"
 	href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
@@ -20,7 +21,6 @@
 </head>
 
 <body>
-	<%@ include file="/template/navbar.jsp" %>
 	<h1 id="title" class="text-center mt-5">Find yourself outside</h1>
 	<h3 class="text-center mb-5">
 		Discover and book tent camping, RV parks,<br> cabins, treehouses,

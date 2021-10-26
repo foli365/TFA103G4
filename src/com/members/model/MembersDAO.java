@@ -33,7 +33,7 @@ public class MembersDAO implements MembersDAO_interface {
 	private static final String GET_ONE_STMT = "SELECT member_id, name, phone, email, membership, member_status, thumbnail, address, password FROM members where member_id = ?";
 	private static final String GET_BY_EMAIL = "SELECT email, member_id, password, name FROM members where email = ?";
 	private static final String UPDATE = "UPDATE members set name=?, phone=?, membership=?, member_status=?, thumbnail=?, address=? where member_id = ?";
-	private static final String UPDATE_PASSWORD = "UPDATE members set password=? where email=?";
+	private static final String UPDATE_PASSWORD = "UPDATE members set password=? where member_id=?";
 
 	@Override
 	public void insert(MembersVO membersVO) {
@@ -306,7 +306,7 @@ public class MembersDAO implements MembersDAO_interface {
 			pstmt = con.prepareStatement(UPDATE_PASSWORD);
 			
 			pstmt.setString(1, membersVO.getPassword());
-			pstmt.setString(2, membersVO.getEmail());
+			pstmt.setInt(2, membersVO.getMemberId());
 			
 			pstmt.executeUpdate();
 		} catch (SQLException se) {

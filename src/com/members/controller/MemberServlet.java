@@ -28,8 +28,8 @@ public class MemberServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		req.setCharacterEncoding("UTF-8");
-		String action = req.getParameter("action");
-		String url = "/account/edit_profile.jsp";
+		final String action = req.getParameter("action");
+		final String url = "/account/edit_profile.jsp";
 
 		if ("update".equals(action)) {
 			try {
@@ -95,6 +95,8 @@ public class MemberServlet extends HttpServlet {
 			if (currentPassword.trim().length() == 0 || newPassword.trim().length() == 0
 					|| confirmNewPword.trim().length() == 0) {
 				req.setAttribute("invalid", "請輸入所有欄位");
+				req.setAttribute("index", "2");
+				View.forward(req, res);
 				return;
 			}
 			HttpSession session = req.getSession();
@@ -125,7 +127,7 @@ public class MemberServlet extends HttpServlet {
 					return;
 				} else {
 					String hashedPassword = BCrypt.withDefaults().hashToString(12, newPassword.toCharArray());
-					memSvc.updatePassword(hashedPassword, memSvc.findByPrimaryKey(id).getEmail());
+					memSvc.updatePassword(hashedPassword, id);
 					req.setAttribute("success", "密碼更新成功");
 					req.setAttribute("index", "2");
 					View.forward(req, res);

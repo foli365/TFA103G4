@@ -39,9 +39,9 @@ public class MemberService {
 		return membersVO;
 	}
 	
-	public void updatePassword(String password, String email) {
+	public void updatePassword(String password, Integer memberId ) {
 		MembersVO membersVO = new MembersVO();
-		membersVO.setEmail(email);
+		membersVO.setMemberId(memberId);
 		membersVO.setPassword(password);
 		dao.updatePassword(membersVO);
 	}

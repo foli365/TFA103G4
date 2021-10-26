@@ -50,17 +50,17 @@ public class passwordReset extends HttpServlet {
 		} else {
 			try {
 				DecodedJWT jwt = JWT.decode(token);
-				String email = jwt.getKeyId();
-				String subPassword = memSvc.findByEmail(email.toString()).getPassword().substring(7);
+				Integer id = new Integer(jwt.getKeyId());
+				String subPassword = memSvc.findByPrimaryKey(id).getPassword().substring(7);
 				Algorithm algorithm = Algorithm.HMAC256(SECRET);
 				JWTVerifier verifier = JWT.require(algorithm)
 						.withIssuer(ISSUER)
 						.withSubject(SUB)
-						.withClaim("password", subPassword).build();
+						.withClaim("password", subPassword)
+						.build();
 				jwt = verifier.verify(token);
-
 				String bcryptHashString = BCrypt.withDefaults().hashToString(12, password.toCharArray());
-				memSvc.updatePassword(bcryptHashString, email);
+				memSvc.updatePassword(bcryptHashString, id);
 				req.setAttribute("success", "н╫зяжие\");
 				RequestDispatcher success = req.getRequestDispatcher("/register_and_login/reset_password.jsp");
 				success.forward(req, res);

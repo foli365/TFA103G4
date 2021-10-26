@@ -1,10 +1,13 @@
+<%@page import="java.util.List"%>
+<%@page import="com.camporder.model.*"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<jsp:useBean id="CSvc" class="com.campsite.model.CampsiteService" scope="page"></jsp:useBean>
 <%
-	response.setHeader("Cache-Control", "no-store");
-	response.setHeader("Pragma", "no-cache");
-	response.setDateHeader("Expires", 0);
+	CampOrderService COSvc = new CampOrderService();
+	List<CampOrderVO> list = COSvc.getByMemberId((Integer)session.getAttribute("id"));
+	pageContext.setAttribute("list", list);
 %>
 
 
@@ -59,6 +62,7 @@
 						role="tabpanel" aria-labelledby="pills-home-tab">
 						<div class="container">
 							<div class="row">
+								<c:forEach var="order" items="${list}">
 								<div class="col mb-4">
 									<div class="card mx-auto" style="width: 40rem;">
 										<img src="./img/campsite/1485516773runke_ground17-180816.jpg"
@@ -67,7 +71,7 @@
 											<div class="row align-items-center">
 												<div class="col">
 													<h5 class="card-title mb-2">
-														<a href="">南灣風情</a>
+														<a href="">${CSvc.getOneCampsite(order.campId).campName}</a>
 													</h5>
 												</div>
 												<div class="col d-flex justify-content-end">
@@ -75,13 +79,13 @@
 												</div>
 											</div>
 											<p class="card-text">
-												<a href="">屏東縣恆春鎮南灣路102號</a>
+												<a href="">${CSvc.getOneCampsite(order.campId).location}</a>
 											</p>
 										</div>
 										<ul class="list-group list-group-flush">
-											<li class="list-group-item">預訂期間: 11/25至11/31</li>
-											<li class="list-group-item">人數: 4</li>
-											<li class="list-group-item">總價: 2000元</li>
+											<li class="list-group-item">預訂期間: ${order.checkInDate}至${order.checkOutDate}</li>
+											<li class="list-group-item">人數: ${order.guestNumber}</li>
+											<li class="list-group-item">總價: ${order.orderTotal}</li>
 										</ul>
 										<div class="card-body">
 											<button type="button" class="btn btn-primary">修改訂單</button>
@@ -89,6 +93,7 @@
 										</div>
 									</div>
 								</div>
+								</c:forEach>
 								<div class="col mb-4">
 									<div class="card mx-auto" style="width: 40rem;">
 										<img src="./img/campsite/741692.jpg" class="card-img-top"
@@ -268,6 +273,9 @@
 		</div>
 	</div>
 	<%@ include file="/template/script.html"%>
+	<script type="text/javascript">
+		
+	</script>
 
 </body>
 </html>

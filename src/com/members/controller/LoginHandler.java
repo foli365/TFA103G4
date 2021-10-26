@@ -43,17 +43,16 @@ public class LoginHandler extends HttpServlet {
 		if (!allowUser(email, password)) {
 			MemberService memSvc = new MemberService();
 			MembersVO membersVO = memSvc.findByEmail(email);
+			String url = "/register_and_login/login.jsp";
+			RequestDispatcher failedView = req.getRequestDispatcher(url);
 			if (membersVO != null) {
 				req.setAttribute("email", membersVO.getEmail());
 				req.setAttribute("noPassword", "你所輸入的密碼錯誤。");
-				String url = "/register_and_login/login.jsp";
-				RequestDispatcher failedView = req.getRequestDispatcher(url);
 				failedView.forward(req, res);
+				return;
 			} else {
 				req.setAttribute("noEmail", "你所輸入的電子信箱錯誤");
 				req.setAttribute("noPassword", "你所輸入的密碼錯誤。");
-				String url = "/register_and_login/login.jsp";
-				RequestDispatcher failedView = req.getRequestDispatcher(url);
 				failedView.forward(req, res);
 			}
 
