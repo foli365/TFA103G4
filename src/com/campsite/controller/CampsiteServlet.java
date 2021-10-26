@@ -24,6 +24,7 @@ import org.apache.jasper.tagplugins.jstl.core.ForEach;
 
 import com.campsite.model.CampsiteService;
 import com.campsite.model.CampsiteVO;
+import com.campsite.model.StringToSQLDate;
 import com.campsitetentstatus.model.CampsiteTentStatusService;
 
 @MultipartConfig
@@ -284,28 +285,47 @@ public class CampsiteServlet extends HttpServlet {
 //				List<CampsiteVO> sortedList = campsiteSvc.sortCampsiteVO(list);
 //				System.out.println("Servlet sortedList= " + sortedList);
 				
-//				Integer customerNum = new Integer(req.getParameter("EMPTY_CAMP_LEFT"));
-//				CampsiteTentStatusService campsiteTentStatusSvc = new CampsiteTentStatusService();
-//				ArrayList<CampsiteVO> filterList = new ArrayList<CampsiteVO>();
-//				for (CampsiteVO campsiteVO : list) {
-//					if (campsiteVO.getStrDate() != null && campsiteVO.getEndDate() != null) {
-//						if (campsiteTentStatusSvc.isCampAvailible(campsiteVO.getCampId(), campsiteVO.getStrDate(),
-//								campsiteVO.getEndDate(), customerNum)) {
-//							filterList.add(campsiteVO);
-//						}
-//					}
-//					if (campsiteVO.getStrDate() != null && campsiteVO.getEndDate() != null && customerNum != null) {
-//						if (campsiteTentStatusSvc.isCampAvailible(campsiteVO.getCampId(), campsiteVO.getStrDate(),
-//								campsiteVO.getEndDate(), customerNum)) {
-//							filterList.add(campsiteVO);
-//						}
-//					}
-//				}
+				String str = req.getParameter("EMPTY_CAMP_LEFT");
+				Integer customerNum = null;
+				try {
+					customerNum = new Integer(str);
+				} catch (Exception e) {
+					customerNum = 0;
+				}
 				
+				
+				String value = req.getParameter("CAMP_OPENING_TIME");
+				java.sql.Date strDate;
+				java.sql.Date endDate;
+				try {
+					String strDateString = value.substring(0, 10);
+					String endDateString = value.substring(13);
+					strDate = StringToSQLDate.convertToSQLDate(strDateString);
+					endDate = StringToSQLDate.convertToSQLDate(endDateString);
+				} catch (Exception e) {
+					strDate = null;
+					endDate = null;
+				}
+				
+				CampsiteTentStatusService campsiteTentStatusSvc = new CampsiteTentStatusService();
+				List<CampsiteVO> filterList = new ArrayList<CampsiteVO>();
+				
+				for (CampsiteVO campsiteVO : list) {
+					if (campsiteVO.getStrDate() != null && campsiteVO.getEndDate() != null) {
+						if (campsiteTentStatusSvc.isTentAvailiblewithGuestNumberandTimeRange(campsiteVO.getCampId(), customerNum, strDate, endDate)) {
+							filterList.add(campsiteVO);
+						}
+					} else if (customerNum != null) {
+						if(campsiteTentStatusSvc.getUnavailibleDatewithGuestNumberOnly(campsiteVO.getCampId(), customerNum).isEmpty()) {
+							filterList.add(campsiteVO);
+						}
+					}
+				}
+				System.out.println("Servlet filterList " + filterList);
 				
 				/*************************** 3.查詢完成,準備轉交(Send the Success view) ************/
-			
-				req.setAttribute("campsiteList", list); // 資料庫取出的filterList物件,存入request
+				req.setAttribute("listExist", "empty");
+				req.setAttribute("campsiteList", filterList); // 資料庫取出的filterList物件,存入request
 				RequestDispatcher successView = req.getRequestDispatcher("/campsite/search_campsite.jsp"); // 成功轉交search_campsite.jsp
 				successView.forward(req, res);
 
@@ -329,12 +349,6 @@ public class CampsiteServlet extends HttpServlet {
 				String str = req.getParameter("campId");
 				if (str == null || (str.trim()).length() == 0) {
 					errorMsgs.add("請輸入營地編號");
-				}
-				// Send the use back to the form, if there were errors
-				if (!errorMsgs.isEmpty()) {
-					RequestDispatcher failureView = req.getRequestDispatcher("/campsite/search_campsite.jsp");
-					failureView.forward(req, res);
-					return;// 程式中斷
 				}
 
 				Integer campId = null;
