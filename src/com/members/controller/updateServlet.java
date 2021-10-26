@@ -93,7 +93,7 @@ public class updateServlet extends HttpServlet {
 				} catch (Exception e) {
 					memberStatus = memVO.getMemberStatus();
 				}
-				System.out.println("身分"+membership);
+				System.out.println("狀態"+memberStatus);
 				MembersVO updatedMemVO = memSvc.updateMembers(id, name, phone, membership, memberStatus, buf, address);
 				req.setAttribute("memVO", updatedMemVO);
 				HttpSession session = req.getSession();
@@ -122,14 +122,12 @@ public class updateServlet extends HttpServlet {
 					failureView.forward(req, res);
 					return;//程式中斷
 				}
-				System.out.println("here1");
 				Integer mem = null;
 				try {
 					mem = new Integer(memid);
 				} catch (Exception e) {
 					errorMsgs.add("管理員編號格式不正確");
 				}
-				System.out.println("here2");
 				if (!errorMsgs.isEmpty()) {
 					RequestDispatcher failureView = req
 							.getRequestDispatcher("/backendLogin/member.jsp");
@@ -140,9 +138,7 @@ public class updateServlet extends HttpServlet {
 				MemberService memSvc = new MemberService();
 				MembersVO membersVO = memSvc.findByPrimaryKey(mem);
 				if (membersVO == null) {
-					errorMsgs.add("查無資料");
 				}
-				System.out.println("here3");
 				// Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
 					RequestDispatcher failureView = req
@@ -152,7 +148,6 @@ public class updateServlet extends HttpServlet {
 				}
 				/***************************3.查詢完成,準備轉交(Send the Success view)*************/
 				req.setAttribute("MembersVO",membersVO); // 資料庫取出的empVO物件,存入req
-				System.out.println(membersVO);
 				String url = "/backendLogin/member-listone.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url); // 成功轉交 listOneEmp.jsp
 				successView.forward(req, res);

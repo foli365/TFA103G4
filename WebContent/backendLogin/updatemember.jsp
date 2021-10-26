@@ -34,7 +34,6 @@
 		enctype="multipart/form-data"
 		name="form1">
 		<input type="hidden" name="photo" value="">
-		<input type="hidden" name="memberStatus" value="">
 		<table>
 			<tr>
 				<td>會員編號:<font color=red><b>*</b></font></td>
@@ -65,10 +64,18 @@
 <%-- 					value="<%=membersVO.getMemberStatus() %>" /></td> --%>
 <!-- 			</tr> -->
 			<tr>
-				<td>會員狀態:</td>
+				<td>會員身分:</td>
 				<td><select size="1" name="membership">
 						<option value="0" ${membersVO.getMembership()==0?'selected':''}>一般會員</option>
 						<option value="1" ${membersVO.getMembership()==1?'selected':''}>營地業主</option>
+				</select></td>
+				
+			</tr>
+			<tr>
+				<td>會員狀態:</td>
+				<td><select size="1" name="memberStatus">
+						<option value="0" ${membersVO.getMemberStatus()==0?'selected':''}>使用中</option>
+						<option value="1" ${membersVO.getMemberStatus()==1?'selected':''}>已停權</option>
 				</select></td>
 				
 			</tr>

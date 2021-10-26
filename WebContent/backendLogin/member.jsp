@@ -97,7 +97,8 @@
 					<th>姓名</th>
 					<th>電子信箱</th>
 					<th>連絡電話</th>
-					<th>身分狀態</th>
+					<th>身分</th>
+					<th>狀態</th>
 					<th width=300px>地址</th>
 					<th>編輯</th>
 				</tr>
@@ -111,13 +112,14 @@
 					<td>${VO.email}</td>
 					<td>${VO.phone}</td>
 					<td>${VO.membership == 1 ? "營地業主":"一般會員"}</td>
+					<td>${VO.memberStatus == 1 ? "已停權":"使用中"}</td>
 <%-- 					<td>${VO.memberStatus}</td> --%>
 					<td>${VO.address}</td>
 					<td>
 						<FORM METHOD="post"
 							ACTION="<%=request.getContextPath()%>/backendLogin/updatemember.do"
 							style="margin-bottom: 0px;">
-							<input type="submit" value="修改" id="upd"> <input type="hidden"
+							<input type="submit" value="修改" id="upd" class="btn btn-primary"> <input type="hidden"
 								name="memberId" value="${VO.memberId}"> <input
 								type="hidden" name="action" value="getOne_For_Update">
 						</FORM>

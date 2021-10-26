@@ -131,7 +131,7 @@ img {
 						class="pic"></td>
 					<td>
 						<FORM METHOD="post"
-							ACTION="<%=request.getContextPath()%>/backendLogin/AdminServlet.do"
+							ACTION="<%=request.getContextPath()%>/backendLogin/camplistone.do"
 							style="margin-bottom: 0px;">
 							<input type="submit" value="修改"> <input type="hidden"
 								name="campId" value="${VO.campId}"> <input type="hidden"
