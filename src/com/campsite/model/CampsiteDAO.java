@@ -6,14 +6,10 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-
-import com.sun.org.apache.regexp.internal.recompile;
 
 import jdbc.util.CompositeQuery.jdbcUtil_CompositeQuery_Campsite;
 
@@ -471,26 +467,6 @@ public class CampsiteDAO implements CampsiteDAO_Interface {
 					+ "FROM CAMPSITE c LEFT JOIN CAMPSITE_TENT_STATUS cts on c.CAMP_ID = cts.CAMP_ID"
 					+ jdbcUtil_CompositeQuery_Campsite.get_WhereCondition(map)
 					+ "ORDER BY CAMP_PRICE"; //DESC
-
-			String value = "";
-			Set<String> keys = map.keySet();
-			z: for (String key : keys) {
-				while ("CAMP_OPENING_TIME".equals(key)) {
-					value = map.get(key)[0];
-					break z;
-				}
-			}
-			Date strDate;
-			Date endDate;
-			try {
-				String strDateString = value.substring(0, 10);
-				String endDateString = value.substring(13);
-				strDate = StringToSQLDate.convert(strDateString);
-				endDate = StringToSQLDate.convert(endDateString);
-			} catch (Exception e) {
-				strDate = null;
-				endDate = null;
-			}
 			
 			pstmt = con.prepareStatement(finalSQL);
 			System.out.println("¡´¡´finalSQL(by DAO) = " + finalSQL);
@@ -505,8 +481,6 @@ public class CampsiteDAO implements CampsiteDAO_Interface {
 				campsiteVO.setPicture1(rs.getBytes("PICTURE1"));
 				campsiteVO.setCampId(rs.getInt("CAMP_ID"));
 				campsiteVO.setMemberId(rs.getInt("MEMBER_ID"));
-				campsiteVO.setStrDate(strDate);
-				campsiteVO.setEndDate(endDate);
 
 				list.add(campsiteVO); // Store the row in the List
 			}

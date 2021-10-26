@@ -1,6 +1,6 @@
-<%@page import="com.campsite.model.CampsiteDAO"%>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="Big5"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@page import="com.campsite.model.CampsiteDAO"%>
 <%@ page import="java.util.*"%>
 <%@ page import="com.campsite.model.*"%>
 
@@ -19,72 +19,18 @@
 
 <head>
 <meta charset="utf-8">
-<title></title>
+<title>搜尋露營地</title>
+<%@ include file="/template/navbar.jsp"%>
 
-<!-- Bootstrap 的 CSS -->
-<link rel="stylesheet" href="./vendors/bootstrap/css/bootstrap.min.css">
-<!-- 日期選擇器 的 CSS & JS -->
-<script type="text/javascript"
-	src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
-<script type="text/javascript"
-	src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
-<script type="text/javascript"
-	src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+<!-- 日期選擇器的 CSS -->
 <link rel="stylesheet" type="text/css"
 	href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
-<!-- 載入 Font Awesome -->
-<script src="https://kit.fontawesome.com/846e361093.js"
-	crossorigin="anonymous"></script>
-<!-- 載入 CSS & JS -->
-<script src="./vendors/bootstrap/js/SearchCamp.js"></script>
-<link rel="stylesheet" href="./vendors/bootstrap/css/SearchCamp.css">
+<!-- 載入 CSS -->
+<link rel="stylesheet"
+	href="<%=request.getContextPath()%>/campsite/vendors/bootstrap/css/SearchCamp.css">
 </head>
 
 <body style="background-color: #fbefe7;">
-	<nav class="navbar navbar-expand-md navbar-light"
-		style="background-color: #fbefe7;">
-		<div class="container-fluid">
-			<a class="navbar-brand" href="#">GoCamping</a>
-			<button class="navbar-toggler" type="button"
-				data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
-				aria-controls="navbarSupportedContent" aria-expanded="false"
-				aria-label="Toggle navigation">
-				<span class="navbar-toggler-icon"></span>
-			</button>
-			<div class="collapse navbar-collapse" id="navbarSupportedContent">
-				<form class="d-flex">
-					<input class="form-control me-2 rounded-pill" type="search"
-						placeholder="Search" aria-label="Search">
-					<button id="searchIcon" class="btn" type="submit"
-						style="padding: 0">
-						<i class="bi bi-search"></i>
-					</button>
-				</form>
-				<ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-					<li class="nav-item"><a id="hosting" class="nav-link" href="#"
-						style="color: green;">上架營地</a></li>
-					<li class="nav-item"><a class="nav-link" href="#">商城</a></li>
-					<li class="nav-item"><a class="nav-link" href="#">論壇</a></li>
-					<li class="nav-item"><a class="nav-link" href="#">註冊</a></li>
-					<li class="nav-item"><a class="nav-link" href="#">登入</a></li>
-					<li class="nav-item dropdown"><a
-						class="nav-link dropdown-toggle" href="#" id="navbarDropdown"
-						role="button" data-bs-toggle="dropdown" aria-expanded="false">
-							會員姓名 </a>
-						<ul class="dropdown-menu dropdown-menu-end"
-							aria-labelledby="navbarDropdown">
-							<li><a class="dropdown-item" href="#">會員中心</a></li>
-							<li><a class="dropdown-item" href="#"></a></li>
-							<li>
-								<hr class="dropdown-divider">
-							</li>
-							<li><a class="dropdown-item" href="#">登出</a></li>
-						</ul></li>
-				</ul>
-			</div>
-		</div>
-	</nav>
-
 	<div class="container">
 		<div class="row">
 			<form method="post" action="campsite.do">
@@ -111,7 +57,7 @@
 								<p class="fw-bold">目的地?</p>
 								<i class="fas fa-location-arrow form-control-feedback"></i> <input
 									type="text" name="CAMP_NAME" class="form-control has-icon"
-									placeholder="請輸入營地...">
+									placeholder="請輸入營地或地址..." autocomplete="off">
 							</div>
 						</div>
 						<div class="col-3">
@@ -119,25 +65,26 @@
 								<p class="fw-bold">選擇日期</p>
 								<i class="fas fa-calendar-alt form-control-feedback"></i> <input
 									type="text" id="date" class="form-control choose-date has-icon"
-									name="CAMP_OPENING_TIME" value="" placeholder="請選擇日期..." />
+									name="CAMP_OPENING_TIME" value="" placeholder="請選擇日期..."
+									autocomplete="off" readonly>
 							</div>
 						</div>
 						<div class="col-2">
 							<div class="form-group has-search">
 								<p class="fw-bold">顧客人數</p>
 								<i class="fas fa-user-friends form-control-feedback"></i> <input
-									type="text" name="EMPTY_CAMP_LEFT" class="form-control has-icon"
-									placeholder="請輸入人數...">
+									type="text" name="EMPTY_CAMP_LEFT"
+									class="form-control has-icon" placeholder="請輸入人數..."
+									autocomplete="off">
 							</div>
 						</div>
 						<div class="col-2">
 							<div class="has-search">
 								<p class="fw-bold">價格範圍</p>
 								<i class="fas fa-wallet form-control-feedback"></i> <select
-									name="CAMP_PRICE"
-									class="form-select has-icon"
+									name="CAMP_PRICE" class="form-select has-icon"
 									aria-label="Default select example">
-									<option value="" selected>請選擇價格...</option>
+									<option style="color: #757575" value="" selected>請選擇價格...</option>
 									<option value="300~1000">300~1000</option>
 									<option value="1001~2000">1001~2000</option>
 									<option value="2001~3000">2001~3000</option>
@@ -146,7 +93,8 @@
 								</select>
 							</div>
 						</div>
-						<input type="hidden" name="action" value="listCampsites_ByCompositeQuery">
+						<input type="hidden" name="action"
+							value="listCampsites_ByCompositeQuery">
 						<div>
 							<button type="submit" class="search-icon">
 								<i class="fas fa-search"></i>
@@ -237,30 +185,33 @@
 			<div class="col-7 camp-list">
 				<div class="list-group">
 					<div class="default-list">
-<%-- 						<c:forEach var="campsiteVO" items="${list}"> --%>
-<!-- 							<a -->
-<%-- 								href="campsite.do?action=getReserveCampsite&campId=${campsiteVO.campId}" --%>
-<!-- 								class="list-group-item list-group-item-action flex-column align-items-start"> -->
-<!-- 								<div class="row"> -->
-<!-- 									<div class="col-6"> -->
-<!-- 										<div class="d-flex w-100 justify-content-between camp-name"> -->
-<%-- 											<h5>${campsiteVO.campName}</h5> --%>
-<!-- 										</div> -->
-<!-- 										<div class="camp-addr"> -->
-<%-- 											<p>地址: ${campsiteVO.location}</p> --%>
-<!-- 										</div> -->
-<!-- 										<div class="camp-content"> -->
-<%-- 											<p>${campsiteVO.campDescription}</p> --%>
-<!-- 										</div> -->
-<!-- 									</div> -->
-<!-- 									<div class="col-6 camp-pic-div"> -->
-<!-- 										<img -->
-<%-- 											src="<%=request.getContextPath()%>/CampsiteGifReader?column=picture1&camp_id=${campsiteVO.campId}" --%>
-<!-- 											class="rounded float-right camp-picture" alt="..."> -->
-<!-- 									</div> -->
-<!-- 								</div> -->
-<!-- 							</a> -->
-<%-- 						</c:forEach> --%>
+						<c:forEach var="campsiteVO" items="${list}">
+							<a 
+								href="<%=request.getContextPath()%>/campsite/reserve_campsite.jsp?campId=${campsiteVO.campId}"
+								class="list-group-item list-group-item-action flex-column align-items-start">
+								<div class="row">
+									<div class="col-6 camp-content-div">
+										<div class="d-flex w-100 justify-content-between camp-name">
+											<h5>${campsiteVO.campName}</h5>
+										</div>
+										<div class="camp-addr">
+											<p>地址: ${campsiteVO.location}</p>
+										</div>
+										<div class="camp-content">
+											<p>${campsiteVO.campDescription}</p>
+										</div>
+										<div class="camp-price">
+											<p>$${campsiteVO.campPrice} (平均每人一晚)</p>
+										</div>
+									</div>
+									<div class="col-6 camp-pic-div">
+										<img
+											src="<%=request.getContextPath()%>/CampsiteGifReader?column=picture1&camp_id=${campsiteVO.campId}"
+											class="rounded float-right camp-picture" alt="...">
+									</div>
+								</div>
+							</a>
+						</c:forEach>
 					</div>
 					<c:forEach var="campsiteVO" items="${campsiteList}">
 						<a
@@ -278,7 +229,7 @@
 										<p>${campsiteVO.campDescription}</p>
 									</div>
 									<div class="camp-price">
-										<p>$${campsiteVO.campPrice}/晚</p>
+										<p>$${campsiteVO.campPrice} (平均每人一晚)</p>
 									</div>
 								</div>
 								<div class="col-6 camp-pic-div">
@@ -288,13 +239,30 @@
 								</div>
 							</div>
 						</a>
-						<script>$(".default-list").attr("style", "display:none")</script>
 					</c:forEach>
+					<input type="hidden" id="listExist" value="${listExist}">
 				</div>
 			</div>
 		</div>
-		<!-- body 結束標籤之前，載入Bootstrap 的 JS -->
-		<script src="./vendors/bootstrap/js/bootstrap.bundle.min.js"></script>
+		<%@ include file="/template/script.html"%>
+		<!-- 日期選擇器的 JS -->
+		<script type="text/javascript"
+			src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
+		<script type="text/javascript"
+			src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+		<script type="text/javascript"
+			src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+		<!-- 載入 Font Awesome -->
+		<script src="https://kit.fontawesome.com/846e361093.js"
+			crossorigin="anonymous"></script>
+		<!-- 載入 JS -->
+		<script
+			src="<%=request.getContextPath()%>/campsite/vendors/bootstrap/js/SearchCamp.js"></script>
+		<script>
+			if($("#listExist").val()=="empty"){
+				$(".default-list").attr("style", "display:none");
+			}
+		</script>
 </body>
 
 </html>

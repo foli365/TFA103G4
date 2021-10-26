@@ -6,6 +6,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.LinkedList;
 import java.util.List;
 
 import javax.servlet.RequestDispatcher;
@@ -33,22 +34,23 @@ public class CampOrderServlet extends HttpServlet {
 	}
 
 	public void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
-
-		String url = "/campsite/camp_shopping_cart.jsp";
+		
+		String url = "/campsite/reserve_campsite.jsp";
 		req.setCharacterEncoding("UTF-8");
 		String action = req.getParameter("action");
 		// 建立訂單基本資料
 		if ("book".equals(action)) {
+			
 			try {
 				// 入住日期
 				String from = req.getParameter("from");
+				System.out.println("from = " + from);
 				java.sql.Date checkedIn = null;
 				try {
 					SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 					Date parsed = dateFormat.parse(from);
 					checkedIn = new java.sql.Date(parsed.getTime());
 				} catch (Exception e) {
-					// TODO: handle exception
 					throw new ExceptionInInitializerError(e);
 				}
 				// 退住日期

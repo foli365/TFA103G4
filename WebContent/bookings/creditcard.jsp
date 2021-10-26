@@ -97,7 +97,7 @@
 			</div>
 			<div class="col-md-5 d-flex justify-content-center">
 				<div class="card" style="width: 18rem;">
-					<img src="" class="card-img-top" alt="camp-site-image">
+					<img src="<%=request.getContextPath()%>/CampsiteGifReader?column=picture1&camp_id=${campOrderVO.campId}" class="card-img-top" alt="camp-site-image">
 					<div class="card-body">
 						<h5 class="card-title">那山那谷</h5>
 						<p class="card-text">Some quick example text to build on the
