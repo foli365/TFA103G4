@@ -10,11 +10,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-
-<<<<<<< HEAD
-
-=======
->>>>>>> origin/Steven
 import jdbc.util.CompositeQuery.jdbcUtil_CompositeQuery_Campsite;
 
 public class CampsiteDAO implements CampsiteDAO_Interface {
