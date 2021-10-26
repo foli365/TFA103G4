@@ -5,12 +5,12 @@ import java.util.List;
 public class PlanTest {
 	public static void main(String args[]) {
 		
-		// æ–°å¢ž
+		// ·s¼W
 		/*PlanVO planVO = new PlanVO();
 		
 		planVO.setPlanId(103);
 		planVO.setCampId(5001);
-		planVO.setPlanName("çƒ¤è‚‰");
+		planVO.setPlanName("¯N¦×");
 		planVO.setPlanGuestLimit(30);
 		planVO.setPlanAgeLimit(0);
 		planVO.setPlanPrice(1000);
@@ -20,10 +20,10 @@ public class PlanTest {
 		
 		//==============================================================
 		
-		// ä¿®æ”¹
+		// ­×§ï
 		/*PlanVO planVO = new PlanVO();
 		
-		planVO.setPlanName("æº¯æºª");
+		planVO.setPlanName("·¹·Ë");
 		planVO.setPlanGuestLimit(12);
 		planVO.setPlanAgeLimit(65);
 		planVO.setPlanPrice(1500);
@@ -34,13 +34,13 @@ public class PlanTest {
 		
 		//==============================================================
 		
-		// åˆªé™¤
+		// §R°£
 		/*PlanDAO_interface plan = new PlanDAO();
 		plan.delete(103);*/
 		
 		//==============================================================
 		
-		// æŸ¥è©¢å–®ç­†
+		// ¬d¸ß³æµ§
 		/*PlanDAO_interface plan = new PlanDAO();
 		PlanVO planVO = plan.findbyPrimaryKey(101);
 		
@@ -48,7 +48,7 @@ public class PlanTest {
 		
 		//==============================================================
 		
-		// æŸ¥è©¢å¤šç­†
+		// ¬d¸ß¦hµ§
 		/*PlanDAO_interface plan = new PlanDAO();
 		List<PlanVO> planList = plan.getAll();
 		

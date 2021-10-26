@@ -12,6 +12,7 @@ import java.util.List;
 
 import com.customerplan.model.CustomerPlanDAO;
 import com.customerplan.model.CustomerPlanVO;
+import com.mysql.cj.jdbc.CallableStatement;
 
 
 public class CampOrderDAO implements CampOrderDAO_interface {
@@ -26,7 +27,7 @@ public class CampOrderDAO implements CampOrderDAO_interface {
 	public static final String UPDATE_STMT = "UPDATE CAMP_ORDER SET MEMBER_ID = ?, "
 			+ "GUEST_NUMBER = ?, CHECK_IN_DATE = ?, CHECK_OUT_DATE = ?, ORDER_DATE = ?, PAYMENT_DEADLINE = ?, "
 			+ "ORDER_STATUS = ?, ORDER_TOTAL = ?, COMMENT = ?, PICTURE1 = ?, PICTURE2 = ?, PICTURE3 = ? "
-			+ "WHERE CAMP_ORDER_ID = ?"; // Foreign Key銝update
+			+ "WHERE CAMP_ORDER_ID = ?"; // Foreign Key����update
 	public static final String DELETE_STMT = "DELETE FROM CAMP_ORDER WHERE CAMP_ORDER_ID = ?";
 	public static final String FIND_BY_PK = "SELECT CAMP_ORDER_ID, CAMP_ID, MEMBER_ID, GUEST_NUMBER, "
 			+ "CHECK_IN_DATE, CHECK_OUT_DATE, ORDER_DATE, PAYMENT_DEADLINE, ORDER_STATUS, ORDER_TOTAL, COMMENT "
@@ -35,7 +36,8 @@ public class CampOrderDAO implements CampOrderDAO_interface {
 			+ "CHECK_IN_DATE, CHECK_OUT_DATE, ORDER_DATE, PAYMENT_DEADLINE, ORDER_STATUS, ORDER_TOTAL, COMMENT "
 			+ "FROM CAMP_ORDER ORDER BY CAMP_ORDER_ID";
 
-	static { // 銝��憓��閬�銝�甈⊿���
+
+	static { 
 		try {
 			Class.forName(DRIVER);
 		} catch (ClassNotFoundException ce) {
@@ -291,6 +293,7 @@ public class CampOrderDAO implements CampOrderDAO_interface {
 
 		Connection con = null;
 		PreparedStatement pstmt = null;
+		java.sql.CallableStatement cs;
 
 		try {
 
@@ -299,7 +302,7 @@ public class CampOrderDAO implements CampOrderDAO_interface {
 			// 1●設定於 pstm.executeUpdate()之前
     		con.setAutoCommit(false);
 			
-    		// 先新增部門
+    		// 先新增訂單
 			String cols[] = {"CAMP_ORDER_ID"};
 			pstmt = con.prepareStatement(INSERT_STMT , cols);			
 			pstmt.setInt(1, campOrderVO.getCampId());
@@ -331,18 +334,24 @@ public class CampOrderDAO implements CampOrderDAO_interface {
 			rs.close();
 			// 再同時新增員工
 			CustomerPlanDAO dao = new CustomerPlanDAO();
-			System.out.println("list.size()-A="+list.size());
 			for (CustomerPlanVO aPlan : list) {
 				aPlan.setCampOrderId(new Integer(next_orderId));
 				dao.insert2(aPlan,con);
 			}
+			
+			cs = con.prepareCall("{call filldates(?, ?, ?, ?)}");
+			cs.setInt(1, campOrderVO.getCampId());
+			cs.setDate(2, campOrderVO.getCheckInDate());
+			cs.setDate(3, campOrderVO.getCheckOutDate());
+			cs.setInt(4, campOrderVO.getGuestNumber());
+			
+			cs.executeUpdate();
 
 			// 2●設定於 pstm.executeUpdate()之後
 			con.commit();
 			con.setAutoCommit(true);
-			System.out.println("list.size()-B="+list.size());
-			System.out.println("新增部門編號" + next_orderId + "時,共有員工" + list.size()
-					+ "人同時被新增");
+			System.out.println("新增訂單編號" + next_orderId + "時,共有自訂方案" + list.size()
+					+ "組同時被新增");
 			
 			// Handle any driver errors
 		} catch (SQLException se) {
@@ -350,7 +359,7 @@ public class CampOrderDAO implements CampOrderDAO_interface {
 				try {
 					// 3●設定於當有exception發生時之catch區塊內
 					System.err.print("Transaction is being ");
-					System.err.println("rolled back-由-dept");
+					System.err.println("rolled back-由-campOrder");
 					con.rollback();
 				} catch (SQLException excep) {
 					throw new RuntimeException("rollback error occured. "

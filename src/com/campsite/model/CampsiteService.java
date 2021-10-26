@@ -1,7 +1,9 @@
 package com.campsite.model;
 
+import java.sql.Date;
 import java.sql.Timestamp;
 import java.util.List;
+import java.util.Map;
 
 public class CampsiteService {
 
@@ -79,12 +81,21 @@ public class CampsiteService {
 	public CampsiteVO getOneCampsite(Integer campId) {
 		return dao.findbyPrimaryKey(campId);
 	}
-	
+
 	public List<CampsiteVO> getSearchCampsite(String campName) {
 		return dao.getSearchCampsite(campName);
 	}
 
 	public List<CampsiteVO> getAll() {
 		return dao.getAll();
+	}
+
+	public List<CampsiteVO> getMultiSearchCampsite(String campName, Date strDate, Date endDate, Integer customerNum,
+			Integer campPriceL, Integer campPriceH) {
+		return dao.getMultiSearchCampsite(campName, strDate, endDate, customerNum, campPriceL, campPriceH);
+	}
+
+	public List<CampsiteVO> getAll(Map<String, String[]> map) {
+		return dao.getAll(map);
 	}
 }
