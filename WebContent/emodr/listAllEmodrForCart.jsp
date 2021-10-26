@@ -4,7 +4,7 @@
 <%@ page import="com.emodr.model.*,com.members.model.*"%>
 
 <%
-	EmodrVO emodrVO = (EmodrVO) request.getAttribute("emodrVO");
+  	EmodrVO emodrVO = (EmodrVO) request.getAttribute("emodrVO");
 %>
 
 <%
@@ -18,13 +18,19 @@
 <title>您的訂單資料 </title>
 
 <style>
+html, body {
+	font: 15px verdana, Times New Roman, arial, helvetica, sans-serif,
+		Microsoft JhengHei;
+	background-color: rgb(243, 242, 239);
+}
 table#table-1 {
-	background-color: #CCCCFF;
+	background-color: rgb(230, 239, 217);
 	border: 2px solid black;
 	text-align: center;
 }
 
 table#table-1 h4 {
+	background-color: rgb(230, 239, 217);
 	color: red;
 	display: block;
 	margin-bottom: 1px;
@@ -46,7 +52,7 @@ table {
 }
 
 table, th, td {
-	border: 1px solid #CCCCFF;
+/* 	border: 1px solid #CCCCFF; */
 }
 
 th, td {
@@ -68,8 +74,8 @@ th, td {
 				</h4>
 			</td>
 		</tr>
-	</table>
-	<table>
+<!-- 	</table> -->
+<!-- 	<table> -->
 		<tr>
 <!-- 			<th>商城訂單編號</th> -->
 			<th>購買人</th>

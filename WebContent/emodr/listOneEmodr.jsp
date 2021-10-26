@@ -16,7 +16,7 @@
 
 <html>
 <head>
-<title>訂單資料 - listOneEmodr.jsp</title>
+<title>單筆訂單資料 - listOneEmodr.jsp</title>
 
 <style>
 table#table-1 {
@@ -35,11 +35,16 @@ h4 {
 	color: blue;
 	display: inline;
 }
+a:hover{
+	color:red;
+	font-size: 20px;
+}
 </style>
 
 <style>
 table {
-	width: 800px;
+/* 	width: 800px; */
+	width: 100%;
 	background-color: white;
 	margin-top: 5px;
 	margin-bottom: 5px;
@@ -57,15 +62,12 @@ th, td {
 
 </head>
 <body bgcolor='white'>
-
-	<h4>此頁暫練習採用 Script 的寫法取值:</h4>
 	<table id="table-1">
 		<tr>
 			<td>
-				<h3>單筆訂單資料</h3>
+				<h3>查詢結果</h3>
 				<h4>
-					<a href="<%=request.getContextPath()%>/emodr/select_page.jsp"><img
-						src="images/back1.gif" width="100" height="32" border="0">回首頁</a>
+					<a href="<%=request.getContextPath()%>/emodr/listAllEmodr.jsp">回前一頁</a>
 				</h4>
 			</td>
 		</tr>
@@ -73,8 +75,8 @@ th, td {
 
 	<table>
 		<tr>
-			<th>商城訂單編號</th>
-			<th>買方會員編號</th>
+			<th>訂單編號</th>
+			<th>買方編號與名字</th>
 			<th>訂單日期</th>
 			<th>收貨人</th>
 			<th>收貨地址</th>
@@ -91,7 +93,7 @@ th, td {
 			<td><%=emodrVO.getAddr()%></td>
 			<td><%=emodrVO.getMobile()%></td>
 			<td><%=emodrVO.getTotalprice()%></td>
-			<td><%=emodrVO.getEmodr_status()%></td>
+			<td><%= (emodrVO.getEmodr_status()== true)? "成立": "不成立"%></td>
 		</tr>
 	</table>
 

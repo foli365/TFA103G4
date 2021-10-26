@@ -100,7 +100,7 @@ th, td {
 			<tr>
 				<td>${emodrVO.emodr_id}</td>
 
-				<%-- 		    <td>${emodrVO.member_id}</td> --%>
+				<%-- <td>${emodrVO.member_id}</td> --%>
 				<td>${emodrVO.member_id}【${membersSvc.findByPrimaryKey(emodrVO.member_id).name}】</td>
 
 				<td>${emodrVO.emodr_date}</td>

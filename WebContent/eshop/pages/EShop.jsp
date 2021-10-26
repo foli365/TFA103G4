@@ -1,7 +1,7 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
-<%
+<% 
   response.setHeader("Cache-Control","no-store"); //HTTP 1.1
   response.setHeader("Pragma","no-cache");        //HTTP 1.0
   response.setDateHeader ("Expires", 0);
@@ -29,9 +29,9 @@
 	<div>
 
 		<nav class="shopnav">
-			<a href="#" class="camppage">回到露營網站首頁</a> <a
-				href="<%=request.getContextPath()%>/eshop/pages/Cart.jsp"
-				class="shoppingcart">查看購物車</a>
+			<a href="<%=request.getContextPath()%>/homepage/index.jsp" class="camppage" style="font-size: 1.25em;">GoCamping</a>
+			<a href="#" class="myorders" style="font-size: 1.25em;">我的訂單</a>
+			<a href="<%=request.getContextPath()%>/eshop/pages/Cart.jsp" class="shoppingcart" style="font-size: 1.25em;">購物車</a>
 		</nav>
 
 		<div class="top_main">

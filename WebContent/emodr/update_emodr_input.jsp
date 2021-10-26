@@ -9,7 +9,7 @@
 <html>
 <head>
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
-<title>訂單資料修改 - update_emodr_input.jsp</title>
+<title>訂單資料修改</title>
 
 <style>
   table#table-1 {
@@ -48,12 +48,12 @@
 
 <table id="table-1">
 	<tr><td>
-		 <h3>訂單資料修改 - update_emodr_input.jsp</h3>
-		 <h4><a href="select_page.jsp"><img src="images/back1.gif" width="100" height="32" border="0">回首頁</a></h4>
+		 <h3>訂單資料修改</h3>
+		 <h4><a href="<%=request.getContextPath()%>/emodr/listAllEmodr.jsp">回前一頁</a></h4>
 	</td></tr>
 </table>
 
-<h3>資料修改:</h3>
+<h3>訂單資料修改:</h3>
 
 <%-- 錯誤表列 --%>
 <c:if test="${not empty errorMsgs}">

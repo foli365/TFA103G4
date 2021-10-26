@@ -240,7 +240,7 @@ public class EmodrServlet extends HttpServlet {
 				/*************************** 3.新增完成,準備轉交(Send the Success view) *************/
 				req.setAttribute("emodrVO", emodrVO); // 資料庫update成功後,正確的的empVO物件,存入req
 				String url = "/emodr/listAllEmodrForCart.jsp";
-				RequestDispatcher successView = req.getRequestDispatcher(url); // 修改成功後,轉交listAllEmodr.jsp
+				RequestDispatcher successView = req.getRequestDispatcher(url); // 修改成功後,轉交listAllEmodrCart.jsp
 				successView.forward(req, res);
 
 				/*************************** 其他可能的錯誤處理 *************************************/
@@ -250,8 +250,70 @@ public class EmodrServlet extends HttpServlet {
 //				failureView.forward(req, res);
 			}
 		}
-		
-		
+//收尋		
+		if ("getOne_For_Display".equals(action)) { // 來自select_page.jsp的請求
+
+			List<String> errorMsgs = new LinkedList<String>();
+			// Store this set in the request scope, in case we need to
+			// send the ErrorPage view.
+			req.setAttribute("errorMsgs", errorMsgs);
+
+			try {
+				/***************************1.接收請求參數 - 輸入格式的錯誤處理**********************/
+				String str = req.getParameter("emodr_id");//req.getParameter接收來自from表單中input標籤 text的empno，會是字串
+				if (str == null || (str.trim()).length() == 0) {//沒有輸入編號或是程式碼中有錯字
+					errorMsgs.add("請輸入訂單編號"); //將錯誤訊息加入errorMsgs集合
+				}
+				// Send the use back to the form, if there were errors
+				if (!errorMsgs.isEmpty()) { //若有錯誤訊息
+					RequestDispatcher failureView = req
+							.getRequestDispatcher("/emodr/listAllEmodr.jsp");
+					failureView.forward(req, res); //將請求和回應轉交到select_page.jsp
+					return;//程式中斷
+				}
+				
+				Integer emodr_id = null;//當以上的判斷都通過時，準備開始將輸入從字串轉為數字型別
+				try {
+					emodr_id = new Integer(str);//用包裝型別Integer將字串轉為數字型別
+				} catch (Exception e) {
+					errorMsgs.add("訂單編號格式不正確");
+				}
+				// Send the use back to the form, if there were errors
+				if (!errorMsgs.isEmpty()) {
+					RequestDispatcher failureView = req
+							.getRequestDispatcher("/emodr/listAllEmodr.jsp");
+					failureView.forward(req, res);
+					return;//程式中斷
+				}
+				
+				/***************************2.開始查詢資料*****************************************/
+				EmodrService emodrSvc = new EmodrService();//建立service去呼叫DAO跟資料庫拿資料
+				EmodrVO emodrVO = emodrSvc.getOneEmodr(emodr_id);
+				if (emodrVO == null) {
+					errorMsgs.add("查無資料");
+				}
+				// Send the use back to the form, if there were errors
+				if (!errorMsgs.isEmpty()) {
+					RequestDispatcher failureView = req
+							.getRequestDispatcher("/emodr/listAllEmodr.jsp");
+					failureView.forward(req, res);
+					return;//程式中斷
+				}
+				
+				/***************************3.查詢完成,準備轉交(Send the Success view)*************/
+				req.setAttribute("emodrVO", emodrVO); // 資料庫取出的empVO物件,存入req
+				String url = "/emodr/listOneEmodr.jsp"; //之後記得在listOneEmp.jsp裡寫request.getAttribute("empVO")來取出物件
+				RequestDispatcher successView = req.getRequestDispatcher(url); // 成功轉交到 listOneEmodr.jsp
+				successView.forward(req, res);
+
+				/***************************其他可能的錯誤處理*************************************/
+			} catch (Exception e) {
+				errorMsgs.add("無法取得資料:" + e.getMessage());
+				RequestDispatcher failureView = req
+						.getRequestDispatcher("/emodr/listAllEmodr.jsp");
+				failureView.forward(req, res);
+			}
+		}
 	}
 
 }
