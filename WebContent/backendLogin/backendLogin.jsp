@@ -22,6 +22,7 @@
             
         <div class="button">
             <button  type="submit" class="button_submit">送出</button>
+            <a href="<%=request.getContextPath()%>/homepage/index.jsp">回到首頁</a>
             
         </div>
         </form>
