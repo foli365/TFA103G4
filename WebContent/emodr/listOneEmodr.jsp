@@ -1,14 +1,14 @@
-<%@ page contentType="text/html; charset=UTF-8" pageEncoding="Big5"%>
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import="com.emodr.model.*"%>
 <%@ page import="com.members.model.*"%>
-<%-- ¦¹­¶¼È½m²ß±Ä¥Î Script ªº¼gªk¨ú­È --%>
+<%-- æ­¤é æš«ç·´ç¿’æ¡ç”¨ Script çš„å¯«æ³•å–å€¼ --%>
 
-<%-- ¨ú¥X Concroller EmpServlet.java¤w¦s¤JrequestªºEmpVOª«¥ó--%>
+<%-- å–å‡º Concroller EmpServlet.javaå·²å­˜å…¥requestçš„EmpVOç‰©ä»¶--%>
 <%
 	EmodrVO emodrVO = (EmodrVO) request.getAttribute("emodrVO");
 %>
 
-<%-- ¨ú¥X ¹ïÀ³ªºmembersVOª«¥ó--%>
+<%-- å–å‡º å°æ‡‰çš„membersVOç‰©ä»¶--%>
 <%
 	MemberService memberSvc = new MemberService();
 	MembersVO membersVO = memberSvc.findByPrimaryKey(emodrVO.getMember_id());
@@ -16,7 +16,7 @@
 
 <html>
 <head>
-<title>­q³æ¸ê®Æ - listOneEmodr.jsp</title>
+<title>å–®ç­†è¨‚å–®è³‡æ–™ - listOneEmodr.jsp</title>
 
 <style>
 table#table-1 {
@@ -35,11 +35,16 @@ h4 {
 	color: blue;
 	display: inline;
 }
+a:hover{
+	color:red;
+	font-size: 20px;
+}
 </style>
 
 <style>
 table {
-	width: 800px;
+/* 	width: 800px; */
+	width: 100%;
 	background-color: white;
 	margin-top: 5px;
 	margin-bottom: 5px;
@@ -57,15 +62,12 @@ th, td {
 
 </head>
 <body bgcolor='white'>
-
-	<h4>¦¹­¶¼È½m²ß±Ä¥Î Script ªº¼gªk¨ú­È:</h4>
 	<table id="table-1">
 		<tr>
 			<td>
-				<h3>­û¤u¸ê®Æ - listOneEmodr.jsp</h3>
+				<h3>æŸ¥è©¢çµæœ</h3>
 				<h4>
-					<a href="<%=request.getContextPath()%>/emodr/select_page.jsp"><img
-						src="images/back1.gif" width="100" height="32" border="0">¦^­º­¶</a>
+					<a href="<%=request.getContextPath()%>/emodr/listAllEmodr.jsp">å›å‰ä¸€é </a>
 				</h4>
 			</td>
 		</tr>
@@ -73,25 +75,25 @@ th, td {
 
 	<table>
 		<tr>
-			<th>°Ó«°­q³æ½s¸¹</th>
-			<th>¶R¤è·|­û½s¸¹</th>
-			<th>­q³æ¤é´Á</th>
-			<th>¦¬³f¤H</th>
-			<th>¦¬³f¦a§}</th>
-			<th>¦¬³f¹q¸Ü</th>
-			<th>Á`»ù</th>
-			<th>­q³æª¬ºA</th>
+			<th>è¨‚å–®ç·¨è™Ÿ</th>
+			<th>è²·æ–¹ç·¨è™Ÿèˆ‡åå­—</th>
+			<th>è¨‚å–®æ—¥æœŸ</th>
+			<th>æ”¶è²¨äºº</th>
+			<th>æ”¶è²¨åœ°å€</th>
+			<th>æ”¶è²¨é›»è©±</th>
+			<th>ç¸½åƒ¹</th>
+			<th>è¨‚å–®ç‹€æ…‹</th>
 		</tr>
 		<tr>
 			<td><%=emodrVO.getEmodr_id()%></td>
 			<%-- 			<td><%=emodrVO.getMember_id()%></td> --%>
-			<td><%=emodrVO.getMember_id()%>¡i<%=membersVO.getName()%>¡j</td>
+			<td><%=emodrVO.getMember_id()%>ã€<%=membersVO.getName()%>ã€‘</td>
 			<td><%=emodrVO.getEmodr_date()%></td>
 			<td><%=emodrVO.getReceipient()%></td>
 			<td><%=emodrVO.getAddr()%></td>
 			<td><%=emodrVO.getMobile()%></td>
 			<td><%=emodrVO.getTotalprice()%></td>
-			<td><%=emodrVO.getEmodr_status()%></td>
+			<td><%= (emodrVO.getEmodr_status()== true)? "æˆç«‹": "ä¸æˆç«‹"%></td>
 		</tr>
 	</table>
 

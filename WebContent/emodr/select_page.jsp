@@ -1,109 +1,106 @@
-<%@ page contentType="text/html; charset=UTF-8" pageEncoding="Big5"%>
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="com.members.model.*"%>
 
 <html>
 <head>
-<title>Emodr: ­º­¶</title>
+<title>Emodr: é¦–é </title>
 
 <style>
-table#table-1 {
-	width: 450px;
-	background-color: #CCCCFF;
-	margin-top: 5px;
-	margin-bottom: 10px;
-	border: 3px ridge Gray;
-	height: 80px;
-	text-align: center;
-}
+/* table#table-1 { */
+/* 	width: 450px; */
+/* 	background-color: #CCCCFF; */
+/* 	margin-top: 5px; */
+/* 	margin-bottom: 10px; */
+/* 	border: 3px ridge Gray; */
+/* 	height: 80px; */
+/* 	text-align: center; */
+/* } */
 
-table#table-1 h4 {
-	color: red;
-	display: block;
-	margin-bottom: 1px;
-}
+/* table#table-1 h4 { */
+/* 	color: red; */
+/* 	display: block; */
+/* 	margin-bottom: 1px; */
+/* } */
 
-h4 {
-	color: blue;
-	display: inline;
-}
+/* h4 { */
+/* 	color: blue; */
+/* 	display: inline; */
+/* } */
 </style>
 
-</head>
-<body bgcolor='white'>
-	<p>This is the Home page for Emodr: ­º­¶</p>
+<!-- </head> -->
+<!-- <body bgcolor='white'> -->
+<!-- 	<h3>è³‡æ–™æŸ¥è©¢:</h3> -->
 
-	<h3>¸ê®Æ¬d¸ß:</h3>
-	<%-- ¿ù»~ªí¦C --%>
-	<c:if test="${not empty errorMsgs}}">
-		<font style="color: red">¿é¤J¦³¿ù»~! ½Ğ­×¥¿¥H¤U¿ù»~:</font>
-		<ul>
-			<c:forEach var="message" items="${errorMsgs}">
-				<li style="color: red">${message}</li>
-			</c:forEach>
-		</ul>
-	</c:if>
-	<%-- ================================================================== --%>
+	<%-- éŒ¯èª¤è¡¨åˆ—--%>
+<%-- 	<c:if test="${not empty errorMsgs}}"> --%>
+<!-- 		<font style="color: red">è¼¸å…¥æœ‰éŒ¯èª¤! è«‹ä¿®æ­£ä»¥ä¸‹éŒ¯èª¤:</font> -->
+<!-- 		<ul> -->
+<%-- 			<c:forEach var="message" items="${errorMsgs}"> --%>
+<%-- 				<li style="color: red">${message}</li> --%>
+<%-- 			</c:forEach> --%>
+<!-- 		</ul> -->
+<%-- 	</c:if> --%>
+	<%-- ==================================================================--%>
 
-	<ul>
-		<%-- ¦C¥X©Ò¦³­q³æ¸ê°T¨Ã¸õÂà¨ìlistAllEmodr.jsp ­¶­±¨ÓÅã¥Ü©Ò¦³­q³æ¸ê°T --%>
-		<li><a
-			href='<%=request.getContextPath()%>/emodr/listAllEmodr.jsp'>List</a>
-			©Ò¦³­q³æ<br> <br></li>
+<!-- 	<ul> -->
+		<%-- åˆ—å‡ºæ‰€æœ‰è¨‚å–®è³‡è¨Šä¸¦è·³è½‰åˆ°listAllEmodr.jsp é é¢ä¾†é¡¯ç¤ºæ‰€æœ‰è¨‚å–®è³‡è¨Š--%>
+<!-- 		<li><a -->
+<%-- 			href='<%=request.getContextPath()%>/emodr/listAllEmodr.jsp'>List</a> --%>
+<!-- 			æ‰€æœ‰è¨‚å–®<br> <br></li> -->
+		<%-- ==================================================================--%>
 
-		<%-- ¿é¤J­q³æ°ß¤@Áäpk­È¨Ã±N¦¹¼Æ­È¶Ç¤J·í§@controllerªºservlet.java§@¼Æ­È®æ¦¡ÅçÃÒ --%>
-		<li>
-			<form method="post"
-				action="<%=request.getContextPath()%>/emodr/emodr.do">
-				<b>½Ğ¿é¤J­q³æ½s¸¹(¨Ò¦p1):</b> <input type="text" name="emodr_id"> <input
-					type="hidden" name="action" value="getOne_For_Display"> <input
-					type="submit" value="°e¥X">
-			</form>
-		</li>
 
-		<%-- §Q¥ÎjspªºuseBean+el»yªk¨Ó§ì¸êÁA®w¤¤ªº­q³æªí®æ°ß¤@Áäpk­ÈÅã¥Ü¦b¤U©Ô¦¡ªí³æ¡AÅı¨Ï¥ÎªÌ¿ï¾Ü­n¬d­ş¤@µ§¡A¦¹¼Æ­È¶Ç¤J·í§@controllerªºservlet.java§@¼Æ­È®æ¦¡ÅçÃÒ --%>
-		<jsp:useBean id="emodrSvc" scope="page"
-			class="com.emodr.model.EmodrService" />
-		<li>
-			<form method="post"
-				action="<%=request.getContextPath()%>/emodr/emodr.do">
-				<b>½Ğ¿ï¾Ü­q³æ½s¸¹:</b> <select size="1" name="emodr_id">
-					<c:forEach var="emodrVO" items="${emodrSvc.all}">
-						<option value="${emodrVO.emodr_id}">${emodrVO.emodr_id}
-					</c:forEach>
-				</select> <input type="hidden" name="action" value="getOne_For_Display">
-				<input type="submit" value="°e¥X">
-			</form>
-		</li>
+		<%-- è¼¸å…¥è¨‚å–®å”¯ä¸€éµpkå€¼ä¸¦å°‡æ­¤æ•¸å€¼å‚³å…¥ç•¶ä½œcontrollerçš„servlet.javaä½œæ•¸å€¼æ ¼å¼é©—è­‰--%>
+<!-- 		<li> -->
+<!-- 			<form method="post" -->
+<%-- 				action="<%=request.getContextPath()%>/emodr/emodr.do"> --%>
+<!-- 				<b>è«‹è¼¸å…¥è¨‚å–®ç·¨è™Ÿ(ä¾‹å¦‚1):</b> <input type="text" name="emodr_id"> <input -->
+<!-- 					type="hidden" name="action" value="getOne_For_Display"> <input -->
+<!-- 					type="submit" value="é€å‡º"> -->
+<!-- 			</form> -->
+<!-- 		</li> -->
+		<%-- ==================================================================--%>
 
-		<%-- ¤U­±³o¬qcodeªº¥\¯à¸ò¤W­±¤@¼Ë¡A®t§O¦b©ó¤U©Ô¦¡¿ï³æÅã¥Üªº§ï¦¨¥Î·|­û¦W¨ÓÅã¥Ü --%>
-		<jsp:useBean id="membersSvc" scope="page"
-			class="com.members.model.MemberService" />
-		<li>
-			<form method="post"
-				action="<%=request.getContextPath()%>/emodr/emodr.do">
-				<b>½Ğ¿ï¾Ü¦¬³f¤H:</b> <select size="1" name="emodr_id">
-					<c:forEach var="emodrVO" items="${emodrSvc.all}">
-						<option value="${emodrVO.emodr_id}">
-							<c:forEach var="membersVO" items="${membersSvc.all}">
-								<c:if test="${emodrVO.member_id==membersVO.memberId}">
-									${membersVO.name}
-							    </c:if>
-							</c:forEach>
-					</c:forEach>
-				</select> <input type="hidden" name="action" value="getOne_For_Display">
-				<input type="submit" value="°e¥X">
-			</form>
-		</li>
-	</ul>
-	<%-- ================================================================== --%>
-	<%-- ·s¼W­q³æ¥\¯à--%>
-	<h3>­q³æºŞ²z_·s¼W­q³æ¥\¯à</h3>
 
-	<ul>
-		<li><a href='<%=request.getContextPath()%>/emodr/addEmp.jsp'>Add</a>
-			·sªº­q³æ</li>
-	</ul>
+		<%-- åˆ©ç”¨jspçš„useBean+elèªæ³•ä¾†æŠ“è³‡ç­åº«ä¸­çš„è¨‚å–®è¡¨æ ¼å”¯ä¸€éµpkå€¼é¡¯ç¤ºåœ¨ä¸‹æ‹‰å¼è¡¨å–®ï¼Œè®“ä½¿ç”¨è€…é¸æ“‡è¦æŸ¥å“ªä¸€ç­†ï¼Œæ­¤æ•¸å€¼å‚³å…¥ç•¶ä½œcontrollerçš„servlet.javaä½œæ•¸å€¼æ ¼å¼é©—è­‰--%>
+<%-- 		<jsp:useBean id="emodrSvc" scope="page" --%>
+<%-- 			class="com.emodr.model.EmodrService" /> --%>
+<!-- 		<li> -->
+<!-- 			<form method="post" -->
+<%-- 				action="<%=request.getContextPath()%>/emodr/emodr.do"> --%>
+<!-- 				<b>è«‹é¸æ“‡è¨‚å–®ç·¨è™Ÿ:</b> <select size="1" name="emodr_id"> -->
+<%-- 					<c:forEach var="emodrVO" items="${emodrSvc.all}"> --%>
+<%-- 						<option value="${emodrVO.emodr_id}">${emodrVO.emodr_id} --%>
+<%-- 					</c:forEach> --%>
+<!-- 				</select> <input type="hidden" name="action" value="getOne_For_Display"> -->
+<!-- 				<input type="submit" value="é€å‡º"> -->
+<!-- 			</form> -->
+<!-- 		</li> -->
+
+		<%-- ä¸‹é¢é€™æ®µcodeçš„åŠŸèƒ½è·Ÿä¸Šé¢ä¸€æ¨£ï¼Œå·®åˆ¥åœ¨æ–¼ä¸‹æ‹‰å¼é¸å–®é¡¯ç¤ºçš„æ”¹æˆç”¨æœƒå“¡åä¾†é¡¯ç¤º--%>
+<%-- 		<jsp:useBean id="membersSvc" scope="page" --%>
+<%-- 			class="com.members.model.MemberService" /> --%>
+<!-- 		<li> -->
+<!-- 			<form method="post" -->
+<%-- 				action="<%=request.getContextPath()%>/emodr/emodr.do"> --%>
+<!-- 				<b>è«‹é¸æ“‡æ”¶è²¨äºº:</b> <select size="1" name="emodr_id"> -->
+<%-- 					<c:forEach var="emodrVO" items="${emodrSvc.all}"> --%>
+<%-- 						<option value="${emodrVO.emodr_id}"> --%>
+<%-- 							<c:forEach var="membersVO" items="${membersSvc.all}"> --%>
+<%-- 								<c:if test="${emodrVO.member_id==membersVO.memberId}"> --%>
+<%-- 									${membersVO.name} --%>
+<%-- 							    </c:if> --%>
+<%-- 							</c:forEach> --%>
+<%-- 					</c:forEach> --%>
+<!-- 				</select> <input type="hidden" name="action" value="getOne_For_Display"> -->
+<!-- 				<input type="submit" value="é€å‡º"> -->
+<!-- 			</form> -->
+<!-- 		</li> -->
+<!-- 	</ul> -->
+	<%-- ==================================================================--%>
+
 
 
 </body>

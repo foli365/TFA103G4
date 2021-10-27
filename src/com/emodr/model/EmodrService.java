@@ -56,5 +56,9 @@ public class EmodrService {
 	public List<EmodrVO> getAll() {
 		return dao.getAll();
 	}
+	
+	public List<EmodrVO> notDisplay(Integer emodr_id) {
+		return dao.notDisplay(emodr_id);
+	}
 
 }

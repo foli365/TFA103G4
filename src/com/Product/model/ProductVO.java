@@ -13,7 +13,6 @@ public class ProductVO implements Serializable {
 	private String product_sort;
 	private Integer price;
 	private Integer inventory;
-	private Integer admin_id;
 	private Integer situation;
 	private String descript;
 	private byte[] picture1;
@@ -43,16 +42,6 @@ public class ProductVO implements Serializable {
 		this.situation = situation;
 	}
 
-	
-
-	public Integer getAdmin_id() {
-		return admin_id;
-	}
-
-
-	public void setAdmin_id(Integer admin_id) {
-		this.admin_id = admin_id;
-	}
 
 
 	public String getPname() {
@@ -124,7 +113,7 @@ public class ProductVO implements Serializable {
 	@Override
 	public String toString() {
 		return "ProductVO [product_no=" + product_no + ", product_name=" + product_name + ", product_sort="
-				+ product_sort + ", price=" + price + ", inventory=" + inventory +", situation=" + situation +", admin_id=" + admin_id  + ", descript=" + descript
+				+ product_sort + ", price=" + price + ", inventory=" + inventory +", situation=" + situation + ", descript=" + descript
 				+ ", picture1=" + Arrays.toString(picture1) + ", picture2=" + Arrays.toString(picture2) + ", picture3="
 				+ Arrays.toString(picture3) + "]";
 	}
