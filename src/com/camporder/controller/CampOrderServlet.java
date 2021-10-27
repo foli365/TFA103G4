@@ -44,7 +44,6 @@ public class CampOrderServlet extends HttpServlet {
 			try {
 				// 入住日期
 				String from = req.getParameter("from");
-				System.out.println("from = " + from);
 				java.sql.Date checkedIn = null;
 				try {
 					SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
@@ -141,7 +140,7 @@ public class CampOrderServlet extends HttpServlet {
 				HttpSession session = req.getSession();
 				session.setAttribute("campOrderVO", campOrderVO);
 				res.sendRedirect("bookings/extra_flavour.jsp");
-			} catch (NumberFormatException NFE) {
+			} catch (ExceptionInInitializerError e) {
 				req.setAttribute("missing", "請先填寫所有欄位後再預定");
 				RequestDispatcher failedView = req.getRequestDispatcher(url);
 				failedView.forward(req, res);

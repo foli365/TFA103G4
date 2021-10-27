@@ -5,6 +5,15 @@
 	pageEncoding="UTF-8"%>
 <jsp:useBean id="CSvc" class="com.campsite.model.CampsiteService" scope="page"></jsp:useBean>
 <%
+	response.setHeader("Cache-Control", "no-store");
+	response.setHeader("Pragma", "no-cache");
+	response.setDateHeader("Expires", 0);
+	Object account = session.getAttribute("account");
+	if (account == null) {
+		session.setAttribute("location", request.getRequestURI());
+		response.sendRedirect(request.getContextPath() + "/register_and_login/login.jsp");
+		return;
+	}
 	CampOrderService COSvc = new CampOrderService();
 	List<CampOrderVO> list = COSvc.getByMemberId((Integer)session.getAttribute("id"));
 	pageContext.setAttribute("list", list);
@@ -65,7 +74,7 @@
 								<c:forEach var="order" items="${list}">
 								<div class="col mb-4">
 									<div class="card mx-auto" style="width: 40rem;">
-										<img src="./img/campsite/1485516773runke_ground17-180816.jpg"
+										<img src="<%=request.getContextPath()%>/CampsiteGifReader?column=picture1&camp_id=${order.campId}"
 											class="card-img-top" alt="...">
 										<div class="card-body">
 											<div class="row align-items-center">
@@ -79,7 +88,7 @@
 												</div>
 											</div>
 											<p class="card-text">
-												<a href="">${CSvc.getOneCampsite(order.campId).location}</a>
+												<a href="" onclick="window.open('https://www.google.com.tw/maps/place/${CSvc.getOneCampsite(order.campId).location}', '_blank');">${CSvc.getOneCampsite(order.campId).location}</a>
 											</p>
 										</div>
 										<ul class="list-group list-group-flush">

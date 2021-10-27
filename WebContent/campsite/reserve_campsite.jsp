@@ -13,15 +13,15 @@
 		session.setAttribute("location", (request.getRequestURI() + "?campId=" + request.getParameter("campId")));
 	}
 	pageContext.setAttribute("memberId", (Integer) session.getAttribute("id"));
-	pageContext.setAttribute("campId", 5001);
+	pageContext.setAttribute("campId", Integer.parseInt(request.getParameter("campId")));
 	Integer guestCount = null;
 	try {
 		guestCount = new Integer(request.getParameter("guestCount"));
 	} catch (NumberFormatException nfe) {
-		guestCount = null;
+		guestCount = 0;
 	}
 	CampsiteTentStatusService CTSSvc = new CampsiteTentStatusService();
-	pageContext.setAttribute("unavilibleList", CTSSvc.getUnavailibleDatewithGuestNumberOnly(5001, 1));
+	pageContext.setAttribute("unavilibleList", CTSSvc.getUnavailibleDatewithGuestNumberOnly(Integer.parseInt(request.getParameter("campId")), guestCount));
 %>
 <%
 	MemberService memberService = new MemberService();
@@ -41,7 +41,7 @@
 <link rel="stylesheet" type="text/css"
 	href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
 <!-- ¸ü¤J CSS -->
-<link rel="stylesheet" href="./vendors/bootstrap/css/ReserveCamp.css">
+<link rel="stylesheet" href="<%=request.getContextPath()%>/campsite/vendors/bootstrap/css/ReserveCamp.css">
 </head>
 
 <body style="background-color: #fbefe7;">
