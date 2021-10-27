@@ -12,7 +12,7 @@ ProductVO productVO = (ProductVO) request.getAttribute("productVO");
 
 
 
-<html>
+<html> 
 <head>
 <title>商品修改</title>
 

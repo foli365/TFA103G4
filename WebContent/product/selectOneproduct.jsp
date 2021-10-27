@@ -140,7 +140,7 @@
 				<th>商品圖片3</th>
 				
             </tr>
-	<tr>
+	<tr> 
 		<td><%= productVO.getProductno()%></td>
 		<td><%= productVO.getPname()%></td>
 		<td><%= productVO.getPsort()%></td>

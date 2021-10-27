@@ -19,7 +19,6 @@ public class EmodrDAO implements EmodrDAO_interface {
 		try {
 			Context ctx = new InitialContext();
 			ds = (DataSource) ctx.lookup("java:comp/env/jdbc/camping"); // !!!!!!記得到時要改成這行的程式!!!!!!!
-//			ds = (DataSource) ctx.lookup("java:comp/env/jdbc/TestDB2");  //測試用
 		} catch (NamingException e) {
 			e.printStackTrace();
 		}
