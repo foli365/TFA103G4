@@ -185,33 +185,33 @@
 			<div class="col-7 camp-list">
 				<div class="list-group">
 					<div class="default-list">
-						<c:forEach var="campsiteVO" items="${list}">
-							<a 
-								href="<%=request.getContextPath()%>/campsite/reserve_campsite.jsp?campId=${campsiteVO.campId}"
-								class="list-group-item list-group-item-action flex-column align-items-start">
-								<div class="row">
-									<div class="col-6 camp-content-div">
-										<div class="d-flex w-100 justify-content-between camp-name">
-											<h5>${campsiteVO.campName}</h5>
-										</div>
-										<div class="camp-addr">
-											<p>地址: ${campsiteVO.location}</p>
-										</div>
-										<div class="camp-content">
-											<p>${campsiteVO.campDescription}</p>
-										</div>
-										<div class="camp-price">
-											<p>$${campsiteVO.campPrice} (平均每人一晚)</p>
-										</div>
-									</div>
-									<div class="col-6 camp-pic-div">
-										<img
-											src="<%=request.getContextPath()%>/CampsiteGifReader?column=picture1&camp_id=${campsiteVO.campId}"
-											class="rounded float-right camp-picture" alt="...">
-									</div>
-								</div>
-							</a>
-						</c:forEach>
+<%-- 						<c:forEach var="campsiteVO" items="${list}"> --%>
+<!-- 							<a  -->
+<%-- 								href="<%=request.getContextPath()%>/campsite/reserve_campsite.jsp?campId=${campsiteVO.campId}" --%>
+<!-- 								class="list-group-item list-group-item-action flex-column align-items-start"> -->
+<!-- 								<div class="row"> -->
+<!-- 									<div class="col-6 camp-content-div"> -->
+<!-- 										<div class="d-flex w-100 justify-content-between camp-name"> -->
+<%-- 											<h5>${campsiteVO.campName}</h5> --%>
+<!-- 										</div> -->
+<!-- 										<div class="camp-addr"> -->
+<%-- 											<p>地址: ${campsiteVO.location}</p> --%>
+<!-- 										</div> -->
+<!-- 										<div class="camp-content"> -->
+<%-- 											<p>${campsiteVO.campDescription}</p> --%>
+<!-- 										</div> -->
+<!-- 										<div class="camp-price"> -->
+<!-- 											<p>$${campsiteVO.campPrice} (平均每人一晚)</p> -->
+<!-- 										</div> -->
+<!-- 									</div> -->
+<!-- 									<div class="col-6 camp-pic-div"> -->
+<!-- 										<img -->
+<%-- 											src="<%=request.getContextPath()%>/CampsiteGifReader?column=picture1&camp_id=${campsiteVO.campId}" --%>
+<!-- 											class="rounded float-right camp-picture" alt="..."> -->
+<!-- 									</div> -->
+<!-- 								</div> -->
+<!-- 							</a> -->
+<%-- 						</c:forEach> --%>
 					</div>
 					<c:forEach var="campsiteVO" items="${campsiteList}">
 						<a

@@ -222,7 +222,7 @@
 	        window.onscroll = function() {
 	            var s = document.body.scrollTop || document.documentElement.scrollTop
 	            if (s > H) {
-	                omDiv.style = "position:fixed;top:55px;right:113px"
+	                omDiv.style = "position:fixed;top:70px;right:113px"
 	            } else {
 	                omDiv.style = ""
 	            }
