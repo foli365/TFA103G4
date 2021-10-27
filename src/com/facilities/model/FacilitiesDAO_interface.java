@@ -2,6 +2,8 @@ package com.facilities.model;
 
 import java.util.List;
 
+import com.plan.model.*;
+
 public interface FacilitiesDAO_interface {
 	
 	void insert(FacilitiesVO facilitiesVO);

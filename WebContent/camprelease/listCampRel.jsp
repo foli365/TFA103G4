@@ -5,6 +5,10 @@
 <%@ page import="java.util.*"%>
 <%@ page import="com.camprelease.model.*"%>
 <%@ page import="com.facilities.model.*"%>
+<%@ page import="com.favorite.model.*"%>
+<%@ page import="com.campAlert.model.*"%>
+<%@ page import="com.camporder.model.*"%>
+<%@ page import="com.campsitetentstatus.model.*"%>
 <%@ page import="com.plan.model.*"%>
 
 <%
@@ -32,7 +36,7 @@
 
 <%-- <jsp:useBean id="planSvc" scope="page" class="com.plan.model.PlanService" /> --%>
 <%-- <jsp:useBean id="CampreleaseSvc" scope="page" class="com.camprelease.model.CampReleaseService" /> --%>
-<jsp:useBean id="FacilitiesSvc" scope="page" class="com.facilities.model.FacilitiesService" />
+<%-- <jsp:useBean id="FacilitiesSvc" scope="page" class="com.facilities.model.FacilitiesService" /> --%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -52,45 +56,45 @@
     }
     
          /* 以下設備 */
-      .setting-label{
-        position: relative;
-        display: inline-block;
-        line-height: 1em;
-        overflow: hidden;
-        margin: 0 5px 5px 0;
-        cursor: pointer;
-      }
-      .setting-label > input{
-        position: absolute;
-        top: -20px;
-        left: -20px;
-      }
-      .setting-label > span{
-        position: relative;
-        display: block;
-        padding: 10px 12px 10px 10px;
-        color: #000;
-        font-weight: 500;
-        background-color: lightgray;
-        /* white-space: nowrap;
-        border-radius: 2em; */
-        -webkit-border-radius: 2em;
-        -moz-border-radius: 2em;
-      }
-      .setting-label > span > i{
-        opacity: 1;
-      }
-      .setting-label:hover > span{
-        color:#fff;
-        background-color: #F4A249;
-      }
-      .setting-label:hover >span.male{
-        background-color: #F4A249;
-      }
-      .setting-label input:checked + span{
-        background-color: #f23557;
-        color: white;
-      }
+/*       .setting-label{ */
+/*         position: relative; */
+/*         display: inline-block; */
+/*         line-height: 1em; */
+/*         overflow: hidden; */
+/*         margin: 0 5px 5px 0; */
+/*         cursor: pointer; */
+/*       } */
+/*       .setting-label > input{ */
+/*         position: absolute; */
+/*         top: -20px; */
+/*         left: -20px; */
+/*       } */
+/*       .setting-label > span{ */
+/*         position: relative; */
+/*         display: block; */
+/*         padding: 10px 12px 10px 10px; */
+/*         color: #000; */
+/*         font-weight: 500; */
+/*         background-color: lightgray; */
+/*         /* white-space: nowrap; */
+/*         border-radius: 2em; */ */
+/*         -webkit-border-radius: 2em; */
+/*         -moz-border-radius: 2em; */
+/*       } */
+/*       .setting-label > span > i{ */
+/*         opacity: 1; */
+/*       } */
+/*       .setting-label:hover > span{ */
+/*         color:#fff; */
+/*         background-color: #F4A249; */
+/*       } */
+/*       .setting-label:hover >span.male{ */
+/*         background-color: #F4A249; */
+/*       } */
+/*       .setting-label input:checked + span{ */
+/*         background-color: #f23557; */
+/*         color: white; */
+/*       } */
     </style>
     
 </head>
@@ -131,11 +135,15 @@
             <th>設施</th>
             <th>營地資料修改</th>
             <th>Plan修改</th>
-            <th>刪除</th>
+<!--             <th>刪除</th> -->
         </tr>
     </thead>
     <jsp:useBean id="facilitiesSvc" scope="page" class="com.facilities.model.FacilitiesService" />
     <jsp:useBean id="planSvc" scope="page" class="com.plan.model.PlanService" />
+    <jsp:useBean id="campAlertSvc" scope="page" class="com.campAlert.model.CampAlertService" />
+    <jsp:useBean id="favoriteSvc" scope="page" class="com.favorite.model.FavoriteService" />
+    <jsp:useBean id="campsiteTentStatusSvc" scope="page" class="com.campsitetentstatus.model.CampsiteTentStatusService" />
+    <jsp:useBean id="campOrderSvc" scope="page" class="com.camporder.model.CampOrderService" />
     <c:forEach var="campreleaseVO"  items="${list}">
     <tbody>
         <tr>
@@ -156,10 +164,10 @@
 			<td><c:forEach var="planVO" items="${planSvc.all}"><c:if test="${campreleaseVO.campId == planVO.campId}">【${planVO.planName}】【${planVO.planGuestLimit}人】【${planVO.planAgeLimit}歲以下】【${planVO.planPrice}元】<br></c:if></c:forEach></td>
 			<td>
 			      <div>
-<%--                     <label class="setting-label circle-line" for="setting[]"><input type="checkbox" name="bbq" id="bbq" value= ${facilitiesSvc.getByCampId(facilitiesVO.getCampId()).bbq == '1' ? 'checked' : ''}><span class="material-icons md-18">outdoor_grill</span></label> --%>
-<%--                     <label class="setting-label circle-line" for="setting[]"><input type="checkbox" name="wifi" id="wifi" value="1" ${facilitiesSvc.getByCampId(facilitiesVO.getCampId()).wifi == '1' ? 'checked' : ''}><span class="material-icons md-18">wifi</span></label> --%>
-<%--                     <label class="setting-label circle-line" for="setting[]"><input type="checkbox" name="nosmoke" id="nosmoke" value="1" ${facilitiesSvc.getByCampId(facilitiesVO.getCampId()).nosmoke == '1' ? 'checked' : ''}><span class="material-icons md-18">smoke_free</span></label> --%>
-<%--                     <label class="setting-label circle-line" for="setting[]"><input type="checkbox" name="pets" id="pets" value="1" ${facilitiesSvc.getByCampId(facilitiesVO.getCampId()).pets == '1' ? 'checked' : ''}><span class="material-icons md-18">pets</span></label> --%>
+                    <label class="setting-label circle-line" for="setting[]"><input type="checkbox" name="bbq" id="bbq" value=""${(facilitiesVO.bbq == 0) ? '1' : 'checked' } disabled="disabled"><span class="material-icons md-18">outdoor_grill</span></label>
+                    <label class="setting-label circle-line" for="setting[]"><input type="checkbox" name="wifi" id="wifi" value=""${(facilitiesVO.wifi == 0) ? '1' : 'checked' } disabled="disabled"><span class="material-icons md-18">wifi</span></label>
+                    <label class="setting-label circle-line" for="setting[]"><input type="checkbox" name="nosmoke" id="nosmoke" value=""${(facilitiesVO.nosmoke == 0) ? '1' : 'checked' } disabled="disabled"><span class="material-icons md-18">smoke_free</span></label>
+                    <label class="setting-label circle-line" for="setting[]"><input type="checkbox" name="pets" id="pets" value=""${(facilitiesVO.pets == 0) ? '1' : 'checked' } disabled="disabled"><span class="material-icons md-18">pets</span></label>
                   </div>
 			</td>
             <td>
@@ -182,16 +190,16 @@
 			     <input type="hidden" name="action"	value="getOnePlan_For_Update"></FORM>
               </td>
               
-              <td>
+<!--               <td> -->
 <!--                   <br> -->
 <!--                   <p> -->
 <%--                     <a class="btn btn-outline-danger" href="<%=request.getContextPath() %>/camprelease/updateCampRel.jsp" role="button"><image src="svg/trash.svg"></image>delete</a> --%>
 <!--                   </p> -->
-                  <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/camprelease/camprelease.do" style="margin-bottom: 0px;">
-			     <input type="submit" value="刪除">
-			     <input type="hidden" name="campId"  value="${campreleaseVO.campId}">
-			     <input type="hidden" name="action" value="delete"></FORM>
-              </td>
+<%--                   <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/camprelease/camprelease.do" style="margin-bottom: 0px;"> --%>
+<!-- 			     <input type="submit" value="刪除"> -->
+<%-- 			     <input type="hidden" name="campId"  value="${campreleaseVO.campId}"> --%>
+<!-- 			     <input type="hidden" name="action" value="delete"></FORM> -->
+<!--               </td> -->
         </tr>
     </tbody>
         </c:forEach>
@@ -269,8 +277,9 @@
 <%-- <%@ include file="/camprelease/pages/page2.file" %> --%>
 
 
-<script src="<%=request.getContextPath()%>/camprelease/js/jquery_3.5.1.js"></script>
+<script src="<%=request.getContextPath()%>/camprelease/js/jquery_3.3.1.slim.min.js"></script>
 <script src="<%=request.getContextPath()%>/camprelease/js/jquery.dataTables.min.js"></script>
+<script src="<%=request.getContextPath()%>/camprelease/js/popper.min.js"></script>
 <script>
        $(document).ready(function() {
     $('#example').DataTable( {
@@ -278,11 +287,11 @@
         "searching": true, //搜尋功能, 預設是開啟
         "paging": true, //分頁功能, 預設是開啟
         "ordering": true, //排序功能, 預設是開啟
-        "lengthMenu": [5, 10],
-        // "aria": {
-        //     "sortAscending": ": 升冪排列",
-        //     "sortDescending": ": 降冪排列"
-        // }
+        "lengthMenu": [3, 8],
+//         "aria": {
+//             "sortAscending": ": 升冪排列",
+//             "sortDescending": ": 降冪排列"
+//         }
         "language": {
         "processing": "處理中...",
         "loadingRecords": "載入中...",

@@ -15,10 +15,11 @@ FacilitiesService facilitiesSvc = new FacilitiesService();
 <html>
 <head>
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-<title>All營地資料</title>
+<title>All設施資料</title>
 <link rel='stylesheet' href='<%=request.getContextPath()%>/camprelease/css/jquery.dataTables.min.css' />
 <link rel="stylesheet" href="<%=request.getContextPath()%>/camprelease/css/bootstrap.min5.1.0.css">
 <link rel="stylesheet" href="<%=request.getContextPath()%>/camprelease/css/icon.css">
+
 <style>
 div.dataTables_wrapper {
 	background-color: whitesmoke;
@@ -28,6 +29,52 @@ div.dataTables_wrapper {
 
 body {
 	background-color: #7B7571;
+}
+
+.setting-label {
+	position: relative;
+	display: inline-block;
+	line-height: 1em;
+	overflow: hidden;
+	margin: 0 5px 5px 0;
+	cursor: pointer;
+}
+
+.setting-label>input {
+	position: absolute;
+	top: -20px;
+	left: -20px;
+}
+
+.setting-label>span {
+	position: relative;
+	display: block;
+	padding: 10px 12px 10px 10px;
+	color: #000;
+	font-weight: 500;
+	background-color: lightgray;
+	white-space: nowrap;
+	border-radius: 2em;
+	-webkit-border-radius: 2em;
+	-moz-border-radius: 2em;
+}
+
+.setting-label>span>i {
+	opacity: 1;
+}
+
+.setting-label:hover>span {
+	color: #fff;
+	background-color: #F4A249;
+}
+
+.setting-label:hover>span.male {
+	background-color: #F4A249;
+}
+
+.setting-label input:checked+span {
+	background-color: #f23557;
+	color: white;
 }
 </style>
 
@@ -74,20 +121,20 @@ body {
 				<td>【${facilitiesVO.facilitiesId}】</td>
 				<td>【${facilitiesVO.campId}】</td>
 				
-				<td><label class="setting-label circle-line" for="setting[]">
-				<input type="checkbox" name="bbq" id="bbq" value="" disabled="disabled">
+				<td><label class="setting-label" for="setting[]">
+				<input type="checkbox" name="bbq" id="bbq" value="1"${(facilitiesVO.bbq == 0) ? '1' : 'checked' } disabled="disabled">
 				<span class="material-icons md-18">outdoor_grill</span></label></td>
 				
-				<td><label class="setting-label circle-line" for="setting[]">
-				<input type="checkbox" name="wifi" id="wifi" value="" disabled="disabled">
+				<td><label class="setting-label" for="setting[]">
+				<input type="checkbox" name="wifi" id="wifi" value="1"${(facilitiesVO.wifi == 0) ? '1' : 'checked' } disabled="disabled">
 				<span class="material-icons md-18">wifi</span></label></td>
 				
-				<td><label class="setting-label circle-line" for="setting[]">
-				<input type="checkbox" name="nosmoke" id="nosmoke" value="" disabled="disabled">
+				<td><label class="setting-label" for="setting[]">
+				<input type="checkbox" name="nosmoke" id="nosmoke" value="1"${(facilitiesVO.nosmoke == 0) ? '1' : 'checked' } disabled="disabled">
 				<span class="material-icons md-18">smoke_free</span></label></td>
 				
-				<td><label class="setting-label circle-line" for="setting[]">
-				<input type="checkbox" name="pets" id="pets" value="" disabled="disabled">
+				<td><label class="setting-label" for="setting[]">
+				<input type="checkbox" name="pets" id="pets" value="1"${(facilitiesVO.pets == 0) ? '1' : 'checked' }  disabled="disabled">
 				<span class="material-icons md-18">pets</span></label></td>
 				
 				<td>
@@ -115,10 +162,10 @@ body {
 		$(document).ready(function() {
 			$('#example').DataTable({
 				"scrollX" : true,
-				"searching" : false, //搜尋功能, 預設是開啟
-				"paging" : false, //分頁功能, 預設是開啟
-				"ordering" : false, //排序功能, 預設是開啟
-				"lengthMenu" : false,
+				"searching" : true, //搜尋功能, 預設是開啟
+				"paging" : true, //分頁功能, 預設是開啟
+				"ordering" : true, //排序功能, 預設是開啟
+				"lengthMenu" : [5, 10],
 				// "aria": {
 				//     "sortAscending": ": 升冪排列",
 				//     "sortDescending": ": 降冪排列"

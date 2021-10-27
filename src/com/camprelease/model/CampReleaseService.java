@@ -38,11 +38,12 @@ public class CampReleaseService {
 		return campreleaseVO;
 	}
 
-	public CampReleaseVO updateCampRelease(Integer campId, Integer memberId, String campName, String location, Double latitude, Double longtitude,
-			String campDescription, Integer campPrice,Timestamp listedTime, byte[] picture1, byte[] picture2, byte[] picture3, byte[] picture4, byte[] picture5) {
+	public CampReleaseVO updateCampRelease(Integer memberId, String campName, String location, Double latitude, Double longtitude,
+			String campDescription, Integer campPrice,Timestamp listedTime, byte[] picture1, byte[] picture2, byte[] picture3, byte[] picture4, byte[] picture5, Integer campId) {
 
 		CampReleaseVO campreleaseVO = new CampReleaseVO();
 
+		campreleaseVO.setMemberId(memberId);
 		campreleaseVO.setCampName(campName);
 		campreleaseVO.setLocation(location);
 		campreleaseVO.setLatitude(latitude);
@@ -56,7 +57,6 @@ public class CampReleaseService {
 		campreleaseVO.setPicture4(picture4);
 		campreleaseVO.setPicture5(picture5);
 		campreleaseVO.setCampId(campId);
-		campreleaseVO.setMemberId(memberId);
 		
 		dao.update(campreleaseVO);
 		

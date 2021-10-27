@@ -121,38 +121,9 @@ public class CampReleaseServlet extends HttpServlet {
 			}
 		}
 		
-//	if("getUpdate".equals(action)) {
-//			
-//			List<String> errorMsgs = new LinkedList<String>();
-//			// Store this set in the request scope, in case we need to
-//			// send the ErrorPage view.
-//			req.setAttribute("errorMsgs", errorMsgs);
-//			
-//			try {
-//				Integer productno = new Integer(req.getParameter("productno"));
-//				
-//				ProductService proSvc = new ProductService();
-//				ProductVO productVO = proSvc.getOneproduct(productno);
-//				
-//
-//				req.setAttribute("productVO", productVO);
-//				
-//				String url = "/product/update_product.jsp";
-//				RequestDispatcher successView = req.getRequestDispatcher(url);
-//				successView.forward(req, res);
-//				
-//			} catch (Exception e) {
-//				errorMsgs.add("無法取得要修改的資料:" + e.getMessage());
-//				RequestDispatcher failureView = req
-//						.getRequestDispatcher("/product/selectAll.jsp");
-//				failureView.forward(req, res);
-//			}
-//			
-//		}
 
-		if ("update".equals(action)) { // 來自updateCampRel.jsp的請求
-			Map<String, String> errorMsgs = new HashMap<String, String>();
-//			List<String> errorMsgs = new LinkedList<String>();
+		if ("update".equals(action)) { 
+			List<String> errorMsgs = new LinkedList<String>();
 			// Store this set in the request scope, in case we need to
 			// send the ErrorPage view.
 			req.setAttribute("errorMsgs", errorMsgs);
@@ -166,17 +137,17 @@ public class CampReleaseServlet extends HttpServlet {
 				String campName = req.getParameter("campName");
 				String campNameReg = "^[(\u4e00-\u9fa5)(a-zA-Z0-9_)]{2,10}$";
 				if (campName == null || campName.trim().length() == 0) {
-					errorMsgs.put("campNameError","營地名稱: 請勿空白");
-				} else if (!campName.trim().matches(campNameReg)) { // 以下練習正則(規)表示式(regular-expression)
-					errorMsgs.put("campNameError","營地名稱: 只能是中、英文字母、數字和_ , 且長度必需在2到10之間");
+					errorMsgs.add("營地名稱: 請勿空白");
+				} else if (!campName.trim().matches(campNameReg)) { 
+					errorMsgs.add("營地名稱: 只能是中、英文字母、數字和_ , 且長度必需在2到10之間");
 				}
 
 				String location = req.getParameter("location").trim();
 				String locationReg = "^[(\u4e00-\u9fa5)(a-zA-Z0-9_)]{10,30}$";
 				if (location == null || location.trim().length() == 0) {
-					errorMsgs.put("locationError","地址請勿空白");
-				} else if (!location.trim().matches(locationReg)) { // 以下練習正則(規)表示式(regular-expression)
-					errorMsgs.put("locationError","地址: 只能是中、英文字母、數字和_ , 且長度必需在10到30之間");
+					errorMsgs.add("地址請勿空白");
+				} else if (!location.trim().matches(locationReg)) { 
+					errorMsgs.add("地址: 只能是中、英文字母、數字和_ , 且長度必需在10到30之間");
 				}
 
 				Double latitude = null;
@@ -184,7 +155,7 @@ public class CampReleaseServlet extends HttpServlet {
 					latitude = new Double(req.getParameter("latitude").trim());
 				} catch (NumberFormatException e) {
 					latitude = 0.0;
-					errorMsgs.put("latitudeError","經度請填數字.");
+					errorMsgs.add("經度請填數字.");
 				}
 
 				Double longtitude = null;
@@ -192,12 +163,12 @@ public class CampReleaseServlet extends HttpServlet {
 					longtitude = new Double(req.getParameter("longtitude").trim());
 				} catch (NumberFormatException e) {
 					longtitude = 0.0;
-					errorMsgs.put("longtitudeError","緯度請填數字.");
+					errorMsgs.add("緯度請填數字.");
 				}
 
 				String campDescription = req.getParameter("campDescription").trim();
 				if (campDescription == null || campDescription.trim().length() == 0) {
-					errorMsgs.put("campDescriptionError","營地介紹請填寫");
+					errorMsgs.add("營地介紹請填寫");
 				} 
 
 				Integer campPrice = null;
@@ -205,7 +176,7 @@ public class CampReleaseServlet extends HttpServlet {
 					campPrice = new Integer(req.getParameter("campPrice").trim());
 				} catch (NumberFormatException e) {
 					campPrice = 0;
-					errorMsgs.put("campPriceError","價錢請填數字");
+					errorMsgs.add("價錢請填數字");
 				}
 
 				java.sql.Timestamp listedTime = null;
@@ -213,7 +184,7 @@ public class CampReleaseServlet extends HttpServlet {
 					listedTime = java.sql.Timestamp.valueOf(req.getParameter("listedTime").trim());
 				} catch (IllegalArgumentException e) {
 					listedTime = new java.sql.Timestamp(System.currentTimeMillis());
-					errorMsgs.put("listedTimeError","請輸入日期!");
+					errorMsgs.add("請輸入日期!");
 				}
 				
 //				InputStream in1 = req.getPart("picture1").getInputStream();
@@ -356,41 +327,7 @@ public class CampReleaseServlet extends HttpServlet {
 //				} else {
 //					CampReleaseService campreleaseSvc = new CampReleaseService();
 //					picture5 = campreleaseSvc.getOneCampRelease(campId).getPicture5();
-//				}
-						Integer facilitiesId = new Integer(req.getParameter("facilitiesId").trim());
-						
-						String strbbq = req.getParameter("bbq");
-						Integer bbq = null;
-						if(strbbq == null) {
-							bbq = 0;
-						} else {
-							bbq = new Integer(strbbq);
-						}
-						
-						String strwifi = req.getParameter("wifi");
-						Integer wifi = null;
-						if(strwifi == null) {
-							wifi = 0;
-						} else {
-							wifi = new Integer(strwifi);
-						}
-						
-						String strnosmoke = req.getParameter("nosmoke");
-						Integer nosmoke = null;
-						if(strnosmoke == null) {
-							nosmoke = 0;
-						} else {
-							nosmoke = new Integer(strnosmoke);
-						}
-						
-						String strpets = req.getParameter("pets");
-						Integer pets = null;
-						if(strpets == null) {
-							pets = 0;
-						} else {
-							pets = new Integer(strpets);
-						}		
-						
+//				}					
 				
 				CampReleaseVO campreleaseVO = new CampReleaseVO();
 				campreleaseVO.setCampId(campId);
@@ -408,13 +345,6 @@ public class CampReleaseServlet extends HttpServlet {
 				campreleaseVO.setPicture4(picture4);
 				campreleaseVO.setPicture5(picture5);
 				
-				FacilitiesVO facilitiesVO = new FacilitiesVO();	
-//				facilitiesVO.setFacilitiesId(facilitiesId);
-				facilitiesVO.setBbq(bbq);
-				facilitiesVO.setWifi(wifi);
-				facilitiesVO.setNosmoke(nosmoke);
-				facilitiesVO.setPets(pets);
-
 //				try {
 //					campaddVO.setPicture1(getPictureByteArray(picture1));
 //				} catch (IOException e) {
@@ -424,39 +354,28 @@ public class CampReleaseServlet extends HttpServlet {
 
 						// Send the use back to the form, if there were errors
 						if (!errorMsgs.isEmpty()) {
-							req.setAttribute("campreleaseVO", campreleaseVO); // 含有輸入格式錯誤的campreleaseVO物件,也存入req
+							req.setAttribute("campreleaseVO", campreleaseVO); 
 							
-							req.setAttribute("facilitiesVO", facilitiesVO);
 							RequestDispatcher failureView = req.getRequestDispatcher("/camprelease/updateCampRel.jsp");
 							failureView.forward(req, res);
-							return; // 程式中斷
+							return; 
 						}
 
 						/*************************** 2.開始修改資料 *****************************************/
-//						CampReleaseService campreleaseSvc = new CampReleaseService();
-//						campreleaseVO = campreleaseSvc.updateCampRelease(campName, location, latitude, longtitude,
-//								campDescription, campPrice, listedTime, picture1, picture2, picture3, picture4,
-//								picture5,campId);
-						
 						CampReleaseService campreleaseSvc = new CampReleaseService();
-						campreleaseVO = campreleaseSvc.updateCampRelease(campId, memberId, campName, location, latitude, longtitude,
-								campDescription, campPrice, listedTime, picture1, picture2, picture3, picture4,
-								picture5);
+						campreleaseVO = campreleaseSvc.updateCampRelease(memberId, campName, location, latitude, longtitude,
+								campDescription, campPrice, listedTime, picture1, picture2, picture3, picture4, picture5, campId);
 						
-						FacilitiesService facilitiesSvc = new FacilitiesService();
-						facilitiesVO = facilitiesSvc.updateFacilities(campId, bbq, wifi, nosmoke, pets, facilitiesId);
-
 						/*************************** 3.修改完成,準備轉交(Send the Success view) *************/
-						req.setAttribute("campreleaseVO", campreleaseVO); // 資料庫update成功後,正確的的campaddVO物件,存入req
-						req.setAttribute("facilitiesVO", facilitiesVO);
+						req.setAttribute("campreleaseVO", campreleaseVO); 
 						String url = "/camprelease/listOneRel.jsp";
-						RequestDispatcher successView = req.getRequestDispatcher(url); // 修改成功後,轉交listOneRel.jsp
+						RequestDispatcher successView = req.getRequestDispatcher(url); 
 						successView.forward(req, res);
 					}
 				}
 				/*************************** 其他可能的錯誤處理 *************************************/
 			} catch (Exception e) {
-				errorMsgs.put("updateError","修改資料失敗");
+				errorMsgs.add("修改資料失敗");
 				RequestDispatcher failureView = req.getRequestDispatcher("/camprelease/updateCampRel.jsp");
 				failureView.forward(req, res);
 			}
@@ -742,6 +661,45 @@ public class CampReleaseServlet extends HttpServlet {
 				} else {
 					pets = new Integer(strpets);
 				}
+				
+//				Integer planId = new Integer(req.getParameter("planId").trim());
+//
+//				Integer campId = new Integer(req.getParameter("campId").trim());
+//				Integer facilitiesId = new Integer(req.getParameter("facilitiesId").trim());
+
+				String planName = req.getParameter("planName");
+				String planNameReg = "^[(\u4e00-\u9fa5)(a-zA-Z0-9_)]{2,10}$";
+				if (planName == null || planName.trim().length() == 0) {
+					errorMsgs.put("planNameError","名稱: 請勿空白");
+				} else if (!planName.trim().matches(planNameReg)) { // 以下練習正則(規)表示式(regular-expression)
+					errorMsgs.put("planNameError","名稱: 只能是中、英文字母、數字和_ , 且長度必需在2到10之間");
+				}
+
+				Integer planGuestLimit = null;
+				try {
+					planGuestLimit = new Integer(req.getParameter("planGuestLimit").trim());
+				} catch (NumberFormatException e) {
+					planGuestLimit = 0;
+					errorMsgs.put("planGuestLimitError","請填數字.");
+				}
+
+				Integer planAgeLimit = null;
+				try {
+					planAgeLimit = new Integer(req.getParameter("planAgeLimit").trim());
+				} catch (NumberFormatException e) {
+					planAgeLimit = 0;
+					errorMsgs.put("planAgeLimitError","請填數字.");
+				}
+
+				Integer planPrice = null;
+				try {
+					planPrice = new Integer(req.getParameter("planPrice").trim());
+				} catch (NumberFormatException e) {
+					planPrice = 0;
+					errorMsgs.put("planPriceError","價錢請填數字");
+				}
+				
+				
 
 						CampReleaseVO campreleaseVO = new CampReleaseVO();
 						campreleaseVO.setMemberId(memberId);
@@ -757,9 +715,7 @@ public class CampReleaseServlet extends HttpServlet {
 						campreleaseVO.setPicture3(picture3);
 						campreleaseVO.setPicture4(picture4);
 						campreleaseVO.setPicture5(picture5);
-						
-						
-						
+							
 						List<FacilitiesVO> facilitiesList = new ArrayList<FacilitiesVO>();
 						FacilitiesVO facilitiesVO = new FacilitiesVO();
 						facilitiesVO.setBbq(bbq);
@@ -767,6 +723,14 @@ public class CampReleaseServlet extends HttpServlet {
 						facilitiesVO.setNosmoke(nosmoke);
 						facilitiesVO.setPets(pets);
 						facilitiesList.add(facilitiesVO);
+						
+						List<PlanVO> planList = new ArrayList<PlanVO>();
+						PlanVO planVO = new PlanVO();
+						planVO.setPlanName(planName);
+						planVO.setPlanGuestLimit(planGuestLimit);
+						planVO.setPlanAgeLimit(planAgeLimit);
+						planVO.setPlanPrice(planPrice);
+						
 //				try {
 //					campaddVO.setPicture1(getPictureByteArray(picture1));
 //				} catch (IOException e) {
@@ -777,7 +741,8 @@ public class CampReleaseServlet extends HttpServlet {
 						// Send the use back to the form, if there were errors
 						if (!errorMsgs.isEmpty()) {
 							req.setAttribute("campreleaseVO", campreleaseVO); // 含有輸入格式錯誤的campreleaseVO物件,也存入req
-							req.setAttribute("facilitiesVO", facilitiesVO);
+							req.setAttribute("facilitiesVO", facilitiesList);
+							req.setAttribute("planVO", planList);
 							
 							RequestDispatcher failureView = req.getRequestDispatcher("/camprelease/addCampRel.jsp");
 							failureView.forward(req, res);
@@ -794,7 +759,7 @@ public class CampReleaseServlet extends HttpServlet {
 //								picture5);
 						
 						CampReleaseDAO campreleaseDAO = new CampReleaseDAO();
-						campreleaseDAO.insertCamp(campreleaseVO, facilitiesList);
+						campreleaseDAO.insertCamp(campreleaseVO, facilitiesList, planList);
 
 						/*************************** 3.新增完成,準備轉交(Send the Success view) ***********/
 						String url = "/camprelease/listCampRel.jsp";
@@ -825,11 +790,23 @@ public class CampReleaseServlet extends HttpServlet {
 				CampReleaseService campreleaseSvc = new CampReleaseService();
 				campreleaseSvc.deleteCampRelease(campId);
 				
-				PlanService planSvc = new PlanService();
-				planSvc.deletebyCampId(campId);
-				
-				FacilitiesService facilitiesSvc = new FacilitiesService();
-				facilitiesSvc.deletebyCampId(campId);
+//				PlanService planSvc = new PlanService();
+//				planSvc.deletebyCampId(campId);
+//				
+//				FacilitiesService facilitiesSvc = new FacilitiesService();
+//				facilitiesSvc.deletebyCampId(campId);
+//				
+//				CampAlertService campAlertSvc = new CampAlertService();
+//				campAlertSvc.deletebyCampId(campId);
+//				
+//				FavoriteService favoriteSvc = new FavoriteService();
+//				favoriteSvc.deletebyCampId(campId);
+//				
+//				CampsiteTentStatusService campsiteTentStatusSvc = new CampsiteTentStatusService();
+//				campsiteTentStatusSvc.deletebyCampId(campId);
+//				
+//				CampOrderService campOrderSvc = new CampOrderService();
+//				campOrderSvc.deletebyCampId(campId);
 
 				/*************************** 3.刪除完成,準備轉交(Send the Success view) ***********/
 				String url = "/camprelease/listCampRel.jsp";

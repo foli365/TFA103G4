@@ -3,6 +3,7 @@ package com.camprelease.model;
 import java.util.*;
 
 import com.facilities.model.*;
+import com.plan.model.*;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -25,6 +26,14 @@ public class CampReleaseDAO implements CampReleaseDAO_interface {
 			"DELETE FROM campsite where CAMP_ID = ?";
 	private static final String UPDATE = 
 			"UPDATE campsite set MEMBER_ID, CAMP_NAME=?, LOCATION=?, LATITUDE=?, LONGTITUDE=?, CAMP_DESCRIPTION=?, CAMP_PRICE=?, LISTED_TIME=?,  PICTURE1=?, PICTURE2=?, PICTURE3=?, PICTURE4=?, PICTURE5=? where CAMP_ID = ?";
+
+	static { 
+		try {
+			Class.forName(DRIVER);
+		} catch (ClassNotFoundException ce) {
+			ce.printStackTrace();
+		}
+	}
 
 	@Override
 	public void insert(CampReleaseVO campreleaseVO) {
@@ -86,7 +95,7 @@ public class CampReleaseDAO implements CampReleaseDAO_interface {
 			con = DriverManager.getConnection(URL, USER, PASSWORD);
 			pstmt = con.prepareStatement(UPDATE);
 
-			pstmt.setString(1, campreleaseVO.getCampName());
+			pstmt.setInt(1, campreleaseVO.getMemberId());
 			pstmt.setString(2, campreleaseVO.getCampName());
 			pstmt.setString(3, campreleaseVO.getLocation());
 			pstmt.setDouble(4, campreleaseVO.getLatitude());
@@ -402,7 +411,7 @@ public class CampReleaseDAO implements CampReleaseDAO_interface {
 	}
 
 	@Override
-	public void insertCamp(CampReleaseVO campreleaseVO, List<FacilitiesVO> facilitiesList) {
+	public void insertCamp(CampReleaseVO campreleaseVO, List<FacilitiesVO> facilitiesList, List<PlanVO> planList) {
 		// TODO Auto-generated method stub
 		Connection con = null;
 		PreparedStatement pstmt = null;
@@ -442,6 +451,12 @@ public class CampReleaseDAO implements CampReleaseDAO_interface {
 			for(FacilitiesVO facilities : facilitiesList) {
 				facilities.setCampId(nextCampId);
 				facilitiesDAO.facilitiesInsertWithCampId(facilities, con);
+			}
+			
+			PlanDAO planDAO = new PlanDAO();
+			for(PlanVO plan : planList) {
+				plan.setCampId(nextCampId);
+				planDAO.planInsertWithCampId(plan, con);
 			}
 			
 			con.commit();
