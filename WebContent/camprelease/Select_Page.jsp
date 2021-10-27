@@ -76,32 +76,6 @@ body {
 			<h6 class="border-bottom pb-2 mb-0">營地資料查詢(查詢營地刊登相關資料)</h6>
 			<div class="d-flex text-muted pt-3">
 				<img class="me-3" src="./svg/tree.svg" alt="" width="48" height="38">
-
-				<p class="pb-3 mb-0 small lh-sm border-bottom">
-					<strong class="d-block text-blue">查詢全部營地刊登相關資料</strong> 
-					<a href='listCampRel.jsp'>List</a> all Camps.
-				</p>
-			</div>
-			<div class="d-flex text-muted pt-3">
-				<img class="me-3" src="./svg/tree.svg" alt="" width="48" height="38">
-				<p class="pb-3 mb-0 small lh-sm border-bottom">
-					<strong class="d-block text-gray-dark">由營地編號查詢</strong>
-				</p>
-				<ul>
-					<li>
-						<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/camprelease/camprelease.do">
-							<select size="1" name="campId">
-								<c:forEach var="campreleaseVO" items="${campreleaseSvc.all}">
-									<option value="${campreleaseVO.campId}">${campreleaseVO.campId}
-								</c:forEach>
-							</select> <input type="hidden" name="action" value="getOne_For_Display">
-							<input type="submit" value="送出">
-						</FORM>
-					</li>
-				</ul>
-			</div>
-			<div class="d-flex text-muted pt-3">
-				<img class="me-3" src="./svg/tree.svg" alt="" width="48" height="38">
 				<p class="pb-3 mb-0 small lh-sm border-bottom">
 					<strong class="d-block text-gray-dark">由營地名稱查詢</strong>
 				</p>

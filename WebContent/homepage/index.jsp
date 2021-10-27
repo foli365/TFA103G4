@@ -12,7 +12,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Document</title>
-<%@ include file="/template/navbar.jsp" %>
+<%@ include file="/template/navbar.jsp"%>
 <link rel="stylesheet" href="./index.css">
 <link rel="stylesheet"
 	href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
@@ -100,7 +100,31 @@
 			</div>
 		</div>
 	</div>
-	<%@ include file="/template/script.html" %>
+	<div class="container">
+		<footer
+			class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top">
+			<div class="col-md-4 d-flex align-items-center">
+				<a href="/"
+					class="mb-3 me-2 mb-md-0 text-muted text-decoration-none lh-1">
+					<svg class="bi" width="30" height="24">
+						<use xlink:href="#bootstrap"></use></svg>
+				</a> <span class="text-muted"><a href="<%=request.getContextPath()%>/backendLogin/backendLogin.jsp">© 2021 GoCamping, Inc</a></span>
+			</div>
+
+			<ul class="nav col-md-4 justify-content-end list-unstyled d-flex">
+				<li class="ms-3"><a class="text-muted" href="#"><svg
+							class="bi" width="24" height="24">
+							<use xlink:href="#twitter"></use></svg></a></li>
+				<li class="ms-3"><a class="text-muted" href="#"><svg
+							class="bi" width="24" height="24">
+							<use xlink:href="#instagram"></use></svg></a></li>
+				<li class="ms-3"><a class="text-muted" href="#"><svg
+							class="bi" width="24" height="24">
+							<use xlink:href="#facebook"></use></svg></a></li>
+			</ul>
+		</footer>
+	</div>
+	<%@ include file="/template/script.html"%>
 	<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 	<script src="./js/flatpickr.js"></script>
 </body>

@@ -61,7 +61,7 @@ public class CampPlanServlet extends HttpServlet {
 				}
 
 				PlanService planSvc = new PlanService();
-				PlanVO planVO = planSvc.getOnePlan(planId);
+				List<PlanVO> planVO = planSvc.getOnePlan(planId);
 				if (planVO == null) {
 					errorMsgs.add("查無資料");
 				}
@@ -97,8 +97,7 @@ public class CampPlanServlet extends HttpServlet {
 				Integer planId = new Integer(req.getParameter("planId"));
 
 				PlanService planSvc = new PlanService();
-				PlanVO planVO = planSvc.getOnePlan(planId);
-
+				PlanVO planVO = planSvc.getOnePlanByPlanId(planId);
 				req.setAttribute("planVO", planVO);
 				String url = "/camprelease/updatePlan.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url);

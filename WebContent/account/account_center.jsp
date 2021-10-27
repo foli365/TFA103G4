@@ -104,7 +104,7 @@
 								</div>
 								</c:forEach>
 								<div class="col mb-4">
-									<div class="card mx-auto" style="width: 40rem;">
+									<div class="card mx-auto" style="max-width: 40rem;">
 										<img src="./img/campsite/741692.jpg" class="card-img-top"
 											alt="...">
 										<div class="card-body">
@@ -129,6 +129,10 @@
 										</ul>
 										<div class="card-body">
 											<button type="button" class="btn btn-success">給予評價</button>
+											<form style="display: inline" action="<%=request.getContextPath()%>/>" method="get">
+												<input type="hidden" name="campId" value="">
+												<button type="submit" class="btn btn-danger float-end">檢舉營地</button>										
+											</form>
 										</div>
 									</div>
 								</div>
