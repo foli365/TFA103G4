@@ -161,14 +161,15 @@
 		<url-pattern>/CampsiteGifReader</url-pattern>
 	</servlet-mapping>
 	<!-- 峻華的 -->
-	<servlet>
-		<servlet-name>CampReleaseServlet</servlet-name>
-		<servlet-class>com.camprelease.controller.CampReleaseServlet</servlet-class>
-	</servlet>
+  <servlet>
+	<servlet-name>CampReleaseServlet</servlet-name>
+	<servlet-class>com.camprelease.controller.CampReleaseServlet</servlet-class>
+</servlet>
 	<servlet-mapping>
 		<servlet-name>CampReleaseServlet</servlet-name>
 		<url-pattern>/camprelease/camprelease.do</url-pattern>
 	</servlet-mapping>
+<<<<<<< HEAD
 
 	<!-- 佑叡的 -->
 	<resource-ref>
@@ -235,4 +236,35 @@
 	<!-- <dispatcher>ASYNC</dispatcher> -->
 	<!-- </filter-mapping> -->
 >>>>>>> origin/bonjovilin
+=======
+	<servlet>
+		<servlet-name>FacilitiesServlet</servlet-name>
+		<servlet-class>com.facilities.controller.FacilitiesServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>FacilitiesServlet</servlet-name>
+		<url-pattern>/facilities/facilities.do</url-pattern>
+	</servlet-mapping>
+	<servlet>
+		<servlet-name>CampPlanServlet</servlet-name>
+		<servlet-class>com.campplan.controller.CampPlanServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>CampPlanServlet</servlet-name>
+		<url-pattern>/plan/plan.do</url-pattern>
+	</servlet-mapping>
+	<filter>
+		<filter-name>loginFilter</filter-name>
+		<filter-class>filters.LoginFilter</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>loginFilter</filter-name>
+		<url-pattern>/account/*</url-pattern>
+		<dispatcher>REQUEST</dispatcher>
+		<dispatcher>FORWARD</dispatcher>
+		<dispatcher>INCLUDE</dispatcher>
+		<dispatcher>ERROR</dispatcher>
+		<dispatcher>ASYNC</dispatcher>
+	</filter-mapping>
+>>>>>>> origin/chun
 </web-app>

@@ -1,8 +1,17 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="Big5"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ page import="java.util.*"%>
 <%@ page import="com.camprelease.model.*"%>
+<%@ page import="com.facilities.model.*"%>
+<%@ page import="com.plan.model.*"%>
 
 <%
-CampReleaseVO campreleaseVO = (CampReleaseVO) request.getAttribute("campreleaseVO"); //CampReleaseServlet.java(Concroller), 存入req的campreleaseVO物件
+// CampReleaseVO campreleaseVO = (CampReleaseVO) request.getAttribute("campreleaseVO"); //CampReleaseServlet.java(Concroller), 存入req的campreleaseVO物件
+// PlanService planSvc = new PlanService();
+// CampReleaseVO campreleaseVO = (CampReleaseVO) session.getAttribute("campreleaseVO");
+// Integer campId = campreleaseVO.getCampId();
+// List<PlanVO> list = planSvc.getByCampId(campId);
+// pageContext.setAttribute("list", list);
 %>
 
 <!DOCTYPE html>
@@ -12,6 +21,7 @@ CampReleaseVO campreleaseVO = (CampReleaseVO) request.getAttribute("campreleaseV
 <title>顯示一個營地資料</title>
   <link rel='stylesheet' href='<%=request.getContextPath()%>/camprelease/css/jquery.dataTables.min.css' />
   <link rel="stylesheet" href="<%=request.getContextPath()%>/camprelease/css/bootstrap.min5.1.0.css">
+  <link rel="stylesheet" href="<%=request.getContextPath()%>/camprelease/css/icon.css">
 </head>
 <style>
 
@@ -28,6 +38,46 @@ body{
 text-align: center;
 }
 
+      /* 以下設備 */
+      .setting-label{
+        position: relative;
+        display: inline-block;
+        line-height: 1em;
+        overflow: hidden;
+        margin: 0 5px 5px 0;
+        cursor: pointer;
+      }
+      .setting-label > input{
+        position: absolute;
+        top: -20px;
+        left: -20px;
+      }
+      .setting-label > span{
+        position: relative;
+        display: block;
+        padding: 10px 12px 10px 10px;
+        color: #000;
+        font-weight: 500;
+        background-color: lightgray;
+        /* white-space: nowrap;
+        border-radius: 2em; */
+        -webkit-border-radius: 2em;
+        -moz-border-radius: 2em;
+      }
+      .setting-label > span > i{
+        opacity: 1;
+      }
+      .setting-label:hover > span{
+        color:#fff;
+        background-color: #F4A249;
+      }
+      .setting-label:hover >span.male{
+        background-color: #F4A249;
+      }
+      .setting-label input:checked + span{
+        background-color: #f23557;
+        color: white;
+      }
 </style>
 <body>
 
@@ -50,37 +100,43 @@ text-align: center;
 		<th>營地介紹</th>
 		<th>價錢</th>
 		<th>日期</th>
-		<th>配套名稱</th>
-        <th>配套價格</th>
-        <th>配套搭配人數</th>
 		<th>pic1</th>
 		<th>pic2</th>
 		<th>pic3</th>
 		<th>pic4</th>
 		<th>pic5</th>
+		<th>配套</th>
 		<th>設施</th>
 	</tr>
 	</thead>
 	<tbody>
+	<jsp:useBean id="facilitiesSvc" scope="page" class="com.facilities.model.FacilitiesService" />
+<%-- 	<jsp:useBean id="planSvc" scope="page" class="com.plan.model.PlanService" /> --%>
 	<tr>
-			<td><%=campreleaseVO.getCampId()%></td>
-			<td><%=campreleaseVO.getMemberId()%></td>
-			<td><%=campreleaseVO.getCampName()%></td>
-			<td><%=campreleaseVO.getLocation()%></td>
-			<td><%=campreleaseVO.getLatitude()%></td>
-			<td><%=campreleaseVO.getLongtitude()%></td>
-			<td><%=campreleaseVO.getCampDescription()%></td> 
-			<td><%=campreleaseVO.getCampPrice()%></td>
-			<td><%=campreleaseVO.getListedTime()%></td>
-			<td>配套名稱</td>
-            <td>配套價格</td>
-            <td>配套搭配人數</td>
-			<td><img src="<%=request.getContextPath() %>/CampReleasePhotoServlet?id=${campreleaseVO.campId}&img=1" width="100">
-			<td><img src="<%=request.getContextPath() %>/CampReleasePhotoServlet?id=${campreleaseVO.campId}&img=2" width="100">
-			<td><img src="<%=request.getContextPath() %>/CampReleasePhotoServlet?id=${campreleaseVO.campId}&img=3" width="100">
-			<td><img src="<%=request.getContextPath() %>/CampReleasePhotoServlet?id=${campreleaseVO.campId}&img=4" width="100">
-			<td><img src="<%=request.getContextPath() %>/CampReleasePhotoServlet?id=${campreleaseVO.campId}&img=5" width="100">
-			<td>設施</td>
+			 <td>【${campreleaseVO.campId}】</td>
+			<td>【${campreleaseVO.memberId}】</td>
+			<td>【${campreleaseVO.campName}】</td>
+			<td>【${campreleaseVO.location}】</td>
+			<td>【${campreleaseVO.latitude}】</td>
+			<td>【${campreleaseVO.longtitude}】</td>
+			<td>【${campreleaseVO.campDescription}】</td> 
+			<td>【${campreleaseVO.campPrice}元】</td>
+		    <td>【<fmt:formatDate value="${campreleaseVO.listedTime}"
+					pattern="yyyy-MM-dd HH:mm:ss" />】</td>
+			<td><img src="<%=request.getContextPath() %>/CampReleasePhotoServlet?id=${campreleaseVO.campId}&img=1" width="100"></td>
+			<td><img src="<%=request.getContextPath() %>/CampReleasePhotoServlet?id=${campreleaseVO.campId}&img=2" width="100"></td>
+			<td><img src="<%=request.getContextPath() %>/CampReleasePhotoServlet?id=${campreleaseVO.campId}&img=3" width="100"></td>
+			<td><img src="<%=request.getContextPath() %>/CampReleasePhotoServlet?id=${campreleaseVO.campId}&img=4" width="100"></td>
+			<td><img src="<%=request.getContextPath() %>/CampReleasePhotoServlet?id=${campreleaseVO.campId}&img=5" width="100"></td>
+            <td>【${planVO.planName}】【${planVO.planGuestLimit}人】【${planVO.planAgeLimit}歲以下】【${planVO.planPrice}元】<br></td>
+			<td>			      
+			      <div>
+<%--                     <label class="setting-label circle-line" for="setting[]"><input type="checkbox" name="bbq" id="bbq" value="1" ${facilitiesSvc.getByCampId(facilitiesVO.getCampId()).bbq == '1' ? 'checked' : ''}><span class="material-icons md-18">outdoor_grill</span></label> --%>
+<%--                     <label class="setting-label circle-line" for="setting[]"><input type="checkbox" name="wifi" id="wifi" value="1" ${facilitiesSvc.getByCampId(facilitiesVO.getCampId()).wifi == '1' ? 'checked' : ''}><span class="material-icons md-18">wifi</span></label> --%>
+<%--                     <label class="setting-label circle-line" for="setting[]"><input type="checkbox" name="nosmoke" id="nosmoke" value="1" ${facilitiesSvc.getByCampId(facilitiesVO.getCampId()).nosmoke == '1' ? 'checked' : ''}><span class="material-icons md-18">smoke_free</span></label> --%>
+<%--                     <label class="setting-label circle-line" for="setting[]"><input type="checkbox" name="pets" id="pets" value="1" ${facilitiesSvc.getByCampId(facilitiesVO.getCampId()).pets == '1' ? 'checked' : ''}><span class="material-icons md-18">pets</span></label> --%>
+                  </div>
+            </td>
 	</tr>
 	</tbody>
 </table>

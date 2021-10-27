@@ -4,9 +4,14 @@ import java.util.List;
 
 public interface FacilitiesDAO_interface {
 	
-	public void insert(FacilitiesVO facilitiesVO);
-	public void delete(Integer facilitiesId);
-	public void update(FacilitiesVO facilitiesVO);
-	public List<FacilitiesVO> getAllByCampId(Integer campId);
-
+	void insert(FacilitiesVO facilitiesVO);
+	void update(FacilitiesVO facilitiesVO);
+	void delete(Integer facilitiesId);
+    FacilitiesVO findbyPrimaryKey(Integer facilitiesId);
+	List<FacilitiesVO> getAll();
+	
+	List<FacilitiesVO> findbyCampId(Integer campId);
+	void deletebyCampId(Integer campId);
+	FacilitiesVO getCampId(Integer campId);
+	void facilitiesInsertWithCampId(FacilitiesVO facilitiesVO, java.sql.Connection con);
 }
