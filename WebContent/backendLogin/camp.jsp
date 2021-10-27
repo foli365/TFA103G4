@@ -34,6 +34,7 @@ img {
 <link rel="stylesheet" href="../css/camp.css">
 </head>
 <body>
+<<<<<<< HEAD
 	<div class="container">
 		<nav class="sidebar">
 			<div class="min_picture">
@@ -111,6 +112,79 @@ img {
 					<th>營地檢舉次數</th>
 					<th>營地營業許可證</th>
 					<th>修改</th>
+=======
+<div class="container">
+        <nav class="sidebar">
+            <div class="min_picture">
+                <h1>後臺管理</h1>
+            </div>
+            <ul>
+                  <li>
+                    <a href="#" class="feat-btn">帳號管理
+                        <span class="fas fa-caret-down first"></span>
+                    </a>
+                    <ul class="feat-show">
+                        <li><a href="../backendLogin/member.jsp" class="member_list">會員帳號管理</a></li>
+                    </ul>
+                     <ul class="feat-show">
+                        <li><a href="../backendLogin/manager.jsp" class="manager_list">管理員帳號管理</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="#" class="serv-btn">商品管理
+                        <span class="fas fa-caret-down second"></span> 
+                    </a>
+                    <ul class="serv-show">
+                        <li><a href="../product/selectAll.jsp" class="product_list">商品資料表</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="#1" class="bom-btn">營地管理
+                        <span class="fas fa-caret-down second_1"></span> 
+                        </a>
+
+                    <ul class="bom-show">
+                        <li><a href="camp.jsp" class="camp_list">營地列表</a></li>
+                        <li><a href="#" class="alert_managament">檢舉管理</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="#" class="mky-btn">商城管理
+                        <span class="fas fa-caret-down second_2"></span> 
+                    </a>
+                    <ul class="mky-show">
+                        <li><a href="#" class="shopping_list">商城訂單</a></li>
+                    </ul>
+                </li>
+                
+                <li>
+                <form METHOD="get" ACTION="<%=request.getContextPath()%>/backendLogin/home.do">
+                  <button type="submit" class="btn btn-outline-secondary" id="btnlog">logout</button>
+                </form>
+                </li>
+            </ul>
+        </nav>
+    </div>
+    <div class="rightside">
+        <h2>營地列表</h2>
+        <h3>營地位置：</h3>
+        <div class="dropdown">
+            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+             請選擇
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                <li><a class="dropdown-item" href="#">北部</a></li>
+                <li><a class="dropdown-item" href="#">中部</a></li>
+                <li><a class="dropdown-item" href="#">南部</a></li>
+                <li><a class="dropdown-item" href="#">東部</a></li>
+            </ul>
+        </div>
+        <div class="searcher">
+            <form action="" class="parent">
+                <input type="text" class="search" placeholder="營地查詢">
+                <input type="button" name="" id="" class="btn_search">
+            </form>
+>>>>>>> origin/jorge
 
 				</tr>
 			</thead>

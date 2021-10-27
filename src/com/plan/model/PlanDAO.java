@@ -15,31 +15,19 @@ public class PlanDAO implements PlanDAO_interface {
 	public static final String USER = "David";
 	public static final String PASSWORD = "123456";
 	public static final String INSERT_STMT = "INSERT INTO PLAN (PLAN_ID, CAMP_ID, PLAN_NAME, PLAN_GUEST_LIMIT, "
-<<<<<<< HEAD
-			+ "PLAN_AGE_LIMIT, PLAN_PRICE, PlAN_OUTLINE) VALUES (?, ?, ?, ?, ?, ?, ?)";
-	public static final String UPDATE_STMT = "UPDATE PLAN SET PLAN_NAME = ?, PLAN_GUEST_LIMIT = ?, "
-			+ "PLAN_AGE_LIMIT = ?, PLAN_PRICE = ?, PlAN_OUTLINE = ? WHERE PLAN_ID = ?";
-=======
 			+ "PLAN_AGE_LIMIT, PLAN_PRICE) VALUES (?, ?, ?, ?, ?, ?)";
 	public static final String UPDATE_STMT = "UPDATE PLAN SET CAMP_ID=?, PLAN_NAME = ?, PLAN_GUEST_LIMIT = ?, "
 			+ "PLAN_AGE_LIMIT = ?, PLAN_PRICE = ? WHERE PLAN_ID = ?";
->>>>>>> origin/chun
 	public static final String DELETE_STMT = "DELETE FROM PLAN WHERE PLAN_ID = ?";
 	public static final String FIND_BY_CAMP_ID = "SELECT PLAN_ID, CAMP_ID, PLAN_NAME, PlAN_OUTLINE, PLAN_GUEST_LIMIT, PLAN_AGE_LIMIT, "
 			+ "PLAN_PRICE FROM PLAN WHERE CAMP_ID = ?";
 	public static final String GET_ALL = "SELECT PLAN_ID, CAMP_ID, PLAN_NAME, PlAN_OUTLINE, PLAN_GUEST_LIMIT, PLAN_AGE_LIMIT, "
 			+ "PLAN_PRICE FROM PLAN ORDER BY PLAN_ID";
-	
-<<<<<<< HEAD
-
-	static {
-=======
-	private static final String GET_ONE_CAMPID = "SELECT PLAN_ID, CAMP_ID, PLAN_NAME, PLAN_GUEST_LIMIT, PLAN_AGE_LIMIT, PLAN_PRICE FROM PLAN WHERE CAMP_ID = ?";
-	private static final String DELETE_ONE_CAMPID = "DELETE FROM PLAN WHERE CAMP_ID = ?";
-	
+	public final String GET_ONE_CAMPID = "SELECT PLAN_ID, CAMP_ID, PLAN_NAME, PLAN_GUEST_LIMIT, PLAN_AGE_LIMIT, PLAN_PRICE FROM PLAN WHERE CAMP_ID = ?";
+	public final String DELETE_ONE_CAMPID = "DELETE FROM PLAN WHERE CAMP_ID = ?";
 	
 	static { 
->>>>>>> origin/chun
+		
 		try {
 			Class.forName(DRIVER);
 		} catch (ClassNotFoundException ce) {
@@ -95,21 +83,11 @@ public class PlanDAO implements PlanDAO_interface {
 		try {
 			con = DriverManager.getConnection(URL, USER, PASSWORD);
 			pstmt = con.prepareStatement(UPDATE_STMT);
-
-<<<<<<< HEAD
-			pstmt.setString(1, planVO.getPlanName());
-			pstmt.setInt(2, planVO.getPlanGuestLimit());
-			pstmt.setInt(3, planVO.getPlanAgeLimit());
-			pstmt.setInt(4, planVO.getPlanPrice());
-			pstmt.setString(5, planVO.getPlanOutline());
-=======
-			
 			pstmt.setInt(1, planVO.getCampId());
 			pstmt.setString(2, planVO.getPlanName());
 			pstmt.setInt(3, planVO.getPlanGuestLimit());
 			pstmt.setInt(4, planVO.getPlanAgeLimit());
 			pstmt.setInt(5, planVO.getPlanPrice());
->>>>>>> origin/chun
 			pstmt.setInt(6, planVO.getPlanId());
 
 			pstmt.executeUpdate();

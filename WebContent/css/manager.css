@@ -308,3 +308,6 @@ ul.pagination {
     outline: none;
     cursor: pointer;
 }
+#btnlog{
+	margin-left: 50px;
+}

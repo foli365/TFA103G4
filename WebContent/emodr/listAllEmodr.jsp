@@ -2,7 +2,11 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="java.util.*"%>
 <%@ page import="com.emodr.model.*"%>
+<<<<<<< HEAD
 <%@ page import="com.members.model.*"%>
+=======
+<%-- 此頁練習採用 EL 的寫法取值 --%>
+>>>>>>> origin/jorge
 
 <%
 	EmodrService emodrSvc = new EmodrService();
@@ -13,7 +17,11 @@
 
 <html>
 <head>
+<<<<<<< HEAD
 <title>所有訂單資料 </title>
+=======
+<title>所有訂單資料 - listAllEmodr.jsp</title>
+>>>>>>> origin/jorge
 
 <style>
 
@@ -63,10 +71,24 @@ form#form_1{
 
 <body bgcolor='white'>
 
+<<<<<<< HEAD
 	<h4>
 		<a href="<%=request.getContextPath()%>/emodr/select_page.jsp">回首頁</a> 
 <!-- 		記得要改成連到後台首頁!!!!!!!!!!!!!!!!!!! -->
 	</h4>
+=======
+	<table id="table-1">
+		<tr>
+			<td>
+				<h3>所有訂單資料</h3>
+				<h4>
+					<a href="<%=request.getContextPath()%>/emodr/select_page.jsp"><img
+						src="images/back1.gif" width="100" height="32" border="0">回首頁</a>
+				</h4>
+			</td>
+		</tr>
+	</table>
+>>>>>>> origin/jorge
 
 	<%-- 錯誤表列 --%>
 	<c:if test="${not empty errorMsgs}">
@@ -80,8 +102,13 @@ form#form_1{
 
 	<table>
 		<tr>
+<<<<<<< HEAD
 			<th>訂單編號</th>
 			<th>買方編號與名字</th>
+=======
+			<th>商城訂單編號</th>
+			<th>買方會員編號</th>
+>>>>>>> origin/jorge
 			<th>訂單日期</th>
 			<th>收貨人</th>
 			<th>收貨地址</th>
@@ -92,6 +119,7 @@ form#form_1{
 			<th>刪除</th>
 		</tr>
 		<%@ include file="pages/page1.file"%>
+<<<<<<< HEAD
 		<c:forEach var="emodrVO" items="${list}" begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>">
 
 		<tr>
@@ -118,6 +146,43 @@ form#form_1{
 				</FORM>
 			</td>
 		</tr>
+=======
+		<c:forEach var="emodrVO" items="${list}" begin="<%=pageIndex%>"
+			end="<%=pageIndex+rowsPerPage-1%>">
+
+			<tr>
+				<td>${emodrVO.emodr_id}</td>
+
+<%-- 		    <td>${emodrVO.member_id}</td> --%>
+				<td>${emodrVO.member_id}【${membersSvc.findByPrimaryKey(emodrVO.member_id).name}】</td>
+
+				<td>${emodrVO.emodr_date}</td>
+				<td>${emodrVO.receipient}</td>
+				<td>${emodrVO.addr}</td>
+				<td>${emodrVO.mobile}</td>
+				<td>${emodrVO.totalprice}</td>
+				<td>${emodrVO.emodr_status}</td>
+
+				<td>
+					<FORM METHOD="post"
+						ACTION="<%=request.getContextPath()%>/emodr/emodr.do"
+						style="margin-bottom: 0px;">
+						<input type="submit" value="編輯"> <input type="hidden"
+							name="emodr_id" value="${emodrVO.emodr_id}"> <input
+							type="hidden" name="action" value="getOne_For_Update">
+					</FORM>
+				</td>
+				<td>
+					<FORM METHOD="post"
+						ACTION="<%=request.getContextPath()%>/emodr/emodr.do"
+						style="margin-bottom: 0px;">
+						<input type="submit" value="刪除"> <input type="hidden"
+							name="emodr_id" value="${emodrVO.emodr_id}"> <input
+							type="hidden" name="action" value="delete">
+					</FORM>
+				</td>
+			</tr>
+>>>>>>> origin/jorge
 		</c:forEach>
 	</table>
 		<%@ include file="pages/page2.file"%>	

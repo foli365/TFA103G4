@@ -58,5 +58,9 @@ public class ProductService {
 	public List< ProductVO> getAll(){
 		return dao.getAll();
 	}
+	
+	public ProductVO getOneproductName(String pname) {
+		return dao.findBypname(pname);
+	}
 
 }
