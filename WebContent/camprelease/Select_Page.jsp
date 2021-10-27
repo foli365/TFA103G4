@@ -1,4 +1,4 @@
-<%@ page contentType="text/html; charset=UTF-8" pageEncoding="Big5"%>
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <!DOCTYPE html>
@@ -7,7 +7,7 @@
 <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>­º­¶</title>
+<title>é¦–é </title>
 <link rel="stylesheet" href="<%=request.getContextPath()%>/camprelease/css/bootstrap.min5.1.0.css">
 
 <style>
@@ -37,9 +37,9 @@ body {
 </head>
 <body>
 
-	<%-- ¿ù»~ªí¦C --%>
+	<%-- éŒ¯èª¤è¡¨åˆ— --%>
 	<c:if test="${not empty errorMsgs}">
-		<font style="color: red">½Ð­×¥¿¥H¤U¿ù»~:</font>
+		<font style="color: red">è«‹ä¿®æ­£ä»¥ä¸‹éŒ¯èª¤:</font>
 		<ul>
 			<c:forEach var="message" items="${errorMsgs}">
 				<li style="color: red">${message}</li>
@@ -51,41 +51,41 @@ body {
 	<jsp:useBean id="facilitiesSvc" scope="page" class="com.facilities.model.FacilitiesService" />
 
 	<main class="container">
-		<!-- ¼ÐÃD-->
+		<!-- æ¨™é¡Œ-->
 		<div
-			class="d-flex align-items-center p-3 my-3 text-white bg-purple rounded shadow-sm">
+			class="d-flex align-items-center p-3 my-3 text-black bg-purple rounded shadow-sm">
 			<img class="me-3" src="./svg/triangle-half.svg" alt="" width="48"
 				height="38">
 			<div class="lh-1">Go Camping</div>
 		</div>
 
-		<!-- ·s¼WÀç¦a¥Zµn -->
+		<!-- æ–°å¢žç‡Ÿåœ°åˆŠç™» -->
 		<div class="my-3 p-3 rounded shadow-sm">
-			<h6 class="border-bottom pb-2 mb-0">Àç¦a¸ê®ÆºÞ²z</h6>
+			<h6 class="border-bottom pb-2 mb-0">ç‡Ÿåœ°è³‡æ–™ç®¡ç†</h6>
 			<div class="d-flex text-muted pt-3">
 				<img class="me-3" src="./svg/tree.svg" alt="" width="48" height="38">
 				<p class="pb-3 mb-0 small lh-sm border-bottom">
-					<strong class="d-block text-gray-dark">Àç¦a¤W¬[ºÞ²z</strong> 
+					<strong class="d-block text-gray-dark">ç‡Ÿåœ°ä¸Šæž¶ç®¡ç†</strong> 
 					<a href='<%=request.getContextPath()%>/camprelease/addCampRel.jsp'>Add</a>
 					a new Camp.
 				</p>
 			</div>
 		</div>
-		<!-- Àç¦a¸ê®Æ¬d¸ß¬ÛÃö -->
+		<!-- ç‡Ÿåœ°è³‡æ–™æŸ¥è©¢ç›¸é—œ -->
 		<div class="my-3 p-3 rounded ">
-			<h6 class="border-bottom pb-2 mb-0">Àç¦a¸ê®Æ¬d¸ß(¬d¸ßÀç¦a¥Zµn¬ÛÃö¸ê®Æ)</h6>
+			<h6 class="border-bottom pb-2 mb-0">ç‡Ÿåœ°è³‡æ–™æŸ¥è©¢(æŸ¥è©¢ç‡Ÿåœ°åˆŠç™»ç›¸é—œè³‡æ–™)</h6>
 			<div class="d-flex text-muted pt-3">
 				<img class="me-3" src="./svg/tree.svg" alt="" width="48" height="38">
 
 				<p class="pb-3 mb-0 small lh-sm border-bottom">
-					<strong class="d-block text-blue">¬d¸ß¥þ³¡Àç¦a¥Zµn¬ÛÃö¸ê®Æ</strong> 
+					<strong class="d-block text-blue">æŸ¥è©¢å…¨éƒ¨ç‡Ÿåœ°åˆŠç™»ç›¸é—œè³‡æ–™</strong> 
 					<a href='listCampRel.jsp'>List</a> all Camps.
 				</p>
 			</div>
 			<div class="d-flex text-muted pt-3">
 				<img class="me-3" src="./svg/tree.svg" alt="" width="48" height="38">
 				<p class="pb-3 mb-0 small lh-sm border-bottom">
-					<strong class="d-block text-gray-dark">¥ÑÀç¦a½s¸¹¬d¸ß</strong>
+					<strong class="d-block text-gray-dark">ç”±ç‡Ÿåœ°ç·¨è™ŸæŸ¥è©¢</strong>
 				</p>
 				<ul>
 					<li>
@@ -95,7 +95,7 @@ body {
 									<option value="${campreleaseVO.campId}">${campreleaseVO.campId}
 								</c:forEach>
 							</select> <input type="hidden" name="action" value="getOne_For_Display">
-							<input type="submit" value="°e¥X">
+							<input type="submit" value="é€å‡º">
 						</FORM>
 					</li>
 				</ul>
@@ -103,7 +103,7 @@ body {
 			<div class="d-flex text-muted pt-3">
 				<img class="me-3" src="./svg/tree.svg" alt="" width="48" height="38">
 				<p class="pb-3 mb-0 small lh-sm border-bottom">
-					<strong class="d-block text-gray-dark">¥ÑÀç¦a¦WºÙ¬d¸ß</strong>
+					<strong class="d-block text-gray-dark">ç”±ç‡Ÿåœ°åç¨±æŸ¥è©¢</strong>
 				</p>
 				<ul>
 					<li>
@@ -113,28 +113,28 @@ body {
 									<option value="${campreleaseVO.campId}">${campreleaseVO.campName}
 								</c:forEach>
 							</select> <input type="hidden" name="action" value="getOne_For_Display">
-							<input type="submit" value="°e¥X">
+							<input type="submit" value="é€å‡º">
 						</FORM>
 					</li>
 				</ul>
 			</div>
 		</div>
 
-		<!-- °t®M¸ê®Æ¬ÛÃö -->
+		<!-- é…å¥—è³‡æ–™ç›¸é—œ -->
 		<div class="my-3 p-3 rounded shadow-sm">
-			<h6 class="border-bottom pb-2 mb-0">°t®M¸ê®ÆºÞ²z(¬d¸ß°t®M¬ÛÃö¸ê®Æ)</h6>
+			<h6 class="border-bottom pb-2 mb-0">é…å¥—è³‡æ–™ç®¡ç†(æŸ¥è©¢é…å¥—ç›¸é—œè³‡æ–™)</h6>
 			<div class="d-flex text-muted pt-3">
 				<img class="me-3" src="./svg/tree.svg" alt="" width="48" height="38">
 
 				<p class="pb-3 mb-0 small lh-sm border-bottom">
-					<strong class="d-block text-blue">¬d¸ß¥þ³¡°t®M¬ÛÃö¸ê®Æ</strong> 
+					<strong class="d-block text-blue">æŸ¥è©¢å…¨éƒ¨é…å¥—ç›¸é—œè³‡æ–™</strong> 
 					<a href='listPlan.jsp'>List</a> all Plans.
 				</p>
 			</div>
 			<div class="d-flex text-muted pt-3">
 				<img class="me-3" src="./svg/tree.svg" alt="" width="48" height="38">
 				<p class="pb-3 mb-0 small lh-sm border-bottom">
-					<strong class="d-block text-gray-dark">¥Ñ°t®M½s¸¹¬d¸ß</strong>
+					<strong class="d-block text-gray-dark">ç”±é…å¥—ç·¨è™ŸæŸ¥è©¢</strong>
 				</p>
 				<ul>
 					<li>
@@ -145,7 +145,7 @@ body {
 								</c:forEach>
 							</select> <input type="hidden" name="action"
 								value="getOnePlan_For_Display"> <input type="submit"
-								value="°e¥X">
+								value="é€å‡º">
 						</FORM>
 					</li>
 				</ul>
@@ -153,7 +153,7 @@ body {
 			<div class="d-flex text-muted pt-3">
 				<img class="me-3" src="./svg/tree.svg" alt="" width="48" height="38">
 				<p class="pb-3 mb-0 small lh-sm border-bottom">
-					<strong class="d-block text-gray-dark">¥Ñ°t®M¦WºÙ¬d¸ß</strong>
+					<strong class="d-block text-gray-dark">ç”±é…å¥—åç¨±æŸ¥è©¢</strong>
 				</p>
 				<ul>
 					<li>
@@ -164,27 +164,27 @@ body {
 								</c:forEach>
 							</select> <input type="hidden" name="action"
 								value="getOnePlan_For_Display"> <input type="submit"
-								value="°e¥X">
+								value="é€å‡º">
 						</FORM>
 					</li>
 				</ul>
 			</div>
 		</div>
-		<!--³]¬I¸ê®Æ¬ÛÃö -->
+		<!--è¨­æ–½è³‡æ–™ç›¸é—œ -->
 		<div class="my-3 p-3 rounded shadow-sm">
-			<h6 class="border-bottom pb-2 mb-0">³]¬I¸ê®ÆºÞ²z(¬d¸ß³]¬I¬ÛÃö¸ê®Æ)</h6>
+			<h6 class="border-bottom pb-2 mb-0">è¨­æ–½è³‡æ–™ç®¡ç†(æŸ¥è©¢è¨­æ–½ç›¸é—œè³‡æ–™)</h6>
 			<div class="d-flex text-muted pt-3">
 				<img class="me-3" src="./svg/tree.svg" alt="" width="48" height="38">
 
 				<p class="pb-3 mb-0 small lh-sm border-bottom">
-					<strong class="d-block text-blue">¬d¸ß¥þ³¡³]¬I¬ÛÃö¸ê®Æ</strong> <a
+					<strong class="d-block text-blue">æŸ¥è©¢å…¨éƒ¨è¨­æ–½ç›¸é—œè³‡æ–™</strong> <a
 						href='listFac.jsp'>List</a> all Facilities.
 				</p>
 			</div>
 			<div class="d-flex text-muted pt-3">
 				<img class="me-3" src="./svg/tree.svg" alt="" width="48" height="38">
 				<p class="pb-3 mb-0 small lh-sm border-bottom">
-					<strong class="d-block text-gray-dark">¥Ñ³]¬I½s¸¹¬d¸ß</strong>
+					<strong class="d-block text-gray-dark">ç”±è¨­æ–½ç·¨è™ŸæŸ¥è©¢</strong>
 				</p>
 				<ul>
 					<li>
@@ -195,7 +195,7 @@ body {
 								</c:forEach>
 							</select> <input type="hidden" name="action"
 								value="getOneFacilities_For_Display"> <input type="submit"
-								value="°e¥X">
+								value="é€å‡º">
 						</FORM>
 					</li>
 				</ul>

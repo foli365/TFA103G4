@@ -86,7 +86,6 @@ public class FacilitiesServlet extends HttpServlet {
 		}
 
 		if ("getOneFacilities_For_Update".equals(action)) {
-
 			List<String> errorMsgs = new LinkedList<String>();
 			// Store this set in the request scope, in case we need to
 			// send the ErrorPage view.
@@ -116,7 +115,6 @@ public class FacilitiesServlet extends HttpServlet {
 			// Store this set in the request scope, in case we need to
 			// send the ErrorPage view.
 			req.setAttribute("errorMsgs", errorMsgs);
-
 			try {
 
 				Integer facilitiesId = new Integer(req.getParameter("facilitiesId").trim());
@@ -155,6 +153,11 @@ public class FacilitiesServlet extends HttpServlet {
 					pets = new Integer(strpets);
 				}
 				
+//				Integer bbq = new Integer(req.getParameter("bbq".trim()));
+//				Integer wifi = new Integer(req.getParameter("wifi".trim()));
+//				Integer nosmoke = new Integer(req.getParameter("nosmoke".trim()));
+//				Integer pets = new Integer(req.getParameter("pets".trim()));
+				
 				FacilitiesVO facilitiesVO = new FacilitiesVO();
 				facilitiesVO.setFacilitiesId(facilitiesId);
 				facilitiesVO.setCampId(campId);
@@ -179,6 +182,7 @@ public class FacilitiesServlet extends HttpServlet {
 				String url = "/camprelease/listOneFac.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url);
 				successView.forward(req, res);
+				return;
 
 			} catch (Exception e) {
 				errorMsgs.add("修改資料失敗");

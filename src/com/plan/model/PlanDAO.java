@@ -318,6 +318,9 @@ public class PlanDAO implements PlanDAO_interface {
 		return planlist;
 	}
 
+	
+	
+	
 	@Override
 	public void deletebyCampId(Integer campId) {
 		// TODO Auto-generated method stub
@@ -408,4 +411,48 @@ public class PlanDAO implements PlanDAO_interface {
 		}
 		return planVO;
 	}
+	
+	@Override
+	public void planInsertWithCampId(PlanVO planVO, Connection con) {
+		// TODO Auto-generated method stub
+		PreparedStatement pstmt = null;
+		
+		try {
+			
+			String cols[] = {"planId"};
+			pstmt = con.prepareStatement(INSERT_STMT, cols);
+			
+			
+			pstmt.setInt(1, planVO.getCampId());
+			pstmt.setInt(2, planVO.getPlanGuestLimit());
+			pstmt.setInt(3, planVO.getPlanAgeLimit());
+			pstmt.setInt(4, planVO.getPlanPrice());
+			
+			pstmt.executeUpdate();
+			
+			Integer nextPlanId = null;
+			ResultSet rs = pstmt.getGeneratedKeys();
+			if(rs.next()) {
+				nextPlanId = rs.getInt(1);
+			}
+		} catch(SQLException se) {
+			if(con != null) {
+				try {
+					con.rollback();
+				} catch(SQLException sqle) {
+					throw new RuntimeException("Rollback error occured" + sqle.getMessage());
+				}
+			}
+			throw new RuntimeException("A database error occured. " + se.getMessage()); 
+		} finally {
+			if(pstmt != null) {
+				try {
+					pstmt.close();
+				} catch(SQLException se) {
+					se.printStackTrace();
+				}
+			}
+		}
+	}
 }
+

@@ -10,14 +10,14 @@ public class FacilitiesDAO implements FacilitiesDAO_interface{
 	public static final String USER = "David";
 	public static final String PASSWORD = "123456";
 	
-	private static final String INSERT = "INSERT INTO FACILITIES (CAMP_ID, BBQ, WIFI, NOSMOKE, PETS) VALUES (?, ?, ?, ?, ?)";
-	private static final String DELETE = "DELETE FROM FACILITIES WHERE FACILITIES_ID = ?";
-	private static final String UPDATE = "UPDATE PLAN SET CAMP_ID=?, BBQ = ?, WIFI = ?, NOSMOKE = ?, PETS = ? WHERE PLAN_ID = ?";
-	private static final String GET_ONE_STMT = "SELECT FACILITIES_ID, CAMP_ID, BBQ, WIFI, NOSMOKE, PETS FROM FACILITIES WHERE FACILITIES_ID = ?";
+	private static final String INSERT = "INSERT INTO facilities (CAMP_ID, BBQ, WIFI, NOSMOKE, PETS) VALUES (?, ?, ?, ?, ?)";
+	private static final String DELETE = "DELETE FROM facilities WHERE FACILITIES_ID = ?";
+	private static final String UPDATE = "UPDATE facilities SET CAMP_ID=?, BBQ = ?, WIFI = ?, NOSMOKE = ?, PETS = ? WHERE FACILITIES_ID = ?";
+	private static final String GET_ONE_STMT = "SELECT FACILITIES_ID, CAMP_ID, BBQ, WIFI, NOSMOKE, PETS FROM facilities WHERE FACILITIES_ID = ?";
 	
-	private static final String GET_ALL_STMT = "SELECT FACILITIES_ID, CAMP_ID, BBQ, WIFI, NOSMOKE, PETS FROM FACILITIES ORDER BY FACILITIES_ID";
-	private static final String GET_ONE_CAMPID = "SELECT FACILITIES_ID, CAMP_ID, BBQ, WIFI, NOSMOKE, PETS FROM FACILITIES WHERE CAMP_ID = ?";
-	private static final String DELETE_ONE_CAMPID = "DELETE FROM FACILITIES WHERE CAMP_ID = ?";
+	private static final String GET_ALL_STMT = "SELECT FACILITIES_ID, CAMP_ID, BBQ, WIFI, NOSMOKE, PETS FROM facilities ORDER BY FACILITIES_ID";
+	private static final String GET_ONE_CAMPID = "SELECT FACILITIES_ID, CAMP_ID, BBQ, WIFI, NOSMOKE, PETS FROM facilities WHERE CAMP_ID = ?";
+	private static final String DELETE_ONE_CAMPID = "DELETE FROM facilities WHERE CAMP_ID = ?";
 	
 	
 	static { 
@@ -468,11 +468,12 @@ public class FacilitiesDAO implements FacilitiesDAO_interface{
 				
 				//update
 //				FacilitiesVO facilitiesVO1 = new FacilitiesVO();
-//				facilitiesVO1.setCampId(5004);
+//				facilitiesVO1.setCampId(5006);
 //				facilitiesVO1.setBbq(1);
 //				facilitiesVO1.setWifi(1);
 //				facilitiesVO1.setNosmoke(1);
 //				facilitiesVO1.setPets(1);
+//				facilitiesVO1.setFacilitiesId(6);
 //				dao.update(facilitiesVO1);
 //				System.out.println("¦w¦w");
 				
