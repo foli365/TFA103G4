@@ -21,6 +21,8 @@ public class ProductJDBCDAO implements Product_interface {
 	public static final String DELETE = "DELETE FROM commodity WHERE product_no=?";
 	public static final String GET_ONE_STMT = "SELECT * FROM commodity WHERE PRODUCT_no=?";
 	public static final String GET_ALL_STMT = "SELECT * FROM commodity ORDER BY PRODUCT_no";
+	public static final String GET_STMT = "SELECT * FROM commodity ORDER BY PRODUCT_no";
+	public static final String GET_ONE_NAME = "SELECT * FROM commodity WHERE product_name like \"%\"" + "?" + "\"%\"";
 	
 	static {
 		try {
@@ -276,8 +278,68 @@ public class ProductJDBCDAO implements Product_interface {
 			}
 		}
 		return list;
-	}	
+	}
+
+	@Override
+	public ProductVO findBypname(String pname) {
+		ProductVO productVO = null;
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
 		
+		try {
+			con = DriverManager.getConnection(URL, USER, PASSWORD);
+			pstmt = con.prepareStatement(GET_ONE_NAME);
+			
+			pstmt.setString(1, pname);
+			
+			rs = pstmt.executeQuery();
+			
+			while (rs.next()) {
+				productVO = new ProductVO();
+				productVO.setProductno(rs.getInt("product_no"));
+				productVO.setPname(rs.getString("product_name"));
+				productVO.setPsort(rs.getString("product_sort"));
+				productVO.setPrice(rs.getInt("price"));
+				productVO.setInventory(rs.getInt("inventory"));
+				productVO.setAdmin_id(rs.getInt("admin_id"));
+				productVO.setSituation(rs.getInt("situation"));
+				productVO.setDescript(rs.getString("descript"));
+				productVO.setPicture1(rs.getBytes("picture1"));
+				productVO.setPicture2(rs.getBytes("picture2"));
+				productVO.setPicture3(rs.getBytes("picture3"));
+			}
+		} catch(SQLException se) {
+			se.printStackTrace();			
+		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+	
+		return productVO;
+	
+	}
+
+	
 //	public static byte[] getPictureByteArray(String path) throws IOException {
 //		FileInputStream fis = new FileInputStream(path);
 //		byte[] buffer = new byte[fis.available()];

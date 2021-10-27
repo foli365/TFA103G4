@@ -31,10 +31,10 @@
                         <span class="fas fa-caret-down first"></span>
                     </a>
                     <ul class="feat-show">
-                        <li><a href="#" class="member_list">會員帳號管理</a></li>
+                        <li><a href="../backendLogin/member.jsp" class="member_list">會員帳號管理</a></li>
                     </ul>
                      <ul class="feat-show">
-                        <li><a href="#" class="manager_list">管理員帳號管理</a></li>
+                        <li><a href="../backendLogin/manager.jsp" class="manager_list">管理員帳號管理</a></li>
                     </ul>
                 </li>
                 <li>
@@ -42,8 +42,7 @@
                         <span class="fas fa-caret-down second"></span> 
                     </a>
                     <ul class="serv-show">
-                        <li><a href="http://localhost:8081/git/product/PushProduct.jsp" class="product_up">商品上架</a></li>
-                        <li><a href="http://localhost:8081/git/product/selectAll.jsp" class="product_list">商品資料表</a></li>
+                        <li><a href="../product/selectAll.jsp" class="product_list">商品資料表</a></li>
                     </ul>
                 </li>
                 <li>
@@ -63,6 +62,12 @@
                     <ul class="mky-show">
                         <li><a href="#" class="shopping_list">商城訂單</a></li>
                     </ul>
+                </li>
+                
+                <li>
+                <form METHOD="get" ACTION="<%=request.getContextPath()%>/backendLogin/home.do">
+                  <button type="submit" class="btn btn-outline-secondary" id="btnlog">logout</button>
+                </form>
                 </li>
             </ul>
         </nav>

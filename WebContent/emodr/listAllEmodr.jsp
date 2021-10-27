@@ -1,8 +1,8 @@
-<%@ page contentType="text/html; charset=UTF-8" pageEncoding="Big5"%>
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="java.util.*"%>
 <%@ page import="com.emodr.model.*"%>
-<%-- ¦¹­¶½m²ß±Ä¥Î EL ªº¼gªk¨ú­È --%>
+<%-- æ­¤é ç·´ç¿’æ¡ç”¨ EL çš„å¯«æ³•å–å€¼ --%>
 
 <%
 	EmodrService emodrSvc = new EmodrService();
@@ -14,7 +14,7 @@
 
 <html>
 <head>
-<title>©Ò¦³­q³æ¸ê®Æ - listAllEmodr.jsp</title>
+<title>æ‰€æœ‰è¨‚å–®è³‡æ–™ - listAllEmodr.jsp</title>
 
 <style>
 table#table-1 {
@@ -61,18 +61,18 @@ th, td {
 	<table id="table-1">
 		<tr>
 			<td>
-				<h3>©Ò¦³­q³æ¸ê®Æ</h3>
+				<h3>æ‰€æœ‰è¨‚å–®è³‡æ–™</h3>
 				<h4>
 					<a href="<%=request.getContextPath()%>/emodr/select_page.jsp"><img
-						src="images/back1.gif" width="100" height="32" border="0">¦^­º­¶</a>
+						src="images/back1.gif" width="100" height="32" border="0">å›é¦–é </a>
 				</h4>
 			</td>
 		</tr>
 	</table>
 
-	<%-- ¿ù»~ªí¦C --%>
+	<%-- éŒ¯èª¤è¡¨åˆ— --%>
 	<c:if test="${not empty errorMsgs}">
-		<font style="color: red">½Ğ­×¥¿¥H¤U¿ù»~:</font>
+		<font style="color: red">è«‹ä¿®æ­£ä»¥ä¸‹éŒ¯èª¤:</font>
 		<ul>
 			<c:forEach var="message" items="${errorMsgs}">
 				<li style="color: red">${message}</li>
@@ -82,16 +82,16 @@ th, td {
 
 	<table>
 		<tr>
-			<th>°Ó«°­q³æ½s¸¹</th>
-			<th>¶R¤è·|­û½s¸¹</th>
-			<th>­q³æ¤é´Á</th>
-			<th>¦¬³f¤H</th>
-			<th>¦¬³f¦a§}</th>
-			<th>¦¬³f¹q¸Ü</th>
-			<th>Á`»ù</th>
-			<th>­q³æª¬ºA</th>
-			<th>­×§ï</th>
-			<th>§R°£</th>
+			<th>å•†åŸè¨‚å–®ç·¨è™Ÿ</th>
+			<th>è²·æ–¹æœƒå“¡ç·¨è™Ÿ</th>
+			<th>è¨‚å–®æ—¥æœŸ</th>
+			<th>æ”¶è²¨äºº</th>
+			<th>æ”¶è²¨åœ°å€</th>
+			<th>æ”¶è²¨é›»è©±</th>
+			<th>ç¸½åƒ¹</th>
+			<th>è¨‚å–®ç‹€æ…‹</th>
+			<th>ä¿®æ”¹</th>
+			<th>åˆªé™¤</th>
 		</tr>
 		<%@ include file="pages/page1.file"%>
 		<c:forEach var="emodrVO" items="${list}" begin="<%=pageIndex%>"
@@ -101,7 +101,7 @@ th, td {
 				<td>${emodrVO.emodr_id}</td>
 
 <%-- 		    <td>${emodrVO.member_id}</td> --%>
-				<td>${emodrVO.member_id}¡i${membersSvc.findByPrimaryKey(emodrVO.member_id).name}¡j</td>
+				<td>${emodrVO.member_id}ã€${membersSvc.findByPrimaryKey(emodrVO.member_id).name}ã€‘</td>
 
 				<td>${emodrVO.emodr_date}</td>
 				<td>${emodrVO.receipient}</td>
@@ -114,7 +114,7 @@ th, td {
 					<FORM METHOD="post"
 						ACTION="<%=request.getContextPath()%>/emodr/emodr.do"
 						style="margin-bottom: 0px;">
-						<input type="submit" value="½s¿è"> <input type="hidden"
+						<input type="submit" value="ç·¨è¼¯"> <input type="hidden"
 							name="emodr_id" value="${emodrVO.emodr_id}"> <input
 							type="hidden" name="action" value="getOne_For_Update">
 					</FORM>
@@ -123,7 +123,7 @@ th, td {
 					<FORM METHOD="post"
 						ACTION="<%=request.getContextPath()%>/emodr/emodr.do"
 						style="margin-bottom: 0px;">
-						<input type="submit" value="§R°£"> <input type="hidden"
+						<input type="submit" value="åˆªé™¤"> <input type="hidden"
 							name="emodr_id" value="${emodrVO.emodr_id}"> <input
 							type="hidden" name="action" value="delete">
 					</FORM>

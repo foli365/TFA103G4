@@ -391,52 +391,55 @@ input.btndanger{
 /*     display: none; */
 /* } */
 
-.-on {
-	position: fixed;
-    top: 0;
-    left: 0;
-    bottom: 0;
-    right: 0;
-    background-color: #808080;
-    opacity: 0.8;
-    z-index: 1000;
+/* .-on { */
+/* 	position: fixed; */
+/*     top: 0; */
+/*     left: 0; */
+/*     bottom: 0; */
+/*     right: 0; */
+/*     background-color: #808080; */
+/*     opacity: 0.8; */
+/*     z-index: 1000; */
 /*     display: none; */
     }
 
-div.pop {
-	position: fixed;
-    width: 600px;
-    height: 500px;
-    left: 50%;
-    top: 50%;
-    margin-left: -240px;
-    margin-top: -230px;
-    z-index: 1002;
-    background-color: bisque;
-  	display: none;
-  	padding-top: 20px;
+/* div.pop { */
+/* 	position: fixed; */
+/*     width: 600px; */
+/*     height: 500px; */
+/*     left: 50%; */
+/*     top: 50%; */
+/*     margin-left: -240px; */
+/*     margin-top: -230px; */
+/*     z-index: 1002; */
+/*     background-color: bisque; */
+/*   	display: none; */
+/*   	padding-top: 20px; */
   	
 
-}
+/* } */
 
-.pop .formmember {
-    width: 300px;
-    text-align: center;
-    margin-top: 50px;
-/*     margin-left: 55px; */
+/* .pop .formmember { */
+/*     width: 300px; */
+/*     text-align: center; */
+/*     margin-top: 50px; */
+/* /*     margin-left: 55px; */ */
    
-}
+/* } */
 
 button.button_editok{
 	margin-left: 40px;
 }
-.alert{
-    	position: relative;
-    	padding: 1rem 1rem;
-    	margin-bottom: 1rem;
-    	border: 1px solid transparent;
-    	border-radius: .25rem;
-    	display: flex;
-    	flex-direction: column;
-    	margin-left: 50px;
-    }
+#btnlog{
+	margin-left: 50px;
+}
+/* .alert{ */
+/*     	position: relative; */
+/*     	padding: 1rem 1rem; */
+/*     	margin-bottom: 1rem; */
+/*     	border: 1px solid transparent; */
+/*     	border-radius: .25rem; */
+/*     	display: flex; */
+/*     	flex-direction: column; */
+/*     	margin-left: 50px; */
+/*     } */

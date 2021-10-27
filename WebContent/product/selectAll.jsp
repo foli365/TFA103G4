@@ -39,8 +39,8 @@ ProductVO productVO = (ProductVO) request.getAttribute("productVO");
 			margin-top: 1px;
 			margin-bottom: 1px;
   		}
-  		table, th, td {
-			border: 1px solid blue;
+   		table, th, td { 
+			border: 1px solid blue; 
     
   		}
   		th, td {
@@ -71,7 +71,6 @@ ProductVO productVO = (ProductVO) request.getAttribute("productVO");
                         <span class="fas fa-caret-down second"></span> 
                     </a>
                     <ul class="serv-show">
-                        <li><a href="PushProduct.jsp" class="product_up">商品上架</a></li>
                         <li><a href="selectAll.jsp" class="product_list">商品資料表</a></li>
                     </ul>
                 </li>
@@ -80,7 +79,7 @@ ProductVO productVO = (ProductVO) request.getAttribute("productVO");
 				</a>
 
 					<ul class="bom-show">
-						<li><a href="#" class="camp_list">營地列表</a></li>
+						<li><a href="../backendLogin/camp.jsp" class="camp_list">營地列表</a></li>
 						<li><a href="#" class="alert_managament">檢舉管理</a></li>
 					</ul></li>
                 <li>
@@ -90,6 +89,12 @@ ProductVO productVO = (ProductVO) request.getAttribute("productVO");
                     <ul class="mky-show">
                         <li><a href="#" class="shopping_list">商城訂單</a></li>
                     </ul>
+                </li>
+                
+                <li>
+                <form METHOD="get" ACTION="<%=request.getContextPath()%>/backendLogin/home.do">
+                  <button type="submit" class="btn btn-outline-secondary" id="btnlog">logout</button>
+                </form>
                 </li>
             </ul>
         </nav>
@@ -109,13 +114,14 @@ ProductVO productVO = (ProductVO) request.getAttribute("productVO");
 	</c:if>     
         <div class="dropdown">
           <div class="btninsert">
-          
-        <button type="button" class="btny" id="btninsert">新增商品</button>      
+<!--          <button type="button" onclick="javascript:location.href='./thanks_page.html'">確定</button>  -->
+        <button type="button" class="btny" id="btninsert" onclick="javascript:location.href='PushProduct.jsp'">新增商品</button>      
           </div>        		
             <div class="wrap">
             <div class="search">
             <FORM METHOD="post" ACTION="<%=request.getContextPath() %>/product/product.do" >
-            <input class="search-bar" type="text"  name="productno" placeholder="輸入名稱">
+            <input class="search-bar" type="text"  name="pname" placeholder="輸入名稱">
+<!--             <input type="hidden" name= "action" value="pname"> -->
        		<input type="hidden" name="action" value="search">        	
            <button type="submit" class="search-btn"><i class="fas fa-search"></i></button>
            </FORM>
@@ -150,7 +156,7 @@ ProductVO productVO = (ProductVO) request.getAttribute("productVO");
 				<td>${message.price}</td>
 				<td>${message.inventory}</td>
 				<td>${adminSvc.getOneAdminList(message.admin_id).adminName}</td>
-				<td>${message.situation}</td>
+				<td>${message.situation == 1 ? "已上架" : "已下架"}</td>
 				<td>${message.descript}</td>
 				<td><img src="<%=request.getContextPath() %>/PhotoServlet?id=${message.productno}&img=1">
 				<td><img src="<%=request.getContextPath() %>/PhotoServlet?id=${message.productno}&img=2">
@@ -174,72 +180,72 @@ ProductVO productVO = (ProductVO) request.getAttribute("productVO");
     <div class="pop">
     <div class="formmember">
         
-<FORM METHOD= post ACTION="<%=request.getContextPath()%>/product/product.do" enctype = "multipart/form-data" class=alert>
-	<table class="rwd-side">
-	<tr>
-		<td>商品名稱:</td>
-		<td><input type="TEXT" name="pname" size="40" 
-			 value="<%= (productVO==null)? "" : productVO.getPname()%>" /></td>
-	</tr>
-	<tr>
-		<td>類別:</td>
-		<td><input type="TEXT" name="psort" size="40"
-			 value="<%= (productVO==null)? "" : productVO.getPsort()%>" /></td>
-	</tr>
-	<tr>
-		<td>價格:</td>
-		<td><input type="TEXT" name="price" size="40" 
-			 value= "<%= (productVO==null)? "" : productVO.getPrice()%>" /></td>
-	</tr>
-	<tr>
-		<td>數量:</td>
-		<td><input type="TEXT" name="inventory" size="40"
-			 value="<%= (productVO==null)? "" : productVO.getInventory()%>" /></td>
-	</tr>
-	<tr>
-		<td>上架人員:</td>
-		<td><input type="TEXT" name="admin_id" size="40"
-			 value="<%= (productVO==null)? "" : productVO.getAdmin_id()%>" /></td>
-	</tr>
-	<tr>
-		<td>狀態:</td>
-		<td><input type="TEXT" name="situation" size="40"
-			 value="<%= (productVO==null)? "" : productVO.getSituation()%>" /></td>
-	</tr>
-	<tr>
-		<td>商品介紹:</td>
-		<td><input type="TEXTAREA" name="descript" size="40"
-			 value="<%= (productVO==null)? "" : productVO.getDescript()%>" /></td>
-	</tr>
+<%-- <FORM METHOD= post ACTION="<%=request.getContextPath()%>/product/product.do" enctype = "multipart/form-data" class=alert> --%>
+<!-- 	<table class="rwd-side"> -->
+<!-- 	<tr> -->
+<!-- 		<td>商品名稱:</td> -->
+<!-- 		<td><input type="TEXT" name="pname" size="40"  -->
+<%-- 			 value="<%= (productVO==null)? "" : productVO.getPname()%>" /></td> --%>
+<!-- 	</tr> -->
+<!-- 	<tr> -->
+<!-- 		<td>類別:</td> -->
+<!-- 		<td><input type="TEXT" name="psort" size="40" -->
+<%-- 			 value="<%= (productVO==null)? "" : productVO.getPsort()%>" /></td> --%>
+<!-- 	</tr> -->
+<!-- 	<tr> -->
+<!-- 		<td>價格:</td> -->
+<!-- 		<td><input type="TEXT" name="price" size="40"  -->
+<%-- 			 value= "<%= (productVO==null)? "" : productVO.getPrice()%>" /></td> --%>
+<!-- 	</tr> -->
+<!-- 	<tr> -->
+<!-- 		<td>數量:</td> -->
+<!-- 		<td><input type="TEXT" name="inventory" size="40" -->
+<%-- 			 value="<%= (productVO==null)? "" : productVO.getInventory()%>" /></td> --%>
+<!-- 	</tr> -->
+<!-- 	<tr> -->
+<!-- 		<td>上架人員:</td> -->
+<!-- 		<td><input type="TEXT" name="admin_id" size="40" -->
+<%-- 			 value="<%= (productVO==null)? "" : productVO.getAdmin_id()%>" /></td> --%>
+<!-- 	</tr> -->
+<!-- 	<tr> -->
+<!-- 		<td>狀態:</td> -->
+<!-- 		<td><input type="TEXT" name="situation" size="40" -->
+<%-- 			 value="<%= (productVO==null)? "" : productVO.getSituation()%>" /></td> --%>
+<!-- 	</tr> -->
+<!-- 	<tr> -->
+<!-- 		<td>商品介紹:</td> -->
+<!-- 		<td><input type="TEXTAREA" name="descript" size="40" -->
+<%-- 			 value="<%= (productVO==null)? "" : productVO.getDescript()%>" /></td> --%>
+<!-- 	</tr> -->
 	
-	<tr>
-		<td>商品圖片1:</td>
-		<td><input type="file" name="img1"
-			 value="<%= (productVO==null)? "" : productVO.getPicture1()%>" /></td>
-	</tr>
+<!-- 	<tr> -->
+<!-- 		<td>商品圖片1:</td> -->
+<!-- 		<td><input type="file" name="img1" -->
+<%-- 			 value="<%= (productVO==null)? "" : productVO.getPicture1()%>" /></td> --%>
+<!-- 	</tr> -->
 	
-	<tr>
-		<td>商品圖片2:</td>
-		<td><input type="file" name="img2"
-			 value="<%= (productVO==null)? "" : productVO.getPicture2()%>" /></td>
-	</tr>
+<!-- 	<tr> -->
+<!-- 		<td>商品圖片2:</td> -->
+<!-- 		<td><input type="file" name="img2" -->
+<%-- 			 value="<%= (productVO==null)? "" : productVO.getPicture2()%>" /></td> --%>
+<!-- 	</tr> -->
 	
-	<tr>
-		<td>商品圖片3:</td>
-		<td><input type="file" name="img3"
-			 value="<%= (productVO==null)? "" : productVO.getPicture3()%>" /></td>
-	</tr>
+<!-- 	<tr> -->
+<!-- 		<td>商品圖片3:</td> -->
+<!-- 		<td><input type="file" name="img3" -->
+<%-- 			 value="<%= (productVO==null)? "" : productVO.getPicture3()%>" /></td> --%>
+<!-- 	</tr> -->
 
 
-	</table>
-<br>
-	<div class="button">
-	<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/product/product.do">
-	<input type="hidden" name="action" value="insert">
-	<input type="submit" value="送出新增"></FORM>
+<!-- 	</table> -->
+<!-- <br> -->
+<!-- 	<div class="button"> -->
+<%-- 	<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/product/product.do"> --%>
+<!-- 	<input type="hidden" name="action" value="insert"> -->
+<!-- 	<input type="submit" value="送出新增"></FORM> -->
 	
-	<button class="button_editok">取消</button>
-	</div>
+<!-- 	<button class="button_editok">取消</button> -->
+<!-- 	</div> -->
 
 			
                 

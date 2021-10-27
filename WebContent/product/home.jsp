@@ -42,7 +42,7 @@
 
                     <ul class="bom-show">
                         <li><a href="../backendLogin/camp.jsp" class="camp_list">營地列表</a></li>
-                        <li><a href="#" class="alert_managament">檢舉管理</a></li>
+                        <li><a href="../backendLogin/alert.jsp" class="alert_managament">檢舉管理</a></li>
                     </ul>
                 </li>
                 <li>
@@ -50,7 +50,7 @@
                         <span class="fas fa-caret-down second_2"></span> 
                     </a>
                     <ul class="mky-show">
-                        <li><a href="#" "shopping_list">商城訂單</a></li>
+                        <li><a href="../emodr/listAllEmodr.jsp" "shopping_list">商城訂單</a></li>
                     </ul>
                 </li>
                 <li>

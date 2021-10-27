@@ -10,7 +10,7 @@
         padding-left: 350px;
         height: 100%;
     }
-    /* 這是sidebar */
+    /* �sidebar */
     
     .container {
         position: fixed;
@@ -127,7 +127,7 @@
         background-color: bisque;
         /* display: flex; */
     }
-    /* 這是右邊文字 */
+    /* ������� */
     
     h1 {
         color: white;
@@ -165,7 +165,7 @@
         /* margin: border 0; */
         display: inline-block;
     }
-    /* 這是請選擇下拉式 */
+    /* �隢������ */
     
     .dropdown {
         /* position: fixed; */
@@ -177,7 +177,7 @@
         margin-left: -4rem;
         margin-top: 1rem;
     }
-    /* 這是查詢按鈕 */
+    /* ��閰Ｘ��� */
     
     .btn-outline-success {
         position: fixed;
@@ -185,7 +185,7 @@
         position: relative;
         left: 320px;
     }
-    /* 這是表格 */
+    /* �銵冽 */
     
     .rwd-table {
         background: #eee;
@@ -262,7 +262,7 @@
         z-index: -1;
         padding: 0;
     }
-    /* 這是搜尋 */
+    /* ����� */
     
     .searcher {
         height: 70px;
@@ -325,4 +325,7 @@
         width: 300px;
         /* text-align: center; */
         margin: 0 auto;
+    }
+    #btnlog{
+    margin-left: 50px;
     }
