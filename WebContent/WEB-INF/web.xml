@@ -100,6 +100,32 @@
 		<servlet-name>LogoutServlet</servlet-name>
 		<url-pattern>/backendLogin/home.do</url-pattern>
 	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>Member</servlet-name>
+		<servlet-class>com.members.controller.updateServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>Member</servlet-name>
+		<url-pattern>/backendLogin/updatemember.do</url-pattern>
+	</servlet-mapping>
+	<servlet>
+		<servlet-name>CampsearchServlet</servlet-name>
+		<servlet-class>com.admin.controller.CampsearchServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>CampsearchServlet</servlet-name>
+		<url-pattern>/backendLogin/camplistone.do</url-pattern>
+	</servlet-mapping>
+	<servlet>
+		<servlet-name>CampOrderBackendServlet</servlet-name>
+		<servlet-class>com.camporder.controller.CampOrderBackendServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>CampOrderBackendServlet</servlet-name>
+		<url-pattern>/backendLogin/CampOrderBackendServlet.do</url-pattern>
+	</servlet-mapping>
+	
 	<!-- 志全的 -->
 	<servlet>
 		<servlet-name>productServlet</servlet-name>

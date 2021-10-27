@@ -34,3 +34,6 @@ $("button#btn_edit").on("click", function() {
 $("button.button_cancle").on("click", function() {
     $("div.pop").hide();
 });
+$("a.camp_order").on("click", function(){
+	$(window).attr('location', 'campOrder.jsp');
+});

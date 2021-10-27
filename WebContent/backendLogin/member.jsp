@@ -55,6 +55,7 @@
 
 					<ul class="bom-show">
 						<li><a href="#" class="camp_list">營地列表</a></li>
+					 <li><a href='campOrder.jsp'class="camp_order">營地訂單</a></li>
 						<li><a href="#" class="alert_managament">檢舉管理</a></li>
 					</ul></li>
 				<li><a href="#" class="mky-btn">商城管理 <span
@@ -69,20 +70,20 @@
 	<div class="rightside">
 		<h2>會員管理</h2>
 		<br>
-		<h3>會員類型：</h3>
-		<div class="dropdown">
-			<button class="btn btn-secondary dropdown-toggle" type="button"
-				id="dropdownMenuButton1" data-bs-toggle="dropdown"
-				aria-expanded="false">請選擇</button>
-			<ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-				<li><a class="dropdown-item" href="#">一般會員</a></li>
-				<li><a class="dropdown-item" href="#">營地業主</a></li>
+		<c:if test="${not empty errorMsgs}">
+			<font style="color: red">請修正以下錯誤:</font>
+			<ul>
+				<c:forEach var="message" items="${errorMsgs}">
+					<li style="color: red">${message}</li>
+				</c:forEach>
 			</ul>
-		</div>
+		</c:if>
+		<br>
+		
 		<div class="searcher">
 			<FORM METHOD="post"
-				ACTION="<%=request.getContextPath()%>/backendLogin/AdminServlet.do">
-				<input type="text" class="search" name="adminId"
+				ACTION="<%=request.getContextPath()%>/backendLogin/updatemember.do">
+				<input type="text" class="search" name="memberId"
 					placeholder="會員編號查詢"> <input type="hidden" name="action"
 					id="" class="btn_search" value="getOne_For_Display">
 				<button type="submit" class="btn btn-outline-success">查詢</button>
@@ -96,8 +97,9 @@
 					<th>姓名</th>
 					<th>電子信箱</th>
 					<th>連絡電話</th>
-					<th>身分狀態</th>
-					<th>地址</th>
+					<th>身分</th>
+					<th>狀態</th>
+					<th width=300px>地址</th>
 					<th>編輯</th>
 				</tr>
 			</thead>
@@ -109,13 +111,15 @@
 					<td>${VO.name}</td>
 					<td>${VO.email}</td>
 					<td>${VO.phone}</td>
-					<td>${VO.memberStatus}</td>
+					<td>${VO.membership == 1 ? "營地業主":"一般會員"}</td>
+					<td>${VO.memberStatus == 1 ? "已停權":"使用中"}</td>
+<%-- 					<td>${VO.memberStatus}</td> --%>
 					<td>${VO.address}</td>
 					<td>
 						<FORM METHOD="post"
 							ACTION="<%=request.getContextPath()%>/backendLogin/updatemember.do"
 							style="margin-bottom: 0px;">
-							<input type="submit" value="修改"> <input type="hidden"
+							<input type="submit" value="修改" id="upd" class="btn btn-primary"> <input type="hidden"
 								name="memberId" value="${VO.memberId}"> <input
 								type="hidden" name="action" value="getOne_For_Update">
 						</FORM>
@@ -140,7 +144,7 @@
 	<script>
 		$("#myTable").tablesorter({
 			theme : "blue",
-			widgets : [ 'zebra' ]
+			widgets : [ 'zebra']
 		});
 	</script>
 	<script

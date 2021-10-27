@@ -22,3 +22,6 @@ $("a.alert_managament").on("click", function() {
 $("a.manager_list").on("click",function(){
 	 $(window).attr('location', 'manager.jsp');
 });
+$("a.camp_order").on("click", function(){
+	$(window).attr('location', 'campOrder.jsp');
+});

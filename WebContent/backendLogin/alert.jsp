@@ -2,11 +2,26 @@
      <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
      <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ page import="com.campAlert.model.*"%>
+<%@ page import="com.members.model.*"%>
+<%@ page import="com.campsite.model.*"%>
+<%@ page import="com.adminList.model.*"%>
 <%@ page import="java.util.*"%>
 <%
 	CampAlertDAO dao = new CampAlertDAO();
 	List<CampAlertVO> list = dao.getALL();
 	pageContext.setAttribute("list", list);
+%>
+<%
+	MemberService memSvc = new MemberService();
+	pageContext.setAttribute("memSvc", memSvc);
+%>
+<%
+	CampsiteService campsiteService = new CampsiteService();
+	pageContext.setAttribute("campsiteSvc", campsiteService);
+%>
+<%
+	AdminService adminSvc = new AdminService();
+	pageContext.setAttribute("adminSvc", adminSvc);
 %>
 <!DOCTYPE html>
 <html>
@@ -53,6 +68,7 @@
 
                     <ul class="bom-show">
                         <li><a href="#" class="camp_list">營地列表</a></li>
+                          <li><a href='campOrder.jsp' class="camp_order">營地訂單</a></li>
                         <li><a href="#" class="alert_managament">檢舉管理</a></li>
                     </ul>
                 </li>
@@ -93,7 +109,7 @@
             <tr>
                 <th>檢舉流水號</th>
                 <th>檢舉人</th>
-                <th>營地編號</th>
+                <th>營地名稱</th>
                 <th>檢舉時間</th>
                 <th>檢舉內容</th>
                 <th>檢舉圖片1</th>
@@ -109,15 +125,15 @@
 			<tr>	
 		
 			<td>${VO.alertId}</td>
-			<td>${VO.memberId}</td>
-			<td>${VO.campId}</td>
+			<td>${memSvc.findByPrimaryKey(VO.memberId).name}</td>
+			<td>${campsiteSvc.getOneCampsite(VO.campId).campName}</td>
 			<td>${VO.reportTime}</td>
 			<td>${VO.content}</td>
 			<td><img src="<%=request.getContextPath()%>/backendLogin/CampAlert.do?Id=${VO.alertId}&img=1"></td>
 			<td><img src="<%=request.getContextPath()%>/backendLogin/CampAlert.do?Id=${VO.alertId}&img=2"></td>
 			<td><img src="<%=request.getContextPath()%>/backendLogin/CampAlert.do?Id=${VO.alertId}&img=3"></td>
 			<td>${VO.reportStatus}</td>
-			<td>${VO.handeler}</td>
+			<td>${adminSvc.getOneAdminList(VO.handeler).adminName}</td>
 			<td>
 			  <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/backendLogin" style="margin-bottom: 0px;">
 			     <input type="submit" value="修改">

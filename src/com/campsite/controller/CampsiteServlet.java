@@ -28,7 +28,7 @@ import com.campsite.model.StringToSQLDate;
 import com.campsitetentstatus.model.CampsiteTentStatusService;
 
 @MultipartConfig
-public class CampsiteServlet extends HttpServlet {
+public class CampsiteServlet  extends HttpServlet {
 
 	public void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		doPost(req, res);

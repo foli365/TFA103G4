@@ -1,13 +1,23 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-<%@ page import="com.adminList.model.*"%>
+<%@ page import="com.members.model.*"%>
+<%@ page import="com.campsite.model.*"%>
+<%@ page import="com.camporder.model.*"%>
 <%@ page import="java.util.*"%>
 <%
-	AdminListVO VO = (AdminListVO) request.getAttribute("adminListVO");
+// 	MembersVO vo =(MembersVO) request.getAttribute("MembersVO");
+// 	System.out.println(vo);
+//  	pageContext.setAttribute("vo", vo);
 %>
 <!DOCTYPE html>
 <html>
+<style>
+img {
+	width: 100px;
+	height: 100px;
+}
+</style>
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
@@ -61,30 +71,44 @@
 		</nav>
 	</div>
 	<div class="rightside">
-		<h2>管理員帳號單筆查詢</h2>
+		<h2>營地訂單單筆查詢</h2>
 		<br>
-		<h3><a href='manager.jsp'>回管理員帳號管理</a></h3>
+		<h3><a href='campOrder.jsp'>回營地訂單列表</a></h3>
 		<div class="searcher">
 			<form action="" class="parent">
-				<input type="text" class="search" placeholder="管理員查詢"> <input
+				<input type="text" class="search" placeholder="營地訂單編號查詢"> <input
 					type="button" name="" id="" class="btn_search">
 			</form>
-			<button type="submit" class="btn btn-outline-success">查詢</button>
+
+			<button type="button" class="btn btn-outline-success">查詢</button>
 		</div>
 		<table id="myTable" class="tablesorter">
 			<thead>
 				<tr>
-					<th>管理員編號</th>
-					<th>管理員密碼</th>
-					<th>姓名</th>
+					<th>露營訂單編號</th>
+					<th>營地編號</th>
+					<th>會員編號</th>
+					<th>預定人數</th>
+					<th>入住日期</th>
+					<th>退房日期</th>
+					<th>營地下訂時間</th>
+					<th>營地付款截止時間</th>
+					<th>訂單總金額</th>
+					<th>訂單狀態</th>
 				</tr>
 			</thead>
 				<tr>
-
-					<td><%=VO.getAdminId()%></td>
-					<td><%=VO.getAdminPwd()%></td>
-					<td><%=VO.getAdminName()%></td>
-				</tr>
+					<td>${campOrderVO.campOrderId}</td>
+					<td>${campOrderVO.campId}</td>
+					<td>${campOrderVO.memberId}</td>
+					<td>${campOrderVO.guestNumber}</td>
+					<td>${campOrderVO.checkInDate}</td>
+					<td>${campOrderVO.checkOutDate}</td>
+					<td>${campOrderVO.orderDate}</td>
+					<td>${campOrderVO.paymentDeadline}</td>
+					<td>${campOrderVO.orderTotal}</td>
+					<td>${campOrderVO.orderStatus}</td>
+				
 		</table>
 	</div>
 
