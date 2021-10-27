@@ -133,7 +133,7 @@ img {
 						<FORM METHOD="post"
 							ACTION="<%=request.getContextPath()%>/backendLogin/camplistone.do"
 							style="margin-bottom: 0px;">
-							<input type="submit" value="修改"> <input type="hidden"
+							<input type="submit" value="修改" class="btn btn-primary"> <input type="hidden"
 								name="campId" value="${VO.campId}"> <input type="hidden"
 								name="action" value="getOne_For_Update">
 						</FORM>

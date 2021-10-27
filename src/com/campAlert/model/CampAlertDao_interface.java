@@ -10,7 +10,7 @@ public interface CampAlertDao_interface {
 	void delete(int alertId);
 	CampAlertVO findByPrimaryKey(Integer alertId);
     List<CampAlertVO>getALL();
-	 
+    void updateStatus(CampAlertVO campAlertVO);
 
 	
 

@@ -90,7 +90,7 @@
 				<button type="button" class="btn btn-outline-success" id="export1">匯出</button>
 			</Form>
 		</div>
-		<table id="myTable" class="tablesorter">
+		<table id="myTable1" class="tablesorter">
 			<thead>
 				<tr>
 					<th>會員編號</th>
@@ -134,15 +134,12 @@
 
 	</div>
 	<script src="../js/jquery.js"></script>
-	<script
-		src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 	<script src="../js/jquery.table2excel.js"></script>
-	<link rel="stylesheet"
-		href="https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.30.5/css/theme.blue.min.css"></link>
-	<script type="text/javascript"
-		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.30.5/js/jquery.tablesorter.min.js"></script>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.30.5/css/theme.blue.min.css"></link>
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.30.5/js/jquery.tablesorter.min.js"></script>
 	<script>
-		$("#myTable").tablesorter({
+		$("#myTable1").tablesorter({
 			theme : "blue",
 			widgets : [ 'zebra']
 		});
@@ -153,17 +150,19 @@
 		crossorigin="anonymous"></script>
 	<script src="../js/member.js"></script>
 	<script>
-		$(document).ready(function() {
-			$("#export1").on("click", function() {
-				$("#myTable").table2excel({
-					// exclude CSS class
-					exclude : ".noExl",
-					name : "Worksheet Name",
-					filename : "會員清單", //do not include extension
-					fileext : ".xls" // file extension
-				});
-			});
+	
+	$(document).ready(function(){			
+		$("#export1").on("click", function() {
+				  $("#myTable1").table2excel({
+				    // exclude CSS class
+				    exclude: ".noExl",
+				    name: "Worksheet Name",
+				    filename: "會員列表", //do not include extension
+				    fileext: ".xls" // file extension
+				  }); 
 		});
+		});
+	</script>
 		</body>
 		</html>
 	

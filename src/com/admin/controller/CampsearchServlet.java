@@ -15,7 +15,11 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.adminList.model.AdminListVO;
 import com.adminList.model.AdminService;
+import com.campAlert.model.CampAlertService;
+import com.campAlert.model.CampAlertVO;
 import com.campsite.model.*;
+import com.campAlert.model.*;
+
 @MultipartConfig
 public class CampsearchServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -73,7 +77,7 @@ public class CampsearchServlet extends HttpServlet {
 					return;//程式中斷
 				}
 				/***************************3.查詢完成,準備轉交(Send the Success view)*************/
-				req.setAttribute("CampsiteVO",campsiteVO); // 資料庫取出的empVO物件,存入req
+				req.setAttribute("campsiteVO",campsiteVO); // 資料庫取出的empVO物件,存入req
 				String url = "/backendLogin/camp-listone.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url); // 成功轉交 listOneEmp.jsp
 				successView.forward(req, res);
@@ -272,6 +276,7 @@ public class CampsearchServlet extends HttpServlet {
 
 				/*************************** 3.修改完成,準備轉交(Send the Success view) *************/
 				req.setAttribute("campsiteVO", campsiteVO); // 資料庫update成功後,正確的的campsiteVO物件,存入req
+				System.out.println(campsiteVO);
 				String url = "/backendLogin/camp-listone.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url); // 修改成功後,轉交listOneCampsite.jsp
 				successView.forward(req, res);
@@ -283,6 +288,25 @@ public class CampsearchServlet extends HttpServlet {
 				failureView.forward(req, res);
 			}
 		}
+		
+//更新檢舉		
+		if ("addOne".equals(action)) { 
+		req.setAttribute("errorMsgs", errorMsgs);
 
+		String i =req.getParameter("campId");
+//		CampsiteService campsiteService = new CampsiteService();
+//		CampsiteVO campsiteVO=campsiteService.getOneCampsite(new Integer(i));
+//		campsiteService.updateForOne(campsiteVO);
+		
+		String a = req.getParameter("alertId");
+		CampAlertService campAlertService= new CampAlertService();
+		CampAlertVO campAlertVO=campAlertService.updateStatus(new Integer(a), new Integer(i));
+		
+		
+		req.setAttribute("campsiteVO", campAlertVO); // 資料庫update成功後,正確的的campsiteVO物件,存入req
+		String url1 = "/backendLogin/alert.jsp";
+		RequestDispatcher successView = req.getRequestDispatcher(url1); // 修改成功後,轉交listOneCampsite.jsp
+		successView.forward(req, res);
+		}
 	}
 }

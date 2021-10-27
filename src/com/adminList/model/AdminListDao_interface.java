@@ -10,6 +10,6 @@ public interface AdminListDao_interface {
 		AdminListVO findByPrimaryKey(Integer adminId);
 	    List<AdminListVO>getALL();
 
-		
+
 		
 	}

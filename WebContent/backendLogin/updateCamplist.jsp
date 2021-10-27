@@ -34,15 +34,15 @@
 		ACTION="<%=request.getContextPath()%>/backendLogin/camplistone.do"
 		enctype="multipart/form-data"
 		name="form1">
-		<input type="hidden" name="latitude" value="">
-		<input type="hidden" name="longtitude" value="">
-		<input type="hidden" name="campDescription" value="">
-		<input type="hidden" name="lovedCount" value="">
-		<input type="hidden" name="picture1" value="">
-		<input type="hidden" name="picture2" value="">
-		<input type="hidden" name="picture3" value="">
-		<input type="hidden" name="picture4" value="">
-		<input type="hidden" name="picture5" value="">
+		<input type="hidden" name="latitude" value="<%=campsiteVO.getLatitude() %>">
+		<input type="hidden" name="longtitude" value="<%=campsiteVO.getLongtitude()%>">
+		<input type="hidden" name="campDescription" value="<%=campsiteVO.getCampDescription()%>">
+		<input type="hidden" name="listedTime" value="<%=campsiteVO.getListedTime()%>">
+		<input type="hidden" name="picture1" value="<%=campsiteVO.getPicture1()%>">
+		<input type="hidden" name="picture2" value="<%=campsiteVO.getPicture2()%>">
+		<input type="hidden" name="picture3" value="<%=campsiteVO.getPicture3()%>">
+		<input type="hidden" name="picture4" value="<%=campsiteVO.getPicture4()%>">
+		<input type="hidden" name="picture5" value="<%=campsiteVO.getPicture5()%>">
 		<table>
 			<table>
 			<tr>

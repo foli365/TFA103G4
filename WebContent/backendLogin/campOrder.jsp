@@ -2,11 +2,21 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ page import="com.camporder.model.*"%>
+<%@ page import="com.campsite.model.*"%>
+<%@ page import="com.members.model.*"%>
 <%@ page import="java.util.*"%>
 <%	
 	CampOrderService dao = new CampOrderService();
 	List<CampOrderVO> list = dao.getAll();
 	pageContext.setAttribute("list", list);
+%>
+<%
+MemberService memSvc = new MemberService();
+pageContext.setAttribute("memSvc", memSvc);
+%>
+<%
+CampsiteService campsiteService = new CampsiteService();
+pageContext.setAttribute("campsiteService", campsiteService);
 %>
 <!DOCTYPE html>
 <html>
@@ -111,8 +121,8 @@
 				<tr>
 
 					<td>${VO.campOrderId}</td>
-					<td>${VO.campId}</td>
-					<td>${VO.memberId}</td>
+					<td>${campsiteService.getOneCampsite(VO.campId).campName}</td>
+					<td>${memSvc.findByPrimaryKey(VO.memberId).name}</td>
 					<td>${VO.guestNumber}</td>
 					<td>${VO.checkInDate}</td>
 					<td>${VO.checkOutDate}</td>

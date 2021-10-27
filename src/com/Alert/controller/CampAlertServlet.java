@@ -53,7 +53,7 @@ public class CampAlertServlet extends HttpServlet {
 		List<String> errorMsgs = new LinkedList<String>();
 		//刪除功能
 		if ("delete".equals(action)) {
-			Integer id = new Integer(req.getParameter("alertId"));
+			Integer id = new Integer(req.getParameter("Id"));
 			CampAlertService alertSvc = new CampAlertService();
 			alertSvc.deleteCampAlertDAO(id);
 			String url = "/backendLogin/alert.jsp";

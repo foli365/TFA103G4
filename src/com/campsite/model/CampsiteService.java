@@ -87,4 +87,8 @@ public class CampsiteService {
 	public List<CampsiteVO> getAll() {
 		return dao.getAll();
 	}
+	
+	public void updateForOne(CampsiteVO campsiteVO){
+		 dao.updateForOne(campsiteVO);
+	}
 }

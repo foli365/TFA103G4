@@ -118,12 +118,11 @@
                 <th>檢舉狀態</th>
                  <th>承辦人</th>
                 <th>編輯</th>
-                <th>刪除</th>
+                <th>拒絕</th>
             </tr>
             <%@ include file="page1.file" %> 
             	<c:forEach var="VO" items="${list}" begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>">
 			<tr>	
-		
 			<td>${VO.alertId}</td>
 			<td>${memSvc.findByPrimaryKey(VO.memberId).name}</td>
 			<td>${campsiteSvc.getOneCampsite(VO.campId).campName}</td>
@@ -132,18 +131,19 @@
 			<td><img src="<%=request.getContextPath()%>/backendLogin/CampAlert.do?Id=${VO.alertId}&img=1"></td>
 			<td><img src="<%=request.getContextPath()%>/backendLogin/CampAlert.do?Id=${VO.alertId}&img=2"></td>
 			<td><img src="<%=request.getContextPath()%>/backendLogin/CampAlert.do?Id=${VO.alertId}&img=3"></td>
-			<td>${VO.reportStatus}</td>
+			<td>${VO.reportStatus == 1 ? "檢舉成功":"未審核"}</td>
 			<td>${adminSvc.getOneAdminList(VO.handeler).adminName}</td>
 			<td>
-			  <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/backendLogin" style="margin-bottom: 0px;">
-			     <input type="submit" value="修改">
+			  <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/backendLogin/camplistone.do" style="margin-bottom: 0px;">
+			     <input type="submit" value="同意">
+			     <input type="hidden" name="campId"  value="${VO.campId}">
 			     <input type="hidden" name="alertId"  value="${VO.alertId}">
-			     <input type="hidden" name="action"	value="update"></FORM>
+			     <input type="hidden" name="action"	value="addOne"></FORM>
 			</td>
 			<td>
 			  <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/backendLogin/CampAlert.do" style="margin-bottom: 0px;">
-			     <input type="submit" value="刪除">
-			     <input type="hidden" name="alertId"  value="${VO.alertId}">
+			     <input type="submit" value="拒絕">
+			     <input type="hidden" name="Id"  value="${VO.alertId}">
 			     <input type="hidden" name="action" value="delete"></FORM>
 			</td>
 			

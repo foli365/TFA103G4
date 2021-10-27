@@ -95,13 +95,13 @@
 					<th>管理員編號</th>
 					<th>管理員密碼</th>
 					<th>姓名</th>
-					<th>編輯</th>
-					<th>刪除</th>
+					<th width="70px">編輯</th>
+					<th width="70px">刪除</th>
 				</tr>
 			</thead>
 			<%@ include file="page1.file"%>
 			<c:forEach var="VO" items="${list}" begin="<%=pageIndex%>"
-				end="<%=pageIndex+rowsPerPage-1%>">
+				end="<%=pageIndex+rowsPerPage-1%>">  
 				<tr>
 
 					<td>${VO.adminId}</td>
@@ -112,7 +112,7 @@
 						<FORM METHOD="post"
 							ACTION="<%=request.getContextPath()%>/backendLogin/AdminServlet.do"
 							style="margin-bottom: 0px;">
-							<input type="submit" value="修改"> <input type="hidden"
+							<input type="submit" value="修改" class="btn btn-primary"> <input type="hidden"
 								name="adminId" value="${VO.adminId}"> <input
 								type="hidden" name="action" value="getOne_For_Update">
 						</FORM>
@@ -121,7 +121,7 @@
 						<FORM METHOD="post"
 							ACTION="<%=request.getContextPath()%>/backendLogin/AdminServlet.do"
 							style="margin-bottom: 0px;">
-							<input type="submit" value="刪除"> <input type="hidden"
+							<input type="submit" value="刪除" class="btn btn-danger"> <input type="hidden"
 								name="adminId" value="${VO.adminId}"> <input
 								type="hidden" name="action" value="delete">
 						</FORM>

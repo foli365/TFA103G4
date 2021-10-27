@@ -6,10 +6,15 @@
 <%@ page import="com.camporder.model.*"%>
 <%@ page import="java.util.*"%>
 <%
-// 	MembersVO vo =(MembersVO) request.getAttribute("MembersVO");
-// 	System.out.println(vo);
-//  	pageContext.setAttribute("vo", vo);
+
+MemberService memSvc = new MemberService();
+pageContext.setAttribute("memSvc", memSvc);
 %>
+<%
+CampsiteService campsiteService = new CampsiteService();
+pageContext.setAttribute("campsiteService", campsiteService);
+%>
+
 <!DOCTYPE html>
 <html>
 <style>
@@ -99,8 +104,8 @@ img {
 			</thead>
 				<tr>
 					<td>${campOrderVO.campOrderId}</td>
-					<td>${campOrderVO.campId}</td>
-					<td>${campOrderVO.memberId}</td>
+					<td>${campsiteService.getOneCampsite(VO.campId).campName}</td>
+					<td>${memSvc.findByPrimaryKey(VO.memberId).name}</td>
 					<td>${campOrderVO.guestNumber}</td>
 					<td>${campOrderVO.checkInDate}</td>
 					<td>${campOrderVO.checkOutDate}</td>

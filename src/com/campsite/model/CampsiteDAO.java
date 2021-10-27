@@ -368,4 +368,59 @@ public class CampsiteDAO implements CampsiteDAO_Interface {
 		return campsiteList;
 	}
 
-}
+	@Override
+	public void updateForOne(CampsiteVO campsiteVO) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+
+		try {
+			con = DriverManager.getConnection(URL, USER, PASSWORD);
+			pstmt = con.prepareStatement(UPDATE_STMT);
+
+			pstmt.setInt(1, campsiteVO.getMemberId());
+			pstmt.setString(2, campsiteVO.getCampName());
+			pstmt.setString(3, campsiteVO.getLocation());
+			pstmt.setDouble(4, campsiteVO.getLatitude());
+			pstmt.setDouble(5, campsiteVO.getLongtitude());
+			pstmt.setString(6, campsiteVO.getCampDescription());
+			pstmt.setInt(7, campsiteVO.getCampPrice());
+			pstmt.setInt(8, campsiteVO.getCampLimit());
+			pstmt.setTimestamp(9, campsiteVO.getListedTime());
+			pstmt.setInt(10, campsiteVO.getSiteState());
+			pstmt.setInt(11, campsiteVO.getLovedCount());
+			pstmt.setInt(12, (campsiteVO.getReportedCount()+1));
+			pstmt.setBytes(13, campsiteVO.getCampLicense());
+			pstmt.setBytes(14, campsiteVO.getPicture1());
+			pstmt.setBytes(15, campsiteVO.getPicture2());
+			pstmt.setBytes(16, campsiteVO.getPicture3());
+			pstmt.setBytes(17, campsiteVO.getPicture4());
+			pstmt.setBytes(18, campsiteVO.getPicture5());
+			pstmt.setInt(19, campsiteVO.getCampId());
+
+			pstmt.executeUpdate();
+
+		} catch (SQLException se) {
+			se.printStackTrace();
+		} finally {
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace();
+				}
+			}
+
+			if (con != null) {
+				try {
+					con.close();
+				} catch (SQLException se) {
+					se.printStackTrace();
+				}
+			}
+		}
+	}
+
+		
+	}
+
+
