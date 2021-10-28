@@ -40,11 +40,11 @@ public class passwordReset extends HttpServlet {
 		String passwordConfirm = req.getParameter("passwordConfirm");
 		String passwordReg = "^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{8,}$";
 		if (!password.trim().equals(passwordConfirm.trim())) {
-			req.setAttribute("passwordDiff", "ç¢ºèªå¯†ç¢¼å¤±æ•—ï¼Œè«‹é‡æ–°æª¢æŸ¥");
+			req.setAttribute("passwordDiff", "·s±K½X»P½T»{±K½X¤£¦P");
 			RequestDispatcher failed = req.getRequestDispatcher("/register_and_login/reset_password.jsp");
 			failed.forward(req, res);
 		} else if (!password.trim().matches(passwordReg)) {
-			req.setAttribute("pwordTooWeak", "æ–°å¯†ç¢¼ä¸ç¬¦åˆè¦ç¯„");
+			req.setAttribute("pwordTooWeak", "±K½X±j«×¤£¨¬");
 			RequestDispatcher failed = req.getRequestDispatcher("/register_and_login/reset_password.jsp");
 			failed.forward(req, res);
 		} else {
@@ -61,11 +61,11 @@ public class passwordReset extends HttpServlet {
 				jwt = verifier.verify(token);
 				String bcryptHashString = BCrypt.withDefaults().hashToString(12, password.toCharArray());
 				memSvc.updatePassword(bcryptHashString, id);
-				req.setAttribute("success", "å¯†ç¢¼æ›´æ”¹æˆåŠŸ");
+				req.setAttribute("success", "¤w­«³]±K½X¡A½Ğ­«·sµn¤J");
 				RequestDispatcher success = req.getRequestDispatcher("/register_and_login/reset_password.jsp");
 				success.forward(req, res);
 			} catch (Exception e) {
-				req.setAttribute("invalid", "æ­¤é€£çµå·²å¤±æ•ˆï¼Œè«‹é‡æ–°æ“ä½œ");
+				req.setAttribute("invalid", "¦¹³sµ²¤w¥¢®Ä");
 				RequestDispatcher failed = req.getRequestDispatcher("/register_and_login/reset_password.jsp");
 				failed.forward(req, res);
 			}

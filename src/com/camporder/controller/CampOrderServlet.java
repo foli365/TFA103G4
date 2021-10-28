@@ -38,7 +38,7 @@ public class CampOrderServlet extends HttpServlet {
 		String url = "/campsite/reserve_campsite.jsp";
 		req.setCharacterEncoding("UTF-8");
 		String action = req.getParameter("action");
-		// ï¿½Ø¥ß­qï¿½ï¿½ò¥»¸ï¿½ï¿½
+		// «Ø¥ßÀç¦a­q³æ
 		if ("book".equals(action)) {
 			
 			List<String> errorMsgs = new LinkedList<String>();
@@ -47,7 +47,7 @@ public class CampOrderServlet extends HttpServlet {
 			req.setAttribute("errorMsgs", errorMsgs);
 			
 			try {
-				// ï¿½Jï¿½ï¿½ï¿½ï¿½
+				// ¨ú±o¤J¦í®É¶¡
 				String from = req.getParameter("from");
 				java.sql.Date checkedIn = null;
 				try {
@@ -57,7 +57,7 @@ public class CampOrderServlet extends HttpServlet {
 				} catch (Exception e) {
 					throw new Exception(e);
 				}
-				// ï¿½hï¿½ï¿½ï¿½ï¿½
+				// ¨ú±o°h©Ğ¤é´Á
 				String to = req.getParameter("to");
 				java.sql.Date checkedOut = null;
 				try {
@@ -68,7 +68,6 @@ public class CampOrderServlet extends HttpServlet {
 					// TODO: handle exception
 					throw new Exception(e);
 				}
-<<<<<<< HEAD
 				// Á`¤H¼Æ
 				String strHeadCount = req.getParameter("headCount");
 
@@ -85,21 +84,13 @@ public class CampOrderServlet extends HttpServlet {
 					failureView.forward(req, res);
 					return;// µ{¦¡¤¤Â_
 				}
-				
 				// Á`»ù¿ú
-=======
-				// ï¿½`ï¿½Hï¿½ï¿½
-				Integer headCount = new Integer(req.getParameter("headCount"));
-
-				// ï¿½`ï¿½ï¿½ï¿½ï¿½
->>>>>>> ab8d8a50a6cc87afa7f38fd7276d321d31b87625
 				Integer price = new Integer(req.getParameter("price"));
-				// ï¿½|ï¿½ï¿½ID
+				// ·|­ûID
 				Integer memberId = new Integer(req.getParameter("memberId"));
-				// ï¿½ï¿½aID
+				// Àç¦aID
 				Integer campId = new Integer(req.getParameter("campId"));
-				// ï¿½Uï¿½wï¿½É¶ï¿½
-
+				// ¤U©w®É¶¡
 				String today = req.getParameter("orderDate");
 				Timestamp orderDate = null;
 				try {
@@ -110,7 +101,7 @@ public class CampOrderServlet extends HttpServlet {
 					// TODO: handle exception
 					throw new Exception(e);
 				}
-				// ï¿½Iï¿½Ú´ï¿½ï¿½ï¿½
+				// ¥I´Ú´Á­­
 				String deadline = req.getParameter("deadline");
 				Timestamp expired = null;
 				try {
@@ -121,16 +112,11 @@ public class CampOrderServlet extends HttpServlet {
 					// TODO: handle exception
 					throw new Exception(e);
 				}
-<<<<<<< HEAD
-				
 				//ÀË¬d¹w­q´Á¶¡³Ñ¾lªÅ¦ì
-=======
-				//ï¿½Ë¬dï¿½wï¿½qï¿½ï¿½ï¿½ï¿½ï¿½Ñ¾lï¿½Å¦ï¿½
->>>>>>> ab8d8a50a6cc87afa7f38fd7276d321d31b87625
 				CampsiteTentStatusService CTSSvc = new CampsiteTentStatusService();
 				try {
 					if (!CTSSvc.isTentAvailiblewithGuestNumberandTimeRange(campId, headCount, checkedIn, checkedOut)) {
-						req.setAttribute("noSpace", "æ‚¨æ‰€é å®šçš„å€é–“å‰©é¤˜ç©ºä½ä¸è¶³");
+						req.setAttribute("noSpace", "¹w­q´Á¶¡µLªÅ¦ì");
 						RequestDispatcher failedView = req.getRequestDispatcher(url);
 						failedView.forward(req, res);
 						return;
@@ -140,7 +126,7 @@ public class CampOrderServlet extends HttpServlet {
 					e.printStackTrace();
 				}
 				CampOrderService COSvc = new CampOrderService();
-				// ï¿½Ë¬dï¿½Pï¿½Ï¶ï¿½ï¿½Pï¿½|ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ­qï¿½ï¿½
+				// ÀË¬d¬O§_­«½Æ¤U­q
 				List<CampOrderVO> orderList = COSvc.getByMemberId(memberId);
 				for (CampOrderVO order : orderList) {
 					java.sql.Date confirmDate = checkedIn;
@@ -149,7 +135,7 @@ public class CampOrderServlet extends HttpServlet {
 						Date usedCheckedOutday = order.getCheckOutDate();
 						if (isWithinRange(checkedIn, usedCheckedInday, usedCheckedOutday)) {
 							RequestDispatcher repeat = req.getRequestDispatcher(url);
-							req.setAttribute("repeat", "æ‚¨åœ¨æ­¤æ®µæ™‚é–“å·²æœ‰è¨‚å–®");
+							req.setAttribute("repeat", "±z¦b¦¹¬q®É¶¡¤º¤w©ó¬Û¦PÀç¦a¤U­q");
 							repeat.forward(req, res);
 							return;
 						}
@@ -159,12 +145,7 @@ public class CampOrderServlet extends HttpServlet {
 						confirmDate = new java.sql.Date(c.getTimeInMillis());
 					}
 				}
-<<<<<<< HEAD
-				
 				// ±N¥H¤WÄİ©Ê·s¼W¦Ü·sªºÀç¦a­q³æª«¥ó
-=======
-				// ï¿½Nï¿½Hï¿½Wï¿½İ©Ê·sï¿½Wï¿½Ü·sï¿½ï¿½ï¿½ï¿½aï¿½qï¿½æª«ï¿½ï¿½
->>>>>>> ab8d8a50a6cc87afa7f38fd7276d321d31b87625
 				CampOrderVO campOrderVO = new CampOrderVO();
 				campOrderVO.setCampId(campId);
 				campOrderVO.setGuestNumber(headCount);
@@ -178,7 +159,7 @@ public class CampOrderServlet extends HttpServlet {
 				session.setAttribute("campOrderVO", campOrderVO);
 				res.sendRedirect("bookings/extra_flavour.jsp");
 			} catch (Exception e) {
-				req.setAttribute("missing", "è«‹è¼¸å…¥æ‰€æœ‰æ¬„ä½");
+				req.setAttribute("missing", "½Ğ¶ñ¤J©Ò¦³Äæ¦ì");
 				RequestDispatcher successView = req.getRequestDispatcher(url);
 				successView.forward(req, res);
 			} 
@@ -192,7 +173,7 @@ public class CampOrderServlet extends HttpServlet {
 			CampOrderVO campOrderVO = (CampOrderVO) session.getAttribute("campOrderVO");
 			List<CustomerPlanVO> list = (List<CustomerPlanVO>) session.getAttribute("planList");
 
-			// ï¿½Ø¥ß­qï¿½ï¿½Mï¿½Uï¿½È¤ï¿½ï¿½
+			
 			campOrderVO.setOrderTotal(finalPrice);
 			CampOrderDAO dao = new CampOrderDAO();
 			try {

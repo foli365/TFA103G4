@@ -47,12 +47,12 @@ public class LoginHandler extends HttpServlet {
 			RequestDispatcher failedView = req.getRequestDispatcher(url);
 			if (membersVO != null) {
 				req.setAttribute("email", membersVO.getEmail());
-				req.setAttribute("noPassword", "å¯†ç¢¼éŒ¯èª¤ã€‚");
+				req.setAttribute("noPassword", "±K½X¿ù»~¡C");
 				failedView.forward(req, res);
 				return;
 			} else {
-				req.setAttribute("noEmail", "å¸³è™ŸéŒ¯èª¤");
-				req.setAttribute("noPassword", "å¯†ç¢¼éŒ¯èª¤ã€‚");
+				req.setAttribute("noEmail", "±b¸¹¿ù»~");
+				req.setAttribute("noPassword", "±K½X¿ù»~¡C");
 				failedView.forward(req, res);
 			}
 

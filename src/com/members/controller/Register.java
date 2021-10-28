@@ -34,7 +34,7 @@ public class Register extends HttpServlet {
 		String name = jwt.getClaim("name").asString();
 		String email = jwt.getSubject();
 		if (memSvc.findByEmail(email)!=null) {
-			req.setAttribute("exist", "æ­¤emailå·²å­˜åœ¨");
+			req.setAttribute("exist", "¦¹email¤w¦s¦b");
 			RequestDispatcher success = req.getRequestDispatcher("/register_and_login/validate_result.jsp");
 			success.forward(req, res);
 			return;
@@ -50,11 +50,11 @@ public class Register extends HttpServlet {
 			HttpSession session = req.getSession();
 			session.setAttribute("account", name);
 			session.setAttribute("id", memSvc.findByEmail(email).getMemberId());
-			req.setAttribute("success", "è¨»å†ŠæˆåŠŸ");
+			req.setAttribute("success", "¶}³q¦¨¥\");
 			RequestDispatcher success = req.getRequestDispatcher("/register_and_login/validate_result.jsp");
 			success.forward(req, res);
 		} catch (Exception e) {
-			req.setAttribute("invalid", "æ­¤é€£çµå·²å¤±æ•ˆï¼Œè«‹é‡æ–°æ“ä½œ");
+			req.setAttribute("invalid", "¦¹³sµ²¤w¥¢®Ä¡A½Ğ­«·s¾Ş§@");
 			RequestDispatcher failed = req.getRequestDispatcher("/register_and_login/validate_result.jsp");
 			failed.forward(req, res);
 		} 
@@ -72,20 +72,20 @@ public class Register extends HttpServlet {
 		String email = req.getParameter("email");
 		MemberService memSvc = new MemberService();
 		if (memSvc.findByEmail(email) != null) {
-			req.setAttribute("emailRepeat", "æ­¤emailå·²å­˜åœ¨");
+			req.setAttribute("emailRepeat", "¦¹email¤w³Qµù¥U");
 			req.setAttribute("name", name);
 			RequestDispatcher failed = req.getRequestDispatcher("/register_and_login/register.jsp");
 			failed.forward(req, res);
 			return;
 		} else if (!password.matches(passwordReg)) {
-			req.setAttribute("pwordTooWeak", "æ­¤å¯†ç¢¼å¼·åº¦ä¸è¶³");
+			req.setAttribute("pwordTooWeak", "±K½X±j«×¤£¨¬");
 			req.setAttribute("name", name);
 			req.setAttribute("email", email);
 			RequestDispatcher failed = req.getRequestDispatcher("/register_and_login/register.jsp");
 			failed.forward(req, res);
 			return;
 		} else if (!password.equals(passwordConfirm.trim())) {
-			req.setAttribute("passwordDiff", "ç¢ºèªå¯†ç¢¼èˆ‡å¯†ç¢¼ä¸åŒ");
+			req.setAttribute("passwordDiff", "±K½X»P½T»{±K½X¤£¦P");
 			req.setAttribute("name", name);
 			req.setAttribute("email", email);
 			RequestDispatcher failed = req.getRequestDispatcher("/register_and_login/register.jsp");
@@ -104,10 +104,10 @@ public class Register extends HttpServlet {
 						.withExpiresAt(exp)
 						.sign(algorithm);
 				MailService mailService = new MailService();
-				String content = "è¦ªæ„›çš„" + name + "æ‚¨å¥½:\n\tè«‹åœ¨10åˆ†é˜å…§é€éæ­¤é€£çµé–‹é€šå¸³è™Ÿ:\n\n"+
+				String content = "¿Ë·Rªº" + name + "±z¦n:\n\tÂIÀ»¥H¤U³sµ²¥H¶}³q±b¸¹:\n\n"+
 				"http://localhost:8081"+req.getContextPath()+"/account/register.do?token="+token;
-				mailService.sendMail(email, "å¸³è™Ÿé–‹é€š", content);
-				req.setAttribute("success", "å¸³è™Ÿé–‹é€šä¿¡å·²å¯„å‡ºï¼Œè«‹ç¢ºèª");
+				mailService.sendMail(email, "±b¸¹¶}³q", content);
+				req.setAttribute("success", "µù¥U¦¨¥\¡A½Ğ©ó10¤ÀÄÁ¤º¦Ü¹q¤l«H½c¶}³q±b¸¹");
 				RequestDispatcher success = req.getRequestDispatcher("/register_and_login/register.jsp");
 				success.forward(req, res);
 			} catch (JWTCreationException e) {

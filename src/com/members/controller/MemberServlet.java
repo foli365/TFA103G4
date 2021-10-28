@@ -94,7 +94,7 @@ public class MemberServlet extends HttpServlet {
 			String confirmNewPword = req.getParameter("confirmNewPword");
 			if (currentPassword.trim().length() == 0 || newPassword.trim().length() == 0
 					|| confirmNewPword.trim().length() == 0) {
-				req.setAttribute("invalid", "è«‹è¼¸å…¥æ‰€æœ‰æ¬„ä½å¾Œå†é€å‡º");
+				req.setAttribute("invalid", "½Ğ¿é¤J©Ò¦³Äæ¦ì");
 				req.setAttribute("index", "2");
 				View.forward(req, res);
 				return;
@@ -104,31 +104,31 @@ public class MemberServlet extends HttpServlet {
 			String bcryptHashString = memSvc.findByPrimaryKey(id).getPassword();
 			BCrypt.Result result = BCrypt.verifyer().verify(currentPassword.toCharArray(), bcryptHashString);
 			if (!result.verified) {
-				req.setAttribute("wrongPword", "ç›®å‰å¯†ç¢¼è¼¸å…¥æœ‰èª¤");
+				req.setAttribute("wrongPword", "¥Ø«e±K½X¿é¤J¿ù»~");
 				req.setAttribute("index", "2");
 				View.forward(req, res);
 				return;
 			} else {
 				String passwordReg = "^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{8,}$";
 				if (!newPassword.matches(passwordReg)) {
-					req.setAttribute("pwordTooWeak", "æ­¤å¯†ç¢¼å¼·åº¦ä¸è¶³");
+					req.setAttribute("pwordTooWeak", "±K½X±j«×¤£¨¬");
 					req.setAttribute("index", "2");
 					View.forward(req, res);
 					return;
 				} else if (newPassword.equals(currentPassword)) {
-					req.setAttribute("samePword", "è«‹å‹¿è¼¸å…¥å’Œç›®å‰å¯†ç¢¼ç›¸åŒä¹‹å¯†ç¢¼");
+					req.setAttribute("samePword", "½Ğ¤Å³]¸m»P¥Ø«e±K½X¬Û¦P±K½X");
 					req.setAttribute("index", "2");
 					View.forward(req, res);
 					return;
 				} else if (!newPassword.equals(confirmNewPword)) {
-					req.setAttribute("wrongPword", "å¯†ç¢¼ç¢ºèªå¤±æ•—ï¼Œè«‹é‡æ–°æª¢æŸ¥");
+					req.setAttribute("wrongPword", "½T»{±K½X»P·s±K½X¤£¦P");
 					req.setAttribute("index", "2");
 					View.forward(req, res);
 					return;
 				} else {
 					String hashedPassword = BCrypt.withDefaults().hashToString(12, newPassword.toCharArray());
 					memSvc.updatePassword(hashedPassword, id);
-					req.setAttribute("success", "æ›´æ–°å¯†ç¢¼æˆåŠŸ");
+					req.setAttribute("success", "±K½X§ó·s¦¨¥\");
 					req.setAttribute("index", "2");
 					View.forward(req, res);
 				}

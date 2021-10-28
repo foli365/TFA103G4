@@ -11,28 +11,18 @@
 <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
->>>>>>> Steven
 <title>首頁</title>
 <!-- 日期選擇器的 CSS -->
 <link rel="stylesheet" type="text/css"
 	href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
-<<<<<<< HEAD
-=======
-=======
 <title>Document</title>
 <%@ include file="/template/navbar.jsp"%>
->>>>>>> ab8d8a50a6cc87afa7f38fd7276d321d31b87625
->>>>>>> Steven
 <link rel="stylesheet" href="./index.css">
 <link rel="stylesheet"
 	href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
 </head>
 
 <body>
-	<%@ include file="/template/navbar.jsp"%>
 	<h1 id="title" class="text-center mt-5">Find yourself outside</h1>
 	<h3 class="text-center mb-5">
 		Discover and book tent camping, RV parks,<br> cabins, treehouses,
@@ -72,50 +62,6 @@
 			</form>
 		</div>
 	</div>
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
->>>>>>> Steven
-	<!-- 	<div class="container-sm" id="hot"> -->
-	<!-- 		<h1 class="my-5" style="color: #D84627;">熱門營區</h1> -->
-	<!-- 		<div class="row mb-5 mx-0"> -->
-	<!-- 			<div class="col-md d-flex justify-content-center gx-0"> -->
-	<!-- 				<div class="card" style="width: 100%;"> -->
-	<!-- 					<img src="./img/0_Campsites.jpg" class="card-img-top" alt="..."> -->
-	<!-- 					<div class="card-body"> -->
-	<!-- 						<h5 class="card-title">Card title</h5> -->
-	<!-- 						<p class="card-text">Some quick example text to build on the -->
-	<!-- 							card title and make up the bulk of the card's content.</p> -->
-	<!-- 						<a href="#" class="btn btn-primary">瀏覽營地</a> -->
-	<!-- 					</div> -->
-	<!-- 				</div> -->
-	<!-- 			</div> -->
-	<!-- 			<div class="col-md d-flex justify-content-center"> -->
-	<!-- 				<div class="card" style="width: 100%;"> -->
-	<!-- 					<img src="./img/shutterstock_625918454.0.webp" class="card-img-top" -->
-	<!-- 						alt="..."> -->
-	<!-- 					<div class="card-body"> -->
-	<!-- 						<h5 class="card-title">Card title</h5> -->
-	<!-- 						<p class="card-text">Some quick example text to build on the -->
-	<!-- 							card title and make up the bulk of the card's content.</p> -->
-	<!-- 						<a href="#" class="btn btn-primary">瀏覽營地</a> -->
-	<!-- 					</div> -->
-	<!-- 				</div> -->
-	<!-- 			</div> -->
-	<!-- 			<div class="col-md d-flex justify-content-center"> -->
-	<!-- 				<div class="card" style="width: 100%;"> -->
-	<!-- 					<img src="./img/Leave-No-Trace-campsite-tent.jpg" -->
-	<!-- 						class="card-img-top" alt="..."> -->
-	<!-- 					<div class="card-body"> -->
-	<!-- 						<h5 class="card-title">Card title</h5> -->
-	<!-- 						<p class="card-text">Some quick example text to build on the -->
-	<!-- 							card title and make up the bulk of the card's content.</p> -->
-	<!-- 						<a href="#" class="btn btn-primary">瀏覽營地</a> -->
-	<!-- 					</div> -->
-	<!-- 				</div> -->
-	<!-- 			</div> -->
-	<!-- 		</div> -->
-	<!-- 	</div> -->
 	<%@ include file="/template/script.html"%>
 	<!-- 日期選擇器的 JS -->
 	<script type="text/javascript"
@@ -169,78 +115,6 @@
 					});
 		});
 	</script>
-<<<<<<< HEAD
-=======
-=======
-	<div class="container-sm" id="hot">
-		<h1 class="my-5" style="color: #D84627;">熱門營區</h1>
-		<div class="row mb-5 mx-0">
-			<div class="col-md d-flex justify-content-center gx-0">
-				<div class="card" style="width: 100%;">
-					<img src="./img/0_Campsites.jpg" class="card-img-top" alt="...">
-					<div class="card-body">
-						<h5 class="card-title">Card title</h5>
-						<p class="card-text">Some quick example text to build on the
-							card title and make up the bulk of the card's content.</p>
-						<a href="#" class="btn btn-primary">瀏覽營地</a>
-					</div>
-				</div>
-			</div>
-			<div class="col-md d-flex justify-content-center">
-				<div class="card" style="width: 100%;">
-					<img src="./img/shutterstock_625918454.0.webp" class="card-img-top"
-						alt="...">
-					<div class="card-body">
-						<h5 class="card-title">Card title</h5>
-						<p class="card-text">Some quick example text to build on the
-							card title and make up the bulk of the card's content.</p>
-						<a href="#" class="btn btn-primary">瀏覽營地</a>
-					</div>
-				</div>
-			</div>
-			<div class="col-md d-flex justify-content-center">
-				<div class="card" style="width: 100%;">
-					<img src="./img/Leave-No-Trace-campsite-tent.jpg"
-						class="card-img-top" alt="...">
-					<div class="card-body">
-						<h5 class="card-title">Card title</h5>
-						<p class="card-text">Some quick example text to build on the
-							card title and make up the bulk of the card's content.</p>
-						<a href="#" class="btn btn-primary">瀏覽營地</a>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-	<div class="container">
-		<footer
-			class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top">
-			<div class="col-md-4 d-flex align-items-center">
-				<a href="/"
-					class="mb-3 me-2 mb-md-0 text-muted text-decoration-none lh-1">
-					<svg class="bi" width="30" height="24">
-						<use xlink:href="#bootstrap"></use></svg>
-				</a> <span class="text-muted"><a href="<%=request.getContextPath()%>/backendLogin/backendLogin.jsp">© 2021 GoCamping, Inc</a></span>
-			</div>
-
-			<ul class="nav col-md-4 justify-content-end list-unstyled d-flex">
-				<li class="ms-3"><a class="text-muted" href="#"><svg
-							class="bi" width="24" height="24">
-							<use xlink:href="#twitter"></use></svg></a></li>
-				<li class="ms-3"><a class="text-muted" href="#"><svg
-							class="bi" width="24" height="24">
-							<use xlink:href="#instagram"></use></svg></a></li>
-				<li class="ms-3"><a class="text-muted" href="#"><svg
-							class="bi" width="24" height="24">
-							<use xlink:href="#facebook"></use></svg></a></li>
-			</ul>
-		</footer>
-	</div>
-	<%@ include file="/template/script.html"%>
-	<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
-	<script src="./js/flatpickr.js"></script>
->>>>>>> ab8d8a50a6cc87afa7f38fd7276d321d31b87625
->>>>>>> Steven
 </body>
 
 </html>

@@ -47,7 +47,7 @@ public class JWTMailGenerator extends HttpServlet {
 		cal.add(Calendar.MINUTE, 10);
 		java.util.Date exp = cal.getTime();
 		if (!emailConfirm(email)) {
-			req.setAttribute("noEmail", "æŸ¥ç„¡æ­¤é›»å­ä¿¡ç®±ï¼Œè«‹é‡æ–°è¼¸å…¥");
+			req.setAttribute("noEmail", "¬dµL¹q¤l«H½c");
 			RequestDispatcher noEmail = req.getRequestDispatcher("/register_and_login/search_by_email.jsp");
 			noEmail.forward(req, res);
 		} else {
@@ -64,10 +64,10 @@ public class JWTMailGenerator extends HttpServlet {
 						.sign(algorithm);
 				System.out.println(token);
 				MailService mailService = new MailService();
-				String content = memVO.getName() + "è«‹åœ¨10åˆ†é˜å…§é€éæ­¤é€£çµé‡è¨­å¯†ç¢¼:\n\n"+
+				String content = memVO.getName() + "\t½Ğ¦b¤Q¤ÀÄÁ¤º³z¹L¦¹³sµ²­«³]±K½X:\n\n"+
 				"http://localhost:8081"+req.getContextPath()+"/register_and_login/reset_password.jsp?token="+token;
-				mailService.sendMail(email, "é‡è¨­å¯†ç¢¼", content);
-				req.setAttribute("success", "å¯„é€æˆåŠŸ!");
+				mailService.sendMail(email, "­«³]±K½X", content);
+				req.setAttribute("success", "±H°e¦¨¥\!");
 				RequestDispatcher success = req.getRequestDispatcher("/register_and_login/search_by_email.jsp");
 				success.forward(req, res);
 			} catch (JWTCreationException e) {
