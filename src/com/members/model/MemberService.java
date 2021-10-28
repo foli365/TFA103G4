@@ -4,8 +4,6 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.List;
 
-
-
 public class MemberService {
 
 	private MembersDAO_interface dao;

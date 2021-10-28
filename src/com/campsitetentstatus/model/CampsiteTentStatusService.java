@@ -141,5 +141,15 @@ public class CampsiteTentStatusService {
 	            }
 	        }
 	        return -1;
-	    }	 
+	    }
+	 
+	 public static void main(String[] args) {
+		CampsiteTentStatusService svc = new CampsiteTentStatusService();
+		try {
+			System.out.println(svc.getUnavailibleDatewithGuestNumberOnly(5001, 2));
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 }

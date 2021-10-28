@@ -40,6 +40,12 @@ public class CampOrderServlet extends HttpServlet {
 		String action = req.getParameter("action");
 		// 建立訂單基本資料
 		if ("book".equals(action)) {
+			
+			List<String> errorMsgs = new LinkedList<String>();
+			// Store this set in the request scope, in case we need to
+			// send the ErrorPage view.
+			req.setAttribute("errorMsgs", errorMsgs);
+			
 			try {
 				// 入住日期
 				String from = req.getParameter("from");
@@ -63,8 +69,22 @@ public class CampOrderServlet extends HttpServlet {
 					throw new ExceptionInInitializerError(e);
 				}
 				// 總人數
-				Integer headCount = new Integer(req.getParameter("headCount"));
+				String strHeadCount = req.getParameter("headCount");
 
+				Integer headCount = null;
+				try {
+					headCount = new Integer(strHeadCount);
+				} catch (Exception e) {
+					errorMsgs.add("人數格式不正確");
+				}
+
+				// Send the use back to the form, if there were errors
+				if (!errorMsgs.isEmpty()) {
+					RequestDispatcher failureView = req.getRequestDispatcher(url);
+					failureView.forward(req, res);
+					return;// 程式中斷
+				}
+				
 				// 總價錢
 				Integer price = new Integer(req.getParameter("price"));
 				// 會員ID
@@ -94,6 +114,7 @@ public class CampOrderServlet extends HttpServlet {
 					// TODO: handle exception
 					throw new ExceptionInInitializerError(e);
 				}
+				
 				//檢查預訂期間剩餘空位
 				CampsiteTentStatusService CTSSvc = new CampsiteTentStatusService();
 				try {
@@ -127,6 +148,7 @@ public class CampOrderServlet extends HttpServlet {
 						confirmDate = new java.sql.Date(c.getTimeInMillis());
 					}
 				}
+				
 				// 將以上屬性新增至新的營地訂單物件
 				CampOrderVO campOrderVO = new CampOrderVO();
 				campOrderVO.setCampId(campId);

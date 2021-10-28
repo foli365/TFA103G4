@@ -72,6 +72,10 @@ public class CampOrderService {
 		return dao.findbyPrimaryKey(campOrderId);
 	}
 
+	public List<CampOrderVO> getOneCampsiteCampOrderVO(Integer campId) {
+		return dao.findbyCampId(campId);
+	}
+	
 	public List<CampOrderVO> getAll() {
 		return dao.getAll();
 	}
@@ -113,3 +117,4 @@ public class CampOrderService {
 		return campOrderVO;
 	}
 }
+	

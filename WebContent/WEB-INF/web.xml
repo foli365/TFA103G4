@@ -145,6 +145,14 @@
 		<url-pattern>/campsite/campsite.do</url-pattern>
 	</servlet-mapping>
 	<servlet>
+		<servlet-name>HomePage</servlet-name>
+		<servlet-class>com.campsite.controller.CampsiteServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>HomePage</servlet-name>
+		<url-pattern>/homepage/campsite.do</url-pattern>
+	</servlet-mapping>
+	<servlet>
 		<servlet-name>CampsiteTentStatusServlet</servlet-name>
 		<servlet-class>com.campsitetentstatus.controller.CampsiteTentStatusServlet</servlet-class>
 	</servlet>

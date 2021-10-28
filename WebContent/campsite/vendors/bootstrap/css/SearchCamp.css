@@ -6,6 +6,11 @@
     padding-right: 120px;
     padding-left: 120px;
 } */
+body {
+	/* 	background-color: #fbefe7; */
+	
+}
+
 .search-bar {
 	padding: 20px 40px;
 	border-radius: 60px;
@@ -23,17 +28,17 @@ input:focus {
 		rgba(102, 175, 233, .6)
 }
 
-.col-2 {
+.col-md-2 {
 	padding-left: 5px;
 	padding-right: 5px;
 }
 
-.col-3 {
+.col-md-3 {
 	padding-left: 5px;
 	padding-right: 5px;
 }
 
-.col-4 {
+.col-md-4 {
 	padding-left: 5px;
 	padding-right: 5px;
 }
@@ -73,6 +78,17 @@ input:focus {
 	right: 80px;
 }
 
+@media ( max-width : 768px) {
+	.search-icon {
+		border: none;
+		font-size: 25px;
+		background-color: transparent;
+		position: absolute;
+		top: 20px;
+		right: 40px;
+	}
+}
+
 .row-2 {
 	margin-bottom: 10px;
 }
@@ -89,7 +105,6 @@ input:focus {
 }
 
 .camp-list {
-	margin-left: 20px;
 	height: 700px;
 	width: 750px;
 	overflow: auto;
