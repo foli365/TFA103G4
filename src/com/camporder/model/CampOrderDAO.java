@@ -33,6 +33,8 @@ public class CampOrderDAO implements CampOrderDAO_interface {
 	public static final String GET_ALL = "SELECT CAMP_ORDER_ID, CAMP_ID, MEMBER_ID, GUEST_NUMBER, "
 			+ "CHECK_IN_DATE, CHECK_OUT_DATE, ORDER_DATE, PAYMENT_DEADLINE, ORDER_STATUS, ORDER_TOTAL, COMMENT "
 			+ "FROM CAMP_ORDER ORDER BY CAMP_ORDER_ID";
+	public static final String ADD_COMMENT = "update CAMP_ORDER set COMMENT = ? where CAMP_ORDER_ID = ?";	
+			
 
 
 	static { 

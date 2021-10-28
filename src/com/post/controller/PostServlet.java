@@ -6,6 +6,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.post.model.PostService;
 import com.post.model.PostVO;
@@ -50,6 +51,8 @@ public class PostServlet extends HttpServlet {
 			try {
 				String article = req.getParameter("article");
 				String title = req.getParameter("title");
+				HttpSession session = req.getSession();
+				Integer id = new Integer(session.getAttribute("id").toString());
 				
 				
 				PostVO postVO = new PostVO();
@@ -57,7 +60,7 @@ public class PostServlet extends HttpServlet {
 				postVO.setTitle(title);
 				
 				PostService postSvc = new PostService();
-				postSvc.addPost(1, title, article);
+				postSvc.addPost(id, title, article);
 
 				res.sendRedirect("index.jsp");
 			} catch (Exception e) {
@@ -67,20 +70,20 @@ public class PostServlet extends HttpServlet {
 			
 		}
 		
-		if ("delete".equals(action)) { // ¨Ó¦ÛlistAllEmp.jsp
+		if ("delete".equals(action)) { // ï¿½Ó¦ï¿½listAllEmp.jsp
 	
 			try {
-				/***************************1.±µ¦¬½Ð¨D°Ñ¼Æ***************************************/
+				/***************************1.ï¿½ï¿½ï¿½ï¿½ï¿½Ð¨Dï¿½Ñ¼ï¿½***************************************/
 				Integer postId = new Integer(req.getParameter("postId"));
 				
-				/***************************2.¶}©l§R°£¸ê®Æ***************************************/
+				/***************************2.ï¿½}ï¿½lï¿½Rï¿½ï¿½ï¿½ï¿½ï¿½***************************************/
 				PostService postSvc = new PostService();
 				postSvc.delete(postId);
 				
-				/***************************3.§R°£§¹¦¨,·Ç³ÆÂà¥æ(Send the Success view)***********/								
+				/***************************3.ï¿½Rï¿½ï¿½ï¿½ï¿½ï¿½ï¿½,ï¿½Ç³ï¿½ï¿½ï¿½ï¿½(Send the Success view)***********/								
 				
 				res.sendRedirect("index.jsp");
-				/***************************¨ä¥L¥i¯àªº¿ù»~³B²z**********************************/
+				/***************************ï¿½ï¿½Lï¿½iï¿½àªºï¿½ï¿½ï¿½~ï¿½Bï¿½z**********************************/
 			} catch (Exception e) {
 				e.printStackTrace();
 			}

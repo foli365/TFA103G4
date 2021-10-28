@@ -16,7 +16,7 @@ public class CampAlertDAO implements CampAlertDao_interface {
 	public static final String URL = "jdbc:mysql://localhost:3306/GoCamping?serverTimezone=Asia/Taipei";
 	public static final String USER = "David";
 	public static final String PASSWORD = "123456";
-	public static final String INSERT_STMT = "INSERT INTO camp_alert(alert_Id, member_Id, camp_Id,report_Time,content, picture1, picture2, picture3,report_Status,handeler) VALUES( ?, ?, ?, ?, ?, ?, ?, ?,?,?)";
+	public static final String INSERT_STMT = "INSERT INTO camp_alert(member_Id, camp_Id,report_Time,content, picture1, picture2, picture3,report_Status,handeler) VALUES(?, ?, ?, ?, ?, ?, ?,?,?)";
 	public static final String UPDATE = "UPDATE CAMP_ALERT SET member_Id=?,camp_Id=?, report_Time=?, content=?, picture1=?,picture2=?, picture3=?,report_Status=?,handeler=? WHERE alert_Id=? ";
 	public static final String DELETE = "DELETE FROM CAMP_ALERT WHERE alert_Id=?";
 	public static final String GET_ONE_STMT = "SELECT * FROM CAMP_ALERT WHERE alert_Id=?";
@@ -41,16 +41,15 @@ public class CampAlertDAO implements CampAlertDao_interface {
 			pstmt = con.prepareStatement(INSERT_STMT);
 			
 
-			pstmt.setInt(1, DAO.getAlertId());
-			pstmt.setInt(2, DAO.getMemberId());
-			pstmt.setInt(3, DAO.getCampId());
-			pstmt.setString(4, DAO.getReportTime());
-			pstmt.setString(5, DAO.getContent());
-			pstmt.setBytes(6,DAO.getPicture1());
-			pstmt.setBytes(7,DAO.getPicture2());
-			pstmt.setBytes(8,DAO.getPicture3());
-			pstmt.setInt(9, DAO.getReportStatus());
-			pstmt.setInt(10, DAO.getHandeler());
+			pstmt.setInt(1, DAO.getMemberId());
+			pstmt.setInt(2, DAO.getCampId());
+			pstmt.setString(3, DAO.getReportTime());
+			pstmt.setString(4, DAO.getContent());
+			pstmt.setBytes(5,DAO.getPicture1());
+			pstmt.setBytes(6,DAO.getPicture2());
+			pstmt.setBytes(7,DAO.getPicture3());
+			pstmt.setInt(8, DAO.getReportStatus());
+			pstmt.setInt(9, DAO.getHandeler());
 			pstmt.executeUpdate();
 						
 			
@@ -234,7 +233,7 @@ public class CampAlertDAO implements CampAlertDao_interface {
 			rs = pstmt.executeQuery();
 
 			while (rs.next()) {
-				// empVO 也稱為 Domain objects
+				// empVO 銋迂� Domain objects
 				vo = new CampAlertVO();
 				vo.setAlertId(rs.getInt("alert_Id"));
 				vo.setMemberId(rs.getInt("member_Id"));
