@@ -11,10 +11,9 @@ public class CampAlertService {
 		dao = new CampAlertDAO();
 	}
 
-	public CampAlertVO insertcCampAlertVO(Integer alertId, Integer memberId,Integer campId,String report_Time,String content,byte[] picture1,byte[] picture2,byte[] picture3,Integer report_Status,Integer handeler) {
+	public CampAlertVO insertcCampAlertVO(Integer memberId,Integer campId,String report_Time,String content,byte[] picture1,byte[] picture2,byte[] picture3,Integer report_Status,Integer handeler) {
 
 		CampAlertVO campalert = new CampAlertVO();
-		campalert.setAlertId(alertId);
 		campalert.setMemberId(memberId);
 		campalert.setCampId(campId);
 		campalert.setReportTime(report_Time);

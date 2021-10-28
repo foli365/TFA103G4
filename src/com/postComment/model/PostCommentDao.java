@@ -241,18 +241,18 @@ public class PostCommentDao implements postCommentDAO_interface {
 		long days = diffInSec / 86400;
 		long years = diffInSec / 31207680;
 		if (diffInSec <= 60) {
-			return diffInSec + "¬í«e";
+			return diffInSec + "ç§’å‰";
 		} else if (min <= 60) {
-			return min + "¤ÀÄÁ«e";
+			return min + "åˆ†é˜å‰";
 		} else if (hrs <= 24) {
-			return hrs + "¤p®É«e";
+			return hrs + "å°æ™‚å‰";
 		} else if (days <= 48) {
-			return days + "¤Ñ«e";
+			return days + "å¤©å‰";
 		} else if (days > 48) {
-			return calMonth + "¤ë" + calDays + "¤é";
+			return calMonth + "æœˆ" + calDays + "è™Ÿ";
 		} else {
 			if (years >= 1) {
-				return calYears + "¦~" + calMonth + "¤ë" + calDays + "¤é";
+				return calYears + "å¹´" + calMonth + "æœˆ" + calDays + "è™Ÿ";
 			}
 		}
 		return null;

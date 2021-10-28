@@ -32,7 +32,7 @@ public class PostDAO implements PostDAO_Interface {
 	private static final String INSERT_STMT = "INSERT INTO post (author_id, title, article, created) VALUES (?, ?, ?, ?)";
 	private static final String UPDATE = "UPDATE post set title=?, article=?, created=? where post_id = ?";
 	private static final String DELETE = "DELETE FROM post where post_id = ?";
-	private static final String GET_ONE_BY_AUTHOR = "SELECT author_id, post_id, title, article, created FROM post where author_id= ?";
+	private static final String GET_ONE_BY_AUTHOR = "SELECT author_id, post_id, title, article, created FROM post where author_id= ? order by created desc";
 	private static final String GET_ONE_BY_POSTID = "SELECT author_id, post_id, title, article, created FROM post where post_id= ?";
 	private static final String GET_ALL_STMT = "SELECT author_id, post_id, title, article, created FROM post order by created desc";
 
@@ -333,18 +333,18 @@ public class PostDAO implements PostDAO_Interface {
 		long days = diffInSec / 86400;
 		long years = diffInSec / 31207680;
 		if (diffInSec <= 60) {
-			return diffInSec + "¬í«e";
+			return diffInSec + "ç§’å‰";
 		} else if (min <= 60) {
-			return min + "¤ÀÄÁ«e";
+			return min + "åˆ†é˜å‰";
 		} else if (hrs <= 24) {
-			return hrs + "¤p®É«e";
+			return hrs + "å°æ™‚å‰";
 		} else if (days <= 48) {
-			return days + "¤Ñ«e";
+			return days + "å¤©å‰";
 		} else if (days > 48) {
-			return calMonth + "¤ë" + calDays + "¤é";
+			return calMonth + "æœˆ" + calDays + "è™Ÿ";
 		} else {
 			if (years >= 1) {
-				return calYears + "¦~" + calMonth + "¤ë" + calDays + "¤é";
+				return calYears + "å¹´" + calMonth + "æœˆ" + calDays + "è™Ÿ";
 			}
 		}
 		return null;

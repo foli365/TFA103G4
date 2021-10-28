@@ -63,7 +63,7 @@ public class CampsiteTentStatusService {
 		return newlist;
 	}
 
-	// ·í±oª¾Àç¦aID©M¹w­q¤H¼Æ«á¡A¨ú±oµLªk¹w©wªº¤é´Á
+	// ï¿½ï¿½oï¿½ï¿½ï¿½ï¿½aIDï¿½Mï¿½wï¿½qï¿½Hï¿½Æ«ï¿½Aï¿½ï¿½ï¿½oï¿½Lï¿½kï¿½wï¿½wï¿½ï¿½ï¿½ï¿½ï¿½
 	public ArrayList<String> getUnavailibleDatewithGuestNumberOnly(Integer campId, Integer guestCount) throws ParseException {
 		CampsiteTentStatusService CTSSvc = new CampsiteTentStatusService();
 		ArrayList<CampsiteTentStatusVO> list = (ArrayList<CampsiteTentStatusVO>) CTSSvc.getAllCampStatusofOneCamp(campId);

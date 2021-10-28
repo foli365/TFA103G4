@@ -18,7 +18,6 @@ public static void main(String[] args) throws IOException {
 	int k = 0;
 	
 	CampAlertVO vo = new CampAlertVO();
-	vo.setAlertId(2);
 	vo.setMemberId(1);
 	vo.setCampId(5001);
 	vo.setReportTime("20211001");

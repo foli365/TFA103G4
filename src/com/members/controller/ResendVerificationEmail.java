@@ -18,13 +18,14 @@ import com.auth0.jwt.exceptions.JWTCreationException;
 import com.auth0.jwt.interfaces.DecodedJWT;
 
 @WebServlet("/resend")
-public class ResendVerificationEmail extends HttpServlet{
+public class ResendVerificationEmail extends HttpServlet {
 	private static final String SECRET = "0zy^=Q5&nZpw#Cm'+?&TdlaB0=DeiV*>/x:Pv.amM\"NE;m4k/Mm{Sb;Qx[hN9hP!";
+
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(req.getInputStream()));
 		String json = "";
-		if (br!=null) {
+		if (br != null) {
 			json = br.readLine();
 		}
 		DecodedJWT jwt = JWT.decode(json);
@@ -36,17 +37,13 @@ public class ResendVerificationEmail extends HttpServlet{
 			cal.add(Calendar.MINUTE, 10);
 			java.util.Date exp = cal.getTime();
 			Algorithm algorithm = Algorithm.HMAC256(SECRET);
-			String newtoken = JWT.create()
-					.withSubject(email)
-					.withClaim("password", password)
-					.withClaim("name", name)
-					.withExpiresAt(exp)
-					.sign(algorithm);
+			String newtoken = JWT.create().withSubject(email).withClaim("password", password).withClaim("name", name)
+					.withExpiresAt(exp).sign(algorithm);
 			MailService mailService = new MailService();
-			String content = "¿Ë·Rªº" + name + "±z¦n:\n\t½Ğ¦b10¤ÀÄÁ¤º³z¹L¦¹³sµ²¶}³q±b¸¹:\n\n"+
-			"http://localhost:8081"+req.getContextPath()+"/account/register.do?token="+newtoken;
-			mailService.sendMail(email, "±b¸¹¶}³q", content);
-			req.setAttribute("success", "½Ğ±z¦b10¤ÀÄÁ¤º«e©¹¹q¤l«H½c¶}³q±b¸¹");
+			String content = "è¦ªæ„›çš„" + name + "æ‚¨å¥½:\n\tè«‹åœ¨10åˆ†é˜å…§é€éæ­¤é€£çµé–‹é€šå¸³è™Ÿ:\n\n" + "http://localhost:8081"
+					+ req.getContextPath() + "/account/register.do?token=" + newtoken;
+			mailService.sendMail(email, "å¸³è™Ÿé–‹é€š", content);
+			req.setAttribute("success", "å¸³è™Ÿé–‹é€šä¿¡å·²å¯„å‡ºï¼Œè«‹ç¢ºèª");
 			RequestDispatcher success = req.getRequestDispatcher("/register_and_login/validate_result.jsp");
 			success.forward(req, resp);
 		} catch (JWTCreationException e) {
@@ -54,6 +51,6 @@ public class ResendVerificationEmail extends HttpServlet{
 		} catch (Exception e) {
 			// TODO: handle exception
 		}
-		
+
 	}
 }
