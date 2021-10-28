@@ -41,7 +41,6 @@
 						class="fas fa-caret-down second"></span>
 				</a>
 					<ul class="serv-show">
-						<li><a href="../product/PushProduct.jsp" class="product_up">商品上架</a></li>
 						<li><a href="../product/selectAll.jsp" class="product_list">商品資料表</a></li>
 					</ul></li>
 				<li><a href="#1" class="bom-btn">營地管理 <span
@@ -50,6 +49,7 @@
 
 					<ul class="bom-show">
 						<li><a href="#" class="camp_list">營地列表</a></li>
+						  <li><a href='campOrder.jsp'class="camp_order">營地訂單</a></li>
 						<li><a href="#" class="alert_managament">檢舉管理</a></li>
 					</ul></li>
 				<li><a href="#" class="mky-btn">商城管理 <span
@@ -58,6 +58,12 @@
 					<ul class="mky-show">
 						<li><a href="#" class="shopping_list">商城訂單</a></li>
 					</ul></li>
+					
+				<li>
+                <form METHOD="get" ACTION="<%=request.getContextPath()%>/backendLogin/home.do">
+                  <button type="submit" class="btn btn-outline-secondary" id="btnlog">logout</button>
+                </form>
+                </li>
 			</ul>
 		</nav>
 	</div>

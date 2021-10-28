@@ -106,14 +106,15 @@
         </nav>
     </div>
     <div class="rightside" id="rig-1">
-        <h2>商品資料表</h2><h4><a href='selectAll.jsp'>回首頁</a></h4><br>
+        <h2>商品資料表</h2><h4><a href='selectAll.jsp'>返回</a></h4><br>
         <h3>商品類型：</h3>     
         <div class="dropdown">       		
             <div class="wrap">
             <div class="search">
             <FORM METHOD="post" ACTION="product.do" >
-            <input class="search-bar" type="text"  name="productno" placeholder="輸入名稱">
-       		<input type="hidden" name="action" value="search">        	
+            <input class="search-bar" type="text"  name="name" placeholder="輸入名稱">
+       		<input type="hidden" name="action" value="search">
+<!--        		<input type="hidden" name="action" value="pname">        	 -->
            <button type="submit" class="search-btn"><i class="fas fa-search"></i></button>
            </div>
         </div>
@@ -139,7 +140,7 @@
 				<th>商品圖片3</th>
 				
             </tr>
-	<tr>
+	<tr> 
 		<td><%= productVO.getProductno()%></td>
 		<td><%= productVO.getPname()%></td>
 		<td><%= productVO.getPsort()%></td>

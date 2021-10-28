@@ -14,14 +14,12 @@ public static void main(String[] args) throws IOException {
 	String path = "C:\\Users\\Tibame_T14\\Desktop\\images";
 	File f = new File(path);
 	String s[] = f.list();
-	System.out.println(s[0]);
 	
 	int k = 0;
 	
 	CampAlertVO vo = new CampAlertVO();
-	vo.setAlertId(4);
-	vo.setMemberId(1001);
-	vo.setCampId(1);
+	vo.setMemberId(1);
+	vo.setCampId(5001);
 	vo.setReportTime("20211001");
 	vo.setContent("檢舉內容");
 	vo.setReportStatus(0);

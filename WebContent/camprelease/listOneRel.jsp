@@ -1,17 +1,27 @@
-<%@ page contentType="text/html; charset=UTF-8" pageEncoding="Big5"%>
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ page import="java.util.*"%>
 <%@ page import="com.camprelease.model.*"%>
+<%@ page import="com.facilities.model.*"%>
+<%@ page import="com.plan.model.*"%>
 
 <%
-CampReleaseVO campreleaseVO = (CampReleaseVO) request.getAttribute("campreleaseVO"); //CampReleaseServlet.java(Concroller), ¦s¤JreqªºcampreleaseVOª«¥ó
+// CampReleaseVO campreleaseVO = (CampReleaseVO) request.getAttribute("campreleaseVO"); //CampReleaseServlet.java(Concroller), å­˜å…¥reqçš„campreleaseVOç‰©ä»¶
+// PlanService planSvc = new PlanService();
+// CampReleaseVO campreleaseVO = (CampReleaseVO) session.getAttribute("campreleaseVO");
+// Integer campId = campreleaseVO.getCampId();
+// List<PlanVO> list = planSvc.getByCampId(campId);
+// pageContext.setAttribute("list", list);
 %>
 
 <!DOCTYPE html>
 <html>
 <head>
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
-<title>Åã¥Ü¤@­ÓÀç¦a¸ê®Æ</title>
+<title>é¡¯ç¤ºä¸€å€‹ç‡Ÿåœ°è³‡æ–™</title>
   <link rel='stylesheet' href='<%=request.getContextPath()%>/camprelease/css/jquery.dataTables.min.css' />
   <link rel="stylesheet" href="<%=request.getContextPath()%>/camprelease/css/bootstrap.min5.1.0.css">
+  <link rel="stylesheet" href="<%=request.getContextPath()%>/camprelease/css/icon.css">
 </head>
 <style>
 
@@ -28,11 +38,51 @@ body{
 text-align: center;
 }
 
+      /* ä»¥ä¸‹è¨­å‚™ */
+      .setting-label{
+        position: relative;
+        display: inline-block;
+        line-height: 1em;
+        overflow: hidden;
+        margin: 0 5px 5px 0;
+        cursor: pointer;
+      }
+      .setting-label > input{
+        position: absolute;
+        top: -20px;
+        left: -20px;
+      }
+      .setting-label > span{
+        position: relative;
+        display: block;
+        padding: 10px 12px 10px 10px;
+        color: #000;
+        font-weight: 500;
+        background-color: lightgray;
+        /* white-space: nowrap;
+        border-radius: 2em; */
+        -webkit-border-radius: 2em;
+        -moz-border-radius: 2em;
+      }
+      .setting-label > span > i{
+        opacity: 1;
+      }
+      .setting-label:hover > span{
+        color:#fff;
+        background-color: #F4A249;
+      }
+      .setting-label:hover >span.male{
+        background-color: #F4A249;
+      }
+      .setting-label input:checked + span{
+        background-color: #f23557;
+        color: white;
+      }
 </style>
 <body>
 
 <header class="header" >
-  <h1 class="header__title">Åã¥Ü¤@µ§¸ê®Æ</h1><br>
+  <h1 class="header__title">é¡¯ç¤ºä¸€ç­†è³‡æ–™</h1><br>
   <table id="table-1">
 		 <h4><a href="<%=request.getContextPath()%>/camprelease/Select_Page.jsp"><img src="images/gocamping.jpg" width="500" height="125" border="0"><br>back home</a></h4>
 </table>
@@ -41,46 +91,52 @@ text-align: center;
 <table id="example" class="display nowrap" style="width:100%">
     <thead>
 	<tr>
-		<th>Àç¦a½s¸¹</th>
-		<th>·|­û½s¸¹</th>
-		<th>Àç¦a¦WºÙ</th>
-		<th>¦aÂI</th>
-		<th>¸g«×</th>
-		<th>½n«×</th>
-		<th>Àç¦a¤¶²Ğ</th>
-		<th>»ù¿ú</th>
-		<th>¤é´Á</th>
-		<th>°t®M¦WºÙ</th>
-        <th>°t®M»ù®æ</th>
-        <th>°t®M·f°t¤H¼Æ</th>
+		<th>ç‡Ÿåœ°ç·¨è™Ÿ</th>
+		<th>æœƒå“¡ç·¨è™Ÿ</th>
+		<th>ç‡Ÿåœ°åç¨±</th>
+		<th>åœ°é»</th>
+		<th>ç¶“åº¦</th>
+		<th>ç·¯åº¦</th>
+		<th>ç‡Ÿåœ°ä»‹ç´¹</th>
+		<th>åƒ¹éŒ¢</th>
+		<th>æ—¥æœŸ</th>
 		<th>pic1</th>
 		<th>pic2</th>
 		<th>pic3</th>
 		<th>pic4</th>
 		<th>pic5</th>
-		<th>³]¬I</th>
+		<th>é…å¥—</th>
+		<th>è¨­æ–½</th>
 	</tr>
 	</thead>
 	<tbody>
+	<jsp:useBean id="facilitiesSvc" scope="page" class="com.facilities.model.FacilitiesService" />
+<%-- 	<jsp:useBean id="planSvc" scope="page" class="com.plan.model.PlanService" /> --%>
 	<tr>
-			<td><%=campreleaseVO.getCampId()%></td>
-			<td><%=campreleaseVO.getMemberId()%></td>
-			<td><%=campreleaseVO.getCampName()%></td>
-			<td><%=campreleaseVO.getLocation()%></td>
-			<td><%=campreleaseVO.getLatitude()%></td>
-			<td><%=campreleaseVO.getLongtitude()%></td>
-			<td><%=campreleaseVO.getCampDescription()%></td> 
-			<td><%=campreleaseVO.getCampPrice()%></td>
-			<td><%=campreleaseVO.getListedTime()%></td>
-			<td>°t®M¦WºÙ</td>
-            <td>°t®M»ù®æ</td>
-            <td>°t®M·f°t¤H¼Æ</td>
-			<td><img src="<%=request.getContextPath() %>/CampReleasePhotoServlet?id=${campreleaseVO.campId}&img=1" width="100">
-			<td><img src="<%=request.getContextPath() %>/CampReleasePhotoServlet?id=${campreleaseVO.campId}&img=2" width="100">
-			<td><img src="<%=request.getContextPath() %>/CampReleasePhotoServlet?id=${campreleaseVO.campId}&img=3" width="100">
-			<td><img src="<%=request.getContextPath() %>/CampReleasePhotoServlet?id=${campreleaseVO.campId}&img=4" width="100">
-			<td><img src="<%=request.getContextPath() %>/CampReleasePhotoServlet?id=${campreleaseVO.campId}&img=5" width="100">
-			<td>³]¬I</td>
+			 <td>ã€${campreleaseVO.campId}ã€‘</td>
+			<td>ã€${campreleaseVO.memberId}ã€‘</td>
+			<td>ã€${campreleaseVO.campName}ã€‘</td>
+			<td>ã€${campreleaseVO.location}ã€‘</td>
+			<td>ã€${campreleaseVO.latitude}ã€‘</td>
+			<td>ã€${campreleaseVO.longtitude}ã€‘</td>
+			<td>ã€${campreleaseVO.campDescription}ã€‘</td> 
+			<td>ã€${campreleaseVO.campPrice}å…ƒã€‘</td>
+		    <td>ã€<fmt:formatDate value="${campreleaseVO.listedTime}"
+					pattern="yyyy-MM-dd HH:mm:ss" />ã€‘</td>
+			<td><img src="<%=request.getContextPath() %>/CampReleasePhotoServlet?id=${campreleaseVO.campId}&img=1" width="100"></td>
+			<td><img src="<%=request.getContextPath() %>/CampReleasePhotoServlet?id=${campreleaseVO.campId}&img=2" width="100"></td>
+			<td><img src="<%=request.getContextPath() %>/CampReleasePhotoServlet?id=${campreleaseVO.campId}&img=3" width="100"></td>
+			<td><img src="<%=request.getContextPath() %>/CampReleasePhotoServlet?id=${campreleaseVO.campId}&img=4" width="100"></td>
+			<td><img src="<%=request.getContextPath() %>/CampReleasePhotoServlet?id=${campreleaseVO.campId}&img=5" width="100"></td>
+            <td>ã€${planVO.planName}ã€‘ã€${planVO.planGuestLimit}äººã€‘ã€${planVO.planAgeLimit}æ­²ä»¥ä¸‹ã€‘ã€${planVO.planPrice}å…ƒã€‘<br></td>
+			<td>			      
+			      <div>
+<%--                     <label class="setting-label circle-line" for="setting[]"><input type="checkbox" name="bbq" id="bbq" value="1" ${facilitiesSvc.getByCampId(facilitiesVO.getCampId()).bbq == '1' ? 'checked' : ''}><span class="material-icons md-18">outdoor_grill</span></label> --%>
+<%--                     <label class="setting-label circle-line" for="setting[]"><input type="checkbox" name="wifi" id="wifi" value="1" ${facilitiesSvc.getByCampId(facilitiesVO.getCampId()).wifi == '1' ? 'checked' : ''}><span class="material-icons md-18">wifi</span></label> --%>
+<%--                     <label class="setting-label circle-line" for="setting[]"><input type="checkbox" name="nosmoke" id="nosmoke" value="1" ${facilitiesSvc.getByCampId(facilitiesVO.getCampId()).nosmoke == '1' ? 'checked' : ''}><span class="material-icons md-18">smoke_free</span></label> --%>
+<%--                     <label class="setting-label circle-line" for="setting[]"><input type="checkbox" name="pets" id="pets" value="1" ${facilitiesSvc.getByCampId(facilitiesVO.getCampId()).pets == '1' ? 'checked' : ''}><span class="material-icons md-18">pets</span></label> --%>
+                  </div>
+            </td>
 	</tr>
 	</tbody>
 </table>
@@ -92,29 +148,29 @@ text-align: center;
        $(document).ready(function() {
     $('#example').DataTable( {
         "scrollX": true,
-        "searching": false, //·j´M¥\¯à, ¹w³]¬O¶}±Ò
-        "paging": false, //¤À­¶¥\¯à, ¹w³]¬O¶}±Ò
-        "ordering": false, //±Æ§Ç¥\¯à, ¹w³]¬O¶}±Ò
+        "searching": false, //æœå°‹åŠŸèƒ½, é è¨­æ˜¯é–‹å•Ÿ
+        "paging": false, //åˆ†é åŠŸèƒ½, é è¨­æ˜¯é–‹å•Ÿ
+        "ordering": false, //æ’åºåŠŸèƒ½, é è¨­æ˜¯é–‹å•Ÿ
         "lengthMenu": false,
         // "aria": {
-        //     "sortAscending": ": ¤É¾­±Æ¦C",
-        //     "sortDescending": ": ­°¾­±Æ¦C"
+        //     "sortAscending": ": å‡å†ªæ’åˆ—",
+        //     "sortDescending": ": é™å†ªæ’åˆ—"
         // }
         "language": {
-        "processing": "³B²z¤¤...",
-        "loadingRecords": "¸ü¤J¤¤...",
-        "lengthMenu": "Åã¥Ü _MENU_ ¶µµ²ªG",
-        "zeroRecords": "¨S¦³²Å¦Xªºµ²ªG",
-        "info": "Åã¥Ü²Ä _START_ ¦Ü _END_ ¶µµ²ªG¡A¦@ _TOTAL_ ¶µ",
-        "infoEmpty": "Åã¥Ü²Ä 0 ¦Ü 0 ¶µµ²ªG¡A¦@ 0 ¶µ",
-        "infoFiltered": "(±q _MAX_ ¶µµ²ªG¤¤¹LÂo)",
+        "processing": "è™•ç†ä¸­...",
+        "loadingRecords": "è¼‰å…¥ä¸­...",
+        "lengthMenu": "é¡¯ç¤º _MENU_ é …çµæœ",
+        "zeroRecords": "æ²’æœ‰ç¬¦åˆçš„çµæœ",
+        "info": "é¡¯ç¤ºç¬¬ _START_ è‡³ _END_ é …çµæœï¼Œå…± _TOTAL_ é …",
+        "infoEmpty": "é¡¯ç¤ºç¬¬ 0 è‡³ 0 é …çµæœï¼Œå…± 0 é …",
+        "infoFiltered": "(å¾ _MAX_ é …çµæœä¸­éæ¿¾)",
         "infoPostFix": "",
-        "search": "·j´M:",
+        "search": "æœå°‹:",
         "paginate": {
-            "first": "²Ä¤@­¶",
-            "previous": "¤W¤@­¶",
-            "next": "¤U¤@­¶",
-            "last": "³Ì«á¤@­¶"
+            "first": "ç¬¬ä¸€é ",
+            "previous": "ä¸Šä¸€é ",
+            "next": "ä¸‹ä¸€é ",
+            "last": "æœ€å¾Œä¸€é "
         },
     }
     } );

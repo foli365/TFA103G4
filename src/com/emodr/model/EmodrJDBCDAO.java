@@ -10,7 +10,7 @@ import java.util.List;
 
 public class EmodrJDBCDAO implements EmodrDAO_interface {
 	String driver = "com.mysql.cj.jdbc.Driver";
-	String url = "jdbc:mysql://localhost:3306/db01?serverTimezone=Asia/Taipei";
+	String url = "jdbc:mysql://localhost:3306/gocamping?serverTimezone=Asia/Taipei";
 	String userid = "David";
 	String passwd = "123456";
 
@@ -280,5 +280,13 @@ public class EmodrJDBCDAO implements EmodrDAO_interface {
 		return list;
 
 	}
+
+	@Override
+	public List<EmodrVO> notDisplay(Integer emodrid) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
 
 }

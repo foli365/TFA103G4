@@ -16,6 +16,9 @@ $("a.member_list").on("click", function() {
 $("a.alert_managament").on("click", function() {
     $(window).attr('location', 'alert.jsp');
 });
+$("a.camp_order").on("click", function(){
+	$(window).attr('location', 'campOrder.jsp');
+});
 $("h1").on("click", function() {
     $(window).attr('location', 'home.jsp');
 });

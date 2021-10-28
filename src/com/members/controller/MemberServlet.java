@@ -28,8 +28,8 @@ public class MemberServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		req.setCharacterEncoding("UTF-8");
-		String action = req.getParameter("action");
-		String url = "/account/edit_profile.jsp";
+		final String action = req.getParameter("action");
+		final String url = "/account/edit_profile.jsp";
 
 		if ("update".equals(action)) {
 			try {
@@ -94,7 +94,9 @@ public class MemberServlet extends HttpServlet {
 			String confirmNewPword = req.getParameter("confirmNewPword");
 			if (currentPassword.trim().length() == 0 || newPassword.trim().length() == 0
 					|| confirmNewPword.trim().length() == 0) {
-				req.setAttribute("invalid", "½Ğ¿é¤J©Ò¦³Äæ¦ì");
+				req.setAttribute("invalid", "è«‹è¼¸å…¥æ‰€æœ‰æ¬„ä½å¾Œå†é€å‡º");
+				req.setAttribute("index", "2");
+				View.forward(req, res);
 				return;
 			}
 			HttpSession session = req.getSession();
@@ -102,31 +104,31 @@ public class MemberServlet extends HttpServlet {
 			String bcryptHashString = memSvc.findByPrimaryKey(id).getPassword();
 			BCrypt.Result result = BCrypt.verifyer().verify(currentPassword.toCharArray(), bcryptHashString);
 			if (!result.verified) {
-				req.setAttribute("wrongPword", "±K½X©Î½T»{±K½X¿é¤J¿ù»~¡A½Ğ­«·sÀË¬d");
+				req.setAttribute("wrongPword", "ç›®å‰å¯†ç¢¼è¼¸å…¥æœ‰èª¤");
 				req.setAttribute("index", "2");
 				View.forward(req, res);
 				return;
 			} else {
 				String passwordReg = "^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{8,}$";
 				if (!newPassword.matches(passwordReg)) {
-					req.setAttribute("pwordTooWeak", "±K½Xªø«×¤£±o¤p©ó8¥B¦Ü¤Ö¶·¦³¤@¦r¥À");
+					req.setAttribute("pwordTooWeak", "æ­¤å¯†ç¢¼å¼·åº¦ä¸è¶³");
 					req.setAttribute("index", "2");
 					View.forward(req, res);
 					return;
 				} else if (newPassword.equals(currentPassword)) {
-					req.setAttribute("samePword", "·s±K½X½Ğ¤Å»PÂÂ±K½X¬Û¦P");
+					req.setAttribute("samePword", "è«‹å‹¿è¼¸å…¥å’Œç›®å‰å¯†ç¢¼ç›¸åŒä¹‹å¯†ç¢¼");
 					req.setAttribute("index", "2");
 					View.forward(req, res);
 					return;
 				} else if (!newPassword.equals(confirmNewPword)) {
-					req.setAttribute("wrongPword", "±K½X©Î½T»{±K½X¿é¤J¿ù»~¡A½Ğ­«·sÀË¬d");
+					req.setAttribute("wrongPword", "å¯†ç¢¼ç¢ºèªå¤±æ•—ï¼Œè«‹é‡æ–°æª¢æŸ¥");
 					req.setAttribute("index", "2");
 					View.forward(req, res);
 					return;
 				} else {
 					String hashedPassword = BCrypt.withDefaults().hashToString(12, newPassword.toCharArray());
-					memSvc.updatePassword(hashedPassword, memSvc.findByPrimaryKey(id).getEmail());
-					req.setAttribute("success", "±K½X§ó·s¦¨¥\");
+					memSvc.updatePassword(hashedPassword, id);
+					req.setAttribute("success", "æ›´æ–°å¯†ç¢¼æˆåŠŸ");
 					req.setAttribute("index", "2");
 					View.forward(req, res);
 				}
@@ -135,12 +137,12 @@ public class MemberServlet extends HttpServlet {
 
 	}
 
-	// ¨ú¥X¤W¶ÇªºÀÉ®×¦WºÙ (¦]¬°API¥¼´£¨Ñmethod,©Ò¥H¥²¶·¦Û¦æ¼¶¼g)
+	// ï¿½ï¿½ï¿½Xï¿½Wï¿½Çªï¿½ï¿½É®×¦Wï¿½ï¿½ (ï¿½]ï¿½ï¿½APIï¿½ï¿½ï¿½ï¿½ï¿½ï¿½method,ï¿½Ò¥Hï¿½ï¿½ï¿½ï¿½ï¿½Û¦æ¼¶ï¿½g)
 	public String getFileNameFromPart(Part part) {
 		String header = part.getHeader("content-disposition");
-		System.out.println("header=" + header); // ´ú¸Õ¥Î
+		System.out.println("header=" + header); // ï¿½ï¿½ï¿½Õ¥ï¿½
 		String filename = new File(header.substring(header.lastIndexOf("=") + 2, header.length() - 1)).getName();
-		System.out.println("filename=" + filename); // ´ú¸Õ¥Î
+		System.out.println("filename=" + filename); // ï¿½ï¿½ï¿½Õ¥ï¿½
 		if (filename.length() == 0) {
 			return null;
 		}

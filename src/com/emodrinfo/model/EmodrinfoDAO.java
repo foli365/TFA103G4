@@ -19,7 +19,7 @@ public class EmodrinfoDAO implements EmodrinfoDAO_interface {
 	static {
 		try {
 			Context ctx = new InitialContext();
-			ds = (DataSource) ctx.lookup("java:comp/env/jdbc/TestDB2");
+			ds = (DataSource) ctx.lookup("java:comp/env/jdbc/camping"); // !!!!!!記得到時要改成這行的程式!!!!!!!
 		} catch (NamingException e) {
 			e.printStackTrace();
 		}

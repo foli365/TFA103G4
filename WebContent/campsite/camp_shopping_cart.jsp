@@ -56,7 +56,7 @@
 					class="btn btn-success btn-lg" id="book">預定</button>
 				<input type="hidden" name="action" value="book"> 
 				<input type="hidden" name="memberId" id="memberId" value="${memberId}">
-				<input type="hidden" name="campId" value="${campId}"> 
+				<input type="hidden" name="campId" value="${campId}">
 				<input type="hidden" id="orderDate" name="orderDate" value=""> 
 				<input type="hidden" id="deadline" name="deadline" value="">
 				<input type="hidden" id="price" name="price" value="">

@@ -19,15 +19,11 @@ $("a.alert_managament").on("click", function() {
 $("a.camp_list").on("click", function() {
     $(window).attr('location', 'camp.html');
 });
-$("a.product_up").on("click", function() {
-    $(window).attr('location', 'product.html');
-});
-$("h1").on("click", function() {
-    $(window).attr('location', 'home.html');
-});
+
 $(".min_picture").on("click", function() {
-    $(window).attr('location', 'home.html');
+    $(window).attr('location', 'home.jsp');
 });
+
 $("button.btny").on("click", function() {
     $("div.pop").show();
 });

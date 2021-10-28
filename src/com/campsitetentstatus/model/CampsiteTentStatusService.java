@@ -63,10 +63,10 @@ public class CampsiteTentStatusService {
 		return newlist;
 	}
 
-	// ·í±oª¾Àç¦aID©M¹w­q¤H¼Æ«á¡A¨ú±oµLªk¹w©wªº¤é´Á
+	// ï¿½ï¿½oï¿½ï¿½ï¿½ï¿½aIDï¿½Mï¿½wï¿½qï¿½Hï¿½Æ«ï¿½Aï¿½ï¿½ï¿½oï¿½Lï¿½kï¿½wï¿½wï¿½ï¿½ï¿½ï¿½ï¿½
 	public ArrayList<String> getUnavailibleDatewithGuestNumberOnly(Integer campId, Integer guestCount) throws ParseException {
 		CampsiteTentStatusService CTSSvc = new CampsiteTentStatusService();
-		 ArrayList<CampsiteTentStatusVO> list = (ArrayList<CampsiteTentStatusVO>) CTSSvc.getAllCampStatusofOneCamp(campId);
+		ArrayList<CampsiteTentStatusVO> list = (ArrayList<CampsiteTentStatusVO>) CTSSvc.getAllCampStatusofOneCamp(campId);
 		String pattern = "yyyy-MM-dd";
 		SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
 		String today = simpleDateFormat.format(new java.util.Date());
@@ -77,9 +77,9 @@ public class CampsiteTentStatusService {
 		java.util.Date sixtyDaysAfter = new java.util.Date(c.getTimeInMillis());
 		ArrayList<String> unavilibleDate = new ArrayList<String>();
 		while (parsedToday.compareTo(sixtyDaysAfter) <= 0) {
-			if(getIndexByProperty(list, parsedToday, campId) != -1) {
-				if (list.get(getIndexByProperty(list, parsedToday, campId)).getCampOpeningTime().equals(parsedToday)) {
-					if (list.get(getIndexByProperty(list, parsedToday, campId)).getEmptyCampLeft()<guestCount) {
+			if(getIndexByProperty(list, parsedToday) != -1) {
+				if (list.get(getIndexByProperty(list, parsedToday)).getCampOpeningTime().equals(parsedToday)) {
+					if (list.get(getIndexByProperty(list, parsedToday)).getEmptyCampLeft()<guestCount) {
 						String matchDay = simpleDateFormat.format(parsedToday);
 						unavilibleDate.add("\"" + matchDay + "\"");
 					}
@@ -106,15 +106,15 @@ public class CampsiteTentStatusService {
 			guestCount = 0;
 		}
 		while (start.compareTo(end) <= 0) {
-			if(getIndexByProperty(list, start, campId) != -1) {
-				if (list.get(getIndexByProperty(list, start, campId)).getCampOpeningTime().equals(start)) {
+			if(getIndexByProperty(list, start) != -1) {
+				if (list.get(getIndexByProperty(list, start)).getCampOpeningTime().equals(start)) {
 					if (guestCount == 0) {
-						if (list.get(getIndexByProperty(list, start, campId)).getEmptyCampLeft() == 0) {
+						if (list.get(getIndexByProperty(list, start)).getEmptyCampLeft() == 0) {
 							String matchDay = simpleDateFormat.format(start);
 							unavilibleDate.add("\"" + matchDay + "\"");
 						}
 					} else {
-						if (list.get(getIndexByProperty(list, start, campId)).getEmptyCampLeft() < guestCount) {
+						if (list.get(getIndexByProperty(list, start)).getEmptyCampLeft() < guestCount) {
 							String matchDay = simpleDateFormat.format(start);
 							unavilibleDate.add("\"" + matchDay + "\"");
 						}
@@ -134,7 +134,7 @@ public class CampsiteTentStatusService {
 		}
 	}
 	
-	 private int getIndexByProperty(ArrayList<CampsiteTentStatusVO> list, java.util.Date targetDate, Integer campid) {
+	 private int getIndexByProperty(ArrayList<CampsiteTentStatusVO> list, java.util.Date targetDate) {
 	        for (int i = 0; i < list.size(); i++) {
 	            if (list.get(i) !=null && list.get(i).getCampOpeningTime().equals(targetDate)) {
 	                return i;
@@ -143,4 +143,13 @@ public class CampsiteTentStatusService {
 	        return -1;
 	    }
 	 
+	 public static void main(String[] args) {
+		CampsiteTentStatusService svc = new CampsiteTentStatusService();
+		try {
+			System.out.println(svc.getUnavailibleDatewithGuestNumberOnly(5001, 2));
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 }

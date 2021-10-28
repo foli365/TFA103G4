@@ -2,8 +2,7 @@ package com.members.controller;
 
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.Calendar;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -12,24 +11,58 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.auth0.jwt.JWT;
+import com.auth0.jwt.JWTVerifier;
+import com.auth0.jwt.algorithms.Algorithm;
+import com.auth0.jwt.exceptions.JWTCreationException;
+import com.auth0.jwt.interfaces.DecodedJWT;
 import com.members.model.MemberService;
-import com.members.model.MembersVO;
 
 import at.favre.lib.crypto.bcrypt.BCrypt;
 
+
 public class Register extends HttpServlet {
+	private static final String SECRET = "0zy^=Q5&nZpw#Cm'+?&TdlaB0=DeiV*>/x:Pv.amM\"NE;m4k/Mm{Sb;Qx[hN9hP!";
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		doPost(req, res);
+		MemberService memSvc = new MemberService();
+		String token = req.getParameter("token");
+		DecodedJWT jwt = JWT.decode(token);
+		String password = jwt.getClaim("password").asString();
+		String name = jwt.getClaim("name").asString();
+		String email = jwt.getSubject();
+		if (memSvc.findByEmail(email)!=null) {
+			req.setAttribute("exist", "æ­¤emailå·²å­˜åœ¨");
+			RequestDispatcher success = req.getRequestDispatcher("/register_and_login/validate_result.jsp");
+			success.forward(req, res);
+			return;
+		}
+		String path = getServletContext().getRealPath("/img/avatar.jpg");
+		try {
+			Algorithm algorithm = Algorithm.HMAC256(SECRET);
+			JWTVerifier verifier = JWT
+					.require(algorithm)
+					.build();
+			jwt = verifier.verify(token);
+			memSvc.addMember(name, password, email, getPictureByteArray(path));
+			HttpSession session = req.getSession();
+			session.setAttribute("account", name);
+			session.setAttribute("id", memSvc.findByEmail(email).getMemberId());
+			req.setAttribute("success", "è¨»å†ŠæˆåŠŸ");
+			RequestDispatcher success = req.getRequestDispatcher("/register_and_login/validate_result.jsp");
+			success.forward(req, res);
+		} catch (Exception e) {
+			req.setAttribute("invalid", "æ­¤é€£çµå·²å¤±æ•ˆï¼Œè«‹é‡æ–°æ“ä½œ");
+			RequestDispatcher failed = req.getRequestDispatcher("/register_and_login/validate_result.jsp");
+			failed.forward(req, res);
+		} 
 	}
 
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		List<String> errorMsgs = new LinkedList<String>();
-
 		req.setCharacterEncoding("UTF-8");
 		String name = req.getParameter("name");
 		String password = req.getParameter("password");
@@ -39,38 +72,49 @@ public class Register extends HttpServlet {
 		String email = req.getParameter("email");
 		MemberService memSvc = new MemberService();
 		if (memSvc.findByEmail(email) != null) {
-			req.setAttribute("emailRepeat", "¦¹¹q¤l¶l¥ó¤w³Qµù¥U¹L");
+			req.setAttribute("emailRepeat", "æ­¤emailå·²å­˜åœ¨");
 			req.setAttribute("name", name);
 			RequestDispatcher failed = req.getRequestDispatcher("/register_and_login/register.jsp");
 			failed.forward(req, res);
+			return;
 		} else if (!password.matches(passwordReg)) {
-			req.setAttribute("pwordTooWeak", "±K½Xªø«×¤£±o¤p©ó8¥B¦Ü¤Ö¶·¦³¤@¦r¥À");
+			req.setAttribute("pwordTooWeak", "æ­¤å¯†ç¢¼å¼·åº¦ä¸è¶³");
 			req.setAttribute("name", name);
 			req.setAttribute("email", email);
 			RequestDispatcher failed = req.getRequestDispatcher("/register_and_login/register.jsp");
 			failed.forward(req, res);
+			return;
 		} else if (!password.equals(passwordConfirm.trim())) {
-			req.setAttribute("passwordDiff", "½ĞÀË¬d±K½X»P½T»{±K½X¬O§_¬Û¦P");
+			req.setAttribute("passwordDiff", "ç¢ºèªå¯†ç¢¼èˆ‡å¯†ç¢¼ä¸åŒ");
 			req.setAttribute("name", name);
 			req.setAttribute("email", email);
 			RequestDispatcher failed = req.getRequestDispatcher("/register_and_login/register.jsp");
 			failed.forward(req, res);
+			return;
 		} else {
-			String path = getServletContext().getRealPath("/img/avatar.jpg");
-			MembersVO memVO = memSvc.addMember(name, bcryptHashString, email, getPictureByteArray(path));
-			HttpSession session = req.getSession();
-			session.setAttribute("account", name);
-			session.setAttribute("id", memSvc.findByEmail(email).getMemberId());
 			try {
-				String location = (String) session.getAttribute("location");
-				if (location != null) {
-					session.removeAttribute("location");
-					res.sendRedirect(location);
-					return;
-				}
+				Calendar cal = Calendar.getInstance();
+				cal.add(Calendar.MINUTE, 10);
+				java.util.Date exp = cal.getTime();
+				Algorithm algorithm = Algorithm.HMAC256(SECRET);
+				String token = JWT.create()
+						.withSubject(email)
+						.withClaim("password", bcryptHashString)
+						.withClaim("name", name)
+						.withExpiresAt(exp)
+						.sign(algorithm);
+				MailService mailService = new MailService();
+				String content = "è¦ªæ„›çš„" + name + "æ‚¨å¥½:\n\tè«‹åœ¨10åˆ†é˜å…§é€éæ­¤é€£çµé–‹é€šå¸³è™Ÿ:\n\n"+
+				"http://localhost:8081"+req.getContextPath()+"/account/register.do?token="+token;
+				mailService.sendMail(email, "å¸³è™Ÿé–‹é€š", content);
+				req.setAttribute("success", "å¸³è™Ÿé–‹é€šä¿¡å·²å¯„å‡ºï¼Œè«‹ç¢ºèª");
+				RequestDispatcher success = req.getRequestDispatcher("/register_and_login/register.jsp");
+				success.forward(req, res);
+			} catch (JWTCreationException e) {
+				// TODO: handle exception
 			} catch (Exception e) {
+				// TODO: handle exception
 			}
-			res.sendRedirect(req.getContextPath() + "/homepage/index.jsp");
 		}
 	}
 

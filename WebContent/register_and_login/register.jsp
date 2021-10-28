@@ -21,7 +21,7 @@ body {
 }
 
 #main {
-	margin-top: 150px;
+	margin-top: 80px;
 	background-color: #fbefe7;
 	box-shadow: 0 2px 4px rgb(0 0 0/ 10%), 0 8px 16px rgb(0 0 0/ 10%);
 	border-radius: 30px;
@@ -80,8 +80,9 @@ h3 {
 			</div>
 			<div class="mb-3">
 				<input type="password" placeholder="密碼" class="form-control"
-					id="password" name="password" required> <small
-					style="color: red;">${pwordTooWeak}</small>
+					id="password" name="password" required>
+					<div id="emailHelp" class="form-text">密碼長度最少8碼，並且須至少有一字母和一數字</div> 
+					<small style="color: red;">${pwordTooWeak}</small>
 				<div class="invalid-feedback">請輸入密碼</div>
 			</div>
 			<div class="mb-3" id="password">
@@ -89,6 +90,7 @@ h3 {
 					name="passwordConfirm" id="passwordConfirm" required> <small
 					style="color: red;">${passwordDiff}</small>
 				<div class="invalid-feedback">請確認密碼</div>
+			<small style="color: green;">${success}</small>
 			</div>
 			<div class="d-grid gap-2 col-6 mx-auto">
 				<button id="submit" class="btn btn-success" type="submit">註冊</button>

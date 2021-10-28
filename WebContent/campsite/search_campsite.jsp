@@ -1,8 +1,8 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="Big5"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@page import="com.campsite.model.CampsiteDAO"%>
-<%@ page import="java.util.*"%>
+<%@page import="com.campsite.model.*"%>
 <%@ page import="com.campsite.model.*"%>
+<%@ page import="java.util.*"%>
 
 <%
 	CampsiteDAO dao = new CampsiteDAO();
@@ -30,7 +30,7 @@
 	href="<%=request.getContextPath()%>/campsite/vendors/bootstrap/css/SearchCamp.css">
 </head>
 
-<body style="background-color: #fbefe7;">
+<body>
 	<div class="container">
 		<div class="row">
 			<form method="post" action="campsite.do">
@@ -51,7 +51,7 @@
 								</script>
 							</ul>
 						</c:if>
-						<div class="col-4">
+						<div class="col-md-4">
 							<!-- Actual search box -->
 							<div class="form-group has-search">
 								<p class="fw-bold">目的地?</p>
@@ -60,7 +60,7 @@
 									placeholder="請輸入營地或地址..." autocomplete="off">
 							</div>
 						</div>
-						<div class="col-3">
+						<div class="col-md-3">
 							<div class="form-group has-search">
 								<p class="fw-bold">選擇日期</p>
 								<i class="fas fa-calendar-alt form-control-feedback"></i> <input
@@ -69,7 +69,7 @@
 									autocomplete="off" readonly>
 							</div>
 						</div>
-						<div class="col-2">
+						<div class="col-md-2">
 							<div class="form-group has-search">
 								<p class="fw-bold">顧客人數</p>
 								<i class="fas fa-user-friends form-control-feedback"></i> <input
@@ -78,7 +78,7 @@
 									autocomplete="off">
 							</div>
 						</div>
-						<div class="col-2">
+						<div class="col-md-2">
 							<div class="has-search">
 								<p class="fw-bold">價格範圍</p>
 								<i class="fas fa-wallet form-control-feedback"></i> <select
@@ -105,7 +105,7 @@
 			</form>
 		</div>
 		<div class="row row-2">
-			<div class="col-5 map">
+			<div class="col-md-5 map">
 				<div id="map"></div>
 				<script>
 				  var geocoder;
@@ -182,7 +182,7 @@
 					src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBXvwD_h4qVCbRmi7_BkRKrc4ySwpnm604&callback=initialize"
 					async defer></script>
 			</div>
-			<div class="col-7 camp-list">
+			<div class="col-md-7 camp-list">
 				<div class="list-group">
 					<div class="default-list">
 <%-- 						<c:forEach var="campsiteVO" items="${list}"> --%>

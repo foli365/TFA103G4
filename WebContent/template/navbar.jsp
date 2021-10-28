@@ -18,13 +18,6 @@
 			<span class="navbar-toggler-icon"></span>
 		</button>
 		<div class="collapse navbar-collapse" id="navbarSupportedContent">
-			<form class="d-flex">
-				<input class="form-control me-2 rounded-pill ml-0" type="search"
-					placeholder="Search" aria-label="Search">
-				<button id="searchIcon" class="btn" type="submit" style="padding: 0">
-					<i class="bi bi-search"></i>
-				</button>
-			</form>
 			<ul class="navbar-nav ms-auto mb-2 mb-lg-0 me-xl-5">
 				<li class="nav-item"><a id="hosting" class="nav-link" href="<%=request.getContextPath()%>/camprelease/addCampRel.jsp"
 					style="color: green;">上架營地</a></li>
@@ -45,13 +38,13 @@
 						<li><a class="dropdown-item"
 							href="<%=request.getContextPath()%>/account/account_center.jsp">會員中心</a></li>
 						<li><a class="dropdown-item"
-							href="<%=request.getContextPath()%>/account/camp_management.jsp">營地管理</a></li>
+							href="<%=request.getContextPath()%>/camprelease/Select_Page.jsp">營地管理</a></li>
 						<li><a class="dropdown-item"
 							href="<%=request.getContextPath()%>/account/edit_profile.jsp">編輯會員資料</a></li>
 						<li>
 							<hr class="dropdown-divider">
 						</li>
-						<li><a class="dropdown-item" href="<%=request.getContextPath()%>/account/logout.do">登出</a></li>
+						<li><a style="color: red;" class="dropdown-item" href="<%=request.getContextPath()%>/account/logout.do">登出</a></li>
 					</ul></li>
 			</ul>
 		</div>

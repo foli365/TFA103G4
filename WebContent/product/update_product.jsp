@@ -12,7 +12,7 @@ ProductVO productVO = (ProductVO) request.getAttribute("productVO");
 
 
 
-<html>
+<html> 
 <head>
 <title>商品修改</title>
 
@@ -55,7 +55,7 @@ ProductVO productVO = (ProductVO) request.getAttribute("productVO");
 <table id="table-2">
 	<tr><td>
 		 <h3>商品資料修改 </h3>
-		 <h4><a href='selectAll.jsp'>回首頁</a></h4>
+		 <h4><a href='selectAll.jsp'>返回</a></h4>
 	</td></tr>
 </table>
 
@@ -130,9 +130,14 @@ ProductVO productVO = (ProductVO) request.getAttribute("productVO");
 	<tr>
 		<td>類別:<font color=red><b>*</b></font></td>
 		<td><select size="1" name="psort">
-			<c:forEach var="productVO" items="${productSvc.all}">
-				<option value="${productVO.psort}">${productVO.psort}</option>>
-			</c:forEach>
+			  <option value="帳篷">帳篷</option>
+              <option value="露營燈">露營燈</option>
+              <option value="露營杯">露營杯</option>
+              <option value="露營扇">露營扇</option>
+              <option value="露營椅">露營椅</option>
+              <option value="露營桌">露營桌</option>
+              <option value="露營餐具">露營餐具</option>
+              <option value="露營碗">露營碗</option>
 		</select></td>
 	</tr>
 

@@ -1,6 +1,10 @@
 package com.camprelease.model;
 
 import java.util.*;
+
+import com.facilities.model.*;
+import com.plan.model.*;
+
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.sql.*;
@@ -21,7 +25,15 @@ public class CampReleaseDAO implements CampReleaseDAO_interface {
 	private static final String DELETE = 
 			"DELETE FROM campsite where CAMP_ID = ?";
 	private static final String UPDATE = 
-			"UPDATE campsite set CAMP_NAME=?, LOCATION=?, LATITUDE=?, LONGTITUDE=?, CAMP_DESCRIPTION=?, CAMP_PRICE=?, LISTED_TIME=?,  PICTURE1=?, PICTURE2=?, PICTURE3=?, PICTURE4=?, PICTURE5=? where CAMP_ID = ?";
+			"UPDATE campsite set MEMBER_ID, CAMP_NAME=?, LOCATION=?, LATITUDE=?, LONGTITUDE=?, CAMP_DESCRIPTION=?, CAMP_PRICE=?, LISTED_TIME=?,  PICTURE1=?, PICTURE2=?, PICTURE3=?, PICTURE4=?, PICTURE5=? where CAMP_ID = ?";
+
+	static { 
+		try {
+			Class.forName(DRIVER);
+		} catch (ClassNotFoundException ce) {
+			ce.printStackTrace();
+		}
+	}
 
 	@Override
 	public void insert(CampReleaseVO campreleaseVO) {
@@ -83,19 +95,20 @@ public class CampReleaseDAO implements CampReleaseDAO_interface {
 			con = DriverManager.getConnection(URL, USER, PASSWORD);
 			pstmt = con.prepareStatement(UPDATE);
 
-			pstmt.setString(1, campreleaseVO.getCampName());
-			pstmt.setString(2, campreleaseVO.getLocation());
-			pstmt.setDouble(3, campreleaseVO.getLatitude());
-			pstmt.setDouble(4, campreleaseVO.getLongtitude());
-			pstmt.setString(5, campreleaseVO.getCampDescription());
-			pstmt.setInt(6, campreleaseVO.getCampPrice());
-			pstmt.setTimestamp(7, campreleaseVO.getListedTime());
-			pstmt.setBytes(8, campreleaseVO.getPicture1());
-			pstmt.setBytes(9, campreleaseVO.getPicture2());
-			pstmt.setBytes(10, campreleaseVO.getPicture3());
-			pstmt.setBytes(11, campreleaseVO.getPicture4());
-			pstmt.setBytes(12, campreleaseVO.getPicture5());
-			pstmt.setInt(13, campreleaseVO.getCampId());
+			pstmt.setInt(1, campreleaseVO.getMemberId());
+			pstmt.setString(2, campreleaseVO.getCampName());
+			pstmt.setString(3, campreleaseVO.getLocation());
+			pstmt.setDouble(4, campreleaseVO.getLatitude());
+			pstmt.setDouble(5, campreleaseVO.getLongtitude());
+			pstmt.setString(6, campreleaseVO.getCampDescription());
+			pstmt.setInt(7, campreleaseVO.getCampPrice());
+			pstmt.setTimestamp(8, campreleaseVO.getListedTime());
+			pstmt.setBytes(9, campreleaseVO.getPicture1());
+			pstmt.setBytes(10, campreleaseVO.getPicture2());
+			pstmt.setBytes(11, campreleaseVO.getPicture3());
+			pstmt.setBytes(12, campreleaseVO.getPicture4());
+			pstmt.setBytes(13, campreleaseVO.getPicture5());
+			pstmt.setInt(14, campreleaseVO.getCampId());
 
 			pstmt.executeUpdate();
 
@@ -349,7 +362,7 @@ public class CampReleaseDAO implements CampReleaseDAO_interface {
 //		System.out.println("success");
 
 		// ¬d¸ß
-		CampReleaseVO VO3 = dao.findByPrimaryKey(3201004);
+		CampReleaseVO VO3 = dao.findByPrimaryKey(5001);
 		System.out.print(VO3.getCampId() + ",");
 		System.out.print(VO3.getMemberId() + ",");
 		System.out.print(VO3.getCampName() + ",");
@@ -395,6 +408,90 @@ public class CampReleaseDAO implements CampReleaseDAO_interface {
 		fis.read(buffer);
 		fis.close();
 		return buffer;
+	}
+
+	@Override
+	public void insertCamp(CampReleaseVO campreleaseVO, List<FacilitiesVO> facilitiesList, List<PlanVO> planList) {
+		// TODO Auto-generated method stub
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		
+		try {
+			
+			con = DriverManager.getConnection(URL, USER, PASSWORD);
+			
+			con.setAutoCommit(false);
+			
+			String cols[] = {"campId"};
+			pstmt = con.prepareStatement(INSERT_STMT, cols);
+			pstmt.setInt(1, campreleaseVO.getMemberId());
+			pstmt.setString(2, campreleaseVO.getCampName());
+			pstmt.setString(3, campreleaseVO.getLocation());
+			pstmt.setDouble(4, campreleaseVO.getLatitude());
+			pstmt.setDouble(5, campreleaseVO.getLongtitude());
+			pstmt.setString(6, campreleaseVO.getCampDescription());
+			pstmt.setInt(7, campreleaseVO.getCampPrice());
+			pstmt.setTimestamp(8, campreleaseVO.getListedTime());
+			pstmt.setBytes(9, campreleaseVO.getPicture1());
+			pstmt.setBytes(10, campreleaseVO.getPicture2());
+			pstmt.setBytes(11, campreleaseVO.getPicture3());
+			pstmt.setBytes(12, campreleaseVO.getPicture4());
+			pstmt.setBytes(13, campreleaseVO.getPicture5());
+
+			pstmt.executeUpdate();
+			
+			Integer nextCampId = null;
+			ResultSet rs = pstmt.getGeneratedKeys();
+			if(rs.next()) {
+				nextCampId = rs.getInt(1);
+			}
+			rs.close();
+			
+			FacilitiesDAO facilitiesDAO = new FacilitiesDAO();
+			for(FacilitiesVO facilities : facilitiesList) {
+				facilities.setCampId(nextCampId);
+				facilitiesDAO.facilitiesInsertWithCampId(facilities, con);
+			}
+			
+			PlanDAO planDAO = new PlanDAO();
+			for(PlanVO plan : planList) {
+				plan.setCampId(nextCampId);
+				planDAO.planInsertWithCampId(plan, con);
+			}
+			
+			con.commit();
+			con.setAutoCommit(true);
+			// Handle any driver errors
+//		} catch (ClassNotFoundException e) {
+//			throw new RuntimeException("A database error occured. " + e.getMessage());
+			// Clean up JDBC resources
+		} catch(SQLException se) {
+			if(con != null) {
+				try {
+					System.out.println("rollback");
+					con.rollback();
+				} catch (SQLException sqle) {
+					throw new RuntimeException("rollback error occured. " + sqle.getMessage());
+				}
+			}
+			throw new RuntimeException("A database error occured. " + se.getMessage());
+		}
+		finally {
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
 	}
 
 }

@@ -28,7 +28,7 @@ import com.campsite.model.StringToSQLDate;
 import com.campsitetentstatus.model.CampsiteTentStatusService;
 
 @MultipartConfig
-public class CampsiteServlet extends HttpServlet {
+public class CampsiteServlet  extends HttpServlet {
 
 	public void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		doPost(req, res);
@@ -52,12 +52,6 @@ public class CampsiteServlet extends HttpServlet {
 				if (str == null || (str.trim()).length() == 0) {
 					errorMsgs.add("請輸入營地編號");
 				}
-				// Send the use back to the form, if there were errors
-				if (!errorMsgs.isEmpty()) {
-					RequestDispatcher failureView = req.getRequestDispatcher("/campsite/select_page.jsp");
-					failureView.forward(req, res);
-					return;// 程式中斷
-				}
 
 				Integer campId = null;
 				try {
@@ -65,6 +59,7 @@ public class CampsiteServlet extends HttpServlet {
 				} catch (Exception e) {
 					errorMsgs.add("營地編號格式不正確");
 				}
+				
 				// Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
 					RequestDispatcher failureView = req.getRequestDispatcher("/campsite/select_page.jsp");
@@ -265,7 +260,7 @@ public class CampsiteServlet extends HttpServlet {
 			try {
 
 				/*************************** 1.將輸入資料轉為Map **********************************/
-//				String dateRange = req.getParameter("datefilter");
+//				String dateRange = req.getParameter("CAMP_OPENING_TIME");
 //				if (dateRange == null || dateRange.trim().length() == 0) {
 //					errorMsgs.add("請選擇日期!");
 //				}
@@ -293,7 +288,6 @@ public class CampsiteServlet extends HttpServlet {
 					customerNum = 0;
 				}
 				
-				
 				String value = req.getParameter("CAMP_OPENING_TIME");
 				java.sql.Date strDate;
 				java.sql.Date endDate;
@@ -311,13 +305,15 @@ public class CampsiteServlet extends HttpServlet {
 				List<CampsiteVO> filterList = new ArrayList<CampsiteVO>();
 				
 				for (CampsiteVO campsiteVO : list) {
-					if (campsiteVO.getStrDate() != null && campsiteVO.getEndDate() != null) {
-						if (campsiteTentStatusSvc.isTentAvailiblewithGuestNumberandTimeRange(campsiteVO.getCampId(), customerNum, strDate, endDate)) {
-							filterList.add(campsiteVO);
-						}
-					} else if (customerNum != null) {
-						if(campsiteTentStatusSvc.getUnavailibleDatewithGuestNumberOnly(campsiteVO.getCampId(), customerNum).isEmpty()) {
-							filterList.add(campsiteVO);
+					if(campsiteVO.getSiteState() == 1) {
+						if (campsiteVO.getStrDate() != null && campsiteVO.getEndDate() != null) {
+							if (campsiteTentStatusSvc.isTentAvailiblewithGuestNumberandTimeRange(campsiteVO.getCampId(), customerNum, strDate, endDate)) {
+								filterList.add(campsiteVO);
+							}
+						} else if (customerNum != null) {
+							if(campsiteTentStatusSvc.getUnavailibleDatewithGuestNumberOnly(campsiteVO.getCampId(), customerNum).isEmpty()) {
+								filterList.add(campsiteVO);
+							}
 						}
 					}
 				}

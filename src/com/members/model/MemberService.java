@@ -4,8 +4,6 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.List;
 
-
-
 public class MemberService {
 
 	private MembersDAO_interface dao;
@@ -39,9 +37,9 @@ public class MemberService {
 		return membersVO;
 	}
 	
-	public void updatePassword(String password, String email) {
+	public void updatePassword(String password, Integer memberId ) {
 		MembersVO membersVO = new MembersVO();
-		membersVO.setEmail(email);
+		membersVO.setMemberId(memberId);
 		membersVO.setPassword(password);
 		dao.updatePassword(membersVO);
 	}

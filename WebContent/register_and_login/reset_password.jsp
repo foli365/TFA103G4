@@ -59,7 +59,7 @@ body {
 		將於五秒鐘後帶您回到首頁
 	</div>
 	<div
-		style="margin-top: 120px; height: 350px; max-width: 570px; background-color: #FBEFE7; border-radius: 8px"
+		style="margin-top: 120px; height: 360px; max-width: 570px; background-color: #FBEFE7; border-radius: 8px"
 		class="container">
 		<h3 class="px-2" style="padding-top: 30px">重設密碼</h3>
 		<hr>
@@ -68,14 +68,14 @@ body {
 			<div style="margin-bottom: 20px;">
 				<label style="margin-top: 10px;" for="password"><h5>輸入新密碼</h5></label>
 				<input class="form-control" type="password" name="password"
-					id="password"> <small
+					id="password"><div id="emailHelp" class="form-text">密碼長度最少8碼，並且須至少有一字母和一數字</div> <small
 					style="color: red; margin-top: -20px;">${pwordTooWeak}</small>
 			</div>
 			<label for="passwordConfirm"><h5>確認新密碼</h5></label> <input
 				class="form-control" type="password" name="passwordConfirm"
-				id="passwordConfirm"> <small style="color: red;">${passwordDiff}</small>
+				id="passwordConfirm"><small style="color: red;">${passwordDiff}</small>
 			<input type="hidden" name="token" value="${token}">
-			<button type="submit" class="mt-3 float-end btn btn-primary">重設密碼</button>
+			<button type="submit" class="my-3 float-end btn btn-primary">重設密碼</button>
 		</form>
 	</div>
 	<%@ include file="/template/script.html"%>

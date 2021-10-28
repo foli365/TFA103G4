@@ -8,4 +8,10 @@ public interface PlanDAO_interface {
 	void delete(Integer planId);
 	List<PlanVO> findbyPrimaryKey(Integer planId);
 	List<PlanVO> getAll();
+	
+	
+	List<PlanVO> findbyCampId(Integer campId);
+	void deletebyCampId(Integer campId);
+	PlanVO getCampId(Integer campId);
+	void planInsertWithCampId(PlanVO planVO, java.sql.Connection con);
 }

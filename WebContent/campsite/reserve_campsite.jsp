@@ -3,6 +3,8 @@
 <%@ page import="com.campsitetentstatus.model.CampsiteTentStatusService"%>
 <%@ page import="com.campsite.model.*"%>
 <%@ page import="com.members.model.*"%>
+<%@ page import="com.camporder.model.*"%>
+<%@ page import="java.util.*"%>
 <%
 	CampsiteService campsiteService = new CampsiteService();
 	CampsiteVO campsiteVO = campsiteService.getOneCampsite(Integer.parseInt(request.getParameter("campId")));
@@ -10,22 +12,30 @@
 %>
 <%
 	if (session.getAttribute("id") == null) {
-		session.setAttribute("location", (request.getRequestURI() + "?campId=" + request.getParameter("campId")));
+		session.setAttribute("location",
+				(request.getRequestURI() + "?campId=" + request.getParameter("campId")));
 	}
 	pageContext.setAttribute("memberId", (Integer) session.getAttribute("id"));
-	pageContext.setAttribute("campId", 5001);
+	pageContext.setAttribute("campId", Integer.parseInt(request.getParameter("campId")));
 	Integer guestCount = null;
 	try {
 		guestCount = new Integer(request.getParameter("guestCount"));
 	} catch (NumberFormatException nfe) {
-		guestCount = null;
+		guestCount = 0;
 	}
 	CampsiteTentStatusService CTSSvc = new CampsiteTentStatusService();
-	pageContext.setAttribute("unavilibleList", CTSSvc.getUnavailibleDatewithGuestNumberOnly(5001, 1));
+	pageContext.setAttribute("unavilibleList", CTSSvc.getUnavailibleDatewithGuestNumberOnly(
+			Integer.parseInt(request.getParameter("campId")), guestCount));
 %>
 <%
 	MemberService memberService = new MemberService();
 	MembersVO membersVO = memberService.findByPrimaryKey(campsiteVO.getMemberId()); //取得Member的電話號碼
+%>
+<%
+	CampOrderService campOrderService = new CampOrderService();
+	List<CampOrderVO> campOrderList = campOrderService.getOneCampsiteCampOrderVO(campsiteVO.getCampId());
+	pageContext.setAttribute("campOrderList", campOrderList);
+	System.out.println("campOrderList = " + campOrderList);
 %>
 
 <!DOCTYPE html>
@@ -41,10 +51,11 @@
 <link rel="stylesheet" type="text/css"
 	href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
 <!-- 載入 CSS -->
-<link rel="stylesheet" href="./vendors/bootstrap/css/ReserveCamp.css">
+<link rel="stylesheet"
+	href="<%=request.getContextPath()%>/campsite/vendors/bootstrap/css/ReserveCamp.css">
 </head>
 
-<body style="background-color: #fbefe7;">
+<body>
 
 	<div class="container text-center my-3">
 		<div class="row mx-auto my-auto justify-content-center">
@@ -118,23 +129,54 @@
 		</div>
 	</div>
 	<div class="container">
-		<div class="row">
-			<div class="col-8 camp-content">
-				<div class="camp-title">
-					<h2 class="camp-name ">${campsiteVO.campName}</h2>
-					<p class="addr ">地址: ${campsiteVO.location}</p>
-					<p class="cel ">
-						電話:
-						<%=membersVO.getPhone()%></p>
-				</div>
-				<div class="camp-detail">
-					<p>${campsiteVO.campDescription}</p>
-				</div>
-				<div class="camp-comment">
-					<p>營地評論</p>
+		<div class="row camp-row">
+			<div class="col-md-8 camp-content">
+				<div class="row">
+					<div class="col-md-12 camp-title">
+						<h2 class="camp-name ">${campsiteVO.campName}</h2>
+						<p class="addr ">地址: ${campsiteVO.location}</p>
+						<p class="cel ">
+							電話:
+							<%=membersVO.getPhone()%></p>
+					</div>
+					<div class="col-md-12 camp-detail">
+						<p>${campsiteVO.campDescription}</p>
+					</div>
+					<div class="col-md-12 camp-comment">
+						<p class="comment">營地評論</p>
+						<c:forEach var="campOrderVO" items="${campOrderList}">
+							<c:set var="comment" value="${campOrderVO.comment}" />
+							<c:set var="memberId" value="${campOrderVO.memberId}" />
+							<%
+								MemberService memberService1 = new MemberService();
+									MembersVO membersVO1 = memberService1
+											.findByPrimaryKey(new Integer(pageContext.getAttribute("memberId").toString()));
+							%>
+							<div class="container mt-2 container-comment">
+								<div class="row d-flex justify-content-center">
+									<div class="col-md">
+										<c:if test="${not empty comment}">
+											<div class="card p-3">
+												<div
+													class="d-flex justify-content-between align-items-center">
+													<div class="user d-flex flex-row align-items-center">
+														<img
+															src="data:image/jpg;base64,<%=membersVO1.getBase64Image()%>"
+															width="30" class="user-img rounded-circle mr-2"> <span><small
+															class="font-weight-bold text-primary"><%=membersVO1.getName()%></small>
+															<small class="font-weight-bold">${campOrderVO.comment}</small></span>
+													</div>
+												</div>
+											</div>
+										</c:if>
+									</div>
+								</div>
+							</div>
+						</c:forEach>
+					</div>
 				</div>
 			</div>
-			<div class="col-4 order-menu">
+			<div class="col-md-4 order-menu">
 				<form action="<%=request.getContextPath()%>/campOrder.do"
 					method="post">
 					<h2 class="camp-price">$${campsiteVO.campPrice}</h2>
@@ -152,8 +194,16 @@
 						type="hidden" id="to" name="to" value="">
 					<hr>
 					<h3 style="padding-bottom: 20px;">
-						總價: <span id="price"></span>
+						<p class="total-price">總價:</p>
+						<span id="price"></span>
 					</h3>
+					<c:if test="${not empty errorMsgs}">
+						<ul>
+							<c:forEach var="message" items="${errorMsgs}">
+								<li style="color: red;">${message}</li>
+							</c:forEach>
+						</ul>
+					</c:if>
 					<small style="color: red">${missing}</small> <small
 						style="color: red">${noSession}</small> <small style="color: red">${noSpace}</small>
 					<small style="color: red">${repeat}</small>
@@ -209,6 +259,7 @@
 	        next = next.nextElementSibling
 	    }
 	})
+<<<<<<< HEAD
 
 	window.onload =
 	    function() {
@@ -228,6 +279,28 @@
 	            }
 	        }
 	    }
+=======
+	</script>
+	<script>
+// 	window.onload =
+// 	    function() {
+// 	        var omDiv = document.getElementsByClassName("order-menu")[0],
+// 	            H = -75,
+// 	            Y = omDiv
+// 	        while (Y) {
+// 	            H += Y.offsetTop;
+// 	            Y = Y.offsetParent;
+// 	        }
+// 	        window.onscroll = function() {
+// 	            var s = document.body.scrollTop || document.documentElement.scrollTop
+// 	            if (s > H) {
+// 	                omDiv.style = "position:fixed;top:75px;right:113px"
+// 	            } else {
+// 	                omDiv.style = ""
+// 	            }
+// 	        }
+// 	    }
+>>>>>>> Steven
 	</script>
 	<%@ include file="/template/script.html"%>
 	<script type="text/javascript"
@@ -292,7 +365,7 @@
 				            console.log(daysBetween);
 				            if (daysBetween != null && $("#headCount").val() > 0) {
 				    			let price = daysBetween * $("#headCount").val() * ${campsiteVO.campPrice};
-				    			$("#price").text(price);
+				    			$("#price").text('$'+price);
 				    			$("[name='price']").val(price);
 				    			$("#headCounts").val($("#headCount").val());
 				    		}
