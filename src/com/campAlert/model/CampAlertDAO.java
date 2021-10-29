@@ -52,8 +52,6 @@ public class CampAlertDAO implements CampAlertDao_interface {
 			pstmt.setInt(9, DAO.getHandeler());
 			pstmt.executeUpdate();
 						
-			
-			
 		} catch(SQLException se) {
 			se.printStackTrace();
 		} finally {

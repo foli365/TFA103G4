@@ -26,7 +26,7 @@ import javax.servlet.http.Part;
 import com.campAlert.model.*;
 
 //@WebServlet("/backendLogin/CampAlert.do")
-@MultipartConfig(fileSizeThreshold = 1024 * 1024)
+@MultipartConfig
 public class CampAlertServlet extends HttpServlet {
 
 	public void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
@@ -76,7 +76,7 @@ public class CampAlertServlet extends HttpServlet {
 			SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
 			String reportTimeString = formatter.format(reportTime);
 			Integer status = 0;
-			Integer handler = 0;
+			Integer handler = 1001;
 			List<byte[]> picList = new ArrayList<>();
 
 			try {
@@ -122,7 +122,9 @@ public class CampAlertServlet extends HttpServlet {
 			}
 			CampAlertService casvc = new CampAlertService();
 			casvc.insertcCampAlertVO(id, campId, reportTimeString, comment, picture1, picture2, picture3, status, handler);
-			
+			req.setAttribute("success", "¿À¡|¶®•\");
+			RequestDispatcher success = req.getRequestDispatcher("/account/account_center.jsp");
+			success.forward(req, res);
 		}
 		
 	}

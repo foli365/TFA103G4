@@ -244,6 +244,7 @@
 				</div>
 			</div>
 		</div>
+		</div>
 		<%@ include file="/template/script.html"%>
 		<!-- 日期選擇器的 JS -->
 		<script type="text/javascript"

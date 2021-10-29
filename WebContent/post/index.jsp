@@ -208,6 +208,7 @@
 										</div>
 									</div>
 									<p class="card-text">${postVO.article}</p>
+									<div class="read-more"></div>
 								</div>
 							</div>
 						</div>

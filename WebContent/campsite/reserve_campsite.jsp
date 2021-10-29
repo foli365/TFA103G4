@@ -146,11 +146,11 @@
 						<p class="comment">Àç¦aµû½×</p>
 						<c:forEach var="campOrderVO" items="${campOrderList}">
 							<c:set var="comment" value="${campOrderVO.comment}" />
-							<c:set var="memberId" value="${campOrderVO.memberId}" />
+							<c:set var="id" value="${campOrderVO.memberId}" />
 							<%
 								MemberService memberService1 = new MemberService();
 									MembersVO membersVO1 = memberService1
-											.findByPrimaryKey(new Integer(pageContext.getAttribute("memberId").toString()));
+											.findByPrimaryKey(new Integer(pageContext.getAttribute("id").toString()));
 							%>
 							<div class="container mt-2 container-comment">
 								<div class="row d-flex justify-content-center">

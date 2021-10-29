@@ -24,7 +24,7 @@ public class CampOrderDAO implements CampOrderDAO_interface {
 	public static final String UPDATE_STMT = "UPDATE CAMP_ORDER SET MEMBER_ID = ?, "
 			+ "GUEST_NUMBER = ?, CHECK_IN_DATE = ?, CHECK_OUT_DATE = ?, ORDER_DATE = ?, PAYMENT_DEADLINE = ?, "
 			+ "ORDER_STATUS = ?, ORDER_TOTAL = ?, COMMENT = ?, PICTURE1 = ?, PICTURE2 = ?, PICTURE3 = ? "
-			+ "WHERE CAMP_ORDER_ID = ?"; // Foreign Key����update
+			+ "WHERE CAMP_ORDER_ID = ?"; 
 	public static final String DELETE_STMT = "DELETE FROM CAMP_ORDER WHERE CAMP_ORDER_ID = ?";
 	public static final String FIND_BY_PK = "SELECT CAMP_ORDER_ID, CAMP_ID, MEMBER_ID, GUEST_NUMBER, "
 			+ "CHECK_IN_DATE, CHECK_OUT_DATE, ORDER_DATE, PAYMENT_DEADLINE, ORDER_STATUS, ORDER_TOTAL, COMMENT "
@@ -361,10 +361,8 @@ public class CampOrderDAO implements CampOrderDAO_interface {
 
 			con = DriverManager.getConnection(URL, USER, PASSWORD);
 
-			// 1●設定於 pstm.executeUpdate()之前
 			con.setAutoCommit(false);
 
-			// 先新增訂單
 			String cols[] = { "CAMP_ORDER_ID" };
 			pstmt = con.prepareStatement(INSERT_STMT, cols);
 			pstmt.setInt(1, campOrderVO.getCampId());
@@ -381,20 +379,16 @@ public class CampOrderDAO implements CampOrderDAO_interface {
 			pstmt.setBytes(12, campOrderVO.getPicture2());
 			pstmt.setBytes(13, campOrderVO.getPicture3());
 			Statement stmt = con.createStatement();
-//			stmt.executeUpdate("set auto_increment_offset=1000;");    //自增主鍵-初始值
-			stmt.executeUpdate("set auto_increment_increment=1;"); // 自增主鍵-遞增
+//			stmt.executeUpdate("set auto_increment_offset=1000;");
+			stmt.executeUpdate("set auto_increment_increment=1;"); 
 			pstmt.executeUpdate();
-			// 掘取對應的自增主鍵值
 			String next_orderId = null;
 			ResultSet rs = pstmt.getGeneratedKeys();
 			if (rs.next()) {
 				next_orderId = rs.getString(1);
-				System.out.println("自增主鍵值= " + next_orderId + "(剛新增成功的部門編號)");
 			} else {
-				System.out.println("未取得自增主鍵值");
 			}
 			rs.close();
-			// 再同時新增員工
 			CustomerPlanDAO dao = new CustomerPlanDAO();
 			for (CustomerPlanVO aPlan : list) {
 				aPlan.setCampOrderId(new Integer(next_orderId));
@@ -409,18 +403,13 @@ public class CampOrderDAO implements CampOrderDAO_interface {
 
 			cs.executeUpdate();
 
-			// 2●設定於 pstm.executeUpdate()之後
 			con.commit();
 			con.setAutoCommit(true);
-			System.out.println("新增訂單編號" + next_orderId + "時,共有自訂方案" + list.size() + "組同時被新增");
 
 			// Handle any driver errors
 		} catch (SQLException se) {
 			if (con != null) {
 				try {
-					// 3●設定於當有exception發生時之catch區塊內
-					System.err.print("Transaction is being ");
-					System.err.println("rolled back-由-campOrder");
 					con.rollback();
 				} catch (SQLException excep) {
 					throw new RuntimeException("rollback error occured. " + excep.getMessage());

@@ -27,6 +27,8 @@ public class afterPlan extends HttpServlet {
 
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
+
+		req.setCharacterEncoding("UTF-8");
 		// TODO Auto-generated method stub
 		HttpSession session = req.getSession();
 		BufferedReader br = new BufferedReader(new InputStreamReader(req.getInputStream()));

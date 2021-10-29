@@ -178,6 +178,7 @@ public class CampOrderServlet extends HttpServlet {
 			CampOrderDAO dao = new CampOrderDAO();
 			try {
 				dao.insertWithPlans(campOrderVO, list);
+				res.sendRedirect(req.getContextPath()+"/account/account_center.jsp");
 			} catch (ClassNotFoundException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

@@ -105,7 +105,7 @@ input:focus {
 						<div class="container">
 							<div class="row">
 								<c:forEach var="order" items="${list}">
-									<div class="col mb-4">
+									<div class="col-12 mb-4">
 										<div class="card mx-auto" style="width: 40rem;">
 											<img
 												src="<%=request.getContextPath()%>/CampsiteGifReader?column=picture1&camp_id=${order.campId}"
@@ -139,7 +139,7 @@ input:focus {
 										</div>
 									</div>
 								</c:forEach>
-								<div class="col mb-4">
+								<div class="col-12 mb-4">
 									<div class="card mx-auto" style="max-width: 40rem;">
 										<img src="./img/campsite/741692.jpg" class="card-img-top"
 											alt="...">
@@ -194,7 +194,7 @@ input:focus {
 																<div class="mb-3">
 																	<label for="formFileMultiple" class="form-label">檢舉照片</label>
 																	<input class="form-control" type="file"
-																		id="formFileMultiple" multiple>
+																		id="formFileMultiple" name="file" multiple>
 																</div>
 																<div class="modal-footer">
 																	<button type="button" class="btn btn-secondary"
