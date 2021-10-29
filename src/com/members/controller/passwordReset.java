@@ -27,7 +27,27 @@ public class passwordReset extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		doPost(req, res);
+		MemberService memSvc = new MemberService();
+		String token = req.getParameter("token");
+		System.out.println("new token :" + token);
+		try {
+			DecodedJWT jwt = JWT.decode(token);
+			Integer id = new Integer(jwt.getKeyId());
+			String subPassword = memSvc.findByPrimaryKey(id).getPassword().substring(7);
+			Algorithm algorithm = Algorithm.HMAC256(SECRET);
+			JWTVerifier verifier = JWT.require(algorithm)
+					.withIssuer(ISSUER)
+					.withSubject(SUB)
+					.withClaim("password", subPassword)
+					.build();
+			jwt = verifier.verify(token);
+		} catch (Exception e) {
+			req.setAttribute("invalid", "此連結已失效");
+			RequestDispatcher failed = req.getRequestDispatcher("/register_and_login/reset_password.jsp");
+			failed.forward(req, res);
+		}
+		
+		
 	}
 
 	@Override

@@ -59,7 +59,6 @@ public class CampAlertServlet extends HttpServlet {
 		req.setCharacterEncoding("UTF-8");
 		String action = req.getParameter("action");
 		List<String> errorMsgs = new LinkedList<String>();
-		//刪除功能
 		if ("delete".equals(action)) {
 			Integer id = new Integer(req.getParameter("alertId"));
 			CampAlertService alertSvc = new CampAlertService();
@@ -81,7 +80,7 @@ public class CampAlertServlet extends HttpServlet {
 			List<byte[]> picList = new ArrayList<>();
 
 			try {
-				Collection<Part> parts = req.getParts();
+				List<Part> parts = (List<Part>)req.getParts();
 
 				for (Part part : parts) {
 					String fileName = part.getSubmittedFileName();

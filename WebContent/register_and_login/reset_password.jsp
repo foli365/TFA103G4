@@ -38,7 +38,7 @@ body {
 	<input type="hidden" id="invalid" value="${invalid}">
 	<input type="hidden" id="success" value="${success}">
 	<div
-		style="max-width: 550px; margin-top: 100px; margin-bottom: -100px;"
+		style="max-width: 550px; margin-top: 50px; margin-bottom: -100px;"
 		class="alert alert-danger mx-auto d-none" role="alert" id="failNotice">
 		<h4 class="alert-heading">
 			<i class="fas fa-exclamation-triangle"></i>&nbsp;${invalid}!
@@ -49,14 +49,13 @@ body {
 			class="alert-link">搜尋郵件。</a>
 	</div>
 	<div
-		style="max-width: 550px; margin-top: 100px; margin-bottom: -100px;"
+		style="max-width: 550px; margin-top: 50px; margin-bottom: -100px;"
 		class="d-none alert alert-success mx-auto" role="alert"
 		id="successNotice">
 		<h4 class="alert-heading">
-			<i class="fas fa-check-circle"></i>&nbsp;${success}!
+			<i class="fas fa-check-circle"></i>&nbsp;${success}
 		</h4>
 		<hr>
-		將於五秒鐘後帶您回到首頁
 	</div>
 	<div
 		style="margin-top: 120px; height: 360px; max-width: 570px; background-color: #FBEFE7; border-radius: 8px"
@@ -75,7 +74,7 @@ body {
 				class="form-control" type="password" name="passwordConfirm"
 				id="passwordConfirm"><small style="color: red;">${passwordDiff}</small>
 			<input type="hidden" name="token" value="${token}">
-			<button type="submit" class="my-3 float-end btn btn-primary">重設密碼</button>
+			<button type="submit" id="reset" class="my-3 float-end btn btn-primary">重設密碼</button>
 		</form>
 	</div>
 	<%@ include file="/template/script.html"%>
@@ -83,12 +82,13 @@ body {
 	$(document).ready(function() {
 		if ($("#invalid").val()) {
 			$("#failNotice").removeClass("d-none");
+			$("#reset").prop('disabled', true);
 		} else if($("#success").val()) {
 			$("#successNotice").removeClass("d-none")
 		}		
 	})
 		if ($("#success").val()) {
-			window.setTimeout(function() {window.location.href = "<%=request.getContextPath()%>/homepage/index.jsp";}, 4000)}
+			window.setTimeout(function() {window.location.href = "<%=request.getContextPath()%>/register_and_login/login.jsp";}, 4000)}
 	</script>
 </body>
 </html>
