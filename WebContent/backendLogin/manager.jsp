@@ -105,7 +105,8 @@
 				<tr>
 
 					<td>${VO.adminId}</td>
-					<td>${VO.adminPwd}</td>
+					<td>*****</td>
+<%-- 					<td>${VO.adminPwd}</td> --%>
 					<td>${VO.adminName}</td>
 
 					<td>

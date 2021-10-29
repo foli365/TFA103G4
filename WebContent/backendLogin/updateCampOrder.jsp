@@ -91,6 +91,7 @@
 				<td><select size="1" name="orderStatus">
 						<option value="0" ${campOrderVO.getOrderStatus()==0?'selected':''}>未付款</option>
 						<option value="1" ${campOrderVO.getOrderStatus()==1?'selected':''}>已付款</option>
+						<option value="2" ${campOrderVO.getOrderStatus()==2?'selected':''}>取消訂單</option>
 				</select></td>
 			</tr>
 		

@@ -111,9 +111,11 @@ img {
 					<td>${campOrderVO.orderDate}</td>
 					<td>${campOrderVO.paymentDeadline}</td>
 					<td>${campOrderVO.orderTotal}</td>
-					<td>${campOrderVO.orderStatus==1 ? "已付款":"未付款"}</td>
+				<td><c:if test="${campOrderVO.orderStatus == 0}"> ${"未付款"}</c:if>
+					<c:if test="${campOrderVO.orderStatus == 1}"> ${"已付款"}</c:if>
+					<c:if test="${campOrderVO.orderStatus == 2}"> ${"取消訂單"}</c:if>
 					
-				
+				</td>
 		</table>
 	</div>
 

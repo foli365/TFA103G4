@@ -17,8 +17,8 @@
     </div>
     <div class="divform">
         	<form action="<%=request.getContextPath()%>/backendLogin/backendLogin.do" method="post">
-            <p>請輸入管理員帳號: <input type="text" name="adminaccount"></p>
-            <p>請輸入管理員密碼: <input type="PASSWORD" name="adminpassword"></p>
+            <p>請輸入管理員帳號: <input type="text" name="adminId"></p>
+            <p>請輸入管理員密碼: <input type="PASSWORD" name="adminPwd"></p>
             
         <div class="button">
             <button  type="submit" class="button_submit">送出</button>

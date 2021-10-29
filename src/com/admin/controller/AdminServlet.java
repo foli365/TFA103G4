@@ -19,12 +19,9 @@ import com.mysql.cj.x.protobuf.MysqlxCrud.Update;
 public class AdminServlet extends HttpServlet {
 	public AdminServlet() {
 	}
-
 	protected void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
-
 		doPost(req, res);
 	}
-
 	protected void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		req.setCharacterEncoding("UTF-8");
 		String action = req.getParameter("action");
@@ -56,13 +53,14 @@ public class AdminServlet extends HttpServlet {
 			} else if (!adminPwd.trim().matches(adminPwdReg)) { // 以下練習正則(規)表示式(regular-expression)
 				errorMsgs.add("管理員密碼: 只能是英文字母、數字和_ , 且長度必需在6到10之間");
 			}
+			String md5password = MD5Utils.md5(adminPwd);
 			String adminName = req.getParameter("adminName").trim();
 			if (adminName == null || adminName.trim().length() == 0) {
 				errorMsgs.add("名字請勿空白");
 			}
 			AdminListVO AdminListVO = new AdminListVO();
 			AdminListVO.setAdminId(adminId);
-			AdminListVO.setAdminPwd(adminPwd);
+			AdminListVO.setAdminPwd(md5password);
 			AdminListVO.setAdminName(adminName);
 			// Send the use back to the form, if there were errors
 			if (!errorMsgs.isEmpty()) {
@@ -72,7 +70,7 @@ public class AdminServlet extends HttpServlet {
 				return;
 			}
 			AdminService adminSvc = new AdminService();
-			AdminListVO vo = adminSvc.addAdminListVO(adminId, adminPwd, adminName);
+			AdminListVO vo = adminSvc.addAdminListVO(adminId, md5password, adminName);
 			req.setAttribute("AdminListVO", AdminListVO);
 			String url = "/backendLogin/manager.jsp";
 			RequestDispatcher successView = req.getRequestDispatcher(url);
