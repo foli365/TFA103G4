@@ -161,21 +161,6 @@
 		<servlet-name>EmodrServlet</servlet-name>
 		<url-pattern>/emodr/emodr.do</url-pattern>
 	</servlet-mapping>
-
-<<<<<<< HEAD
-<!-- 	<filter> -->
-<!-- 	<filter-name>loginFilter</filter-name> -->
-<!-- 	<filter-class>filters.LoginFilter</filter-class> -->
-<!-- 	</filter> -->
-<!-- 	<filter-mapping> -->
-<!-- 	<filter-name>loginFilter</filter-name> -->
-<!-- 	<url-pattern>/account/*</url-pattern> -->
-<!-- 	<dispatcher>REQUEST</dispatcher> -->
-<!-- 	<dispatcher>INCLUDE</dispatcher> -->
-<!-- 	<dispatcher>ERROR</dispatcher> -->
-<!-- 	<dispatcher>ASYNC</dispatcher> -->
-<!-- 	</filter-mapping> -->
-=======
 	<servlet>
 		<servlet-name>ShoppingServlet</servlet-name>
 		<servlet-class>com.eshop.controller.ShoppingServlet</servlet-class>
@@ -193,20 +178,4 @@
 		<servlet-name>PictureServlet</servlet-name>
 		<url-pattern>/eshop/PictureServlet</url-pattern>
 	</servlet-mapping>
-
-
-	<!-- <filter> -->
-	<!-- <filter-name>loginFilter</filter-name> -->
-	<!-- <filter-class>filters.LoginFilter</filter-class> -->
-	<!-- </filter> -->
-	<!-- <filter-mapping> -->
-	<!-- <filter-name>loginFilter</filter-name> -->
-	<!-- <url-pattern>/account/*</url-pattern> -->
-	<!-- <dispatcher>REQUEST</dispatcher> -->
-	<!-- <dispatcher>FORWARD</dispatcher> -->
-	<!-- <dispatcher>INCLUDE</dispatcher> -->
-	<!-- <dispatcher>ERROR</dispatcher> -->
-	<!-- <dispatcher>ASYNC</dispatcher> -->
-	<!-- </filter-mapping> -->
->>>>>>> origin/bonjovilin
 </web-app>
