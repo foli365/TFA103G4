@@ -16,4 +16,7 @@ public interface EmodrDAO_interface {
 	public List<EmodrVO> getAll();
 	// 萬用複合查詢(傳入參數型態Map)(回傳 List)
 //	public List<EmodrVO> getAll(Map<String,String[]> map);
+	
+	public List<EmodrVO> findByFK(Integer memberid);//此發法為用FK memberid來查資料
+	
 }

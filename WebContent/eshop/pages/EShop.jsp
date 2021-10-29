@@ -18,9 +18,9 @@
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css"
 	rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU"
 	crossorigin="anonymous">
-<!-- <link rel="stylesheet" href="<%=request.getContextPath()%>/css/bootstrap.min.css"> -->
+<!-- <link rel="stylesheet" href="<%=request.getContextPath()%>/eshop/css_eshop/bootstrap.min.css"> -->
 <!-- 商城 的 CSS -->
-<link rel="stylesheet" href="<%=request.getContextPath()%>/css/EShop.css">
+<link rel="stylesheet" href="<%=request.getContextPath()%>/eshop/css_eshop/EShop.css">
 
 
 </head>
@@ -30,7 +30,7 @@
 
 		<nav class="shopnav">
 			<a href="<%=request.getContextPath()%>/homepage/index.jsp" class="camppage" style="font-size: 1.25em;">GoCamping</a>
-			<a href="#" class="myorders" style="font-size: 1.25em;">我的訂單</a>
+			<a href="<%=request.getContextPath()%>/emodr/emodr.do?action=showMyOders" class="myorders" style="font-size: 1.25em;">我的訂單</a>			
 			<a href="<%=request.getContextPath()%>/eshop/pages/Cart.jsp" class="shoppingcart" style="font-size: 1.25em;">購物車</a>
 		</nav>
 
@@ -46,8 +46,7 @@
 			</div>
 
 			<div class="slideshow">
-				<!-- 這邊放入輪播功能<br> 這邊放入輪播功能<br> 這邊放入輪播功能 -->
-<%-- 				<img src="<%=request.getContextPath()%>/eshop/imgs/welcom2.jpg" style="width: 100%"> --%>
+				<!-- 已用背景圖取代這一區塊的顯示 -->
 			</div>
 
 		</div>

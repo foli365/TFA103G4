@@ -60,5 +60,9 @@ public class EmodrService {
 	public List<EmodrVO> notDisplay(Integer emodr_id) {
 		return dao.notDisplay(emodr_id);
 	}
+	
+	public List<EmodrVO> getAllMyOrder(Integer memberid) {
+		return dao.findByFK(memberid);
+	}
 
 }
