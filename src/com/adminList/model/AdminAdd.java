@@ -11,11 +11,11 @@ public class AdminAdd {
 	public static void main(String[] args) {
 		AdminListDAO dao = new AdminListDAO();
 
-		// Êñ∞Â¢û
+		// ∑sºW
 		AdminListVO VO = new AdminListVO();
 		VO.setAdminId(7005);
 		VO.setAdminPwd("jacky0229");
-		VO.setAdminName("Âê≥ÁãÑËªí");
+		VO.setAdminName("ßd®f∞a");
 		dao.add(VO);
 
 	}

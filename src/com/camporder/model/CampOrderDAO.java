@@ -24,7 +24,10 @@ public class CampOrderDAO implements CampOrderDAO_interface {
 	public static final String UPDATE_STMT = "UPDATE CAMP_ORDER SET MEMBER_ID = ?, "
 			+ "GUEST_NUMBER = ?, CHECK_IN_DATE = ?, CHECK_OUT_DATE = ?, ORDER_DATE = ?, PAYMENT_DEADLINE = ?, "
 			+ "ORDER_STATUS = ?, ORDER_TOTAL = ?, COMMENT = ?, PICTURE1 = ?, PICTURE2 = ?, PICTURE3 = ? "
-			+ "WHERE CAMP_ORDER_ID = ?"; 
+			+ "WHERE CAMP_ORDER_ID = ?"; // Foreign Key不能update
+	public static final String UDATE_ORDER = "UPDATE CAMP_ORDER SET CAMP_ID = ?,MEMBER_ID = ?, "
+			+ "GUEST_NUMBER = ?, CHECK_IN_DATE = ?, CHECK_OUT_DATE = ?, ORDER_DATE = ?, PAYMENT_DEADLINE = ?, "
+			+ "ORDER_STATUS = ?, ORDER_TOTAL = ? WHERE CAMP_ORDER_ID = ?"; // Foreign Key不能update
 	public static final String DELETE_STMT = "DELETE FROM CAMP_ORDER WHERE CAMP_ORDER_ID = ?";
 	public static final String FIND_BY_PK = "SELECT CAMP_ORDER_ID, CAMP_ID, MEMBER_ID, GUEST_NUMBER, "
 			+ "CHECK_IN_DATE, CHECK_OUT_DATE, ORDER_DATE, PAYMENT_DEADLINE, ORDER_STATUS, ORDER_TOTAL, COMMENT "
@@ -36,8 +39,6 @@ public class CampOrderDAO implements CampOrderDAO_interface {
 			+ "CHECK_IN_DATE, CHECK_OUT_DATE, ORDER_DATE, PAYMENT_DEADLINE, ORDER_STATUS, ORDER_TOTAL, COMMENT "
 			+ "FROM CAMP_ORDER ORDER BY CAMP_ORDER_ID";
 	public static final String ADD_COMMENT = "update CAMP_ORDER set COMMENT = ? where CAMP_ORDER_ID = ?";	
-			
-
 	static {
 		try {
 			Class.forName(DRIVER);
@@ -350,9 +351,47 @@ public class CampOrderDAO implements CampOrderDAO_interface {
 		}
 		return campOrderList;
 	}
+	public void updateOrder(CampOrderVO campOrderVO) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+
+		try {
+			con = DriverManager.getConnection(URL, USER, PASSWORD);
+			pstmt = con.prepareStatement(UDATE_ORDER);
+			pstmt.setInt(1, campOrderVO.getCampId());
+			pstmt.setInt(2, campOrderVO.getMemberId());
+			pstmt.setInt(3, campOrderVO.getGuestNumber());
+			pstmt.setDate(4, campOrderVO.getCheckInDate());
+			pstmt.setDate(5, campOrderVO.getCheckOutDate());
+			pstmt.setTimestamp(6, campOrderVO.getOrderDate());
+			pstmt.setTimestamp(7, campOrderVO.getPaymentDeadline());
+			pstmt.setString(8, campOrderVO.getOrderStatus());
+			pstmt.setInt(9, campOrderVO.getOrderTotal());
+			pstmt.setInt(10, campOrderVO.getCampOrderId());
+
+			pstmt.executeUpdate();
+			
+		} catch (SQLException se) {
+			se.printStackTrace();
+		} finally {
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace();
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (SQLException se) {
+					se.printStackTrace();
+				}
+			}
+		}
+	}
 
 	public void insertWithPlans(CampOrderVO campOrderVO, List<CustomerPlanVO> list) throws ClassNotFoundException {
-
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		java.sql.CallableStatement cs = null;
@@ -440,6 +479,5 @@ public class CampOrderDAO implements CampOrderDAO_interface {
 				}
 			}
 		}
-
 	}
 }

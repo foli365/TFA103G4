@@ -290,6 +290,52 @@ public static byte[] getPictureByteArray(String path) throws IOException {
 	return buffer;
 }
 
+@Override
+public void updateStatus(CampAlertVO campAlertVO) {
+	Connection con = null;
+	PreparedStatement pstmt = null;
+	
+	try {
+		con = DriverManager.getConnection(URL, USER, PASSWORD);
+		pstmt = con.prepareStatement(UPDATE);
+		
+
+		pstmt.setInt(10, campAlertVO.getAlertId());
+		pstmt.setInt(1, campAlertVO.getMemberId());
+		pstmt.setInt(2, campAlertVO.getCampId());
+		pstmt.setString(3, campAlertVO.getReportTime());
+		pstmt.setString(4, campAlertVO.getContent());
+		pstmt.setBytes(5,campAlertVO.getPicture1());
+		pstmt.setBytes(6,campAlertVO.getPicture2());
+		pstmt.setBytes(7,campAlertVO.getPicture3());
+		pstmt.setInt(8, 1);
+		pstmt.setInt(9, campAlertVO.getHandeler());
+		
+		pstmt.executeUpdate();
+			
+	} catch(SQLException se) {
+		se.printStackTrace();
+	} finally {
+		if (pstmt != null) {
+			try {
+				pstmt.close();
+			} catch (SQLException se) {
+				se.printStackTrace();
+			}
+		}
+
+		if (con != null) {
+			try {
+				con.close();
+			} catch (SQLException se) {
+				se.printStackTrace();
+			}
+		}
+	}
+	
+	
+}
+
 
 
 

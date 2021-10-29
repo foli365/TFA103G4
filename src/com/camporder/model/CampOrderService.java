@@ -93,7 +93,6 @@ public class CampOrderService {
 			String comment, byte[] picture1, byte[] picture2, byte[] picture3, List<CustomerPlanVO> list) {
 		
 		CampOrderVO campOrderVO = new CampOrderVO();
-
 		campOrderVO.setCampId(campId);
 		campOrderVO.setMemberId(memberId);
 		campOrderVO.setGuestNumber(guestNumber);
@@ -113,8 +112,27 @@ public class CampOrderService {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
 		return campOrderVO;
 	}
-}
 	
+	public CampOrderVO updateOrder(Integer campId,Integer memberId, Integer guestNumber, Date checkInDate,
+			Date checkOutDate, Timestamp orderDate, Timestamp paymentDeadline, String orderStatus, Integer orderTotal,
+			Integer campOrderId) {
+		
+		CampOrderVO campOrderVO = new CampOrderVO();
+		campOrderVO.setCampId(campId);
+		campOrderVO.setMemberId(memberId);
+		campOrderVO.setGuestNumber(guestNumber);
+		campOrderVO.setCheckInDate(checkInDate);
+		campOrderVO.setCheckOutDate(checkOutDate);
+		campOrderVO.setOrderDate(orderDate);
+		campOrderVO.setPaymentDeadline(paymentDeadline);
+		campOrderVO.setOrderStatus(orderStatus);
+		campOrderVO.setOrderTotal(orderTotal);
+		campOrderVO.setCampOrderId(campOrderId);
+		dao.updateOrder(campOrderVO);
+		
+		return campOrderVO;
+	}
+	
+}

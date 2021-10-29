@@ -1,18 +1,26 @@
 package com.campAlert.model;
 
-import com.campAlert.model.*;
-
 import java.util.List;
+
+import com.campsite.model.CampsiteDAO;
+import com.campsite.model.CampsiteDAO_Interface;
+import com.campsite.model.CampsiteVO;
 
 public class CampAlertService {
 	private CampAlertDao_interface dao;
+	private CampsiteDAO_Interface dao1;
+		
+	
 
 	public CampAlertService() {
 		dao = new CampAlertDAO();
+		dao1=new CampsiteDAO();
 	}
 
-	public CampAlertVO insertcCampAlertVO(Integer memberId,Integer campId,String report_Time,String content,byte[] picture1,byte[] picture2,byte[] picture3,Integer report_Status,Integer handeler) {
 
+	public CampAlertVO insertcCampAlertVO(Integer memberId, Integer campId, String report_Time,
+			String content, byte[] picture1, byte[] picture2, byte[] picture3, Integer report_Status,
+			Integer handeler) {
 		CampAlertVO campalert = new CampAlertVO();
 		campalert.setMemberId(memberId);
 		campalert.setCampId(campId);
@@ -28,8 +36,10 @@ public class CampAlertService {
 		return campalert;
 	}
 
-	public CampAlertVO updateCampAlertVO(Integer alertId, Integer memberId,Integer campId,String report_Time,String content,byte[] picture1,byte[] picture2,byte[] picture3,Integer report_Status,Integer handeler) {
-	CampAlertVO campalert = new CampAlertVO();
+	public CampAlertVO updateCampAlertVO(Integer alertId, Integer memberId, Integer campId, String report_Time,
+			String content, byte[] picture1, byte[] picture2, byte[] picture3, Integer report_Status,
+			Integer handeler) {
+		CampAlertVO campalert = new CampAlertVO();
 		campalert.setAlertId(alertId);
 		campalert.setMemberId(memberId);
 		campalert.setCampId(campId);
@@ -56,4 +66,13 @@ public class CampAlertService {
 	public List<CampAlertVO> getAll() {
 		return dao.getALL();
 	}
+
+	public CampAlertVO updateStatus(Integer alertId, Integer campId) {
+		CampsiteVO campsiteVO = dao1.findbyPrimaryKey(campId);
+		dao1.updateForOne(campsiteVO);
+		CampAlertVO campAlertVO = dao.findByPrimaryKey(alertId);
+		dao.updateStatus(campAlertVO);
+		return campAlertVO;
+	}
+
 }

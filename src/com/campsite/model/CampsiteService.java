@@ -4,7 +4,6 @@ import java.sql.Date;
 import java.sql.Timestamp;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 public class CampsiteService {
 
@@ -108,4 +107,8 @@ public class CampsiteService {
 //		System.out.println("sortedList= " + sortedList);
 //		return sortedList;
 //	}
+
+	public void updateForOne(CampsiteVO campsiteVO){
+		 dao.updateForOne(campsiteVO);
+	}
 }

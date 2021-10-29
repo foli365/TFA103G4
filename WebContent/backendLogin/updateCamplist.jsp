@@ -34,15 +34,15 @@
 		ACTION="<%=request.getContextPath()%>/backendLogin/camplistone.do"
 		enctype="multipart/form-data"
 		name="form1">
-		<input type="hidden" name="latitude" value="">
-		<input type="hidden" name="longtitude" value="">
-		<input type="hidden" name="campDescription" value="">
-		<input type="hidden" name="lovedCount" value="">
-		<input type="hidden" name="picture1" value="">
-		<input type="hidden" name="picture2" value="">
-		<input type="hidden" name="picture3" value="">
-		<input type="hidden" name="picture4" value="">
-		<input type="hidden" name="picture5" value="">
+		<input type="hidden" name="latitude" value="<%=campsiteVO.getLatitude() %>">
+		<input type="hidden" name="longtitude" value="<%=campsiteVO.getLongtitude()%>">
+		<input type="hidden" name="campDescription" value="<%=campsiteVO.getCampDescription()%>">
+		<input type="hidden" name="listedTime" value="<%=campsiteVO.getListedTime()%>">
+		<input type="hidden" name="picture1" value="<%=campsiteVO.getPicture1()%>">
+		<input type="hidden" name="picture2" value="<%=campsiteVO.getPicture2()%>">
+		<input type="hidden" name="picture3" value="<%=campsiteVO.getPicture3()%>">
+		<input type="hidden" name="picture4" value="<%=campsiteVO.getPicture4()%>">
+		<input type="hidden" name="picture5" value="<%=campsiteVO.getPicture5()%>">
 		<table>
 			<table>
 			<tr>
@@ -77,8 +77,8 @@
 			<tr>
 				<td>營業狀態:</td>
 				<td><select size="1" name="siteState">
-						<option value="1" ${campsiteVO.getSiteState()==1?'selected':''}>營業中</option>
-						<option value="0" ${campsiteVO.getSiteState()==0?'selected':''}>歇業中</option>
+						<option value="1" ${campsiteVO.getSiteState()==1?'selected':''}>已停權</option>
+						<option value="0" ${campsiteVO.getSiteState()==0?'selected':''}>營業中</option>
 				</select></td>
 			</tr>
 			<tr>

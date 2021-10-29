@@ -15,4 +15,5 @@ public interface CampsiteDAO_Interface {
 											Integer customerNum, Integer campPriceL, 
 											Integer campPriceH); // 自己做的複合查詢
 	List<CampsiteVO> getAll(Map<String, String[]> map); // 複合查詢
+	void updateForOne(CampsiteVO campsiteVO);
 }
