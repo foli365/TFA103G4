@@ -15,7 +15,7 @@ public class CampReleaseService {
 	}
 
 	public CampReleaseVO addCampRelease(Integer memberId, String campName, String location, Double latitude, Double longtitude,
-			String campDescription, Integer campPrice, Timestamp listedTime, byte[] picture1, byte[] picture2, byte[] picture3, byte[] picture4, byte[] picture5) {
+			String campDescription, Integer campPrice, Integer campLimit, Timestamp listedTime, byte[] picture1, byte[] picture2, byte[] picture3, byte[] picture4, byte[] picture5) {
 
 		CampReleaseVO campreleaseVO = new CampReleaseVO();
 
@@ -25,6 +25,7 @@ public class CampReleaseService {
 		campreleaseVO.setLongtitude(longtitude);
 		campreleaseVO.setCampDescription(campDescription);
 		campreleaseVO.setCampPrice(campPrice);
+		campreleaseVO.setCampLimit(campLimit);
 		campreleaseVO.setListedTime(listedTime);
 		campreleaseVO.setPicture1(picture1);
 		campreleaseVO.setPicture2(picture2);
@@ -39,7 +40,7 @@ public class CampReleaseService {
 	}
 
 	public CampReleaseVO updateCampRelease(Integer memberId, String campName, String location, Double latitude, Double longtitude,
-			String campDescription, Integer campPrice,Timestamp listedTime, byte[] picture1, byte[] picture2, byte[] picture3, byte[] picture4, byte[] picture5, Integer campId) {
+			String campDescription, Integer campPrice, Integer campLimit, Timestamp listedTime, byte[] picture1, byte[] picture2, byte[] picture3, byte[] picture4, byte[] picture5, Integer campId) {
 
 		CampReleaseVO campreleaseVO = new CampReleaseVO();
 
@@ -50,6 +51,7 @@ public class CampReleaseService {
 		campreleaseVO.setLongtitude(longtitude);
 		campreleaseVO.setCampDescription(campDescription);
 		campreleaseVO.setCampPrice(campPrice);
+		campreleaseVO.setCampLimit(campLimit);
 		campreleaseVO.setListedTime(listedTime);
 		campreleaseVO.setPicture1(picture1);
 		campreleaseVO.setPicture2(picture2);
@@ -74,6 +76,19 @@ public class CampReleaseService {
 	
 	public List<CampReleaseVO> getAll() {
 		return dao.getAll();
+	}
+	
+	public ArrayList<CampReleaseVO> getCamp(Integer campId) {
+		return dao.findbyPrimaryKey(campId);
+	}
+	
+	
+	public CampReleaseVO getOneCamprelease(Integer campId) {
+		List<CampReleaseVO> list = dao.getAll();
+		List<CampReleaseVO> campReleaseVO = list.stream()
+				.filter(e -> e.getCampId().equals(campId))
+				.collect(Collectors.toList());
+		return campReleaseVO.get(0);
 	}
 	
 	public List<CampReleaseVO> getAllforMember(Integer memberId){

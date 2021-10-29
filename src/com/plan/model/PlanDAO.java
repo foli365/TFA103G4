@@ -14,16 +14,16 @@ public class PlanDAO implements PlanDAO_interface {
 	public static final String URL = "jdbc:mysql://localhost:3306/GoCamping?serverTimezone=Asia/Taipei";
 	public static final String USER = "David";
 	public static final String PASSWORD = "123456";
-	public static final String INSERT_STMT = "INSERT INTO PLAN (PLAN_ID, CAMP_ID, PLAN_NAME, PLAN_GUEST_LIMIT, "
-			+ "PLAN_AGE_LIMIT, PLAN_PRICE) VALUES (?, ?, ?, ?, ?, ?)";
+	public static final String INSERT_STMT = "INSERT INTO PLAN (CAMP_ID, PLAN_NAME, PLAN_GUEST_LIMIT, "
+			+ "PLAN_AGE_LIMIT, PLAN_PRICE,PlAN_OUTLINE) VALUES (?, ?, ?, ?, ?, ?)";
 	public static final String UPDATE_STMT = "UPDATE PLAN SET CAMP_ID=?, PLAN_NAME = ?, PLAN_GUEST_LIMIT = ?, "
-			+ "PLAN_AGE_LIMIT = ?, PLAN_PRICE = ? WHERE PLAN_ID = ?";
+			+ "PLAN_AGE_LIMIT = ?, PLAN_PRICE = ?, PlAN_OUTLINE=? WHERE PLAN_ID = ?";
 	public static final String DELETE_STMT = "DELETE FROM PLAN WHERE PLAN_ID = ?";
 	public static final String FIND_BY_CAMP_ID = "SELECT PLAN_ID, CAMP_ID, PLAN_NAME, PlAN_OUTLINE, PLAN_GUEST_LIMIT, PLAN_AGE_LIMIT, "
-			+ "PLAN_PRICE FROM PLAN WHERE CAMP_ID = ?";
+			+ "PLAN_PRICE, PlAN_OUTLINE FROM PLAN WHERE CAMP_ID = ?";
 	public static final String GET_ALL = "SELECT PLAN_ID, CAMP_ID, PLAN_NAME, PlAN_OUTLINE, PLAN_GUEST_LIMIT, PLAN_AGE_LIMIT, "
-			+ "PLAN_PRICE FROM PLAN ORDER BY PLAN_ID";
-	public final String GET_ONE_CAMPID = "SELECT PLAN_ID, CAMP_ID, PLAN_NAME, PLAN_GUEST_LIMIT, PLAN_AGE_LIMIT, PLAN_PRICE FROM PLAN WHERE CAMP_ID = ?";
+			+ "PLAN_PRICE, PlAN_OUTLINE FROM PLAN ORDER BY PLAN_ID";
+	public final String GET_ONE_CAMPID = "SELECT PLAN_ID, CAMP_ID, PLAN_NAME, PLAN_GUEST_LIMIT, PLAN_AGE_LIMIT, PLAN_PRICE, PlAN_OUTLINE FROM PLAN WHERE CAMP_ID = ?";
 	public final String DELETE_ONE_CAMPID = "DELETE FROM PLAN WHERE CAMP_ID = ?";
 	
 	static { 
@@ -44,13 +44,13 @@ public class PlanDAO implements PlanDAO_interface {
 			con = DriverManager.getConnection(URL, USER, PASSWORD);
 			pstmt = con.prepareStatement(INSERT_STMT);
 			
-			pstmt.setInt(1, planVO.getPlanId());
-			pstmt.setInt(2, planVO.getCampId());
-			pstmt.setString(3, planVO.getPlanName());
-			pstmt.setInt(4, planVO.getPlanGuestLimit());
-			pstmt.setInt(5, planVO.getPlanAgeLimit());
-			pstmt.setInt(6, planVO.getPlanPrice());
-			pstmt.setString(7, planVO.getPlanOutline());
+//			pstmt.setInt(1, planVO.getPlanId());
+			pstmt.setInt(1, planVO.getCampId());
+			pstmt.setString(2, planVO.getPlanName());
+			pstmt.setInt(3, planVO.getPlanGuestLimit());
+			pstmt.setInt(4, planVO.getPlanAgeLimit());
+			pstmt.setInt(5, planVO.getPlanPrice());
+			pstmt.setString(6, planVO.getPlanOutline());
 			
 			pstmt.executeUpdate();
 			
@@ -88,7 +88,8 @@ public class PlanDAO implements PlanDAO_interface {
 			pstmt.setInt(3, planVO.getPlanGuestLimit());
 			pstmt.setInt(4, planVO.getPlanAgeLimit());
 			pstmt.setInt(5, planVO.getPlanPrice());
-			pstmt.setInt(6, planVO.getPlanId());
+			pstmt.setString(6, planVO.getPlanOutline());
+			pstmt.setInt(7, planVO.getPlanId());
 
 			pstmt.executeUpdate();
 			
@@ -148,8 +149,8 @@ public class PlanDAO implements PlanDAO_interface {
 	}
 
 	@Override
-	public List<PlanVO> findbyPrimaryKey(Integer campId) {
-		List<PlanVO> planList = new ArrayList<>();
+	public ArrayList<PlanVO> findbyPrimaryKey(Integer campId) {
+		ArrayList<PlanVO> planList = new ArrayList<PlanVO>();
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -286,6 +287,7 @@ public class PlanDAO implements PlanDAO_interface {
 				planVO.setPlanGuestLimit(rs.getInt("PLAN_GUEST_LIMIT"));
 				planVO.setPlanAgeLimit(rs.getInt("PLAN_AGE_LIMIT"));
 				planVO.setPlanPrice(rs.getInt("PLAN_PRICE"));
+				planVO.setPlanOutline(rs.getString("PLAN_OUTLINE"));
 				planlist.add(planVO);
 			}
 			// Handle any driver errors
@@ -361,12 +363,13 @@ public class PlanDAO implements PlanDAO_interface {
 	}
 
 	@Override
-	public PlanVO getCampId(Integer campId) {
+	public ArrayList<PlanVO> getCampId(Integer campId) {
 		// TODO Auto-generated method stub
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		PlanVO planVO = null;
+		PlanVO planVO = new PlanVO();
+		ArrayList<PlanVO> list = new ArrayList<PlanVO>();
 
 		try {
 			con = DriverManager.getConnection(URL, USER, PASSWORD);
@@ -384,6 +387,8 @@ public class PlanDAO implements PlanDAO_interface {
 				planVO.setPlanGuestLimit(rs.getInt("PLAN_GUEST_LIMIT"));
 				planVO.setPlanAgeLimit(rs.getInt("PLAN_AGE_LIMIT"));
 				planVO.setPlanPrice(rs.getInt("PLAN_PRICE"));
+				planVO.setPlanOutline(rs.getString("PLAN_OUTLINE"));
+				list.add(planVO);
 			}
 			// Handle any driver errors
 		} catch (SQLException se) {
@@ -412,50 +417,8 @@ public class PlanDAO implements PlanDAO_interface {
 				}
 			}
 		}
-		return planVO;
+		return list;
 	}
 	
-	@Override
-	public void planInsertWithCampId(PlanVO planVO, Connection con) {
-		// TODO Auto-generated method stub
-		PreparedStatement pstmt = null;
-		
-		try {
-			
-			String cols[] = {"planId"};
-			pstmt = con.prepareStatement(INSERT_STMT, cols);
-			
-			
-			pstmt.setInt(1, planVO.getCampId());
-			pstmt.setInt(2, planVO.getPlanGuestLimit());
-			pstmt.setInt(3, planVO.getPlanAgeLimit());
-			pstmt.setInt(4, planVO.getPlanPrice());
-			
-			pstmt.executeUpdate();
-			
-			Integer nextPlanId = null;
-			ResultSet rs = pstmt.getGeneratedKeys();
-			if(rs.next()) {
-				nextPlanId = rs.getInt(1);
-			}
-		} catch(SQLException se) {
-			if(con != null) {
-				try {
-					con.rollback();
-				} catch(SQLException sqle) {
-					throw new RuntimeException("Rollback error occured" + sqle.getMessage());
-				}
-			}
-			throw new RuntimeException("A database error occured. " + se.getMessage()); 
-		} finally {
-			if(pstmt != null) {
-				try {
-					pstmt.close();
-				} catch(SQLException se) {
-					se.printStackTrace();
-				}
-			}
-		}
-	}
 }
 

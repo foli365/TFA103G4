@@ -1,5 +1,6 @@
 package com.plan.model;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -11,23 +12,24 @@ public class PlanService {
 		dao = new PlanDAO();
 	}
 
-	public PlanVO addPlan(Integer planId, Integer campId, String planName, Integer planGuestLimit, Integer planAgeLimit,
-			Integer planPrice) {
+	public PlanVO addPlan(Integer campId, String planName, Integer planGuestLimit, Integer planAgeLimit,
+			Integer planPrice, String planOutline) {
 
 		PlanVO planVO = new PlanVO();
 
-		planVO.setPlanId(planId);
+//		planVO.setPlanId(planId);
 		planVO.setCampId(campId);
 		planVO.setPlanName(planName);
 		planVO.setPlanGuestLimit(planGuestLimit);
 		planVO.setPlanAgeLimit(planAgeLimit);
 		planVO.setPlanPrice(planPrice);
+		planVO.setPlanOutline(planOutline);
 		dao.add(planVO);
 
 		return planVO;
 	}
 
-	public PlanVO updatePlan(Integer campId, String planName, Integer planGuestLimit, Integer planAgeLimit, Integer planPrice,
+	public PlanVO updatePlan(Integer campId, String planName, Integer planGuestLimit, Integer planAgeLimit, Integer planPrice,String planOutline,
 			Integer planId) {
 
 		PlanVO planVO = new PlanVO();
@@ -37,6 +39,7 @@ public class PlanService {
 		planVO.setPlanGuestLimit(planGuestLimit);
 		planVO.setPlanAgeLimit(planAgeLimit);
 		planVO.setPlanPrice(planPrice);
+		planVO.setPlanOutline(planOutline);
 		planVO.setPlanId(planId);
 		dao.update(planVO);
 
@@ -47,7 +50,7 @@ public class PlanService {
 		dao.delete(planId);
 	}
 
-	public List<PlanVO> getOnePlan(Integer campId) {
+	public ArrayList<PlanVO> getPlans(Integer campId) {
 		return dao.findbyPrimaryKey(campId);
 	}
 	
@@ -72,7 +75,7 @@ public class PlanService {
 		dao.deletebyCampId(campId);
 	};
 	
-	public PlanVO getCampId(Integer campId) {
+	public ArrayList<PlanVO> getCampId(Integer campId) {
 		return dao.getCampId(campId);
 	}
 }

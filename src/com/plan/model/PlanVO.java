@@ -82,9 +82,11 @@ public class PlanVO implements Serializable {
 
 	@Override
 	public String toString() {
-		return "PlanVO [planId=" + planId + ", campId=" + campId + ", planName=" + planName + ", planGuestLimit="
-				+ planGuestLimit + ", planAgeLimit=" + planAgeLimit + ", planPrice=" + planPrice + "]";
+		return "PlanVO [planId=" + planId + ", campId=" + campId + ", planName=" + planName + ", planOutline="
+				+ planOutline + ", planGuestLimit=" + planGuestLimit + ", planAgeLimit=" + planAgeLimit + ", planPrice="
+				+ planPrice + "]";
 	}
+
 	
 }
 

@@ -5,10 +5,6 @@
 <%@ page import="java.util.*"%>
 <%@ page import="com.camprelease.model.*"%>
 <%@ page import="com.facilities.model.*"%>
-<%@ page import="com.favorite.model.*"%>
-<%@ page import="com.campAlert.model.*"%>
-<%@ page import="com.camporder.model.*"%>
-<%@ page import="com.campsitetentstatus.model.*"%>
 <%@ page import="com.plan.model.*"%>
 
 <%
@@ -22,17 +18,7 @@
     
     FacilitiesVO facilitiesVO = (FacilitiesVO) request.getAttribute("facilitiesVO");
 %>
-<%
-//     FacilitiesService facilitiesSvc = new FacilitiesService();
-//     List<FacilitiesVO> listfacilities = facilitiesSvc.getAll();
-//     pageContext.setAttribute("listfacilities",listfacilities);
-//     session.setAttribute("facilitiesId", 1);
-//     session.getAttribute("facilitiesId");
-        
-%>
-<%-- <c:if test="${facilitiesId == 1}"> --%>
-<%-- <c:set var="states" value="true"></c:set> --%>
-<%-- </c:if> --%>
+
 
 <%-- <jsp:useBean id="planSvc" scope="page" class="com.plan.model.PlanService" /> --%>
 <%-- <jsp:useBean id="CampreleaseSvc" scope="page" class="com.camprelease.model.CampReleaseService" /> --%>
@@ -47,54 +33,14 @@
   <link rel="stylesheet" href="<%=request.getContextPath()%>/camprelease/css/icon.css">
     <style>
         div.dataTables_wrapper {
-        background-color: whitesmoke;
+        background-color: #99BFE6;
         width: 800px;
         margin: 0 auto;
     }
     body{
-        background-color: #7B7571; 
+        background-color: #FFEEE1; 
     }
-    
-         /* 以下設備 */
-/*       .setting-label{ */
-/*         position: relative; */
-/*         display: inline-block; */
-/*         line-height: 1em; */
-/*         overflow: hidden; */
-/*         margin: 0 5px 5px 0; */
-/*         cursor: pointer; */
-/*       } */
-/*       .setting-label > input{ */
-/*         position: absolute; */
-/*         top: -20px; */
-/*         left: -20px; */
-/*       } */
-/*       .setting-label > span{ */
-/*         position: relative; */
-/*         display: block; */
-/*         padding: 10px 12px 10px 10px; */
-/*         color: #000; */
-/*         font-weight: 500; */
-/*         background-color: lightgray; */
-/*         /* white-space: nowrap; */
-/*         border-radius: 2em; */ */
-/*         -webkit-border-radius: 2em; */
-/*         -moz-border-radius: 2em; */
-/*       } */
-/*       .setting-label > span > i{ */
-/*         opacity: 1; */
-/*       } */
-/*       .setting-label:hover > span{ */
-/*         color:#fff; */
-/*         background-color: #F4A249; */
-/*       } */
-/*       .setting-label:hover >span.male{ */
-/*         background-color: #F4A249; */
-/*       } */
-/*       .setting-label input:checked + span{ */
-/*         background-color: #f23557; */
-/*         color: white; */
-/*       } */
+   
     </style>
     
 </head>
@@ -108,12 +54,63 @@
 		</c:forEach>
 	</ul>
 </c:if>
+
+	<nav class="navbar navbar-expand-md navbar-light sticky-top"
+		style="background-color: #fbefe7">
+		<div class="container-fluid">
+			<a class="navbar-brand ms-lg-5" href="../Homepage/index.html"
+				style="font-size: 1.25em">GoCamping</a>
+			<button class="navbar-toggler" type="button"
+				data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+				aria-controls="navbarSupportedContent" aria-expanded="false"
+				aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+			<div class="collapse navbar-collapse" id="navbarSupportedContent">
+				<form class="d-flex">
+					<input class="form-control me-2 rounded-pill ml-0" type="search"
+						placeholder="Search" aria-label="Search" />
+					<button id="searchIcon" class="btn" type="submit"
+						style="padding: 0">
+						<i class="bi bi-search"></i>
+					</button>
+				</form>
+				<ul class="navbar-nav ms-auto mb-2 mb-lg-0 me-xl-5">
+					<li class="nav-item"><a id="hosting" class="nav-link" href="<%=request.getContextPath()%>/camprelease/addCampRel.jsp"
+						style="color: green">上架營地</a></li>
+					<li class="nav-item"><a class="nav-link" href="#"
+						style="color: #e40580">商城</a></li>
+					<li class="nav-item"><a class="nav-link" href="index.jsp"
+						style="color: #0b83ed">論壇</a></li>
+					<li class="nav-item"><a class="nav-link"
+						href="../RegisterAndLogin/register.html">註冊</a></li>
+					<li class="nav-item"><a class="nav-link"
+						href="../RegisterAndLogin/login.html">登入</a></li>
+					<li class="nav-item dropdown"><a
+						class="nav-link dropdown-toggle" href="#" id="navbarDropdown"
+						role="button" data-bs-toggle="dropdown" aria-expanded="false">
+							會員姓名 </a>
+						<ul class="dropdown-menu dropdown-menu-end"
+							aria-labelledby="navbarDropdown">
+							<li><a class="dropdown-item"
+								href="../Account/accountCenter.html">會員中心</a></li>
+							<li><a class="dropdown-item"
+								href="../Account/editProfile.html">編輯會員資料</a></li>
+							<li>
+								<hr class="dropdown-divider" />
+							</li>
+							<li><a class="dropdown-item" href="#">登出</a></li>
+						</ul></li>
+				</ul>
+			</div>
+		</div>
+	</nav>
         
         <br>
         <br>
         <br>
         <div class="container">
-            <a class="btn btn-primary" href="<%=request.getContextPath() %>/camprelease/addCampRel.jsp" role="button"><image src="svg/patch-plus.svg"></image>Add</a>
+<%--             <a class="btn btn-primary" href="<%=request.getContextPath() %>/camprelease/addCampRel.jsp" role="button"><image src="svg/patch-plus.svg"></image>Add</a> --%>
 <table id="example" class="display nowrap" style="width:100%">
     <thead>
         <tr>
@@ -131,19 +128,12 @@
             <th>pic3</th>
             <th>pic4</th>
             <th>pic5</th>
-            <th>配套方案</th>
             <th>設施</th>
             <th>營地資料修改</th>
-            <th>Plan修改</th>
-<!--             <th>刪除</th> -->
         </tr>
     </thead>
     <jsp:useBean id="facilitiesSvc" scope="page" class="com.facilities.model.FacilitiesService" />
     <jsp:useBean id="planSvc" scope="page" class="com.plan.model.PlanService" />
-    <jsp:useBean id="campAlertSvc" scope="page" class="com.campAlert.model.CampAlertService" />
-    <jsp:useBean id="favoriteSvc" scope="page" class="com.favorite.model.FavoriteService" />
-    <jsp:useBean id="campsiteTentStatusSvc" scope="page" class="com.campsitetentstatus.model.CampsiteTentStatusService" />
-    <jsp:useBean id="campOrderSvc" scope="page" class="com.camporder.model.CampOrderService" />
     <c:forEach var="campreleaseVO"  items="${list}">
     <tbody>
         <tr>
@@ -161,45 +151,14 @@
 			<td><img src="<%=request.getContextPath() %>/CampReleasePhotoServlet?id=${campreleaseVO.campId}&img=3" width="100"></td>
 			<td><img src="<%=request.getContextPath() %>/CampReleasePhotoServlet?id=${campreleaseVO.campId}&img=4" width="100"></td>
 			<td><img src="<%=request.getContextPath() %>/CampReleasePhotoServlet?id=${campreleaseVO.campId}&img=5" width="100"></td>
-			<td><c:forEach var="planVO" items="${planSvc.all}"><c:if test="${campreleaseVO.campId == planVO.campId}">【${planVO.planName}】【${planVO.planGuestLimit}人】【${planVO.planAgeLimit}歲以下】【${planVO.planPrice}元】<br></c:if></c:forEach></td>
 			<td>
-			      <div>
-                    <label class="setting-label circle-line" for="setting[]"><input type="checkbox" name="bbq" id="bbq" value=""${(facilitiesVO.bbq == 0) ? '1' : 'checked' } disabled="disabled"><span class="material-icons md-18">outdoor_grill</span></label>
-                    <label class="setting-label circle-line" for="setting[]"><input type="checkbox" name="wifi" id="wifi" value=""${(facilitiesVO.wifi == 0) ? '1' : 'checked' } disabled="disabled"><span class="material-icons md-18">wifi</span></label>
-                    <label class="setting-label circle-line" for="setting[]"><input type="checkbox" name="nosmoke" id="nosmoke" value=""${(facilitiesVO.nosmoke == 0) ? '1' : 'checked' } disabled="disabled"><span class="material-icons md-18">smoke_free</span></label>
-                    <label class="setting-label circle-line" for="setting[]"><input type="checkbox" name="pets" id="pets" value=""${(facilitiesVO.pets == 0) ? '1' : 'checked' } disabled="disabled"><span class="material-icons md-18">pets</span></label>
-                  </div>
 			</td>
             <td>
-<!--                   <br>     -->
-<!--                   <p> -->
-<%--                   <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/camprelease/camprelease.do" style="margin-bottom: 0px;">  --%>
-<%--                     <a class="btn btn-outline-info" href="<%=request.getContextPath() %>/camprelease/updateCampRel.jsp" role="button"><image src="svg/gear.svg"></image>update</a> --%>
-<%--                     			     <input type="hidden" name="campId"  value="${campreleaseVO.campId}">  --%>
-<!--  			     <input type="hidden" name="action"	value="getOne_For_Update" > -->
-<!--                   </FORM></p> -->
                   			  <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/camprelease/camprelease.do" style="margin-bottom: 0px;"> 
 			     <input type="submit" value="營地資料修改">
 			     <input type="hidden" name="campId"  value="${campreleaseVO.campId}">
 			     <input type="hidden" name="action"	value="getOne_For_Update"></FORM>
               </td>
-                          <td>
-                  			  <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/plan/plan.do" style="margin-bottom: 0px;"> 
-			     <input type="submit" value="Plan修改">
-			     <input type="hidden" name="planId"  value="${planVO.planId}">
-			     <input type="hidden" name="action"	value="getOnePlan_For_Update"></FORM>
-              </td>
-              
-<!--               <td> -->
-<!--                   <br> -->
-<!--                   <p> -->
-<%--                     <a class="btn btn-outline-danger" href="<%=request.getContextPath() %>/camprelease/updateCampRel.jsp" role="button"><image src="svg/trash.svg"></image>delete</a> --%>
-<!--                   </p> -->
-<%--                   <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/camprelease/camprelease.do" style="margin-bottom: 0px;"> --%>
-<!-- 			     <input type="submit" value="刪除"> -->
-<%-- 			     <input type="hidden" name="campId"  value="${campreleaseVO.campId}"> --%>
-<!-- 			     <input type="hidden" name="action" value="delete"></FORM> -->
-<!--               </td> -->
         </tr>
     </tbody>
         </c:forEach>
@@ -284,7 +243,7 @@
        $(document).ready(function() {
     $('#example').DataTable( {
         "scrollX": true,
-        "searching": true, //搜尋功能, 預設是開啟
+        "searching": false, //搜尋功能, 預設是開啟
         "paging": true, //分頁功能, 預設是開啟
         "ordering": true, //排序功能, 預設是開啟
         "lengthMenu": [3, 8],
