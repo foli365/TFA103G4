@@ -1,6 +1,8 @@
 package com.facilities.model;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class FacilitiesService {
 	
@@ -61,4 +63,14 @@ public class FacilitiesService {
 		return dao.getCampId(campId);
 	}
 	
+	public ArrayList<FacilitiesVO> getCamp(Integer campId) {
+		return dao.getCamp(campId);
+	}
+	public FacilitiesVO getOneFacByFacilitiesId(Integer facilitiesId) {
+		List<FacilitiesVO> list = dao.getAll();
+		List<FacilitiesVO> facilitiesVO = list.stream()
+				.filter(e -> e.getFacilitiesId().equals(facilitiesId))
+				.collect(Collectors.toList());
+		return facilitiesVO.get(0);
+	}
 }

@@ -1,13 +1,18 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import="java.util.*"%>
 <%@ page import="com.plan.model.*"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <%
 	response.setHeader("Cache-Control", "no-store"); //HTTP 1.1
 	response.setHeader("Pragma", "no-cache"); //HTTP 1.0
 	response.setDateHeader("Expires", 0);
 
-	PlanVO planVO = (PlanVO) request.getAttribute("planVO");
+// 	PlanVO planVO = (PlanVO) request.getAttribute("planVO");
+	
+	PlanService planSvc = new PlanService();
+	List<PlanVO> planlist = planSvc.getByCampId(Integer.parseInt(request.getParameter("campId")));
+	pageContext.setAttribute("planVOList", planlist);
 %>
 
 <!DOCTYPE html>
@@ -17,7 +22,6 @@
 <title>顯示一個配套資料</title>
 <link rel='stylesheet' href='<%=request.getContextPath()%>/camprelease/css/jquery.dataTables.min.css' />
 <link rel="stylesheet" href="<%=request.getContextPath()%>/camprelease/css/bootstrap.min5.1.0.css">
-</head>
 <style>
 body {
 	background-color: #FFEEE1;
@@ -33,17 +37,14 @@ body {
 	text-align: center;
 }
 </style>
+</head>
 <body>
-	<header class="header">
-		<h1 class="header__title">顯示一筆資料</h1>
-		<br>
-		<table id="table-1">
-			<h4>
-				<a href="<%=request.getContextPath()%>/camprelease/Select_Page.jsp">
-				<img src="camprelease/images/gocamping.jpg" width="500" height="125" border="0"><br>back home</a>
-			</h4>
-		</table>
-	</header>
+<header class="header" >
+  <h1 class="header__title">顯示配套資料</h1><br>
+  <table id="table-1">
+		 <h4><a href="<%=request.getContextPath()%>/camprelease/Select_Page.jsp"><img src="<%=request.getContextPath()%>/camprelease/images/gocamping.jpg" width="500" height="125" border="0"></a></h4>
+</table>
+</header>
 
 	<table id="example" class="display nowrap" style="width: 100%">
 		<thead>
@@ -54,12 +55,13 @@ body {
 				<th>配套人數限制</th>
 				<th>配套年齡限制</th>
 				<th>配套價錢</th>
+				<th>配套介紹</th>
 				<th>Plan修改</th>
-				<th>刪除</th>
+<!-- 				<th>刪除</th>				 -->
 			</tr>
 		</thead>
 		<tbody>
-			<jsp:useBean id="planSvc" scope="page" class="com.plan.model.PlanService" />
+			<c:forEach var="planVO" items="${planVOList}">
 			<tr>
 				<td>【${planVO.planId}】</td>
 				<td>【${planVO.campId}】</td>
@@ -67,6 +69,7 @@ body {
 				<td>【${planVO.planGuestLimit}人】</td>
 				<td>【${planVO.planAgeLimit}歲以下】</td>
 				<td>【${planVO.planPrice}元】</td>
+				<td>【${planVO.planOutline}】</td>
 				<td>
 					<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/plan/plan.do" style="margin-bottom: 0px;">
 						<input type="submit" value="Plan修改"> 
@@ -75,13 +78,15 @@ body {
 						<input type="hidden" name="action" value="getOnePlan_For_Update">
 					</FORM>
 				</td>
-				<td>
-					<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/plan/plan.do" style="margin-bottom: 0px;">
-						<input type="submit" value="刪除"> <input type="hidden" name="planId" value="${planVO.planId}"> 
-						<input type="hidden" name="action" value="delete_plan">
-					</FORM>
-				</td>
+<!-- 				<td> -->
+<%-- 					<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/plan/plan.do" style="margin-bottom: 0px;"> --%>
+<%-- 						<input type="submit" value="刪除"> <input type="hidden" name="planId" value="${planVO.planId}">  --%>
+<!-- 						<input type="hidden" name="action" value="delete_plan"> -->
+<!-- 					</FORM> -->
+<!-- 				</td> -->
+				
 			</tr>
+			</c:forEach>
 		</tbody>
 	</table>
 

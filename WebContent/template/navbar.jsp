@@ -45,7 +45,7 @@
 						<li><a class="dropdown-item"
 							href="<%=request.getContextPath()%>/account/account_center.jsp">會員中心</a></li>
 						<li><a class="dropdown-item"
-							href="<%=request.getContextPath()%>/account/camp_management.jsp">營地管理</a></li>
+							href="<%=request.getContextPath()%>/camprelease/Select_Page.jsp">營地管理</a></li>
 						<li><a class="dropdown-item"
 							href="<%=request.getContextPath()%>/account/edit_profile.jsp">編輯會員資料</a></li>
 						<li>

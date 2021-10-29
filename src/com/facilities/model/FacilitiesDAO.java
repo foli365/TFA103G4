@@ -3,6 +3,8 @@ package com.facilities.model;
 import java.sql.*;
 import java.util.*;
 
+import com.plan.model.PlanVO;
+
 public class FacilitiesDAO implements FacilitiesDAO_interface{
 	
 	public static final String DRIVER = "com.mysql.cj.jdbc.Driver";
@@ -282,6 +284,7 @@ public class FacilitiesDAO implements FacilitiesDAO_interface{
 						facilitiesVO.setWifi(rs.getInt("WIFI"));
 						facilitiesVO.setNosmoke(rs.getInt("NOSMOKE"));
 						facilitiesVO.setPets(rs.getInt("PETS"));
+						facilitieslist.add(facilitiesVO);
 					}
 					// Handle any driver errors
 				} catch (ClassNotFoundException e) {
@@ -314,6 +317,62 @@ public class FacilitiesDAO implements FacilitiesDAO_interface{
 				}
 				return facilitieslist;
 			}
+			
+			@Override
+			public ArrayList<FacilitiesVO> getCamp(Integer campId) {
+				ArrayList<FacilitiesVO> facList = new ArrayList<FacilitiesVO>();
+				Connection con = null;
+				PreparedStatement pstmt = null;
+				ResultSet rs = null;
+				FacilitiesVO facilitiesVO = null;
+
+				try {
+					con = DriverManager.getConnection(URL, USER, PASSWORD);
+					pstmt = con.prepareStatement(GET_ONE_CAMPID);
+
+					pstmt.setInt(1, campId);
+					rs = pstmt.executeQuery();
+
+					while (rs.next()) {
+						facilitiesVO = new FacilitiesVO();
+						facilitiesVO.setFacilitiesId(rs.getInt("FACILITIES_ID"));
+						facilitiesVO.setCampId(rs.getInt("CAMP_ID"));
+						facilitiesVO.setBbq(rs.getInt("BBQ"));
+						facilitiesVO.setWifi(rs.getInt("WIFI"));
+						facilitiesVO.setNosmoke(rs.getInt("NOSMOKE"));
+						facilitiesVO.setPets(rs.getInt("PETS"));
+						facList.add(facilitiesVO);
+					}
+						
+				} catch (SQLException se) {
+					se.printStackTrace();
+				} finally {
+					if (rs != null) {
+						try {
+							rs.close();
+						} catch (SQLException se) {
+							se.printStackTrace();
+						}
+					}
+
+					if (pstmt != null) {
+						try {
+							pstmt.close();
+						} catch (SQLException se) {
+							se.printStackTrace();
+						}
+					}
+
+					if (con != null) {
+						try {
+							con.close();
+						} catch (SQLException se) {
+							se.printStackTrace();
+						}
+					}
+				}
+				return facList;
+			}
 
 			@Override
 			public void facilitiesInsertWithCampId(FacilitiesVO facilitiesVO, Connection con) {
@@ -334,11 +393,11 @@ public class FacilitiesDAO implements FacilitiesDAO_interface{
 					
 					pstmt.executeUpdate();
 					
-					Integer nextFacilitiesId = null;
-					ResultSet rs = pstmt.getGeneratedKeys();
-					if(rs.next()) {
-						nextFacilitiesId = rs.getInt(1);
-					}
+//					Integer nextFacilitiesId = null;
+//					ResultSet rs = pstmt.getGeneratedKeys();
+//					if(rs.next()) {
+//						nextFacilitiesId = rs.getInt(1);
+//					}
 				} catch(SQLException se) {
 					if(con != null) {
 						try {
