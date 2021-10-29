@@ -166,7 +166,7 @@ public class productServlet extends HttpServlet {
 		}
 
 		if ("update".equals(action)) {
-			System.out.println("hello");
+//			System.out.println("hello");
 			List<String> errorMsgs = new LinkedList<String>();
 			req.setAttribute("errorMsgs", errorMsgs);
 
@@ -185,7 +185,7 @@ public class productServlet extends HttpServlet {
 
 				try {
 					price = new Integer(req.getParameter("price").trim());
-			System.out.println(price);
+//			System.out.println(price);
 				} catch (NumberFormatException e) {
 					price = 0;
 					errorMsgs.add("請輸入價格");
@@ -214,6 +214,7 @@ public class productServlet extends HttpServlet {
 //			 System.out.println(inventory);
 				} catch (NumberFormatException e) {
 					errorMsgs.add("狀態不能空");
+				
 				}
 
 				String descript = req.getParameter("descript");
@@ -385,7 +386,7 @@ public class productServlet extends HttpServlet {
 								in1.close();
 								picList.add(picture);
 							} else {
-								errorMsgs.add("圖片: 請勿空白");
+								errorMsgs.add("圖片不能空");
 							}
 						}
 					}
@@ -493,6 +494,7 @@ public class productServlet extends HttpServlet {
 				RequestDispatcher successView = req.getRequestDispatcher(url);
 				successView.forward(req, res);
 			} catch (Exception e) {
+				e.printStackTrace();
 				errorMsgs.add("刪除資料失敗:" + e.getMessage());
 				RequestDispatcher failureView = req.getRequestDispatcher("/product/selectAll.jsp");
 				failureView.forward(req, res);
