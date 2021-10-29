@@ -8,4 +8,5 @@ public interface CampOrderDAO_interface {
 	void delete(Integer campOrderId);
 	CampOrderVO findbyPrimaryKey(Integer campOrderId);
 	List<CampOrderVO> getAll();
+	void updateOrder(CampOrderVO campOrderVO);
 }

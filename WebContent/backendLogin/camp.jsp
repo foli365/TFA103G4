@@ -124,7 +124,7 @@ img {
 					<td>${VO.campName}</td>
 					<td>${VO.location}</td>
 					<td>${VO.listedTime}</td>
-					<td>${VO.siteState}</td>
+					<td>${VO.siteState==1 ?  "已停權":"營業中"}</td>
 					<td>${VO.reportedCount}</td>
 					<td><img
 						src="<%=request.getContextPath()%>/CampsiteGifReader?column=camp_license&camp_id=${VO.campId}"

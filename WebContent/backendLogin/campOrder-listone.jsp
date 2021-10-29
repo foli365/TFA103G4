@@ -6,7 +6,6 @@
 <%@ page import="com.camporder.model.*"%>
 <%@ page import="java.util.*"%>
 <%
-
 MemberService memSvc = new MemberService();
 pageContext.setAttribute("memSvc", memSvc);
 %>
@@ -91,8 +90,8 @@ img {
 			<thead>
 				<tr>
 					<th>露營訂單編號</th>
-					<th>營地編號</th>
-					<th>會員編號</th>
+					<th>營地名稱</th>
+					<th>會員名稱</th>
 					<th>預定人數</th>
 					<th>入住日期</th>
 					<th>退房日期</th>
@@ -104,15 +103,16 @@ img {
 			</thead>
 				<tr>
 					<td>${campOrderVO.campOrderId}</td>
-					<td>${campsiteService.getOneCampsite(VO.campId).campName}</td>
-					<td>${memSvc.findByPrimaryKey(VO.memberId).name}</td>
+					<td>${campsiteService.getOneCampsite(campOrderVO.campId).campName}</td>
+					<td>${memSvc.findByPrimaryKey(campOrderVO.memberId).name}</td>
 					<td>${campOrderVO.guestNumber}</td>
 					<td>${campOrderVO.checkInDate}</td>
 					<td>${campOrderVO.checkOutDate}</td>
 					<td>${campOrderVO.orderDate}</td>
 					<td>${campOrderVO.paymentDeadline}</td>
 					<td>${campOrderVO.orderTotal}</td>
-					<td>${campOrderVO.orderStatus}</td>
+					<td>${campOrderVO.orderStatus==1 ? "已付款":"未付款"}</td>
+					
 				
 		</table>
 	</div>

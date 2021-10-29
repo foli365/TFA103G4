@@ -92,7 +92,7 @@ $(function(){
     $("#pwd2").blur(function(){
         if($("#pwd1").val()!=$("#pwd2").val()){
 
-            alert("两次输入的密码不一致");
+            alert("兩次輸入的密碼不一致");
 
         }
     })

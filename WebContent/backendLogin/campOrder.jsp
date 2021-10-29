@@ -90,6 +90,8 @@ pageContext.setAttribute("campsiteService", campsiteService);
 					placeholder="管理員編號查詢"> <input type="hidden" name="action"
 					id="" class="btn_search" value="getOne_For_Display">
 				<button type="submit" class="btn btn-outline-success">查詢</button>
+				<button type="button" class="btn btn-outline-success" id="export">匯出</button>
+			</Form>
 <!-- 				<button type="button" class="btn btn-outline-success" -->
 <%-- 					onclick="location.href='<%=request.getContextPath()%>/backendLogin/addAdmin.jsp'">新增管理員</button> --%>
 <!-- 				<button type="button" class="btn btn-outline-success" id="export">匯出</button> -->
@@ -112,7 +114,8 @@ pageContext.setAttribute("campsiteService", campsiteService);
 					<th>營地付款截止時間</th>
 					<th>訂單總金額</th>
 					<th>訂單狀態</th>
-<!-- 					<th>修改</th> -->
+					<th>修改訂單</th>
+					<th>取消訂單</th>
 				</tr>
 			</thead>
 			<%@ include file="page1.file"%>
@@ -129,25 +132,25 @@ pageContext.setAttribute("campsiteService", campsiteService);
 					<td>${VO.orderDate}</td>
 					<td>${VO.paymentDeadline}</td>
 					<td>${VO.orderTotal}</td>
-					<td>${VO.orderStatus}</td>
-<!-- 					<td> -->
-<!-- 						<FORM METHOD="post" -->
-<%-- 							ACTION="<%=request.getContextPath()%>/backendLogin/AdminServlet.do" --%>
-<!-- 							style="margin-bottom: 0px;"> -->
-<!-- 							<input type="submit" value="修改"> <input type="hidden" -->
-<%-- 								name="adminId" value="${VO.adminId}"> <input --%>
-<!-- 								type="hidden" name="action" value="getOne_For_Update"> -->
-<!-- 						</FORM> -->
-<!-- 					</td> -->
-<!-- 					<td> -->
-<!-- 						<FORM METHOD="post" -->
-<%-- 							ACTION="<%=request.getContextPath()%>/backendLogin/AdminServlet.do" --%>
-<!-- 							style="margin-bottom: 0px;"> -->
-<!-- 							<input type="submit" value="刪除"> <input type="hidden" -->
-<%-- 								name="adminId" value="${VO.adminId}"> <input --%>
-<!-- 								type="hidden" name="action" value="delete"> -->
-<!-- 						</FORM> -->
-<!-- 					</td> -->
+					<td>${VO.orderStatus==1 ? "已付款":"未付款"}</td>
+					<td>
+						<FORM METHOD="post"
+							ACTION="<%=request.getContextPath()%>/backendLogin/CampOrderBackendServlet.do"
+							style="margin-bottom: 0px;">
+							<input type="submit" value="修改訂單" class="btn btn-primary"> <input type="hidden"
+								name="campOrderId" value="${VO.campOrderId}"> <input
+								type="hidden" name="action" value="getOne_For_Update">
+						</FORM>
+					</td>
+					<td>
+						<FORM METHOD="post"
+							ACTION="<%=request.getContextPath()%>/backendLogin/CampOrderBackendServlet.do"
+							style="margin-bottom: 0px;">
+							<input type="submit" value="取消訂單" class="btn btn-danger"> <input type="hidden"
+								name="" value=""> <input
+								type="hidden" name="action" value="delete">
+						</FORM>
+					</td>
 
 				</tr>
 
