@@ -25,7 +25,7 @@ public class CampOrderDAO implements CampOrderDAO_interface {
 			+ "WHERE CAMP_ORDER_ID = ?"; // Foreign Key不能update
 	public static final String UDATE_ORDER = "UPDATE CAMP_ORDER SET CAMP_ID = ?,MEMBER_ID = ?, "
 			+ "GUEST_NUMBER = ?, CHECK_IN_DATE = ?, CHECK_OUT_DATE = ?, ORDER_DATE = ?, PAYMENT_DEADLINE = ?, "
-			+ "ORDER_STATUS = ?, ORDER_TOTAL = ?,  "+"WHERE CAMP_ORDER_ID = ?"; // Foreign Key不能update
+			+ "ORDER_STATUS = ?, ORDER_TOTAL = ? WHERE CAMP_ORDER_ID = ?"; // Foreign Key不能update
 	public static final String DELETE_STMT = "DELETE FROM CAMP_ORDER WHERE CAMP_ORDER_ID = ?";
 	public static final String FIND_BY_PK = "SELECT CAMP_ORDER_ID, CAMP_ID, MEMBER_ID, GUEST_NUMBER, "
 			+ "CHECK_IN_DATE, CHECK_OUT_DATE, ORDER_DATE, PAYMENT_DEADLINE, ORDER_STATUS, ORDER_TOTAL, COMMENT "

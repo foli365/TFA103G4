@@ -29,30 +29,30 @@ public class AdminLoginServlet extends HttpServlet {
 		req.setCharacterEncoding("UTF-8");
 	    res.setContentType("text/html; charset=UTF-8");
 	    PrintWriter out = res.getWriter();
-	 // ã€å–å¾—ä½¿ç”¨è€… å¸³è™Ÿ(account) å¯†ç¢¼(password)ã€‘
+	 // ¡i¨ú±o¨Ï¥ÎªÌ ±b¸¹(account) ±K½X(password)¡j
 	    String adminaccount = req.getParameter("adminaccount");
 	    String adminpassword = req.getParameter("adminpassword");
 
-	    // ã€æª¢æŸ¥è©²å¸³è™Ÿ , å¯†ç¢¼æ˜¯å¦æœ‰æ•ˆã€‘
-	    if (!allowUser(adminaccount, adminpassword)) {          //ã€å¸³è™Ÿ , å¯†ç¢¼ç„¡æ•ˆæ™‚ã€‘
+	    // ¡iÀË¬d¸Ó±b¸¹ , ±K½X¬O§_¦³®Ä¡j
+	    if (!allowUser(adminaccount, adminpassword)) {          //¡i±b¸¹ , ±K½XµL®Ä®É¡j
 	      out.println("<HTML><HEAD><TITLE>Access Denied</TITLE></HEAD>");
-	      out.println("<BODY>ä½ çš„å¸³è™Ÿ , å¯†ç¢¼ç„¡æ•ˆ!<BR>");
-	      out.println("è«‹æŒ‰æ­¤é‡æ–°ç™»å…¥ <A HREF="+req.getContextPath()+"/backendLogin/backendLogin.jsp>é‡æ–°ç™»å…¥</A>");
+	      out.println("<BODY>§Aªº±b¸¹ , ±K½XµL®Ä!<BR>");
+	      out.println("½Ğ«ö¦¹­«·sµn¤J <A HREF="+req.getContextPath()+"/backendLogin/backendLogin.jsp>­«·sµn¤J</A>");
 	      out.println("</BODY></HTML>");
-	    }else {                                       //ã€å¸³è™Ÿ , å¯†ç¢¼æœ‰æ•ˆæ™‚, æ‰åšä»¥ä¸‹å·¥ä½œã€‘
+	    }else {                                       //¡i±b¸¹ , ±K½X¦³®Ä®É, ¤~°µ¥H¤U¤u§@¡j
 	      HttpSession session = req.getSession();
-	      session.setAttribute("adminaccount", adminaccount);   //*å·¥ä½œ1: æ‰åœ¨sessionå…§åšå·²ç¶“ç™»å…¥éçš„æ¨™è­˜
+	      session.setAttribute("adminaccount", adminaccount);   //*¤u§@1: ¤~¦bsession¤º°µ¤w¸gµn¤J¹Lªº¼ĞÃÑ
 	      
 	       try {                                                        
 	         String location = (String) session.getAttribute("Location");
 	         if (location != null) {
-	           session.removeAttribute("Location");   //*å·¥ä½œ2: çœ‹çœ‹æœ‰ç„¡ä¾†æºç¶²é  (-->å¦‚æœ‰ä¾†æºç¶²é :å‰‡é‡å°è‡³ä¾†æºç¶²é )
+	           session.removeAttribute("Location");   //*¤u§@2: ¬İ¬İ¦³µL¨Ó·½ºô­¶ (-->¦p¦³¨Ó·½ºô­¶:«h­«¾É¦Ü¨Ó·½ºô­¶)
 	           res.sendRedirect(location);            
 	           return;
 	         }
 	       }catch (Exception ignored) { }
 
-	      res.sendRedirect(req.getContextPath()+"/backendLogin/home.jsp");  //*å·¥ä½œ3: (-->å¦‚ç„¡ä¾†æºç¶²é :å‰‡é‡å°è‡³login_success.jsp)
+	      res.sendRedirect(req.getContextPath()+"/backendLogin/home.jsp");  //*¤u§@3: (-->¦pµL¨Ó·½ºô­¶:«h­«¾É¦Ülogin_success.jsp)
 	    }
 	}
 

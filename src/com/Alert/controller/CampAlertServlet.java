@@ -17,6 +17,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import com.campAlert.model.*;
+import com.camporder.model.CampOrderService;
+import com.camporder.model.CampOrderVO;
 
 //@WebServlet("/backendLogin/CampAlert.do")
 public class CampAlertServlet extends HttpServlet {
@@ -51,7 +53,7 @@ public class CampAlertServlet extends HttpServlet {
 		req.setCharacterEncoding("UTF-8");
 		String action = req.getParameter("action");
 		List<String> errorMsgs = new LinkedList<String>();
-		//åˆªé™¤åŠŸèƒ½
+		//§R°£¥\¯à
 		if ("delete".equals(action)) {
 			Integer id = new Integer(req.getParameter("Id"));
 			CampAlertService alertSvc = new CampAlertService();
@@ -60,7 +62,56 @@ public class CampAlertServlet extends HttpServlet {
 			RequestDispatcher successView = req.getRequestDispatcher(url);
 			successView.forward(req, res);
 		}
-		//æŸ¥è©¢åœ–ç‰‡åŠŸèƒ½
-		
+		//¬d¸ß¹Ï¤ù¥\¯à
+		if ("getOne_For_Display".equals(action)) { // ¨Ó¦Ûselect_page.jspªº½Ð¨D
+			req.setAttribute("errorMsgs", errorMsgs);
+
+			try {
+				/*************************** 1.±µ¦¬½Ð¨D°Ñ¼Æ - ¿é¤J®æ¦¡ªº¿ù»~³B²z **********************/
+				String alertId = req.getParameter("alertId");
+				if (alertId == null || (alertId.trim()).length() == 0) {
+					errorMsgs.add("½Ð¿é¤JÀç¦aÀËÁ|½s¸¹");
+				}
+				if (!errorMsgs.isEmpty()) {
+					RequestDispatcher failureView = req.getRequestDispatcher("/backendLogin/alert.jsp");
+					failureView.forward(req, res);
+					return;// µ{¦¡¤¤Â_
+				}
+
+				Integer alert = null;
+				try {
+					alert= new Integer(alertId);
+				} catch (Exception e) {
+					errorMsgs.add("ÀËÁ|½s¸¹®æ¦¡¤£¥¿½T");
+				}
+				if (!errorMsgs.isEmpty()) {
+					RequestDispatcher failureView = req.getRequestDispatcher("/backendLogin/alert.jsp");
+					failureView.forward(req, res);
+					return;
+				}
+				/*************************** 2.¶}©l¬d¸ß¸ê®Æ *****************************************/
+				CampAlertService alertSvc = new CampAlertService();
+				CampAlertVO campAlertVO = alertSvc.getOneEmp(alert);
+				if (campAlertVO == null) {
+					errorMsgs.add("¬dµL¸ê®Æ");
+				}
+				if (!errorMsgs.isEmpty()) {
+					RequestDispatcher failureView = req.getRequestDispatcher("/backendLogin/alert.jsp");
+					failureView.forward(req, res);
+					return;// µ{¦¡¤¤Â_
+				}
+				/*************************** 3.¬d¸ß§¹¦¨,·Ç³ÆÂà¥æ(Send the Success view) *************/
+				req.setAttribute("campAlertVO",campAlertVO);
+				String url = "/backendLogin/campAlertListone.jsp";
+				RequestDispatcher successView = req.getRequestDispatcher(url);
+				successView.forward(req, res);
+
+				/*************************** ¨ä¥L¥i¯àªº¿ù»~³B²z *************************************/
+			} catch (Exception e) {
+				errorMsgs.add("µLªk¨ú±o¸ê®Æ:" + e.getMessage());
+				RequestDispatcher failureView = req.getRequestDispatcher("/backendLogin/alert.jsp");
+				failureView.forward(req, res);
+			}
+		}
 	}
 }

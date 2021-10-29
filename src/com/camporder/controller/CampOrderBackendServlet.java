@@ -18,6 +18,7 @@ import org.apache.naming.java.javaURLContextFactory;
 
 import com.adminList.model.AdminListVO;
 import com.adminList.model.AdminService;
+import com.campAlert.model.CampAlertService;
 import com.camporder.model.CampOrderService;
 import com.camporder.model.CampOrderVO;
 import com.campsite.model.*;
@@ -36,52 +37,52 @@ public class CampOrderBackendServlet extends HttpServlet {
 		String action = req.getParameter("action");
 		String xxx = req.getParameter("xxx");
 		List<String> errorMsgs = new LinkedList<String>();
-		if ("getOne_For_Display".equals(action)) { // ä¾†è‡ªselect_page.jspçš„è«‹æ±‚
+		if ("getOne_For_Display".equals(action)) { // ¨Ó¦Ûselect_page.jspªº½Ğ¨D
 			req.setAttribute("errorMsgs", errorMsgs);
 
 			try {
-				/*************************** 1.æ¥æ”¶è«‹æ±‚åƒæ•¸ - è¼¸å…¥æ ¼å¼çš„éŒ¯èª¤è™•ç† **********************/
+				/*************************** 1.±µ¦¬½Ğ¨D°Ñ¼Æ - ¿é¤J®æ¦¡ªº¿ù»~³B²z **********************/
 				String campOrderId = req.getParameter("campOrderId");
 				if (campOrderId == null || (campOrderId.trim()).length() == 0) {
-					errorMsgs.add("è«‹è¼¸å…¥éœ²ç‡Ÿè¨‚å–®ç·¨è™Ÿ");
+					errorMsgs.add("½Ğ¿é¤JÅSÀç­q³æ½s¸¹");
 				}
 				if (!errorMsgs.isEmpty()) {
 					RequestDispatcher failureView = req.getRequestDispatcher("/backendLogin/campOrder.jsp");
 					failureView.forward(req, res);
-					return;// ç¨‹å¼ä¸­æ–·
+					return;// µ{¦¡¤¤Â_
 				}
 
 				Integer campOrder = null;
 				try {
 					campOrder = new Integer(campOrderId);
 				} catch (Exception e) {
-					errorMsgs.add("ç®¡ç†å“¡ç·¨è™Ÿæ ¼å¼ä¸æ­£ç¢º");
+					errorMsgs.add("ºŞ²z­û½s¸¹®æ¦¡¤£¥¿½T");
 				}
 				if (!errorMsgs.isEmpty()) {
 					RequestDispatcher failureView = req.getRequestDispatcher("/backendLogin/campOrder.jsp");
 					failureView.forward(req, res);
 					return;
 				}
-				/*************************** 2.é–‹å§‹æŸ¥è©¢è³‡æ–™ *****************************************/
+				/*************************** 2.¶}©l¬d¸ß¸ê®Æ *****************************************/
 				CampOrderService coSvc = new CampOrderService();
 				CampOrderVO campOrderVO = coSvc.getOneCampOrder(campOrder);
 				if (campOrderVO == null) {
-					errorMsgs.add("æŸ¥ç„¡è³‡æ–™");
+					errorMsgs.add("¬dµL¸ê®Æ");
 				}
 				if (!errorMsgs.isEmpty()) {
 					RequestDispatcher failureView = req.getRequestDispatcher("/backendLogin/campOrder.jsp");
 					failureView.forward(req, res);
-					return;// ç¨‹å¼ä¸­æ–·
+					return;// µ{¦¡¤¤Â_
 				}
-				/*************************** 3.æŸ¥è©¢å®Œæˆ,æº–å‚™è½‰äº¤(Send the Success view) *************/
+				/*************************** 3.¬d¸ß§¹¦¨,·Ç³ÆÂà¥æ(Send the Success view) *************/
 				req.setAttribute("campOrderVO", campOrderVO);
 				String url = "/backendLogin/campOrder-listone.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url);
 				successView.forward(req, res);
 
-				/*************************** å…¶ä»–å¯èƒ½çš„éŒ¯èª¤è™•ç† *************************************/
+				/*************************** ¨ä¥L¥i¯àªº¿ù»~³B²z *************************************/
 			} catch (Exception e) {
-				errorMsgs.add("ç„¡æ³•å–å¾—è³‡æ–™:" + e.getMessage());
+				errorMsgs.add("µLªk¨ú±o¸ê®Æ:" + e.getMessage());
 				RequestDispatcher failureView = req.getRequestDispatcher("/backendLogin/campOrder.jsp");
 				failureView.forward(req, res);
 			}
@@ -91,22 +92,22 @@ public class CampOrderBackendServlet extends HttpServlet {
 			req.setAttribute("errorMsgs", errorMsgs);
 
 			try {
-				/*************************** 1.æ¥æ”¶è«‹æ±‚åƒæ•¸ ****************************************/
+				/*************************** 1.±µ¦¬½Ğ¨D°Ñ¼Æ ****************************************/
 				Integer campOrderId = new Integer(req.getParameter("campOrderId"));
 
-				/*************************** 2.é–‹å§‹æŸ¥è©¢è³‡æ–™ ****************************************/
+				/*************************** 2.¶}©l¬d¸ß¸ê®Æ ****************************************/
 				CampOrderService campOrderService = new CampOrderService();
 				CampOrderVO campOrderVO = campOrderService.getOneCampOrder(campOrderId);
 
-				/*************************** 3.æŸ¥è©¢å®Œæˆ,æº–å‚™è½‰äº¤(Send the Success view) ************/
-				req.setAttribute("campOrderVO", campOrderVO); // è³‡æ–™åº«å–å‡ºçš„campsiteVOç‰©ä»¶,å­˜å…¥req
+				/*************************** 3.¬d¸ß§¹¦¨,·Ç³ÆÂà¥æ(Send the Success view) ************/
+				req.setAttribute("campOrderVO", campOrderVO); // ¸ê®Æ®w¨ú¥XªºcampsiteVOª«¥ó,¦s¤Jreq
 				String url = "/backendLogin/updateCampOrder.jsp";
-				RequestDispatcher successView = req.getRequestDispatcher(url);// æˆåŠŸè½‰äº¤ update_campsite_input.jsp
+				RequestDispatcher successView = req.getRequestDispatcher(url);// ¦¨¥\Âà¥æ update_campsite_input.jsp
 				successView.forward(req, res);
 
-				/*************************** å…¶ä»–å¯èƒ½çš„éŒ¯èª¤è™•ç† **********************************/
+				/*************************** ¨ä¥L¥i¯àªº¿ù»~³B²z **********************************/
 			} catch (Exception e) {
-				errorMsgs.add("ç„¡æ³•å–å¾—è¦ä¿®æ”¹çš„è³‡æ–™:" + e.getMessage());
+				errorMsgs.add("µLªk¨ú±o­n­×§ïªº¸ê®Æ:" + e.getMessage());
 				RequestDispatcher failureView = req.getRequestDispatcher("/backendLogin/campOrder.jsp");
 				failureView.forward(req, res);
 			}
@@ -123,7 +124,7 @@ public class CampOrderBackendServlet extends HttpServlet {
 					guestNumber = new Integer(req.getParameter("guestNumber").trim());
 				} catch (NumberFormatException e) {
 					guestNumber = 0;
-					errorMsgs.add("é å®šäººæ•¸è«‹å¡«æ­£æ•´æ•¸.");
+					errorMsgs.add("¹w©w¤H¼Æ½Ğ¶ñ¥¿¾ã¼Æ.");
 				}
 				java.sql.Date checkInDate = null;
 				SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
@@ -131,7 +132,7 @@ public class CampOrderBackendServlet extends HttpServlet {
 				try {
 					d = format.parse(req.getParameter("checkInDate").trim());
 				} catch (IllegalArgumentException e) {
-					errorMsgs.add("è«‹è¼¸å…¥å…¥ä½æ—¥æœŸ!");
+					errorMsgs.add("½Ğ¿é¤J¤J¦í¤é´Á!");
 					e.printStackTrace();
 				}
 				checkInDate = new java.sql.Date(d.getTime());
@@ -140,7 +141,7 @@ public class CampOrderBackendServlet extends HttpServlet {
 				try {
 					c = format.parse(req.getParameter("checkOutDate").trim());
 				} catch (IllegalArgumentException e) {
-					errorMsgs.add("è«‹è¼¸å…¥é€€æˆ¿æ—¥æœŸ!");
+					errorMsgs.add("½Ğ¿é¤J°h©Ğ¤é´Á!");
 					e.printStackTrace();
 				}
 				checkOutDate = new java.sql.Date(c.getTime());
@@ -151,7 +152,7 @@ public class CampOrderBackendServlet extends HttpServlet {
 					orderTotal = new Integer(req.getParameter("orderTotal").trim());
 				} catch (NumberFormatException e) {
 					orderTotal = 0;
-					errorMsgs.add("ç¸½é‡‘é¡è«‹å¡«å…¥æ­£æ•´æ•¸.");
+					errorMsgs.add("Á`ª÷ÃB½Ğ¶ñ¤J¥¿¾ã¼Æ.");
 				}
 				System.out.println("here");
 				String orderStatus = req.getParameter("orderStatus");
@@ -167,28 +168,36 @@ public class CampOrderBackendServlet extends HttpServlet {
 				campOrderVO.setOrderTotal(orderTotal);
 				campOrderVO.setOrderStatus(orderStatus);
 				if (!errorMsgs.isEmpty()) {
-					req.setAttribute("campOrderVO", campOrderVO); // å«æœ‰è¼¸å…¥æ ¼å¼éŒ¯èª¤çš„empVOç‰©ä»¶,ä¹Ÿå­˜å…¥req
+					req.setAttribute("campOrderVO", campOrderVO); // §t¦³¿é¤J®æ¦¡¿ù»~ªºempVOª«¥ó,¤]¦s¤Jreq
 					RequestDispatcher failureView = req.getRequestDispatcher("/backendLogin/updateCampOrder.jsp");
 					failureView.forward(req, res);
-					return; // ç¨‹å¼ä¸­æ–·
+					return; // µ{¦¡¤¤Â_
 				}
-				/*************************** 2.é–‹å§‹ä¿®æ”¹è³‡æ–™ *****************************************/
+				/*************************** 2.¶}©l­×§ï¸ê®Æ *****************************************/
 				CampOrderService campOrderSvc = new CampOrderService();
 				campOrderVO = campOrderSvc.updateOrder(campId,memberId, guestNumber, checkInDate, checkOutDate, orderDate,
 						paymentDeadline, orderStatus, orderTotal,campOrderId);
-				/*************************** 3.ä¿®æ”¹å®Œæˆ,æº–å‚™è½‰äº¤(Send the Success view) *************/
-				req.setAttribute("campOrderVO", campOrderVO); // è³‡æ–™åº«updateæˆåŠŸå¾Œ,æ­£ç¢ºçš„çš„campsiteVOç‰©ä»¶,å­˜å…¥req
+				/*************************** 3.­×§ï§¹¦¨,·Ç³ÆÂà¥æ(Send the Success view) *************/
+				req.setAttribute("campOrderVO", campOrderVO); // ¸ê®Æ®wupdate¦¨¥\«á,¥¿½TªºªºcampsiteVOª«¥ó,¦s¤Jreq
 				System.out.println(campOrderVO);
 				String url = "/backendLogin/campOrder-listone.jsp";
-				RequestDispatcher successView = req.getRequestDispatcher(url); // ä¿®æ”¹æˆåŠŸå¾Œ,è½‰äº¤listOneCampsite.jsp
+				RequestDispatcher successView = req.getRequestDispatcher(url); // ­×§ï¦¨¥\«á,Âà¥ælistOneCampsite.jsp
 				successView.forward(req, res);
 
-				/*************************** å…¶ä»–å¯èƒ½çš„éŒ¯èª¤è™•ç† *************************************/
+				/*************************** ¨ä¥L¥i¯àªº¿ù»~³B²z *************************************/
 			} catch (Exception e) {
-				errorMsgs.add("ä¿®æ”¹è³‡æ–™å¤±æ•—:" + e.getMessage());
+				errorMsgs.add("­×§ï¸ê®Æ¥¢±Ñ:" + e.getMessage());
 				RequestDispatcher failureView = req.getRequestDispatcher("/backendLogin/updateCampOrder.jsp");
 				failureView.forward(req, res);
 			}
+		}
+		if ("delete".equals(action)) {
+			Integer campOrderId = new Integer(req.getParameter("campOrderId"));
+			CampOrderService campOrderSvc = new CampOrderService();
+			campOrderSvc.deleteCampOrder(campOrderId);
+			String url = "/backendLogin/campOrder.jsp";
+			RequestDispatcher successView = req.getRequestDispatcher(url);
+			successView.forward(req, res);
 		}
 
 	}

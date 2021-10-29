@@ -90,7 +90,7 @@ pageContext.setAttribute("campsiteService", campsiteService);
 					placeholder="管理員編號查詢"> <input type="hidden" name="action"
 					id="" class="btn_search" value="getOne_For_Display">
 				<button type="submit" class="btn btn-outline-success">查詢</button>
-				<button type="button" class="btn btn-outline-success" id="export">匯出</button>
+				<button type="button" class="btn btn-outline-success" id="export2">匯出</button>
 			</Form>
 <!-- 				<button type="button" class="btn btn-outline-success" -->
 <%-- 					onclick="location.href='<%=request.getContextPath()%>/backendLogin/addAdmin.jsp'">新增管理員</button> --%>
@@ -147,7 +147,7 @@ pageContext.setAttribute("campsiteService", campsiteService);
 							ACTION="<%=request.getContextPath()%>/backendLogin/CampOrderBackendServlet.do"
 							style="margin-bottom: 0px;">
 							<input type="submit" value="取消訂單" class="btn btn-danger"> <input type="hidden"
-								name="" value=""> <input
+								name="campOrderId" value="${VO.campOrderId }"> <input
 								type="hidden" name="action" value="delete">
 						</FORM>
 					</td>
@@ -179,12 +179,12 @@ pageContext.setAttribute("campsiteService", campsiteService);
 	<script src="../js/camporder.js"></script>
 	<script>
 		$(document).ready(function(){			
-		$("#export").on("click", function() {
+		$("#export2").on("click", function() {
 				  $("#myTable").table2excel({
 				    // exclude CSS class
 				    exclude: ".noExl",
 				    name: "Worksheet Name",
-				    filename: "管理員清單", //do not include extension
+				    filename: "營地訂單", //do not include extension
 				    fileext: ".xls" // file extension
 				  }); 
 		});

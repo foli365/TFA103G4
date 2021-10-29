@@ -96,7 +96,7 @@ img {
 				<input type="hidden" name="action" id="" class="btn_search"
 					value="getOne_For_Display">
 				<button type="submit" class="btn btn-outline-success">查詢</button>
-				<button type="button" class="btn btn-outline-success" id="export">匯出</button>
+				<button type="button" class="btn btn-outline-success" id="export3">匯出</button>
 			</Form>
 		</div>
 		<table id="myTable" class="tablesorter">
@@ -163,5 +163,18 @@ img {
 		integrity="sha384-U1DAWAznBHeqEIlVSCgzq+c9gqGAJn5c/t99JyeKa9xxaYpSvHU5awsuZVVFIhvj"
 		crossorigin="anonymous"></script>
 	<script src="../js/camp.js"></script>
+	<script>
+		$(document).ready(function(){			
+		$("#export3").on("click", function() {
+				  $("#myTable").table2excel({
+				    // exclude CSS class
+				    exclude: ".noExl",
+				    name: "Worksheet Name",
+				    filename: "營地列表", //do not include extension
+				    fileext: ".xls" // file extension
+				  }); 
+		});
+		});
+	</script>
 </body>
 </html>
