@@ -48,7 +48,9 @@ public class CampAlertServlet extends HttpServlet {
 	}
 
 	public void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
+		req.setCharacterEncoding("UTF-8");
 		String action = req.getParameter("action");
+		List<String> errorMsgs = new LinkedList<String>();
 		//刪除功能
 		if ("delete".equals(action)) {
 			Integer id = new Integer(req.getParameter("alertId"));
@@ -59,8 +61,6 @@ public class CampAlertServlet extends HttpServlet {
 			successView.forward(req, res);
 		}
 		//查詢圖片功能
-		
-
 		
 	}
 }

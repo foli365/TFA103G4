@@ -9,7 +9,6 @@
 	List<EmodrVO> list = emodrSvc.getAll();
 	pageContext.setAttribute("list", list);
 %>
-<jsp:useBean id="membersSvc" scope="page" class="com.members.model.MemberService" />
 
 <html>
 <head>
@@ -174,8 +173,6 @@ div#alldata{
 
 	<table>
 		<tr>
-			<th>訂單編號</th>
-			<th>買方編號與名字</th>
 			<th>訂單日期</th>
 			<th>收貨人</th>
 			<th>收貨地址</th>
@@ -224,4 +221,3 @@ div#alldata{
 	<script src="<%=request.getContextPath()%>/emodr/js_emodr/table.js"></script>
 
 </body>
-</html>

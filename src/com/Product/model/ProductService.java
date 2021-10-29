@@ -10,7 +10,7 @@ public class ProductService {
 		dao = new  ProductJDBCDAO();
 	}
 	
-	public  ProductVO addProduct(String product_name, String product_sort, Integer price, Integer inventory, String descript, byte[] picture1, byte[] picture2, byte[] picture3) {
+	public  ProductVO addProduct(String product_name, String product_sort, Integer price, Integer inventory, Integer admin_id, Integer situation, String descript, byte[] picture1, byte[] picture2, byte[] picture3) {
 		
 		 ProductVO productVO = new  ProductVO();
 		
@@ -18,6 +18,8 @@ public class ProductService {
 		productVO.setPsort(product_sort);
 		productVO.setPrice(price);
 		productVO.setInventory(inventory);
+		productVO.setAdmin_id(admin_id);
+		productVO.setSituation(situation);
 		productVO.setDescript(descript);
 		productVO.setPicture1(picture1);
 		productVO.setPicture2(picture2);
@@ -28,7 +30,7 @@ public class ProductService {
 	}
 	
 	public  ProductVO updateProduct(Integer product_no, String product_name, String product_sort, Integer price, 
-					Integer inventory, String descript, byte[] picture1, byte[] picture2, byte[] picture3) {
+					Integer inventory, Integer admin_id, Integer situation, String descript, byte[] picture1, byte[] picture2, byte[] picture3) {
 		
 		 ProductVO productVO = new ProductVO();
 		
@@ -37,6 +39,8 @@ public class ProductService {
 		productVO.setPsort(product_sort);
 		productVO.setPrice(price);
 		productVO.setInventory(inventory);
+		productVO.setAdmin_id(admin_id);
+		productVO.setSituation(situation);
 		productVO.setDescript(descript);
 		productVO.setPicture1(picture1);
 		productVO.setPicture2(picture2);
@@ -58,5 +62,10 @@ public class ProductService {
 	public List< ProductVO> getAll(){
 		return dao.getAll();
 	}
+	
+	public ProductVO getOneproductName(String pname) {
+		return dao.findBypname(pname);
+	}
 
 }
+

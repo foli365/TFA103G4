@@ -27,11 +27,12 @@ public class PlanService {
 		return planVO;
 	}
 
-	public PlanVO updatePlan(String planName, Integer planGuestLimit, Integer planAgeLimit, Integer planPrice,
+	public PlanVO updatePlan(Integer campId, String planName, Integer planGuestLimit, Integer planAgeLimit, Integer planPrice,
 			Integer planId) {
 
 		PlanVO planVO = new PlanVO();
 
+		planVO.setCampId(campId);
 		planVO.setPlanName(planName);
 		planVO.setPlanGuestLimit(planGuestLimit);
 		planVO.setPlanAgeLimit(planAgeLimit);
@@ -57,8 +58,21 @@ public class PlanService {
 				.collect(Collectors.toList());
 		return planVO.get(0);
 	}
-
 	public List<PlanVO> getAll() {
 		return dao.getAll();
+	}
+
+	
+	
+	public List<PlanVO> getByCampId(Integer campId) {
+		return dao.findbyCampId(campId);
+	}
+	
+	public void deletebyCampId(Integer campId) {
+		dao.deletebyCampId(campId);
+	};
+	
+	public PlanVO getCampId(Integer campId) {
+		return dao.getCampId(campId);
 	}
 }

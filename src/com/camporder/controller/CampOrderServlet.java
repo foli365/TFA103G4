@@ -1,4 +1,4 @@
-package com.camporder.controller;
+	package com.camporder.controller;
 
 import java.io.IOException;
 import java.sql.Timestamp;
@@ -40,7 +40,6 @@ public class CampOrderServlet extends HttpServlet {
 		String action = req.getParameter("action");
 		// 建立訂單基本資料
 		if ("book".equals(action)) {
-			
 			try {
 				// 入住日期
 				String from = req.getParameter("from");
@@ -73,6 +72,7 @@ public class CampOrderServlet extends HttpServlet {
 				// 營地ID
 				Integer campId = new Integer(req.getParameter("campId"));
 				// 下定時間
+
 				String today = req.getParameter("orderDate");
 				Timestamp orderDate = null;
 				try {
@@ -142,9 +142,9 @@ public class CampOrderServlet extends HttpServlet {
 				res.sendRedirect("bookings/extra_flavour.jsp");
 			} catch (ExceptionInInitializerError e) {
 				req.setAttribute("missing", "請先填寫所有欄位後再預定");
-				RequestDispatcher failedView = req.getRequestDispatcher(url);
-				failedView.forward(req, res);
-			}
+				RequestDispatcher successView = req.getRequestDispatcher(url);
+				successView.forward(req, res);
+			} 
 
 		}
 

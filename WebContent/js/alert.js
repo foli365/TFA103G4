@@ -19,6 +19,9 @@ $("a.camp_list").on("click", function() {
 $("a.manager_list").on("click",function(){
 	 $(window).attr('location', 'manager.jsp');
 });
+$("a.camp_order").on("click", function(){
+	$(window).attr('location', 'campOrder.jsp');
+});
 $("h1").on("click", function() {
     $(window).attr('location', 'home.jsp');
 });

@@ -12,7 +12,7 @@ html {
 }
 
 
-/* �sidebar */
+/* 嚙踐��sidebar */
 
 .container {
     position: fixed;
@@ -141,4 +141,7 @@ h1 {
     letter-spacing: 1px;
     width: 150px;
     /* display: inline-block; */
+}
+#btnlog{
+	margin-left: 50px;
 }

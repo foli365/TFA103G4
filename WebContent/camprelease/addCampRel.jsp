@@ -1,5 +1,6 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="Big5"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ page import="java.util.*"%>
 <%@ page import="com.camprelease.model.*"%>
 <%@ page import="com.facilities.model.*"%>
 
@@ -128,14 +129,15 @@ imput{
 
 <body>
 <%-- 錯誤表列 --%>
-<c:if test="${not empty errorMsgs}">
-	<font style="color:red">請修正以下錯誤:</font>
-	<ul>
-		<c:forEach var="message" items="${errorMsgs}">
-			<li style="color:red">${message}</li>
-		</c:forEach>
-	</ul>
-</c:if>
+<%-- <c:if test="${not empty errorMsgs}"> --%>
+<!-- 	<font style="color:red">請修正以下錯誤:</font> -->
+<!-- 	<ul> -->
+<%-- 		<c:forEach var="message" items="${errorMsgs}"> --%>
+<%-- 			<li style="color:red">${message}</li> --%>
+<%-- 		</c:forEach> --%>
+<!-- 	</ul> -->
+<%-- </c:if> --%>
+
 
 <header class="header" >
   <h1 class="header__title">Go camping營地刊登</h1><br>
@@ -159,14 +161,16 @@ imput{
           </div>
         </div>
 
-<!-- 新增資訊 -->
+<jsp:useBean id="facilitiesSvc" scope="page" class="com.facilities.model.FacilitiesService" />
 <jsp:useBean id="campreleaseSvc" scope="page" class="com.camprelease.model.CampReleaseService" />
-<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/camprelease/camprelease.do" name="form1" enctype="multipart/form-data">
+<!-- 新增資訊 -->
         <div class="row">
           <div class="col-12 col-lg-8 m-auto">
             <div class="multisteps-form__form">
+<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/camprelease/camprelease.do" name="form1" enctype="multipart/form-data">
               <div class="multisteps-form__panel shadow p-4 rounded bg-white js-active" data-animation="scaleIn">
                 <h3 class="multisteps-form__title">營地資訊</h3>
+                <span class="errorMsgs">${errorMsgs['insertError']}</span>
                 <div class="multisteps-form__content">
                   <div class="form-row mt-4">
                     <div class="col-12 col-sm-6">
@@ -180,27 +184,32 @@ imput{
                   </div>
                   <div class="form-row mt-4">
                     <div class="col-12 col-sm-6">
-                      <label for="inputName" class="col-form-label">營地名稱
-                      <input type="text" name="campName" size="45" class="multisteps-form__input form-control" value="<%=(campreleaseVO == null) ? "歡樂露營地" : campreleaseVO.getCampName()%>"></label>
+                      <label for="inputName" class="col-form-label">營地名稱</label>
+                      <input type="text" name="campName" size="45" class="multisteps-form__input form-control" placeholder="輸入營地名稱" 
+                      value="${campreleaseVO.campName == null ? '' : campreleaseVO.getCampName()}">
+                      <span class="errorMsgs" style="color:red">${errorMsgs['campNameError']}</span>
                     </div>
                   </div>
                   <div class="form-row mt-4">
                       <label for="inputintr" class="col-form-label">營地介紹</label>
-                        <textarea class="multisteps-form__textarea form-control" id="intr" name="campDescription" 
-                        ></textarea>
+                        <textarea class="multisteps-form__textarea form-control" id="intr" name="campDescription" >
+                        </textarea>
+                        <span class="errorMsgs" style="color:red">${errorMsgs['campDescriptionError']}</span>
                   </div>
                   <div class="form-row mt-4">
                     <div class="col-12 col-sm-6">
-                      <label for="inputprice" class="col-form-label">價格
-                        <input type="text" class="multisteps-form__input form-control" name="campPrice" id="c_price" 
-                        value="<%=(campreleaseVO == null) ? "500" : campreleaseVO.getCampPrice()%>"></label>
+                      <label for="inputprice" class="col-form-label">價格</label>
+                        <input type="text" class="multisteps-form__input form-control" name="campPrice" id="c_price" placeholder="請輸入價格"
+                        value="${campreleaseVO.campPrice == null ? '' : campreleaseVO.getCampPrice()}">
+                        <span class="errorMsgs" style="color:red">${errorMsgs['campPriceError']}</span>
                     </div>
                   </div>
                   <div class="form-row mt-4">
                     <div class="col-12 col-sm-6">
-                      <label for="inputprice" class="col-form-label">日期
-                        <input type="text" class="multisteps-form__input form-control" name="ListedTime" size="45" id="f_date1"
-                        value="<%=(campreleaseVO == null) ? "2021-12-05 12:45:03" : campreleaseVO.getListedTime()%>"></label>
+                      <label for="inputprice" class="col-form-label">日期</label>
+                        <input type="text" class="multisteps-form__input form-control" name="listedTime" size="45" id="f_date1"
+                        value="${campreleaseVO.listedTime == null ? '' : campreleaseVO.getListedTime()}">
+                        <span class="errorMsgs" style="color:red">${errorMsgs['listedTimeError']}</span>
                     </div>
                   </div>
 <!--                   分類之後看要不要加 -->
@@ -232,8 +241,11 @@ imput{
                     <div class="col">
                       <div id="webbulutumap" style="height: 280px;"></div>
                         <input type="text" name="location" value="" size="40" class="wpcf7-form-control wpcf7-text wpcf7-validates-as-required" id="address" aria-required="true" aria-invalid="false" placeholder="Street Address"/>
-                        <input type="text" name="latitude" value="" placeholder="latitude" id="latitude"/>
-                        <input type="text" name="longtitude" value="" placeholder="longtitude" id="longtitude"/>
+                        <br><span class="errorMsgs" style="color:red">${errorMsgs['locationError']}</span>
+                        <br><input type="text" name="latitude" value="" placeholder="latitude" id="latitude"/>
+                        <br><span class="errorMsgs" style="color:red">${errorMsgs['latitudeError']}</span>
+                        <br><input type="text" name="longtitude" value="" placeholder="longtitude" id="longtitude"/>
+                        <br><span class="errorMsgs" style="color:red">${errorMsgs['longtitudeError']}</span>
                         <a href="#" id="find-address" title="Find Address" class="button">Find Address</a>
                     </div>
                   </div>
@@ -282,15 +294,49 @@ imput{
                   </div>
                 </div>
               </div>
+<!--                </FORM> -->
 <!-- 配套行程新增 -->
               <div class="multisteps-form__panel shadow p-4 rounded bg-white" data-animation="scaleIn">
                 <h3 class="multisteps-form__title">配套行程</h3>
                 <div class="multisteps-form__content">
+                 <div class="form-row mt-4">
+                    <div class="col-12 col-sm-6">
+                      <label for="inputName" class="col-form-label">配套名稱</label>
+                      <input type="text" name="planName" size="45" class="multisteps-form__input form-control" placeholder="輸入行程名稱" 
+                      value="${planVO.planName == null ? '' : planVO.getPlanName()}">
+                      <span class="errorMsgs" style="color:red">${errorMsgs['planNameError']}</span>
+                    </div>
+                  </div>
+                 <div class="form-row mt-4">
+                    <div class="col-12 col-sm-6">
+                      <label for="inputPeople" class="col-form-label">人數限制</label>
+                      <input type="text" name="planGuestLimit" size="45" class="multisteps-form__input form-control" placeholder="輸入人數" 
+                      value="${planVO.planGuestLimit == null ? '' : planVO.getPlanGuestLimit()}">
+                      <span class="errorMsgs" style="color:red">${errorMsgs['planGuestLimitError']}</span>
+                    </div>
+                  </div>
+                 <div class="form-row mt-4">
+                    <div class="col-12 col-sm-6">
+                      <label for="inputAge" class="col-form-label">年齡限制</label>
+                      <input type="text" name="planName" size="45" class="multisteps-form__input form-control" placeholder="輸入年齡" 
+                      value="${planVO.planAgeLimit == null ? '' : planVO.getPlanAgeLimit()}">
+                      <span class="errorMsgs" style="color:red">${errorMsgs['planAgeLimiteError']}</span>
+                    </div>
+                  </div>
                   <div class="form-row mt-4">
                     <div class="col-12 col-sm-6">
-                      <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#plans" data-whatever="@mdo">+開始新增行程</button>
+                      <label for="inputprice" class="col-form-label">配套價格</label>
+                        <input type="text" class="multisteps-form__input form-control" name="planPrice" id="p_price" placeholder="請輸入價格"
+                        value="${planVO.planPrice == null ? '' : campreleaseVO.getCampPrice()}">
+                        <span class="errorMsgs" style="color:red">${errorMsgs['planPriceError']}</span>
+                    </div>
+                    </div>
+                  <div class="form-row mt-4">
+                      <label for="inputintr" class="col-form-label">配套介紹</label>
+                        <textarea class="multisteps-form__textarea form-control" id="planintr" name="planDescription" >
+                        </textarea>
+                        <span class="errorMsgs" style="color:red">${errorMsgs['planDescriptionError']}</span>
                   </div>
-                  
                   </div>
                   <div class="row">
                     <div class="button-row d-flex mt-4 col-12">
@@ -299,16 +345,16 @@ imput{
                     </div>
                   </div>
                 </div>
-              </div>
 <!-- 設施服務ICON -->
+<%-- <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/facilities/facilities.do" name="form1" enctype="multipart/form-data"> --%>
               <div class="multisteps-form__panel shadow p-4 rounded bg-white" data-animation="scaleIn">
                 <h3 class="multisteps-form__title">設備與服務</h3>
                 <div class="multisteps-form__content">
                   <div class="ws-nowrap camp5">
-                    <label class="setting-label circle-line" for="bbq"><input type="checkbox" name="bbq" id="bbq" value="1" ${facilitiesSvc.getBbq(facilitiesVO.getFacilitiesId()).bbq == '1' ? 'checked' : ''}><span class="material-icons md-18">outdoor_grill</span></label>
-                    <label class="setting-label circle-line" for="wifi"><input type="checkbox" name="wifi" id="wifi" value="1" ${facilitiesSvc.getWifi(facilitiesVO.getFacilitiesId()).wifi == '1' ? 'checked' : ''}><span class="material-icons md-18">wifi</span></label>
-                    <label class="setting-label circle-line" for="nosmoke"><input type="checkbox" name="nosmoke" id="nosmoke" value="1" ${facilitiesSvc.getNosmoke(facilitiesVO.getFacilitiesId()).nosmoke == '1' ? 'checked' : ''}><span class="material-icons md-18">smoke_free</span></label>
-                    <label class="setting-label circle-line" for="pets"><input type="checkbox" name="pets" id="pets" value="1" ${facilitiesSvc.getPets(facilitiesVO.getFacilitiesId()).pets == '1' ? 'checked' : ''}><span class="material-icons md-18">pets</span></label>
+<%--                     <input type="checkbox" name="bbq" id="bbq" value="1" ${facilitiesSvc.getByCampId(facilitiesVO.getCampId()).bbq == '1' ? 'checked'}><label class="setting-label circle-line" for="setting[]"><span class="material-icons md-18">outdoor_grill</span></label> --%>
+<%--                     <label class="setting-label circle-line" for="setting[]"><input type="checkbox" name="wifi" id="wifi" value="1" ${facilitiesSvc.findByCampId(facilitiesVO.getCampId()).wifi == '1' ? 'checked' : ''}><span class="material-icons md-18">wifi</span></label> --%>
+<%--                     <label class="setting-label circle-line" for="setting[]"><input type="checkbox" name="nosmoke" id="nosmoke" value="1" ${facilitiesSvc.findByCampId(facilitiesVO.getCampId()).nosmoke == '1' ? 'checked' : ''}><span class="material-icons md-18">smoke_free</span></label> --%>
+<%--                     <label class="setting-label circle-line" for="setting[]"><input type="checkbox" name="pets" id="pets" value="1" ${facilitiesSvc.findByCampId(facilitiesVO.getCampId()).pets == '1' ? 'checked' : ''}><span class="material-icons md-18">pets</span></label> --%>
                   </div>
                   <div class="button-row d-flex mt-4">
                     
@@ -322,53 +368,55 @@ imput{
                   </div>
                 </div>
               </div>
+        </FORM>
+            </div>
             </div>
           </div>
-        </FORM>
         </div>
       </div>
+
       
-     <!-- 配套彈出視窗 -->
-    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-      <div class="modal-dialog" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">請新增配套行程</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="modal-body">
-            <form>
-              <div class="form-group">
-                <label for="recipient-name" class="col-form-label">行程名稱</label>
-                <input type="text" class="form-control" id="recipient-name">
-              </div>
-              <div class="form-group">
-                <label for="recipient-people" class="col-form-label">人數</label>
-                <input type="text" class="form-control" id="recipient-people">
-              </div>
-              <div class="form-group">
-                <label for="recipient-price" class="col-form-label">價錢</label>
-                <input type="text" class="form-control" id="recipient-price">
-              </div>
-              <div class="form-group">
-                <label for="recipient-price" class="col-form-label">年齡限制</label>
-                <input type="text" class="form-control" id="recipient-age">
-              </div>
-              <div class="form-group">
-                <label for="message-text" class="col-form-label">Message:</label>
-                <textarea class="form-control" id="message-text"></textarea>
-              </div>
-            </form>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-primary">Send</button>
-          </div>
-        </div>
-      </div>
-    </div>
+<!--      配套彈出視窗 -->
+<!--     <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true"> -->
+<!--       <div class="modal-dialog" role="document"> -->
+<!--         <div class="modal-content"> -->
+<!--           <div class="modal-header"> -->
+<!--             <h5 class="modal-title" id="exampleModalLabel">請新增配套行程</h5> -->
+<!--             <button type="button" class="close" data-dismiss="modal" aria-label="Close"> -->
+<!--               <span aria-hidden="true">&times;</span> -->
+<!--             </button> -->
+<!--           </div> -->
+<!--           <div class="modal-body"> -->
+<!--             <form> -->
+<!--               <div class="form-group"> -->
+<!--                 <label for="recipient-name" class="col-form-label">行程名稱</label> -->
+<!--                 <input type="text" class="form-control" id="recipient-name"> -->
+<!--               </div> -->
+<!--               <div class="form-group"> -->
+<!--                 <label for="recipient-people" class="col-form-label">人數</label> -->
+<!--                 <input type="text" class="form-control" id="recipient-people"> -->
+<!--               </div> -->
+<!--               <div class="form-group"> -->
+<!--                 <label for="recipient-price" class="col-form-label">價錢</label> -->
+<!--                 <input type="text" class="form-control" id="recipient-price"> -->
+<!--               </div> -->
+<!--               <div class="form-group"> -->
+<!--                 <label for="recipient-price" class="col-form-label">年齡限制</label> -->
+<!--                 <input type="text" class="form-control" id="recipient-age"> -->
+<!--               </div> -->
+<!--               <div class="form-group"> -->
+<!--                 <label for="message-text" class="col-form-label">Message:</label> -->
+<!--                 <textarea class="form-control" id="message-text"></textarea> -->
+<!--               </div> -->
+<!--             </form> -->
+<!--           </div> -->
+<!--           <div class="modal-footer"> -->
+<!--             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button> -->
+<!--             <button type="button" class="btn btn-primary">Send</button> -->
+<!--           </div> -->
+<!--         </div> -->
+<!--       </div> -->
+<!--     </div> -->
     
 <!-- 老師範例 -->
 <%-- 錯誤表列 --%>
@@ -466,7 +514,7 @@ imput{
 <script src="<%=request.getContextPath()%>/camprelease/vendors/jquery/jquery-3.6.0.min.js"></script>
 <script src="<%=request.getContextPath()%>/camprelease/js/camp.js"></script>
 <script src="<%=request.getContextPath()%>/camprelease/js/stepfunction.js"></script>
-<script src="<%=request.getContextPath()%>/camprelease/js/planAlert.js"></script>
+<%-- <script src="<%=request.getContextPath()%>/camprelease/js/planAlert.js"></script> --%>
 <script src="<%=request.getContextPath()%>/camprelease/js/photoUpload.js"></script>
 
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA1SwBl3CYCg1oon98Lyge8VLpxdcx-RZU"></script>

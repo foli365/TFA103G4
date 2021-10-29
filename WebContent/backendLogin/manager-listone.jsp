@@ -61,16 +61,15 @@
 		</nav>
 	</div>
 	<div class="rightside">
-		<h2>管理員帳號管理</h2>
+		<h2>管理員帳號單筆查詢</h2>
 		<br>
+		<h3><a href='manager.jsp'>回管理員帳號管理</a></h3>
 		<div class="searcher">
 			<form action="" class="parent">
 				<input type="text" class="search" placeholder="管理員查詢"> <input
 					type="button" name="" id="" class="btn_search">
 			</form>
-
-			<button type="button" class="btn btn-outline-success">查詢</button>
-			<button type="button" class="btn btn-outline-success">新增管理員</button>
+			<button type="submit" class="btn btn-outline-success">查詢</button>
 		</div>
 		<table id="myTable" class="tablesorter">
 			<thead>

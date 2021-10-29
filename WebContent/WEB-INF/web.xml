@@ -100,6 +100,32 @@
 		<servlet-name>LogoutServlet</servlet-name>
 		<url-pattern>/backendLogin/home.do</url-pattern>
 	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>Member</servlet-name>
+		<servlet-class>com.members.controller.updateServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>Member</servlet-name>
+		<url-pattern>/backendLogin/updatemember.do</url-pattern>
+	</servlet-mapping>
+	<servlet>
+		<servlet-name>CampsearchServlet</servlet-name>
+		<servlet-class>com.admin.controller.CampsearchServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>CampsearchServlet</servlet-name>
+		<url-pattern>/backendLogin/camplistone.do</url-pattern>
+	</servlet-mapping>
+	<servlet>
+		<servlet-name>CampOrderBackendServlet</servlet-name>
+		<servlet-class>com.camporder.controller.CampOrderBackendServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>CampOrderBackendServlet</servlet-name>
+		<url-pattern>/backendLogin/CampOrderBackendServlet.do</url-pattern>
+	</servlet-mapping>
+
 	<!-- 志全的 -->
 	<servlet>
 		<servlet-name>productServlet</servlet-name>
@@ -143,7 +169,6 @@
 		<servlet-name>CampReleaseServlet</servlet-name>
 		<url-pattern>/camprelease/camprelease.do</url-pattern>
 	</servlet-mapping>
-
 	<!-- 佑叡的 -->
 	<resource-ref>
 		<description>DB Connection</description>
@@ -169,7 +194,6 @@
 		<servlet-name>ShoppingServlet</servlet-name>
 		<url-pattern>/eshop/Shopping.html</url-pattern>
 	</servlet-mapping>
-
 	<servlet>
 		<servlet-name>PictureServlet</servlet-name>
 		<servlet-class>com.eshop.controller.PictureServlet</servlet-class>
@@ -178,4 +202,22 @@
 		<servlet-name>PictureServlet</servlet-name>
 		<url-pattern>/eshop/PictureServlet</url-pattern>
 	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>FacilitiesServlet</servlet-name>
+		<servlet-class>com.facilities.controller.FacilitiesServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>FacilitiesServlet</servlet-name>
+		<url-pattern>/facilities/facilities.do</url-pattern>
+	</servlet-mapping>
+	<servlet>
+		<servlet-name>CampPlanServlet</servlet-name>
+		<servlet-class>com.campplan.controller.CampPlanServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>CampPlanServlet</servlet-name>
+		<url-pattern>/plan/plan.do</url-pattern>
+	</servlet-mapping>
+
 </web-app>

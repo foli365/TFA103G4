@@ -29,7 +29,7 @@ public class AdminServlet extends HttpServlet {
 		req.setCharacterEncoding("UTF-8");
 		String action = req.getParameter("action");
 		List<String> errorMsgs = new LinkedList<String>();
-		// §R°£¥\¯à
+		// åˆªé™¤åŠŸèƒ½
 		if ("delete".equals(action)) {
 			Integer id = new Integer(req.getParameter("adminId"));
 			AdminService alertSvc = new AdminService();
@@ -38,7 +38,7 @@ public class AdminServlet extends HttpServlet {
 			RequestDispatcher successView = req.getRequestDispatcher(url);
 			successView.forward(req, res);
 		}
-		// ·s¼W¥\¯à
+		// æ–°å¢åŠŸèƒ½
 		if ("add".equals(action)) {
 			req.setAttribute("errorMsgs", errorMsgs);
 			Integer adminId = null;
@@ -47,18 +47,18 @@ public class AdminServlet extends HttpServlet {
 				adminId = new Integer(req.getParameter("adminId").trim());
 			} catch (NumberFormatException e) {
 				adminId = 0;
-				errorMsgs.add("½s¸¹½Ğ¶ñ¼g¥|¦ì¼Æ¦r.");
+				errorMsgs.add("ç·¨è™Ÿè«‹å¡«å¯«å››ä½æ•¸å­—.");
 			}
 			String adminPwd = req.getParameter("adminPwd");
 			String adminPwdReg = "^[(\\u4e00-\\u9fa5)(a-zA-Z0-9_)]{6,10}$";
 			if (adminPwd == null || adminPwd.trim().length() == 0) {
-				errorMsgs.add("ºŞ²z­û±K½X: ½Ğ¤ÅªÅ¥Õ");
-			} else if (!adminPwd.trim().matches(adminPwdReg)) { // ¥H¤U½m²ß¥¿«h(³W)ªí¥Ü¦¡(regular-expression)
-				errorMsgs.add("ºŞ²z­û±K½X: ¥u¯à¬O­^¤å¦r¥À¡B¼Æ¦r©M_ , ¥Bªø«×¥²»İ¦b6¨ì10¤§¶¡");
+				errorMsgs.add("ç®¡ç†å“¡å¯†ç¢¼: è«‹å‹¿ç©ºç™½");
+			} else if (!adminPwd.trim().matches(adminPwdReg)) { // ä»¥ä¸‹ç·´ç¿’æ­£å‰‡(è¦)è¡¨ç¤ºå¼(regular-expression)
+				errorMsgs.add("ç®¡ç†å“¡å¯†ç¢¼: åªèƒ½æ˜¯è‹±æ–‡å­—æ¯ã€æ•¸å­—å’Œ_ , ä¸”é•·åº¦å¿…éœ€åœ¨6åˆ°10ä¹‹é–“");
 			}
 			String adminName = req.getParameter("adminName").trim();
 			if (adminName == null || adminName.trim().length() == 0) {
-				errorMsgs.add("¦W¦r½Ğ¤ÅªÅ¥Õ");
+				errorMsgs.add("åå­—è«‹å‹¿ç©ºç™½");
 			}
 			AdminListVO AdminListVO = new AdminListVO();
 			AdminListVO.setAdminId(adminId);
@@ -66,7 +66,7 @@ public class AdminServlet extends HttpServlet {
 			AdminListVO.setAdminName(adminName);
 			// Send the use back to the form, if there were errors
 			if (!errorMsgs.isEmpty()) {
-				req.setAttribute("AdminListVO", AdminListVO); // §t¦³¿é¤J®æ¦¡¿ù»~ªºempVOª«¥ó,¤]¦s¤Jreq
+				req.setAttribute("AdminListVO", AdminListVO); // å«æœ‰è¼¸å…¥æ ¼å¼éŒ¯èª¤çš„empVOç‰©ä»¶,ä¹Ÿå­˜å…¥req
 				RequestDispatcher failureView = req.getRequestDispatcher("/backendLogin/addAdmin.jsp");
 				failureView.forward(req, res);
 				return;
@@ -79,25 +79,25 @@ public class AdminServlet extends HttpServlet {
 			successView.forward(req, res);
 		}
 
-		// ­×§ï¥\¯à
-		if ("getOne_For_Update".equals(action)) { // ¨Ó¦ÛlistAllEmp.jspªº½Ğ¨D
+		// ä¿®æ”¹åŠŸèƒ½
+		if ("getOne_For_Update".equals(action)) { // ä¾†è‡ªlistAllEmp.jspçš„è«‹æ±‚
 			req.setAttribute("errorMsgs", errorMsgs);
 			try {
-				/*************************** 1.±µ¦¬½Ğ¨D°Ñ¼Æ ****************************************/
+				/*************************** 1.æ¥æ”¶è«‹æ±‚åƒæ•¸ ****************************************/
 				Integer adminId = new Integer(req.getParameter("adminId"));
 
-				/*************************** 2.¶}©l¬d¸ß¸ê®Æ ****************************************/
+				/*************************** 2.é–‹å§‹æŸ¥è©¢è³‡æ–™ ****************************************/
 				AdminService adminSvc = new AdminService();
 				AdminListVO adminListVO = adminSvc.getOneAdminList(adminId);
-				/*************************** 3.¬d¸ß§¹¦¨,·Ç³ÆÂà¥æ(Send the Success view) ************/
+				/*************************** 3.æŸ¥è©¢å®Œæˆ,æº–å‚™è½‰äº¤(Send the Success view) ************/
 				req.setAttribute("adminListVO", adminListVO);
 				String url = "/backendLogin/updateAdmin.jsp";
-				RequestDispatcher successView = req.getRequestDispatcher(url);// ¦¨¥\Âà¥æ update_emp_input.jsp
+				RequestDispatcher successView = req.getRequestDispatcher(url);// æˆåŠŸè½‰äº¤ update_emp_input.jsp
 				successView.forward(req, res);
 
-				/*************************** ¨ä¥L¥i¯àªº¿ù»~³B²z **********************************/
+				/*************************** å…¶ä»–å¯èƒ½çš„éŒ¯èª¤è™•ç† **********************************/
 			} catch (Exception e) {
-				errorMsgs.add("µLªk¨ú±o­n­×§ïªº¸ê®Æ:" + e.getMessage());
+				errorMsgs.add("ç„¡æ³•å–å¾—è¦ä¿®æ”¹çš„è³‡æ–™:" + e.getMessage());
 				RequestDispatcher failureView = req.getRequestDispatcher("/backendLogin/manager.jsp");
 				failureView.forward(req, res);
 			}
@@ -110,18 +110,18 @@ public class AdminServlet extends HttpServlet {
 
 			} catch (NumberFormatException e) {
 				adminId = 0;
-				errorMsgs.add("½s¸¹½Ğ¶ñ¼g¥|¦ì¼Æ¦r.");
+				errorMsgs.add("ç·¨è™Ÿè«‹å¡«å¯«å››ä½æ•¸å­—.");
 			}
 			String adminPwd = req.getParameter("adminPwd");
 			String adminPwdReg = "^[(\\u4e00-\\u9fa5)(a-zA-Z0-9_)]{6,10}$";
 			if (adminPwd == null || adminPwd.trim().length() == 0) {
-				errorMsgs.add("ºŞ²z­û±K½X: ½Ğ¤ÅªÅ¥Õ");
-			} else if (!adminPwd.trim().matches(adminPwdReg)) { // ¥H¤U½m²ß¥¿«h(³W)ªí¥Ü¦¡(regular-expression)
-				errorMsgs.add("ºŞ²z­û±K½X: ¥u¯à¬O­^¤å¦r¥À¡B¼Æ¦r©M_ , ¥Bªø«×¥²»İ¦b6¨ì10¤§¶¡");
+				errorMsgs.add("ç®¡ç†å“¡å¯†ç¢¼: è«‹å‹¿ç©ºç™½");
+			} else if (!adminPwd.trim().matches(adminPwdReg)) { // ä»¥ä¸‹ç·´ç¿’æ­£å‰‡(è¦)è¡¨ç¤ºå¼(regular-expression)
+				errorMsgs.add("ç®¡ç†å“¡å¯†ç¢¼: åªèƒ½æ˜¯è‹±æ–‡å­—æ¯ã€æ•¸å­—å’Œ_ , ä¸”é•·åº¦å¿…éœ€åœ¨6åˆ°10ä¹‹é–“");
 			}
 			String adminName = req.getParameter("adminName").trim();
 			if (adminName == null || adminName.trim().length() == 0) {
-				errorMsgs.add("¦W¦r½Ğ¤ÅªÅ¥Õ");
+				errorMsgs.add("åå­—è«‹å‹¿ç©ºç™½");
 			}
 			AdminListVO AdminListVO = new AdminListVO();
 			AdminListVO.setAdminId(adminId);
@@ -129,73 +129,73 @@ public class AdminServlet extends HttpServlet {
 			AdminListVO.setAdminName(adminName);
 			// Send the use back to the form, if there were errors
 			if (!errorMsgs.isEmpty()) {
-				req.setAttribute("adminListVO", AdminListVO);// §t¦³¿é¤J®æ¦¡¿ù»~ªºempVOª«¥ó,¤]¦s¤Jreq
+				req.setAttribute("adminListVO", AdminListVO);// å«æœ‰è¼¸å…¥æ ¼å¼éŒ¯èª¤çš„empVOç‰©ä»¶,ä¹Ÿå­˜å…¥req
 				RequestDispatcher failureView = req.getRequestDispatcher("/backendLogin/updateAdmin.jsp");
 				failureView.forward(req, res);
-				return; // µ{¦¡¤¤Â_
+				return; // ç¨‹å¼ä¸­æ–·
 			}
 
-			/*************************** 2.¶}©l­×§ï¸ê®Æ *****************************************/
+			/*************************** 2.é–‹å§‹ä¿®æ”¹è³‡æ–™ *****************************************/
 			AdminService empSvc = new AdminService();
 			AdminListVO = empSvc.updateAdminListVO(adminId, adminPwd, adminName);
 
-			/*************************** 3.­×§ï§¹¦¨,·Ç³ÆÂà¥æ(Send the Success view) *************/
-			req.setAttribute("adminListVO", AdminListVO); // ¸ê®Æ®wupdate¦¨¥\«á,¥¿½TªºªºempVOª«¥ó,¦s¤Jreq
+			/*************************** 3.ä¿®æ”¹å®Œæˆ,æº–å‚™è½‰äº¤(Send the Success view) *************/
+			req.setAttribute("adminListVO", AdminListVO); // è³‡æ–™åº«updateæˆåŠŸå¾Œ,æ­£ç¢ºçš„çš„empVOç‰©ä»¶,å­˜å…¥req
 			String url = "/backendLogin/manager.jsp";
-			RequestDispatcher successView = req.getRequestDispatcher(url); // ­×§ï¦¨¥\«á,Âà¥ælistOneEmp.jsp
+			RequestDispatcher successView = req.getRequestDispatcher(url); // ä¿®æ”¹æˆåŠŸå¾Œ,è½‰äº¤listOneEmp.jsp
 			successView.forward(req, res);
 		}
-		if ("getOne_For_Display".equals(action)) { // ¨Ó¦Ûselect_page.jspªº½Ğ¨D
+		if ("getOne_For_Display".equals(action)) { // ä¾†è‡ªselect_page.jspçš„è«‹æ±‚
 			req.setAttribute("errorMsgs", errorMsgs);
 
 			try {
-				/***************************1.±µ¦¬½Ğ¨D°Ñ¼Æ - ¿é¤J®æ¦¡ªº¿ù»~³B²z**********************/
+				/***************************1.æ¥æ”¶è«‹æ±‚åƒæ•¸ - è¼¸å…¥æ ¼å¼çš„éŒ¯èª¤è™•ç†**********************/
 				String admin= req.getParameter("adminId");
 				if (admin== null || (admin.trim()).length() == 0) {
-					errorMsgs.add("½Ğ¿é¤JºŞ²z­û½s¸¹");
+					errorMsgs.add("è«‹è¼¸å…¥ç®¡ç†å“¡ç·¨è™Ÿ");
 				}
 				// Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
 					RequestDispatcher failureView = req
 							.getRequestDispatcher("/backendLogin/manager.jsp");
 					failureView.forward(req, res);
-					return;//µ{¦¡¤¤Â_
+					return;//ç¨‹å¼ä¸­æ–·
 				}
 				
 				Integer adminId = null;
 				try {
 					adminId = new Integer(admin);
 				} catch (Exception e) {
-					errorMsgs.add("ºŞ²z­û½s¸¹®æ¦¡¤£¥¿½T");
+					errorMsgs.add("ç®¡ç†å“¡ç·¨è™Ÿæ ¼å¼ä¸æ­£ç¢º");
 				}
 				if (!errorMsgs.isEmpty()) {
 					RequestDispatcher failureView = req
 							.getRequestDispatcher("/backendLogin/manager.jsp");
 					failureView.forward(req, res);
-					return;//µ{¦¡¤¤Â_
+					return;//ç¨‹å¼ä¸­æ–·
 				}
-				/***************************2.¶}©l¬d¸ß¸ê®Æ*****************************************/
+				/***************************2.é–‹å§‹æŸ¥è©¢è³‡æ–™*****************************************/
 				AdminService adminSvc = new AdminService();
 				AdminListVO adminVO = adminSvc.getOneAdminList(adminId);
 				if (adminVO == null) {
-					errorMsgs.add("¬dµL¸ê®Æ");
+					errorMsgs.add("æŸ¥ç„¡è³‡æ–™");
 				}
 				// Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
 					RequestDispatcher failureView = req
 							.getRequestDispatcher("/backendLogin/manager.jsp");
 					failureView.forward(req, res);
-					return;//µ{¦¡¤¤Â_
+					return;//ç¨‹å¼ä¸­æ–·
 				}
-				/***************************3.¬d¸ß§¹¦¨,·Ç³ÆÂà¥æ(Send the Success view)*************/
-				req.setAttribute("adminListVO",adminVO); // ¸ê®Æ®w¨ú¥XªºempVOª«¥ó,¦s¤Jreq
+				/***************************3.æŸ¥è©¢å®Œæˆ,æº–å‚™è½‰äº¤(Send the Success view)*************/
+				req.setAttribute("adminListVO",adminVO); // è³‡æ–™åº«å–å‡ºçš„empVOç‰©ä»¶,å­˜å…¥req
 				String url = "/backendLogin/manager-listone.jsp";
-				RequestDispatcher successView = req.getRequestDispatcher(url); // ¦¨¥\Âà¥æ listOneEmp.jsp
+				RequestDispatcher successView = req.getRequestDispatcher(url); // æˆåŠŸè½‰äº¤ listOneEmp.jsp
 				successView.forward(req, res);
 
-				/***************************¨ä¥L¥i¯àªº¿ù»~³B²z*************************************/
+				/***************************å…¶ä»–å¯èƒ½çš„éŒ¯èª¤è™•ç†*************************************/
 			} catch (Exception e) {
-				errorMsgs.add("µLªk¨ú±o¸ê®Æ:" + e.getMessage());
+				errorMsgs.add("ç„¡æ³•å–å¾—è³‡æ–™:" + e.getMessage());
 				RequestDispatcher failureView = req
 						.getRequestDispatcher("/backendLogin/manager.jsp");
 				failureView.forward(req, res);

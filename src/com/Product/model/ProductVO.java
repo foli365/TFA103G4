@@ -11,6 +11,47 @@ public class ProductVO implements Serializable {
 	private Integer product_no;
 	private String product_name;
 	private String product_sort;
+	private Integer admin_id;
+	public Integer getProduct_no() {
+		return product_no;
+	}
+
+
+	public void setProduct_no(Integer product_no) {
+		this.product_no = product_no;
+	}
+
+
+	public String getProduct_name() {
+		return product_name;
+	}
+
+
+	public void setProduct_name(String product_name) {
+		this.product_name = product_name;
+	}
+
+
+	public String getProduct_sort() {
+		return product_sort;
+	}
+
+
+	public void setProduct_sort(String product_sort) {
+		this.product_sort = product_sort;
+	}
+
+
+	public Integer getAdmin_id() {
+		return admin_id;
+	}
+
+
+	public void setAdmin_id(Integer admin_id) {
+		this.admin_id = admin_id;
+	}
+
+
 	private Integer price;
 	private Integer inventory;
 	private Integer situation;

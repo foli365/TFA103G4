@@ -10,8 +10,8 @@
 	List<CampsiteVO> list = dao.getAll();
 	pageContext.setAttribute("list", list);
 %>
-
 <html>
+
 <head>
 <title>營地資料 - listAllCampsite_byDAO.jsp</title>
 
@@ -123,9 +123,9 @@ th, td {
 				<td>${campsiteVO.siteState == 1 ? "營業中":"休息中"}</td>
 				<td>${campsiteVO.lovedCount}</td>
 				<td>${campsiteVO.reportedCount}</td>
-				<td><img
-					src="<%=request.getContextPath()%>/CampsiteGifReader?column=camp_license&camp_id=${campsiteVO.campId}"
-					class="pic"></td>
+					<td><img
+						src="<%=request.getContextPath()%>/CampsiteGifReader?column=camp_license&camp_id=${campsiteVO.campId}"
+						class="pic"></td>
 				<td><img
 					src="<%=request.getContextPath()%>/CampsiteGifReader?column=picture1&camp_id=${campsiteVO.campId}"
 					class="pic"></td>

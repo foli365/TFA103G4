@@ -12,7 +12,7 @@ html {
 }
 
 
-/* 這是sidebar */
+/* �sidebar */
 
 .container {
     position: fixed;
@@ -131,7 +131,7 @@ nav ul li a:hover span {
 }
 
 
-/* 這是右邊文字 */
+/* ������� */
 
 h1 {
     color: white;
@@ -174,7 +174,7 @@ h3 {
 }
 
 
-/* 這是請選擇下拉式 */
+/* �隢������ */
 
 .dropdown {
     position: fixed;
@@ -185,7 +185,7 @@ h3 {
 }
 
 
-/* 這是查詢按鈕 */
+/* ��閰Ｘ��� */
 
 .btn-outline-success {
     position: fixed;
@@ -195,7 +195,7 @@ h3 {
 }
 
 
-/* 這是表格 */
+/* �銵冽 */
 
 .rwd-table {
     background: #eee;
@@ -274,7 +274,7 @@ ul.pagination {
 }
 
 
-/* 這是搜尋 */
+/* ����� */
 
 .searcher {
     height: 70px;
@@ -306,4 +306,7 @@ ul.pagination {
     border: none;
     outline: none;
     cursor: pointer;
+}
+#btnlog{
+	margin-left: 50px;
 }
