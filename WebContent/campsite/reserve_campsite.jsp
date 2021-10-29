@@ -259,8 +259,8 @@
 	        next = next.nextElementSibling
 	    }
 	})
-<<<<<<< HEAD
-
+	</script>
+	<script>
 	window.onload =
 	    function() {
 	        var omDiv = document.getElementsByClassName("order-menu")[0],
@@ -279,7 +279,6 @@
 	            }
 	        }
 	    }
-=======
 	</script>
 	<script>
 // 	window.onload =
@@ -300,7 +299,6 @@
 // 	            }
 // 	        }
 // 	    }
->>>>>>> Steven
 	</script>
 	<%@ include file="/template/script.html"%>
 	<script type="text/javascript"
