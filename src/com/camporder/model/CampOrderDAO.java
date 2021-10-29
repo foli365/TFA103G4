@@ -411,7 +411,7 @@ public class CampOrderDAO implements CampOrderDAO_interface {
 			pstmt.setDate(5, campOrderVO.getCheckOutDate());
 			pstmt.setTimestamp(6, campOrderVO.getOrderDate());
 			pstmt.setTimestamp(7, campOrderVO.getPaymentDeadline());
-			pstmt.setString(8, campOrderVO.getOrderStatus());
+			pstmt.setString(8, "0");
 			pstmt.setInt(9, campOrderVO.getOrderTotal());
 			pstmt.setString(10, campOrderVO.getComment());
 			pstmt.setBytes(11, campOrderVO.getPicture1());

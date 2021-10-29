@@ -91,8 +91,8 @@ public class CampOrderService {
 	public CampOrderVO insertWithPlan(Integer campId, Integer memberId, Integer guestNumber, Date checkInDate,
 			Date checkOutDate, Timestamp orderDate, Timestamp paymentDeadline, String orderStatus, Integer orderTotal,
 			String comment, byte[] picture1, byte[] picture2, byte[] picture3, List<CustomerPlanVO> list) {
-		
 		CampOrderVO campOrderVO = new CampOrderVO();
+		orderStatus = "0";
 		campOrderVO.setCampId(campId);
 		campOrderVO.setMemberId(memberId);
 		campOrderVO.setGuestNumber(guestNumber);

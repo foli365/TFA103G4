@@ -41,13 +41,9 @@
                         </a>
 
                     <ul class="bom-show">
-<<<<<<< HEAD
-                        <li><a href="#" class="camp_list">營地列表</a></li>
                        <li><a href='campOrder.jsp'class="camp_order">營地訂單</a></li>
-=======
-                        <li><a href="../backendLogin/camp.jsp" class="camp_list">營地列表</a></li>
->>>>>>> origin/jorge
-                        <li><a href="#" class="alert_managament">檢舉管理</a></li>
+                       <li><a href="../backendLogin/camp.jsp" class="camp_list">營地列表</a></li>
+                       <li><a href="#" class="alert_managament">檢舉管理</a></li>
                     </ul>
                 </li>
                 <li>
@@ -70,8 +66,6 @@
     <div class="rightside " style="width:84.5vw;float: right;padding: 0 !important; ">
         <!-- <h1 class="mx-auto ">asydhgsa</h1> -->
         <img src="../images/1366X768.png " style="width: 84.5vw;height: 100vh; float: right; ">
-    </div>
-    </div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js " integrity="sha384-U1DAWAznBHeqEIlVSCgzq+c9gqGAJn5c/t99JyeKa9xxaYpSvHU5awsuZVVFIhvj " crossorigin="anonymous "></script>
     <script src="../js/home.js "></script>
