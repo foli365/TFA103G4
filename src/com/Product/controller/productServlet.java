@@ -185,7 +185,7 @@ public class productServlet extends HttpServlet {
 
 				try {
 					price = new Integer(req.getParameter("price").trim());
-			System.out.println(price);
+//			System.out.println(price);
 				} catch (NumberFormatException e) {
 					price = 0;
 					errorMsgs.add("請輸入價格");
@@ -214,6 +214,7 @@ public class productServlet extends HttpServlet {
 //			 System.out.println(inventory);
 				} catch (NumberFormatException e) {
 					errorMsgs.add("狀態不能空");
+				
 				}
 
 				String descript = req.getParameter("descript");
