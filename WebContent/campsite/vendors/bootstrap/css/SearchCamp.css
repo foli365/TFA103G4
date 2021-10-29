@@ -7,8 +7,7 @@
     padding-left: 120px;
 } */
 body {
-	/* 	background-color: #fbefe7; */
-	
+	background-color: #fbefe7;
 }
 
 .search-bar {
@@ -95,6 +94,7 @@ input:focus {
 
 .map {
 	height: 700px;
+	margin-bottom: 10px;
 }
 
 #map {
@@ -112,10 +112,18 @@ input:focus {
 
 .list-group-item {
 	padding: 10px;
+	height: 250px;
+}
+
+@media ( max-width : 768px) {
+	.list-group-item {
+		height: 100%;
+	}
 }
 
 .camp-content-div {
-	position: relative;
+	min-height: 100%;
+	margin-bottom: -30px;
 }
 
 .camp-name {
@@ -128,22 +136,38 @@ input:focus {
 }
 
 .camp-content {
-	padding-top: 5px;
+	padding-top: 20px;
+	margin-bottom: 5px;
+	padding-bottom: 30px;
+}
+
+.ellipsis {
+	overflow: hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	display: -webkit-box;
+	-webkit-line-clamp: 3;
+	-webkit-box-orient: vertical;
+	white-space: normal;
 }
 
 .camp-price {
 	font-size: 20px;
-	position: absolute;
-	bottom: 5px;
-	left: 15px;
+	font-weight: bold;
+	height: 50px;
 }
 
-.camp-picture {
-	float: right;
-	width: 350px;
+.a-tag {
+	height: 100%;
 }
 
 .camp-pic-div {
 	display: flex;
 	align-items: center;
+	justify-content: center;
+}
+
+.camp-picture {
+	max-width: 100%;
+	max-height: 100%;
 }

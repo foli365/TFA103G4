@@ -372,9 +372,24 @@ public class CampsiteServlet  extends HttpServlet {
 					failureView.forward(req, res);
 					return;// 程式中斷
 				}
+				
+				List<Integer> picturesNum = new ArrayList<>();
+				if (campsiteVO.getPicture2() != null) {
+					picturesNum.add(2);
+				}
+				if (campsiteVO.getPicture3() != null) {
+					picturesNum.add(3);
+				}
+				if (campsiteVO.getPicture4() != null) {
+					picturesNum.add(4);
+				}
+				if (campsiteVO.getPicture5() != null) {
+					picturesNum.add(5);
+				}
 
 				/*************************** 3.查詢完成,準備轉交(Send the Success view) *************/
 				req.setAttribute("campsiteVO", campsiteVO); // 資料庫取出的campsiteVO物件,存入req
+				req.setAttribute("picturesNum", picturesNum);
 				String url = "/campsite/reserve_campsite.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url); // 成功轉交 listOneCampsite.jsp
 				successView.forward(req, res);

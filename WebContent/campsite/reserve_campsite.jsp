@@ -11,6 +11,10 @@
 	pageContext.setAttribute("campsiteVO", campsiteVO);
 %>
 <%
+	List<Integer> picturesNum = (List<Integer>) request.getAttribute("picturesNum");
+	System.out.println("picturesNum = " + picturesNum);
+%>
+<%
 	if (session.getAttribute("id") == null) {
 		session.setAttribute("location",
 				(request.getRequestURI() + "?campId=" + request.getParameter("campId")));
@@ -73,50 +77,19 @@
 							</div>
 						</div>
 					</div>
-					<div class="carousel-item">
-						<div class="col-md-3">
-							<div class="card">
-								<div class="card-img">
-									<img
-										src="<%=request.getContextPath()%>/CampsiteGifReader?column=picture2&camp_id=${campsiteVO.campId}"
-										class="img-fluid">
+					<c:forEach var="num" items="${picturesNum}">>
+						<div class="carousel-item ">
+							<div class="col-md-3">
+								<div class="card">
+									<div class="card-img">
+										<img
+											src="<%=request.getContextPath()%>/CampsiteGifReader?column=picture${num}&camp_id=${campsiteVO.campId}"
+											class="img-fluid">
+									</div>
 								</div>
 							</div>
 						</div>
-					</div>
-					<div class="carousel-item">
-						<div class="col-md-3">
-							<div class="card">
-								<div class="card-img">
-									<img
-										src="<%=request.getContextPath()%>/CampsiteGifReader?column=picture3&camp_id=${campsiteVO.campId}"
-										class="img-fluid">
-								</div>
-							</div>
-						</div>
-					</div>
-					<div class="carousel-item">
-						<div class="col-md-3">
-							<div class="card">
-								<div class="card-img">
-									<img
-										src="<%=request.getContextPath()%>/CampsiteGifReader?column=picture4&camp_id=${campsiteVO.campId}"
-										class="img-fluid">
-								</div>
-							</div>
-						</div>
-					</div>
-					<div class="carousel-item">
-						<div class="col-md-3">
-							<div class="card">
-								<div class="card-img">
-									<img
-										src="<%=request.getContextPath()%>/CampsiteGifReader?column=picture5&camp_id=${campsiteVO.campId}"
-										class="img-fluid">
-								</div>
-							</div>
-						</div>
-					</div>
+					</c:forEach>
 				</div>
 				<a class="carousel-control-prev bg-transparent w-aut"
 					href="#recipeCarousel" role="button" data-bs-slide="prev"> <span
@@ -146,11 +119,11 @@
 						<p class="comment">Àç¦aµû½×</p>
 						<c:forEach var="campOrderVO" items="${campOrderList}">
 							<c:set var="comment" value="${campOrderVO.comment}" />
-							<c:set var="memberId" value="${campOrderVO.memberId}" />
+							<c:set var="id" value="${campOrderVO.memberId}" />
 							<%
 								MemberService memberService1 = new MemberService();
 									MembersVO membersVO1 = memberService1
-											.findByPrimaryKey(new Integer(pageContext.getAttribute("memberId").toString()));
+											.findByPrimaryKey(new Integer(pageContext.getAttribute("id").toString()));
 							%>
 							<div class="container mt-2 container-comment">
 								<div class="row d-flex justify-content-center">
@@ -261,24 +234,24 @@
 	})
 	</script>
 	<script>
-	window.onload =
-	    function() {
-	        var omDiv = document.getElementsByClassName("order-menu")[0],
-	            H = -50,
-	            Y = omDiv
-	        while (Y) {
-	            H += Y.offsetTop;
-	            Y = Y.offsetParent;
-	        }
-	        window.onscroll = function() {
-	            var s = document.body.scrollTop || document.documentElement.scrollTop
-	            if (s > H) {
-	                omDiv.style = "position:fixed;top:70px;right:113px"
-	            } else {
-	                omDiv.style = ""
-	            }
-	        }
-	    }
+// 	window.onload =
+// 	    function() {
+// 	        var omDiv = document.getElementsByClassName("order-menu")[0],
+// 	            H = -50,
+// 	            Y = omDiv
+// 	        while (Y) {
+// 	            H += Y.offsetTop;
+// 	            Y = Y.offsetParent;
+// 	        }
+// 	        window.onscroll = function() {
+// 	            var s = document.body.scrollTop || document.documentElement.scrollTop
+// 	            if (s > H) {
+// 	                omDiv.style = "position:fixed;top:70px;right:113px"
+// 	            } else {
+// 	                omDiv.style = ""
+// 	            }
+// 	        }
+// 	    }
 	</script>
 	<script>
 // 	window.onload =
