@@ -4,17 +4,20 @@
 <%@ page import="com.emodr.model.*,com.members.model.*"%>
 
 <%
-	EmodrVO emodrVO = (EmodrVO) request.getAttribute("emodrVO");
+	// 	這塊 用fk 會員編號 從資料庫抓資料
+	Integer member_id = (Integer) request.getAttribute("member_id");
+	EmodrService emodrSvc = new EmodrService();
+	List<EmodrVO> emodrVO2List = emodrSvc.getAllMyOrder(member_id);
+	pageContext.setAttribute("emodrVO2List", emodrVO2List);
+
+	String memberName = (String) request.getAttribute("memberName");//接從EmodrServelt的請求
+	pageContext.setAttribute("memberName", memberName);
 %>
 
-<%
-	MemberService memberSvc = new MemberService();
-	MembersVO membersVO = memberSvc.findByPrimaryKey(emodrVO.getMember_id());
-%>
 
 <html>
 <head>
-<title>您的訂單資料</title>
+<title>歷史訂單</title>
 
 <style>
 html, body {
@@ -65,11 +68,11 @@ th, td {
 			<h4>
 				<a href="<%=request.getContextPath()%>/eshop/pages/EShop.jsp">回商城首頁</a>
 			</h4>
-			<h3>您的訂單資料</h3>
+			<h3>您的歷史訂單如下:</h3>
 		</tr>
 
 		<tr>
-<!-- 			<th>訂單編號</th> -->
+			<th>訂單編號</th>
 			<th>購買人</th>
 			<th>訂單日期</th>
 			<th>收貨人</th>
@@ -78,17 +81,18 @@ th, td {
 			<th>總價</th>
 			<th>訂單狀態</th>
 		</tr>
-		<tr>
-			<%-- 			<td><%=emodrVO.getEmodr_id()%></td> --%>
-			<%-- 			<td><%=emodrVO.getMember_id()%></td> --%>
-			<td><%=membersVO.getName()%></td>
-			<td><%=emodrVO.getEmodr_date()%></td>
-			<td><%=emodrVO.getReceipient()%></td>
-			<td><%=emodrVO.getAddr()%></td>
-			<td><%=emodrVO.getMobile()%></td>
-			<td><%=emodrVO.getTotalprice()%></td>
-			<td><%=(emodrVO.getEmodr_status() == true) ? "成立" : "不成立"%></td>
-		</tr>
+		<c:forEach var="emodrVO" items="${emodrVO2List}">
+			<tr>
+				<td>${emodrVO.emodr_id}</td>
+				<td>${memberName}</td>
+				<td>${emodrVO.emodr_date}</td>
+				<td>${emodrVO.receipient}</td>
+				<td>${emodrVO.addr}</td>
+				<td>${emodrVO.mobile}</td>
+				<td>${emodrVO.totalprice}</td>
+				<td>${(emodrVO.emodr_status== true) ? '成立': '不成立'}</td>
+			</tr>
+		</c:forEach>
 	</table>
 
 

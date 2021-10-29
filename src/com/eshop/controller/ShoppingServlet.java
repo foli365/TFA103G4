@@ -80,7 +80,7 @@ public class ShoppingServlet extends HttpServlet {
 		String name = req.getParameter("name");
 		String price = req.getParameter("price");
 		String quantity = req.getParameter("quantity");
-		String pic = req.getParameter("pic");/// 這邊是接網址要注意一下
+		String pic = req.getParameter("pic");/// 這邊接的是網址要注意一下
 		Merchandise merchandise = new Merchandise();
 		merchandise.setName(name);
 		merchandise.setPrice(new Double(price));

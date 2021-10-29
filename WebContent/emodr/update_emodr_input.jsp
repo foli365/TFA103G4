@@ -8,14 +8,23 @@
 
 <html>
 <head>
-<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>訂單資料修改</title>
+<script src="<%=request.getContextPath()%>/emodr/js_emodr/jquery.js"></script>
+<script src="https://kit.fontawesome.com/a076d05399.js"></script>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet"
+	integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
+<link rel="stylesheet" href="<%=request.getContextPath()%>/emodr/css_emodr/table.css">
+
 
 <style>
+body{
+	background-color: #ffe4c4;
+}
   table#table-1 {
 	background-color: #CCCCFF;
-    border: 2px solid black;
-    text-align: center;
+/*     border: 2px solid black; */
+/* 	text-align: center; */
   }
   table#table-1 h4 {
     color: red;
@@ -24,35 +33,90 @@
   }
   h4 {
     color: blue;
-    display: inline;
+    display: inline-block;
   }
-</style>
-
-<style>
+  a:hover{
+	color:red;
+	font-size: 25px;
+}
+  
   table {
-	width: 450px;
-	background-color: white;
-	margin-top: 1px;
-	margin-bottom: 1px;
+	width: 95%;
+	margin-top: 5px;
+	margin-bottom: 5px;
   }
   table, th, td {
-    border: 0px solid #CCCCFF;
+/* border: 1px solid blue; */
+  	border-collapse:collapse;
+/*      border: 1px solid #CCCCFF;  */
   }
-  th, td {
-    padding: 1px;
+  th{
+    padding: 10px;
+    text-align: center;
   }
+  div#alldata{
+	padding-top:100px;
+}
+td{
+	width:10px;
+	}
 </style>
 
 </head>
-<body bgcolor='white'>
+<body>
+<!-- 側邊攔結構=============================================================================================================== -->
+	<div class="container">
+		<nav class="sidebar">
+			<div class="min_picture">
+				<h1>後臺管理</h1>
+			</div>
+			<ul>
+				<li><a href="#" class="feat-btn">帳號管理 <span
+						class="fas fa-caret-down first"></span>
+				</a>
+					<ul class="feat-show">
+						<li><a href="<%=request.getContextPath()%>/backendLogin/member.jsp" class="member_list">會員帳號管理</a></li>
+					</ul>
+					<ul class="feat-show">
+						<li><a href="<%=request.getContextPath()%>/backendLogin/manager.jsp" class="manager_list">管理員帳號管理</a></li>
+					</ul></li>
+				<li><a href="#" class="serv-btn">商品管理 <span class="fas fa-caret-down second"></span>
+				</a>
+					<ul class="serv-show">
+						<li><a href="<%=request.getContextPath()%>/product/selectAll.jsp" class="product_list">商品資料表</a></li>
+					</ul></li>
+				<li><a href="#1" class="bom-btn">營地管理 <span
+						class="fas fa-caret-down second_1"></span>
+				</a>
 
-<table id="table-1">
-	<tr><td>
-		 <h3>訂單資料修改</h3>
-		 <h4><a href="<%=request.getContextPath()%>/emodr/listAllEmodr.jsp">回前一頁</a></h4>
-	</td></tr>
-</table>
+					<ul class="bom-show">
+						<li><a href="<%=request.getContextPath()%>/backendLogin/camp.jsp" class="camp_list">營地列表</a></li>
+						<li><a href="<%=request.getContextPath()%>/backendLogin/campOrder.jsp"
+							class="camp_order">營地訂單</a></li>
+						<li><a href="<%=request.getContextPath()%>/backendLogin/XXXXXXXXXXXXX.jsp" class="alert_managament">檢舉管理</a></li>
+					</ul></li>
+				<li><a href="#" class="mky-btn">商城管理 <span
+						class="fas fa-caret-down second_2"></span>
+				</a>
+					<ul class="mky-show">
+						<li><a href="<%=request.getContextPath()%>/emodr/listAllEmodr.jsp" class="shopping_list">商城訂單</a></li>
+					</ul></li>
 
+				<li>
+					<form METHOD="get"
+						ACTION="<%=request.getContextPath()%>/backendLogin/home.do">
+						<button type="submit" class="btn btn-outline-secondary"
+							id="btnlog">logout</button>
+					</form>
+				</li>
+			</ul>
+		</nav>
+	</div>
+<!-- 側邊攔結構=============================================================================================================== -->
+
+<div id="alldata">
+		 <h4><a href="<%=request.getContextPath()%>/emodr/listAllEmodr.jsp">返回訂單總表</a></h4>
+			<br><br>
 <h3>訂單資料修改:</h3>
 
 <%-- 錯誤表列 --%>
@@ -83,37 +147,39 @@
 	</tr>
 	<tr>
 		<td>訂單日期:</td>
-		<td><input type="TEXT" name="emodr_date" size="45"	value="<%=emodrVO.getEmodr_date()%>" /></td>
+		<td><input type="TEXT" name="emodr_date" size="20"	value="<%=emodrVO.getEmodr_date()%>" /></td>
 	</tr>
 	<tr>
 		<td>收貨人:</td>
-		<td><input type="TEXT" name="receipient" size="45"	value="<%=emodrVO.getReceipient()%>" /></td>
+		<td><input type="TEXT" name="receipient" size="20"	value="<%=emodrVO.getReceipient()%>" /></td>
 	</tr>
 	<tr>
 		<td>收貨地址:</td>
-		<td><input type="TEXT" name="addr" size="45"	value="<%=emodrVO.getAddr()%>" /></td>
+		<td><input type="TEXT" name="addr" size="20"	value="<%=emodrVO.getAddr()%>" /></td>
 	</tr>
 	<tr>
 		<td>收貨電話:</td>
-		<td><input type="TEXT" name="mobile" size="45" value="<%=emodrVO.getMobile()%>" /></td>
+		<td><input type="TEXT" name="mobile" size="20" value="<%=emodrVO.getMobile()%>" /></td>
 	</tr>
 	<tr>
 		<td>總價:</td>
-		<td><input type="TEXT" name="totalprice" size="45" value="<%=emodrVO.getTotalprice()%>" /></td>
+		<td><input type="TEXT" name="totalprice" size="20" value="<%=emodrVO.getTotalprice()%>" /></td>
 	</tr>
 	<tr>
 		<td>訂單狀態:</td>
-		<td><input type="TEXT" name="emodr_status" size="45" value="<%=emodrVO.getEmodr_status()%>" /></td>
+		<td><input type="TEXT" name="emodr_status" size="10" value="<%=emodrVO.getEmodr_status()%>" /></td>
 	</tr>
-
-
-
-</table>
-<br>
-<input type="hidden" name="action" value="update">  <!-- 送出update字串讓servlet去接，告訴servlet要做的事是update -->
-<input type="hidden" name="emodr_id" value="<%=emodrVO.getEmodr_id()%>"> <!-- 送出<%=emodrVO.getEmodr_id()%>讓servlet去接，告訴servlet emodr_id字串-->
-<input type="submit" value="送出修改">
-</FORM>
-</body>
-
+	</table>
+		<br>
+		<input type="hidden" name="action" value="update">  <!-- 送出update字串讓servlet去接，告訴servlet要做的事是update -->
+		<input type="hidden" name="emodr_id" value="<%=emodrVO.getEmodr_id()%>"> <!-- 送出<%=emodrVO.getEmodr_id()%>讓servlet去接，告訴servlet emodr_id字串-->
+		<input type="submit" value="送出修改">
+	</FORM>
+</div>
+	<script
+		src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js"
+		integrity="sha384-U1DAWAznBHeqEIlVSCgzq+c9gqGAJn5c/t99JyeKa9xxaYpSvHU5awsuZVVFIhvj"
+		crossorigin="anonymous"></script>
+	<script src="<%=request.getContextPath()%>/emodr/js_emodr/table.js"></script>
+	</body>
 </html>
