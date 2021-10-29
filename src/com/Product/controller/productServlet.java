@@ -166,7 +166,7 @@ public class productServlet extends HttpServlet {
 		}
 
 		if ("update".equals(action)) {
-			System.out.println("hello");
+//			System.out.println("hello");
 			List<String> errorMsgs = new LinkedList<String>();
 			req.setAttribute("errorMsgs", errorMsgs);
 
@@ -385,7 +385,7 @@ public class productServlet extends HttpServlet {
 								in1.close();
 								picList.add(picture);
 							} else {
-								errorMsgs.add("圖片: 請勿空白");
+								errorMsgs.add("圖片不能空");
 							}
 						}
 					}
@@ -493,6 +493,7 @@ public class productServlet extends HttpServlet {
 				RequestDispatcher successView = req.getRequestDispatcher(url);
 				successView.forward(req, res);
 			} catch (Exception e) {
+				e.printStackTrace();
 				errorMsgs.add("刪除資料失敗:" + e.getMessage());
 				RequestDispatcher failureView = req.getRequestDispatcher("/product/selectAll.jsp");
 				failureView.forward(req, res);

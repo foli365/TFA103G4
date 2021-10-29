@@ -63,7 +63,7 @@
                         <span class="fas fa-caret-down second_2"></span> 
                     </a>
                     <ul class="mky-show">
-                        <li><a href="#" class="shopping_list">商城訂單</a></li>
+                        <li><a href="../emodr/listAllEmodr.jsp" class="shopping_list">商城訂單</a></li>
                     </ul>
                 </li>
                 
@@ -169,7 +169,6 @@
                     var img_node = document.createElement("img");
                     img_node.setAttribute("src", reader.result);
                     img_node.setAttribute("class", "preview_img");
-//                     preview_p1.innerHTML = '';
                     preview_p1.append(img_node);
                 });
                 reader.readAsDataURL(file);

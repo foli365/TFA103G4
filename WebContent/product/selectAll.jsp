@@ -79,12 +79,8 @@ ProductVO productVO = (ProductVO) request.getAttribute("productVO");
 				</a>
 
 					<ul class="bom-show">
-<<<<<<< HEAD
-						<li><a href="#" class="camp_list">營地列表</a></li>
-						  <li><a href="#" class="camp_order">營地訂單</a></li>
-=======
 						<li><a href="../backendLogin/camp.jsp" class="camp_list">營地列表</a></li>
->>>>>>> origin/jorge
+						  <li><a href="../backendLogin/campOrder.jsp" class="camp_order">營地訂單</a></li>
 						<li><a href="#" class="alert_managament">檢舉管理</a></li>
 					</ul></li>
                 <li>
@@ -92,7 +88,7 @@ ProductVO productVO = (ProductVO) request.getAttribute("productVO");
                         <span class="fas fa-caret-down second_2"></span> 
                     </a>
                     <ul class="mky-show">
-                        <li><a href="#" class="shopping_list">商城訂單</a></li>
+                        <li><a href="../emodr/listAllEmodr.jsp" class="shopping_list">商城訂單</a></li>
                     </ul>
                 </li>
                 
@@ -106,7 +102,7 @@ ProductVO productVO = (ProductVO) request.getAttribute("productVO");
     </div>
     <div class="rightside" id="rig-1">
         <h2>商品資料表</h2><br>
-        <h3>商品類型：</h3><br>
+<!--         <h3>商品類型：</h3><br> -->
         
         <%-- 錯誤表列 --%>
 	<c:if test="${not empty errorMsgs}">

@@ -10,18 +10,7 @@ $('.bom-btn').click(function() {
 $('.mky-btn').click(function() {
     $('nav ul.mky-show').toggleClass("show3");
 });
-$("a.member_list").on("click", function() {
-    $(window).attr('location', 'member.html');
-});
-$("a.alert_managament").on("click", function() {
-    $(window).attr('location', 'alert.html');
-});
-$("a.product_list").on("click", function() {
-    $(window).attr('location', 'table.html');
-});
-$("h1").on("click", function() {
-    $(window).attr('location', 'home.html');
-});
+
 $(".min_picture").on("click", function() {
-    $(window).attr('location', 'home.html');
+    $(window).attr('location', 'home.jsp');
 });
