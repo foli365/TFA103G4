@@ -256,6 +256,7 @@
 		<script src="https://kit.fontawesome.com/846e361093.js"
 			crossorigin="anonymous"></script>
 		<!-- ¸ü¤J JS -->
+<!-- 		TEST -->
 		<script
 			src="<%=request.getContextPath()%>/campsite/vendors/bootstrap/js/SearchCamp.js"></script>
 		<script>
