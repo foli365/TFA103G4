@@ -80,8 +80,8 @@ public class CampReleaseServlet extends HttpServlet {
 				req.setAttribute("campreleaseVO", campreleaseVO); // 資料庫取出的campreleaseVO物件,存入req
 				req.setAttribute("planVOList", list); // 資料庫取出的campreleaseVO物件,存入req
 				
-				String url = "/camprelease/listOneRel.jsp";
-				RequestDispatcher successView = req.getRequestDispatcher(url); // 成功轉交 listOneRel.jsp
+				String url = "/camprelease/listupdateRel.jsp";
+				RequestDispatcher successView = req.getRequestDispatcher(url); // 成功轉交 listAddAllCamp.jsp
 				successView.forward(req, res);
 
 				/*************************** 其他可能的錯誤處理 *************************************/
@@ -116,7 +116,7 @@ public class CampReleaseServlet extends HttpServlet {
 				/*************************** 其他可能的錯誤處理 **********************************/
 			} catch (Exception e) {
 				errorMsgs.add("無法取得要修改的資料:" + e.getMessage());
-				RequestDispatcher failureView = req.getRequestDispatcher("/camprelease/listOneRel.jsp");
+				RequestDispatcher failureView = req.getRequestDispatcher("/camprelease/listupdateRel.jsp");
 				failureView.forward(req, res);
 			}
 		}
@@ -383,7 +383,7 @@ public class CampReleaseServlet extends HttpServlet {
 //						req.setAttribute("list", list);
 						/*************************** 3.修改完成,準備轉交(Send the Success view) *************/
 						req.setAttribute("campreleaseVO", campreleaseVO); 
-						String url = "/camprelease/listOneRel.jsp";
+						String url = "/camprelease/listupdateRel.jsp";
 						RequestDispatcher successView = req.getRequestDispatcher(url); 
 						successView.forward(req, res);
 					}
@@ -582,7 +582,7 @@ public class CampReleaseServlet extends HttpServlet {
 //						campreleaseDAO.insertCamp(campreleaseVO, facilitiesList);
 
 						/*************************** 3.新增完成,準備轉交(Send the Success view) ***********/
-						String url = "/camprelease/listOneRel.jsp";
+						String url = "/camprelease/listAddAllCamp.jsp";
 						RequestDispatcher successView = req.getRequestDispatcher(url); // 新增成功後轉交listAddCamp.jsp
 						successView.forward(req, res);
 

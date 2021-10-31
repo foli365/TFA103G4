@@ -42,7 +42,7 @@ body {
 <header class="header" >
   <h1 class="header__title">顯示配套資料</h1><br>
   <table id="table-1">
-		 <h4><a href="<%=request.getContextPath()%>/camprelease/Select_Page.jsp"><img src="<%=request.getContextPath()%>/camprelease/images/gocamping.jpg" width="500" height="125" border="0"></a></h4>
+		 <h4><a href="<%=request.getContextPath()%>/camprelease/Select_Page.jsp"><img src="<%=request.getContextPath()%>/camprelease/images/gocamping.jpg" width="500" height="125" border="0"><br>back Home</a></h4>
 </table>
 </header>
 
@@ -52,11 +52,11 @@ body {
 				<th>配套編號</th>
 				<th>營地編號</th>
 				<th>配套名稱</th>
-				<th>配套人數限制</th>
-				<th>配套年齡限制</th>
-				<th>配套價錢</th>
+				<th>配套人數上限</th>
+				<th>配套年齡上限</th>
+				<th>配套價格</th>
 				<th>配套介紹</th>
-				<th>Plan修改</th>
+				<th>配套修改</th>
 <!-- 				<th>刪除</th>				 -->
 			</tr>
 		</thead>
@@ -72,7 +72,7 @@ body {
 				<td>【${planVO.planOutline}】</td>
 				<td>
 					<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/plan/plan.do" style="margin-bottom: 0px;">
-						<input type="submit" value="Plan修改"> 
+						<input type="submit" value="配套修改"> 
 						<input type="hidden" name="planId" value="${planVO.planId}"> 
 						<input type="hidden" name="campId" value="${planVO.campId}"> 
 						<input type="hidden" name="action" value="getOnePlan_For_Update">

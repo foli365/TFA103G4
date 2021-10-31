@@ -113,7 +113,7 @@ imput{
 </header>
 <!-- 過程按鈕 -->
     <div class="container overflow-hidden">
-      <div name="action" action="#"  method="#" class="multisteps-form" id="the_form">
+      <div class="multisteps-form" id="the_form">
         <div class="row">
           <div class="col-12 col-lg-8 ml-auto mr-auto mb-4">
             <div class="multisteps-form__progress">
@@ -148,19 +148,19 @@ imput{
 										</div>
 										<div class="form-row mt-4">
 											<div class="col-12 col-sm-6">
-												<label for="inputprice" class="col-form-label">價格</label> 
+												<label for="inputprice" class="col-form-label">營地價格(一晚)</label> 
 												<input type="text" class="multisteps-form__input form-control" name="campPrice" id="c_price" placeholder="請輸入價格" value="">
 											</div>
 										</div>
 										<div class="form-row mt-4">
 											<div class="col-12 col-sm-6">
-												<label for="inputLimit" class="col-form-label">營地人數限制</label>
+												<label for="inputLimit" class="col-form-label">營地人數上限</label>
 												<input type="text" class="multisteps-form__input form-control" name="campLimit" id="c_limit" placeholder="請輸入人數" value="">
 											</div>
 										</div>
 										<div class="form-row mt-4">
 											<div class="col-12 col-sm-6">
-												<label for="inputprice" class="col-form-label">日期</label> <input type="text" class="multisteps-form__input form-control" name="listedTime" size="45" id="f_date1" value="">
+												<label for="inputprice" class="col-form-label">上架日期</label> <input type="text" class="multisteps-form__input form-control" name="listedTime" size="45" id="f_date1" value="">
 											</div>
 										</div>
 										<div class="button-row d-flex mt-4">
@@ -229,7 +229,7 @@ imput{
 											<input type="hidden" name="action" value="insert">
 											<button class="btn btn-success ml-auto" type="submit">Send</button>
 											<input type="hidden" name="memberId" value="${campreleaseVO.memberId}">
-										    <input type="hidden" name="campId" value="${campreleaseVO.campId}">                       
+<%-- 										    <input type="hidden" name="campId" value="${campreleaseVO.campId}">                        --%>
 										</div>
 									</div>
 								</div>
@@ -347,7 +347,7 @@ imput{
 }) 
 </script>
 <!-------------------datetimepicker------------------------->
-<%
+<% 
   java.sql.Timestamp listedTime = null;
 try{
 	listedTime = campreleaseVO.getListedTime();

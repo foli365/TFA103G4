@@ -52,13 +52,16 @@ h4 {
 	margin-bottom: 20px;
 	text-align: center;
 }
+a{
+font-size:5px;
+}
 </style>
 </head>
 <body>
 <div id="main" class="container">
 <h3>設施修改</h3>
 				<h4>	<a href="<%=request.getContextPath()%>/camprelease/Select_Page.jsp"><img src="<%=request.getContextPath()%>/camprelease/images/title_camp.png" 
-					width="100" height="32" border="0"></a>
+					width="100" height="32" border="0"><br>Home</a>
 				</h4>
 <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/facilities/facilities.do" name="form1" enctype="multipart/form-data">
 <!--           <div class="col-md-8"> -->

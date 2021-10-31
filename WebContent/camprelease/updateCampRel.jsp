@@ -63,7 +63,7 @@ h4 {
 <header class="header" id="gocamping">
   <h1 class="header__title">Go camping營地更新</h1><br>
   <table id="table-1">
-		 <h4><a href="<%=request.getContextPath()%>/camprelease/Select_Page.jsp"><img src="images/gocamping.jpg" width="500" height="125" border="0"></a></h4>
+		 <h4><a href="<%=request.getContextPath()%>/camprelease/Select_Page.jsp"><img src="images/gocamping.jpg" width="500" height="125" border="0"></a><br>Home</h4>
 </table>
 </header>
 <%-- 錯誤表列 --%>
@@ -87,18 +87,18 @@ h4 {
 <!--           </div> -->
           <div class="col-md-6">
             <label for="inputcampName" class="form-label">營地名稱</label>
-            <input type="text" class="form-control" name="campName" id="campName" value="${campreleaseVO.campName == null ? '' : campreleaseVO.campName}">
+            <input type="text" class="form-control" name="campName" id="campName" value="${campreleaseVO.campName == null ? '' : campreleaseVO.campName}" required>
           </div>
           <div class="col-md-6">
-            <label for="inputcampPrice" class="form-label">營地價格</label>
+            <label for="inputcampPrice" class="form-label">營地價格(一晚)</label>
             <input type="text" class="form-control" name="campPrice" id="campPrice" value="${campreleaseVO.campPrice == null ? '' : campreleaseVO.campPrice}">
           </div>
           <div class="col-md-6">
-            <label for="inputcampLimit" class="form-label">營地人數限制</label>
+            <label for="inputcampLimit" class="form-label">營地人數上限</label>
             <input type="text" class="form-control" name="campLimit" id="campLimit" value="${campreleaseVO.campLimit == null ? '' : campreleaseVO.campLimit}">
           </div>
           <div class="col-md-6">
-            <label for="inputlistedTime" class="form-label">日期</label>
+            <label for="inputlistedTime" class="form-label">上架日期</label>
             <input type="text" class="form-control" name="listedTime" id="f_date1" value="${campreleaseVO.listedTime == null ? '' : campreleaseVO.listedTime}">
           </div>
           <div class="col-md-12">
@@ -110,9 +110,9 @@ h4 {
             <h3>地點更新</h3><br>
             <div class="col">
               <div id="webbulutumap" style="height: 280px;"></div>
-                <input type="text" name="location" value="" size="40" class="wpcf7-form-control wpcf7-text wpcf7-validates-as-required" id="address" aria-required="true" aria-invalid="false" placeholder="Street Address"/><br><br>
-                 <input type="text" name="latitude" value="" placeholder="latitude" id="latitude"/><br><br>
-                 <input type="text" name="longtitude" value="" placeholder="longitude" id="longitude"/><br><br>
+                <input type="text" name="location" value="${campreleaseVO.location == null ? '' : campreleaseVO.location}" size="40" class="wpcf7-form-control wpcf7-text wpcf7-validates-as-required" id="address" aria-required="true" aria-invalid="false" placeholder="Street Address"/><br><br>
+                 <input type="text" name="latitude" value="${campreleaseVO.latitude}" placeholder="latitude" id="latitude"/><br><br>
+                 <input type="text" name="longtitude" value="${campreleaseVO.longtitude == null ? '' : campreleaseVO.longtitude}" placeholder="longitude" id="longitude"/><br><br>
                  <a href="#" id="find-address" title="Find Address" class="button">Find Address</a>
             </div>
           </div>

@@ -12,7 +12,7 @@ response.setDateHeader("Expires", 0);
 CampReleaseVO campreleaseVO = (CampReleaseVO) request.getAttribute("campreleaseVO");
 
 CampReleaseService campSvc = new CampReleaseService();
-List<CampReleaseVO> camplist = campSvc.getCamp(Integer.parseInt(request.getParameter("campId")));
+List<CampReleaseVO> camplist = campSvc.getAllforMember(Integer.parseInt(request.getParameter("memberId")));
 pageContext.setAttribute("campList", camplist);
 %>
 
@@ -46,7 +46,7 @@ text-align: center;
 <header class="header" >
   <h1 class="header__title">顯示營地資料</h1><br>
   <table id="table-1">
-		 <h4><a href="<%=request.getContextPath()%>/camprelease/Select_Page.jsp"><img src="images/gocamping.jpg" width="500" height="125" border="0"></a></h4>
+		 <h4><a href="<%=request.getContextPath()%>/camprelease/Select_Page.jsp"><img src="images/gocamping.jpg" width="500" height="125" border="0"><br>back Home</a></h4>
 </table>
 </header>
 
@@ -60,9 +60,9 @@ text-align: center;
 		<th>經度</th>
 		<th>緯度</th>
 		<th>營地介紹</th>
-		<th>價錢</th>
-		<th>營地人數限制</th>
-		<th>日期</th>
+		<th>營地價格(一晚)</th>
+		<th>營地人數上限</th>
+		<th>上架日期</th>
 		<th>pic1</th>
 		<th>pic2</th>
 		<th>pic3</th>
@@ -72,7 +72,7 @@ text-align: center;
 	</tr>
 	</thead>
 	<tbody>
-<%-- 	<c:forEach var="campreleaseVO" items="${campList}" > --%>
+	<c:forEach var="campreleaseVO" items="${campList}" >
 	<tr>
 			 <td>【${campreleaseVO.campId}】</td>
 			<td>【${campreleaseVO.memberId}】</td>
@@ -94,11 +94,12 @@ text-align: center;
               <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/camprelease/camprelease.do" style="margin-bottom: 0px;"> 
 			     <input type="submit" value="營地資料修改">
 			     <input type="hidden" name="campId"  value="${campreleaseVO.campId}">
+			     <input type="hidden" name="memberId"  value="${campreleaseVO.memberId}">
 			     <input type="hidden" name="action"	value="getOne_For_Update">
 			  </FORM>
             </td>  	
 	</tr>
-<%-- 	</c:forEach> --%>
+	</c:forEach>
 	</tbody>
 </table>
 
