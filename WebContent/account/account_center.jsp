@@ -164,7 +164,7 @@ input:focus {
 											<li class="list-group-item">總價: 1500元</li>
 										</ul>
 										<div class="card-body">
-											<button type="button" class="btn btn-success">給予評價</button>
+											<button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#review">給予評價</button>
 											<button type="submit"
 												class="btn btn-outline-danger float-end"
 												data-bs-toggle="modal" data-bs-target="#staticBackdrop">檢舉營地</button>
@@ -202,6 +202,38 @@ input:focus {
 																	<button type="submit" class="btn btn-primary">送出</button>
 																	<input type="hidden" name="action" value="insert">
 																	<input type="hidden" name="id" value="${id}"> <input
+																		type="hidden" name="campId" value=5001>
+																</div>
+															</form>
+														</div>
+													</div>
+												</div>
+											</div>
+											<div class="modal fade" id="review"
+												data-bs-backdrop="static" data-bs-keyboard="false"
+												tabindex="-1" aria-labelledby="staticBackdropLabel"
+												aria-hidden="true">
+												<div class="modal-dialog">
+													<div class="modal-content">
+														<div class="modal-header">
+															<h5 class="modal-title" id="staticBackdropLabel">給予此營地評語</h5>
+															<button type="button" class="btn-close"
+																data-bs-dismiss="modal" aria-label="Close"></button>
+														</div>
+														<div class="modal-body">
+															<form method="POST"
+																ACTION="<%=request.getContextPath()%>/campOrder.do">
+																<div class="mb-3">
+																	<textarea style="resize: none;" placeholder="留下評論吧"
+																		class="form-control" name="comment"
+																		id="exampleFormControlTextarea1" rows="4" required="required"></textarea>
+																</div>
+																<div class="modal-footer">
+																	<button type="button" class="btn btn-secondary"
+																		data-bs-dismiss="modal">取消</button>
+																	<button type="submit" class="btn btn-primary">送出</button>
+																	<input type="hidden" name="action" value="addComment">
+																	<input type="hidden" name="orderid" value="1027"> <input
 																		type="hidden" name="campId" value=5001>
 																</div>
 															</form>

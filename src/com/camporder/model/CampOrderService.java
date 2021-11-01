@@ -135,4 +135,9 @@ public class CampOrderService {
 		return campOrderVO;
 	}
 	
+	public CampOrderVO addComment(String comment, Integer orderId) {
+		dao.updateComment(comment, orderId);
+		return dao.findbyPrimaryKey(orderId);
+	}
+	
 }

@@ -184,6 +184,19 @@ public class CampOrderServlet extends HttpServlet {
 				e.printStackTrace();
 			}
 		}
+		
+		if("addComment".equals(action)) {
+			Integer orderId = new Integer(req.getParameter("orderid"));
+			String comment = req.getParameter("comment");
+			if (comment.trim() == "") {
+				req.setAttribute("missing", "請輸入內容");
+				RequestDispatcher missing = req.getRequestDispatcher("");
+				missing.forward(req, res);
+			}
+			CampOrderService COSvc = new CampOrderService();
+			System.out.println(COSvc.addComment(comment, orderId));
+			System.out.println("success");
+		}
 
 	}
 }

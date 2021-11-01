@@ -13,4 +13,5 @@ public interface CampOrderDAO_interface {
 	List<CampOrderVO> getAll();
 	public void insertWithPlans(CampOrderVO campOrderVO , List<CustomerPlanVO> list) throws ClassNotFoundException;
 	void updateOrder(CampOrderVO campOrderVO);
+	void updateComment(String comment, Integer orderId);
 }

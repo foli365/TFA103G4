@@ -480,4 +480,38 @@ public class CampOrderDAO implements CampOrderDAO_interface {
 			}
 		}
 	}
+	
+	public void updateComment(String comment, Integer orderId) {
+		
+		Connection con = null;
+		PreparedStatement pstmt = null;
+
+		try {
+			con = DriverManager.getConnection(URL, USER, PASSWORD);
+			pstmt = con.prepareStatement(ADD_COMMENT);
+			pstmt.setString(1, comment);
+			pstmt.setInt(2, orderId);
+
+			pstmt.executeUpdate();
+			
+		} catch (SQLException se) {
+			se.printStackTrace();
+		} finally {
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace();
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (SQLException se) {
+					se.printStackTrace();
+				}
+			}
+		}
+	}
+	
 }
