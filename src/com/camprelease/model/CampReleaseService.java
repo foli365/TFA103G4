@@ -15,7 +15,7 @@ public class CampReleaseService {
 	}
 
 	public CampReleaseVO addCampRelease(Integer memberId, String campName, String location, Double latitude, Double longtitude,
-			String campDescription, Integer campPrice, Integer campLimit, Timestamp listedTime, byte[] picture1, byte[] picture2, byte[] picture3, byte[] picture4, byte[] picture5) {
+			String campDescription, Integer campPrice, Integer campLimit, Timestamp listedTime, byte[] picture1, byte[] picture2, byte[] picture3, byte[] picture4, byte[] picture5, java.sql.Time openTime, java.sql.Time closeTime) {
 
 		CampReleaseVO campreleaseVO = new CampReleaseVO();
 
@@ -33,6 +33,9 @@ public class CampReleaseService {
 		campreleaseVO.setPicture4(picture4);
 		campreleaseVO.setPicture5(picture5);
 		campreleaseVO.setMemberId(memberId);
+		campreleaseVO.setOpenTime(openTime);
+		campreleaseVO.setCloseTime(closeTime);
+		
 
 		dao.insert(campreleaseVO);
 		
@@ -40,7 +43,7 @@ public class CampReleaseService {
 	}
 
 	public CampReleaseVO updateCampRelease(Integer memberId, String campName, String location, Double latitude, Double longtitude,
-			String campDescription, Integer campPrice, Integer campLimit, Timestamp listedTime, byte[] picture1, byte[] picture2, byte[] picture3, byte[] picture4, byte[] picture5, Integer campId) {
+			String campDescription, Integer campPrice, Integer campLimit, Timestamp listedTime, byte[] picture1, byte[] picture2, byte[] picture3, byte[] picture4, byte[] picture5,java.sql.Time openTime, java.sql.Time closeTime, Integer campId) {
 
 		CampReleaseVO campreleaseVO = new CampReleaseVO();
 
@@ -58,6 +61,8 @@ public class CampReleaseService {
 		campreleaseVO.setPicture3(picture3);
 		campreleaseVO.setPicture4(picture4);
 		campreleaseVO.setPicture5(picture5);
+		campreleaseVO.setOpenTime(openTime);
+		campreleaseVO.setCloseTime(closeTime);
 		campreleaseVO.setCampId(campId);
 		
 		dao.update(campreleaseVO);

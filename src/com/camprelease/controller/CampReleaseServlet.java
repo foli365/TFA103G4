@@ -191,7 +191,23 @@ public class CampReleaseServlet extends HttpServlet {
 				String campDescription = req.getParameter("campDescription").trim();
 				if (campDescription == null || campDescription.trim().length() == 0) {
 					errorMsgs.add("請輸入介紹");
-				}	
+				}
+				
+				java.sql.Time openTime = null;
+				try {
+					openTime = java.sql.Time.valueOf(req.getParameter("openTime").trim());
+				} catch (IllegalArgumentException e) {
+					openTime = new java.sql.Time(System.currentTimeMillis());
+					errorMsgs.add("請輸入營業開始時間!");
+				}
+				
+				java.sql.Time closeTime = null;
+				try {
+					closeTime = java.sql.Time.valueOf(req.getParameter("closeTime").trim());
+				} catch (IllegalArgumentException e) {
+					closeTime = new java.sql.Time(System.currentTimeMillis());
+					errorMsgs.add("請輸入營業結束時間!");
+				}
 
 				
 //				InputStream in1 = req.getPart("picture1").getInputStream();
@@ -357,6 +373,8 @@ public class CampReleaseServlet extends HttpServlet {
 				campreleaseVO.setPicture3(picture3);
 				campreleaseVO.setPicture4(picture4);
 				campreleaseVO.setPicture5(picture5);
+				campreleaseVO.setOpenTime(openTime);
+				campreleaseVO.setCloseTime(closeTime);
 		
 //				try {
 //					campaddVO.setPicture1(getPictureByteArray(picture1));
@@ -376,7 +394,7 @@ public class CampReleaseServlet extends HttpServlet {
 						/*************************** 2.開始修改資料 *****************************************/
 						CampReleaseService campreleaseSvc = new CampReleaseService();
 						campreleaseVO = campreleaseSvc.updateCampRelease(memberId, campName, location, latitude, longtitude,
-								campDescription, campPrice, campLimit, listedTime, picture1, picture2, picture3, picture4, picture5, campId);
+								campDescription, campPrice, campLimit, listedTime, picture1, picture2, picture3, picture4, picture5, openTime, closeTime, campId);
 						System.out.println(campId);	
 //						CampReleaseService crs = new CampReleaseService();
 //						ArrayList<CampReleaseVO> list = crs.getCamp(campId);
@@ -467,6 +485,22 @@ public class CampReleaseServlet extends HttpServlet {
 					errorMsgs.add("請勿空白");
 				}
 				
+				java.sql.Time openTime = null;
+				try {
+					openTime = java.sql.Time.valueOf(req.getParameter("openTime").trim());
+				} catch (IllegalArgumentException e) {
+					openTime = new java.sql.Time(System.currentTimeMillis());
+					errorMsgs.add("請輸入營業開始時間!");
+				}
+				
+				java.sql.Time closeTime = null;
+				try {
+					closeTime = java.sql.Time.valueOf(req.getParameter("closeTime").trim());
+				} catch (IllegalArgumentException e) {
+					closeTime = new java.sql.Time(System.currentTimeMillis());
+					errorMsgs.add("請輸入營業結束時間!");
+				}
+				
 				InputStream in1 = req.getPart("picture1").getInputStream();
 				byte[] picture1 = null;
 				if (in1.available() != 0) {
@@ -537,6 +571,8 @@ public class CampReleaseServlet extends HttpServlet {
 						campreleaseVO.setPicture3(picture3);
 						campreleaseVO.setPicture4(picture4);
 						campreleaseVO.setPicture5(picture5);
+						campreleaseVO.setOpenTime(openTime);
+						campreleaseVO.setCloseTime(closeTime);
 							
 //						List<FacilitiesVO> facilitiesList = new ArrayList<FacilitiesVO>();
 //						FacilitiesVO facilitiesVO = new FacilitiesVO();
@@ -575,7 +611,7 @@ public class CampReleaseServlet extends HttpServlet {
 						CampReleaseService campreleaseSvc = new CampReleaseService();
 						campreleaseVO = campreleaseSvc.addCampRelease(memberId, campName, location, latitude, longtitude,
 								campDescription, campPrice, campLimit, listedTime, picture1, picture2, picture3, picture4,
-								picture5);
+								picture5, openTime, closeTime);
 						
 						req.setAttribute("campreleaseVO", campreleaseVO);
 //						CampReleaseDAO campreleaseDAO = new CampReleaseDAO();
