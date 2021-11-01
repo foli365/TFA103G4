@@ -147,7 +147,8 @@ public class CampsiteServlet  extends HttpServlet {
 				
 				for (CampsiteVO campsiteVO : list) {
 					if(campsiteVO.getSiteState() == 1) {
-						if (campsiteVO.getStrDate() != null && campsiteVO.getEndDate() != null) {
+						System.out.println("vo: " + campsiteVO);
+						if (strDate != null && endDate != null) {
 							if (campsiteTentStatusSvc.isTentAvailiblewithGuestNumberandTimeRange(campsiteVO.getCampId(), customerNum, strDate, endDate)) {
 								filterList.add(campsiteVO);
 							}
