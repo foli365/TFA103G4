@@ -37,7 +37,6 @@ public class jdbcUtil_CompositeQuery_Campsite {
 			if (value != null && value.trim().length() != 0 && !"action".equals(key)) {
 				count++;
 				String aCondition = get_aCondition_For_myDB(key, value.trim());
-				System.out.println(key + " : " + value);
 
 				if (count == 1 && "EMPTY_CAMP_LEFT".equals(key)) {
 					whereCondition.append("");

@@ -12,7 +12,6 @@
 %>
 <%
 	List<Integer> picturesNum = (List<Integer>) request.getAttribute("picturesNum");
-	System.out.println("picturesNum = " + picturesNum);
 %>
 <%
 	if (session.getAttribute("id") == null) {
@@ -39,7 +38,6 @@
 	CampOrderService campOrderService = new CampOrderService();
 	List<CampOrderVO> campOrderList = campOrderService.getOneCampsiteCampOrderVO(campsiteVO.getCampId());
 	pageContext.setAttribute("campOrderList", campOrderList);
-	System.out.println("campOrderList = " + campOrderList);
 %>
 
 <!DOCTYPE html>
@@ -232,26 +230,6 @@
 	        next = next.nextElementSibling
 	    }
 	})
-	</script>
-	<script>
-// 	window.onload =
-// 	    function() {
-// 	        var omDiv = document.getElementsByClassName("order-menu")[0],
-// 	            H = -50,
-// 	            Y = omDiv
-// 	        while (Y) {
-// 	            H += Y.offsetTop;
-// 	            Y = Y.offsetParent;
-// 	        }
-// 	        window.onscroll = function() {
-// 	            var s = document.body.scrollTop || document.documentElement.scrollTop
-// 	            if (s > H) {
-// 	                omDiv.style = "position:fixed;top:70px;right:113px"
-// 	            } else {
-// 	                omDiv.style = ""
-// 	            }
-// 	        }
-// 	    }
 	</script>
 	<script>
 // 	window.onload =
