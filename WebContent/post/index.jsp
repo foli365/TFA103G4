@@ -190,8 +190,10 @@
 						</div>
 					</div>
 				</div>
-				<c:forEach var="postVO" items="${list}">
-					<div id="post" class="row card mb-3" style="max-width: 800px">
+				<%@include file="/template/page1.file" %>
+				<div class="infinite-container">
+				<c:forEach var="postVO" items="${list}" begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>">
+					<div id="post" class="row card mb-3 infinite-item" style="max-width: 800px">
 						<div class="row g-0">
 							<div class="col">
 								<div class="card-body">
@@ -214,14 +216,36 @@
 						</div>
 					</div>
 				</c:forEach>
+				</div>
+				<a class="infinite-more-link" href="<%=request.getContextPath()%>/post/index.jsp?whichPage=2"></a>
 			</div>
 		</div>
 		<input type="hidden" id="name" value="${memberVO.name}">
+		
 	</div>
 	<%@ include file="/template/script.html" %>
-		<script src="<%=request.getContextPath()%>/post/summernote-0.8.18-dist/summernote-lite.js"></script>
-		<script src="<%=request.getContextPath()%>/post/summernote-0.8.18-dist/lang/summernote-zh-TW.js"></script>
-		<script>
+	<script src="<%=request.getContextPath()%>/post/imakewebthings-waypoints-34d9f6d/lib/jquery.waypoints.min.js"></script>
+	<script src="<%=request.getContextPath()%>/post/imakewebthings-waypoints-34d9f6d/lib/shortcuts/infinite.min.js"></script>
+	<script src="<%=request.getContextPath()%>/post/summernote-0.8.18-dist/summernote-lite.js"></script>
+	<script src="<%=request.getContextPath()%>/post/summernote-0.8.18-dist/lang/summernote-zh-TW.js"></script>
+	<script>
+		let start = 2;
+		var infinite = new Waypoint.Infinite({
+			  element: $('.infinite-container')[0]
+			});
+		$(window).scroll(function() {
+			   if($(window).scrollTop() + $(window).height() == $(document).height()) {
+				   let totalPage = ${totalPage};
+				   start = start + 1;
+				   console.log(start);
+				   if(totalPage > start){			   
+				   let link = "<%=request.getContextPath()%>/post/index.jsp?whichPage=" + start;
+				   $(".infinite-more-link").attr("href",  link);
+				   } else {
+					   $(".infinite-more-link").remove();
+				   }
+			   }
+			});
 			// 		function uploadImage(image) {
 			// 			var data = new FormData();
 			// 			data.append("img", image);

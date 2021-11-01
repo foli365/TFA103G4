@@ -21,8 +21,8 @@ if(session.getAttribute("id") != null){
 <head>
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
 <title>Go camping營地刊登</title>
-  <link rel='stylesheet' href='<%=request.getContextPath()%>/camprelease/css/bootstrap.min4.1.3.css' />
-  <link rel="stylesheet" href="<%=request.getContextPath()%>/camprelease/css/stepstyle.css">
+<link rel='stylesheet' href='<%=request.getContextPath()%>/camprelease/css/bootstrap.min4.1.3.css' />
+<link rel="stylesheet" href="<%=request.getContextPath()%>/camprelease/css/stepstyle.css">
 <!-- 以下CSS為網頁樣式 -->
 <%@ include file="/template/navbar.jsp" %>
 <style>
@@ -251,7 +251,7 @@ imput{
 
 <script src="<%=request.getContextPath()%>/https://maps.googleapis.com/maps/api/js?key=AIzaSyBsqt74NPCV93dg4iOpJtLL0RDvMSfsnYM"></script>
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBsqt74NPCV93dg4iOpJtLL0RDvMSfsnYM"></script>
-<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script type="text/javascript">
     var map;
     var marker;
