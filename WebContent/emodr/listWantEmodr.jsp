@@ -89,7 +89,7 @@ div#alldata{
 					<ul class="serv-show">
 						<li><a href="<%=request.getContextPath()%>/product/selectAll.jsp" class="product_list">商品資料表</a></li>
 					</ul></li>
-				<li><a href="#1" class="bom-btn">營地管理 <span
+				<li><a href="#" class="bom-btn">營地管理 <span
 						class="fas fa-caret-down second_1"></span>
 				</a>
 
@@ -97,7 +97,7 @@ div#alldata{
 						<li><a href="<%=request.getContextPath()%>/backendLogin/camp.jsp" class="camp_list">營地列表</a></li>
 						<li><a href="<%=request.getContextPath()%>/backendLogin/campOrder.jsp"
 							class="camp_order">營地訂單</a></li>
-						<li><a href="<%=request.getContextPath()%>/backendLogin/XXXXXXXXXXXXX.jsp" class="alert_managament">檢舉管理</a></li>
+						<li><a href="<%=request.getContextPath()%>/backendLogin/alert.jsp" class="alert_managament">檢舉管理</a></li>
 					</ul></li>
 				<li><a href="#" class="mky-btn">商城管理 <span
 						class="fas fa-caret-down second_2"></span>
@@ -137,8 +137,8 @@ div#alldata{
 
 	<table>
 		<tr>
-			<th>商城訂單編號</th>
-			<th>買方會員編號</th>
+			<th>訂單編號</th>
+			<th>買方編號與名字</th>
 			<th>訂單日期</th>
 			<th>收貨人</th>
 			<th>收貨地址</th>
@@ -163,7 +163,7 @@ div#alldata{
 				<td>${emodrVO.addr}</td>
 				<td>${emodrVO.mobile}</td>
 				<td>${emodrVO.totalprice}</td>
-				<td>${emodrVO.emodr_status}</td>
+				<td>${emodrVO.emodr_status==true ? "成立": "不成立"}</td>
 
 				<td>
 					<FORM METHOD="post"

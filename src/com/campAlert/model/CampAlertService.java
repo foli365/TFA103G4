@@ -1,10 +1,11 @@
 package com.campAlert.model;
 
-import java.util.List;
-
+import com.campAlert.model.*;
 import com.campsite.model.CampsiteDAO;
 import com.campsite.model.CampsiteDAO_Interface;
 import com.campsite.model.CampsiteVO;
+
+import java.util.List;
 
 public class CampAlertService {
 	private CampAlertDao_interface dao;
@@ -17,10 +18,10 @@ public class CampAlertService {
 		dao1=new CampsiteDAO();
 	}
 
-
 	public CampAlertVO insertcCampAlertVO(Integer memberId, Integer campId, String report_Time,
 			String content, byte[] picture1, byte[] picture2, byte[] picture3, Integer report_Status,
 			Integer handeler) {
+
 		CampAlertVO campalert = new CampAlertVO();
 		campalert.setMemberId(memberId);
 		campalert.setCampId(campId);

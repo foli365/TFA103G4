@@ -13,7 +13,7 @@
 <html>
 <head>
 <meta>
-<title>Insert title here</title>
+<title>營地資訊修改</title>
 </head>
 <body>
 	<div class="logo">

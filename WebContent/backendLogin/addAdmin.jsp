@@ -11,7 +11,7 @@
 <html>
 <head>
 <meta >
-<title>Insert title here</title>
+<title>新增管理員</title>
 </head>
 <body>
  <div class="logo">

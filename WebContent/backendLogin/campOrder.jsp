@@ -24,7 +24,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>營地訂單管理</title>
 
 <link
 	href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css"
@@ -44,32 +44,32 @@
 						class="fas fa-caret-down first"></span>
 				</a>
 					<ul class="feat-show">
-						<li><a href="../backendLogin/member.jsp" class="member_list">會員帳號管理</a></li>
+						<li><a href="<%=request.getContextPath()%>/backendLogin/member.jsp" class="member_list">會員帳號管理</a></li>
 					</ul>
 					<ul class="feat-show">
-						<li><a href="../backendLogin/manager.jsp"
+						<li><a href="<%=request.getContextPath()%>/backendLogin/manager.jsp"
 							class="manager_list">管理員帳號管理</a></li>
 					</ul></li>
 				<li><a href="#" class="serv-btn">商品管理 <span
 						class="fas fa-caret-down second"></span>
 				</a>
 					<ul class="serv-show">
-						<li><a href="../product/selectAll.jsp" class="product_list">商品資料表</a></li>
+						<li><a href="<%=request.getContextPath()%>/product/selectAll.jsp" class="product_list">商品資料表</a></li>
 					</ul></li>
 				<li><a href="#1" class="bom-btn">營地管理 <span
 						class="fas fa-caret-down second_1"></span>
 				</a>
 
 					<ul class="bom-show">
-						<li><a href="#" class="camp_list">營地列表</a></li>
-						<li><a href='campOrder.jsp' class="camp_order">營地訂單</a></li>
-						<li><a href="#" class="alert_managament">檢舉管理</a></li>
+						<li><a href="<%=request.getContextPath()%>/backendLogin/camp.jsp" class="camp_list">營地列表</a></li>
+						<li><a href="<%=request.getContextPath()%>/backendLogin/campOrder.jsp" class="camp_order">營地訂單</a></li>
+						<li><a href="<%=request.getContextPath()%>/backendLogin/alert.jsp" class="alert_managament">檢舉管理</a></li>
 					</ul></li>
 				<li><a href="#" class="mky-btn">商城管理 <span
 						class="fas fa-caret-down second_2"></span>
 				</a>
 					<ul class="mky-show">
-						<li><a href="#" class="shopping_list">商城訂單</a></li>
+						<li><a href="<%=request.getContextPath()%>/emodr/listAllEmodr.jsp" class="shopping_list">商城訂單</a></li>
 					</ul></li>
 			</ul>
 		</nav>

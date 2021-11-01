@@ -15,6 +15,20 @@ a {
 }
 
 a:hover {
+	color: orange;
+	font-weight: bold;
+}
+a.shoppingcart:hover {
+	color: green;
+	font-weight: bold;
+}
+
+a.myorders:hover {
+	color: #2d2dff;
+	font-weight: bold;
+}
+
+.logoutfromeshop:hover {
 	color: red;
 	font-weight: bold;
 }
@@ -49,7 +63,7 @@ nav.shopnav a.myorders {
 	line-height: 100px;
 	position: absolute;
 	top: 0px;
-	right: 100px;
+	right: 310px;
 }
 
 nav.shopnav a.shoppingcart {
@@ -59,8 +73,38 @@ nav.shopnav a.shoppingcart {
 	line-height: 100px;
 	position: absolute;
 	top: 0px;
+	right:210px;
+}
+
+nav.shopnav a#errshow{
+	display: inline-block;
+	color:red;
+	height: 100%;
+	line-height: 100px;
+	position: absolute;
+	top: 0px;
+	right: 390px;
+}
+
+nav.shopnav a.loginfromeshop{
+	display: inline-block;
+	height: 100%;
+	line-height: 100px;
+	position: absolute;
+	top: 0px;
+	right: 110px;
+}
+
+nav.shopnav a.logoutfromeshop{
+	display: inline-block;
+	height: 100%;
+	line-height: 100px;
+	position: absolute;
+	top: 0px;
 	right: 20px;
 }
+
+
 /* 商品類型輪播
           ============================================================================================================= */
 div.top_main {

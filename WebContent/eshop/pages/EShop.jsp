@@ -30,8 +30,14 @@
 
 		<nav class="shopnav">
 			<a href="<%=request.getContextPath()%>/homepage/index.jsp" class="camppage" style="font-size: 1.25em;">GoCamping</a>
+			<%-- 錯誤表列 --%>
+			<c:if test="${not empty errorMsgs}">
+				<a id="errshow" href="#">${errorMsgs}</a>
+			</c:if>
 			<a href="<%=request.getContextPath()%>/emodr/emodr.do?action=showMyOders" class="myorders" style="font-size: 1.25em;">我的訂單</a>			
 			<a href="<%=request.getContextPath()%>/eshop/pages/Cart.jsp" class="shoppingcart" style="font-size: 1.25em;">購物車</a>
+			<a href="<%=request.getContextPath()%>/register_and_login/login.jsp" class="loginfromeshop" style="font-size: 1.25em;">登入</a>
+			<a href="<%=request.getContextPath()%>/account/logout.do" class="logoutfromeshop" style="font-size: 1.25em;">登出</a>
 		</nav>
 
 		<div class="top_main">

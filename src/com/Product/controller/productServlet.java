@@ -248,7 +248,7 @@ public class productServlet extends HttpServlet {
 						in1.close();
 
 					} else {
-						errorMsgs.add("圖片1: 請勿空白");
+						errorMsgs.add("圖片1:不能空");
 					}
 
 					Part part2 = req.getPart("img2");
@@ -259,7 +259,7 @@ public class productServlet extends HttpServlet {
 						in2.read(picture2);
 						in2.close();
 					} else {
-						errorMsgs.add("圖片2: 請勿空白");
+						errorMsgs.add("圖片2:不能空");
 					}
 
 					Part part3 = req.getPart("img3");
@@ -270,7 +270,9 @@ public class productServlet extends HttpServlet {
 						in3.read(picture3);
 						in3.close();
 					} else {
-						errorMsgs.add("圖片3: 請勿空白");
+						errorMsgs.add("圖片3:不能空");
+//						ProductService proSvc = new ProductService();
+//						picture3 = proSvc.getOneproduct(productno).getPicture3();
 					}
 
 				} catch (Exception e) {
@@ -354,7 +356,7 @@ public class productServlet extends HttpServlet {
 				try {
 					admin_id = new Integer(req.getParameter("admin_id").trim());
 				} catch (NumberFormatException e) {
-					errorMsgs.add("上架人員不能為空");
+					errorMsgs.add("不能為空");
 				}
 
 				Integer situation = null;

@@ -12,7 +12,7 @@
 <html>
 <head>
 <meta>
-<title>Insert title here</title>
+<title>營地檢舉修改</title>
 </head>
 <body>
 	<div class="logo">

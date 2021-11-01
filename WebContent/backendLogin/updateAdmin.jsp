@@ -12,7 +12,7 @@
 <html>
 <head>
 <meta>
-<title>Insert title here</title>
+<title>管理員資料修改</title>
 </head>
 <body>
 	<div class="logo">

@@ -93,7 +93,7 @@ div#alldata{
 					<ul class="serv-show">
 						<li><a href="<%=request.getContextPath()%>/product/selectAll.jsp" class="product_list">商品資料表</a></li>
 					</ul></li>
-				<li><a href="#1" class="bom-btn">營地管理 <span
+				<li><a href="#" class="bom-btn">營地管理 <span
 						class="fas fa-caret-down second_1"></span>
 				</a>
 
@@ -101,7 +101,7 @@ div#alldata{
 						<li><a href="<%=request.getContextPath()%>/backendLogin/camp.jsp" class="camp_list">營地列表</a></li>
 						<li><a href="<%=request.getContextPath()%>/backendLogin/campOrder.jsp"
 							class="camp_order">營地訂單</a></li>
-						<li><a href="<%=request.getContextPath()%>/backendLogin/XXXXXXXXXXXXX.jsp" class="alert_managament">檢舉管理</a></li>
+						<li><a href="<%=request.getContextPath()%>/backendLogin/alert.jsp" class="alert_managament">檢舉管理</a></li>
 					</ul></li>
 				<li><a href="#" class="mky-btn">商城管理 <span
 						class="fas fa-caret-down second_2"></span>

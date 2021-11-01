@@ -2,19 +2,17 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="java.util.*"%>
 <%@ page import="com.emodr.model.*"%>
-<%-- 此頁練習採用 EL 的寫法取值 --%>
+<%@ page import="com.members.model.*"%>
 
 <%
 	EmodrService emodrSvc = new EmodrService();
 	List<EmodrVO> list = emodrSvc.getAll();
 	pageContext.setAttribute("list", list);
 %>
-<jsp:useBean id="membersSvc" scope="page"
-	class="com.members.model.MemberService" />
+<jsp:useBean id="membersSvc" scope="page" class="com.members.model.MemberService" />
 
 <html>
 <head>
-
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>商城訂單</title>
 
@@ -33,6 +31,7 @@ h4 {
 	color: blue;
 	display: inline-block;
 }
+
 a:hover{
 	color:red;
 	font-size: 25px;
@@ -53,6 +52,7 @@ th, td {
 	padding: 5px;
 	text-align: center;
 }
+
 ul#ul_1{
 	list-style: none;
 	margin-left: 0px;
@@ -93,7 +93,7 @@ div#alldata{
 					<ul class="serv-show">
 						<li><a href="<%=request.getContextPath()%>/product/selectAll.jsp" class="product_list">商品資料表</a></li>
 					</ul></li>
-				<li><a href="#1" class="bom-btn">營地管理 <span
+				<li><a href="#" class="bom-btn">營地管理 <span
 						class="fas fa-caret-down second_1"></span>
 				</a>
 
@@ -101,7 +101,7 @@ div#alldata{
 						<li><a href="<%=request.getContextPath()%>/backendLogin/camp.jsp" class="camp_list">營地列表</a></li>
 						<li><a href="<%=request.getContextPath()%>/backendLogin/campOrder.jsp"
 							class="camp_order">營地訂單</a></li>
-						<li><a href="<%=request.getContextPath()%>/backendLogin/XXXXXXXXXXXXX.jsp" class="alert_managament">檢舉管理</a></li>
+						<li><a href="<%=request.getContextPath()%>/backendLogin/alert.jsp" class="alert_managament">檢舉管理</a></li>
 					</ul></li>
 				<li><a href="#" class="mky-btn">商城管理 <span
 						class="fas fa-caret-down second_2"></span>
@@ -161,6 +161,7 @@ div#alldata{
 		</li>
 	</ul>
 <%-- ================================================================== --%>
+	
 	<%-- 錯誤表列 --%>
 	<c:if test="${not empty errorMsgs}">
 		<font style="color: red">請修正以下錯誤:</font>
@@ -173,8 +174,8 @@ div#alldata{
 
 	<table>
 		<tr>
-			<th>商城訂單編號</th>
-			<th>買方會員編號</th>
+			<th>訂單編號</th>
+			<th>買方編號與名字</th>
 			<th>訂單日期</th>
 			<th>收貨人</th>
 			<th>收貨地址</th>

@@ -24,7 +24,7 @@ img {
 </style>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>查詢單筆營地訂單</title>
 <script src="../js/jquery.js"></script>
 <script src="https://kit.fontawesome.com/a076d05399.js"></script>
 <link

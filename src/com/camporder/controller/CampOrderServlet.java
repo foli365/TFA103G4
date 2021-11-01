@@ -194,8 +194,10 @@ public class CampOrderServlet extends HttpServlet {
 				missing.forward(req, res);
 			}
 			CampOrderService COSvc = new CampOrderService();
-			System.out.println(COSvc.addComment(comment, orderId));
-			System.out.println("success");
+			COSvc.addComment(comment, orderId);
+			RequestDispatcher success = req.getRequestDispatcher("/homepage/campsite.do?action=getReserveCampsite&campId=5001");
+			success.forward(req, res);
+			
 		}
 
 	}

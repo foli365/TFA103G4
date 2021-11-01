@@ -25,8 +25,8 @@ public static void main(String[] args) throws IOException {
 	vo.setReportStatus(0);
 	vo.setHandeler(1002);
 for (int i = 0; i < s.length; i++) {
-	vo.setPicture1(getPictureByteArray(path + "\\" + s[3]));
-	vo.setPicture2(getPictureByteArray(path + "\\" + s[1]));
+	vo.setPicture1(getPictureByteArray(path + "\\" + s[7]));
+	vo.setPicture2(getPictureByteArray(path + "\\" + s[4]));
 	vo.setPicture3(getPictureByteArray(path + "\\" + s[6]));
 		}
 	dao.insert(vo);

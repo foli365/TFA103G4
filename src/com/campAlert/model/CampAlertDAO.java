@@ -52,6 +52,8 @@ public class CampAlertDAO implements CampAlertDao_interface {
 			pstmt.setInt(9, DAO.getHandeler());
 			pstmt.executeUpdate();
 						
+			
+			
 		} catch(SQLException se) {
 			se.printStackTrace();
 		} finally {
@@ -231,7 +233,7 @@ public class CampAlertDAO implements CampAlertDao_interface {
 			rs = pstmt.executeQuery();
 
 			while (rs.next()) {
-				// empVO 銋迂� Domain objects
+				// empVO 也稱為 Domain objects
 				vo = new CampAlertVO();
 				vo.setAlertId(rs.getInt("alert_Id"));
 				vo.setMemberId(rs.getInt("member_Id"));

@@ -2,6 +2,16 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="java.util.* , com.eshop.model.*, com.emodr.model.*,com.members.model.*"%>
 
+<!-- 登入的鎖頭===================================================================================================================== -->
+<%	Object account = session.getAttribute("account");										// 從 session內取出 (key) account的值
+	if (account == null) {																	// 如為 null, 代表此user未登入過 , 才做以下工作
+		session.setAttribute("location", request.getRequestURI());							//*工作1 : 同時記下目前位置 , 以便於login.jsp登入成功後 , 能夠直接導至此網頁(須配合LoginHandler.java)
+		response.sendRedirect(request.getContextPath() + "/register_and_login/login.jsp");	//*工作2 : 請該user去登入網頁(login.html) , 進行登入
+		return;
+	}
+%>
+<!-- =============================================================================================================================  -->
+
 <%
 // 	Integer memberId = new Integer(1); //此行new程式為測試用，正式上線時請註解這行!!!!
 	Integer memberId = (Integer) session.getAttribute("id"); // 正式上線時請打開!!! 接來自loginhandler.java的session.setAttribute("id",)
@@ -10,8 +20,7 @@
 	pageContext.setAttribute("memberVO", memberVO);
 %>
 <%
-	EmodrVO emodrVO = (EmodrVO) request.getAttribute("emodrVO");
-    
+	EmodrVO emodrVO = (EmodrVO) request.getAttribute("emodrVO");    
 %>
 
 <html>
@@ -34,11 +43,13 @@
 		<%
 			@SuppressWarnings("unchecked")
 			Vector<Merchandise> buylist = (Vector<Merchandise>) session.getAttribute("shoppingcart");
-			String amount = (String) request.getAttribute("amount");
-			if (amount==null){
-				Double emodrVOPrice = emodrVO.getTotalprice();
-				amount= String.valueOf(emodrVOPrice);
-			}
+			String amount = (String) session.getAttribute("amount");
+//保留================================================================================			
+//保留		String amount = (String) request.getAttribute("amount"); //保留
+//保留 		if (amount==null){
+//保留 			Double emodrVOPrice = emodrVO.getTotalprice();
+//保留 			amount= String.valueOf(emodrVOPrice);
+//保留 		}
 		%>
 		<%
 			for (int i = 0; i < buylist.size(); i++) {
