@@ -90,24 +90,10 @@ public class CampsiteService {
 		return dao.getAll();
 	}
 
-	public List<CampsiteVO> getMultiSearchCampsite(String campName, Date strDate, Date endDate, Integer customerNum,
-			Integer campPriceL, Integer campPriceH) {
-		return dao.getMultiSearchCampsite(campName, strDate, endDate, customerNum, campPriceL, campPriceH);
-	}
-
 	public List<CampsiteVO> getAll(Map<String, String[]> map) {
 		return dao.getAll(map);
 	}
 	
-//	public List<CampsiteVO> sortCampsiteVO(List<CampsiteVO> list) {
-//		System.out.println("123");
-//		List<CampsiteVO> sortedList = list.stream()
-//						.sorted((o1, o2)->o2.getCampPrice().compareTo(o1.getCampPrice()))
-//						.collect(Collectors.toList());
-//		System.out.println("sortedList= " + sortedList);
-//		return sortedList;
-//	}
-
 	public void updateForOne(CampsiteVO campsiteVO){
 		 dao.updateForOne(campsiteVO);
 	}

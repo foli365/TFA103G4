@@ -115,17 +115,14 @@
 				  <c:set var="i" value="0" scope="page" />
 				  <c:forEach var="campsiteVO" items="${campsiteList}">
 					 addressArray[${i}]='${campsiteVO.location}';
-// 					 console.log(${i}+addressArray[${i}]);
 					<c:set var="i" value="${i + 1}" scope="page"/>
 				  </c:forEach>
 				  <c:set var="i" value="0" scope="page" />
 				  <c:forEach var="campsiteVO" items="${campsiteList}">
 					 campNameArray[${i}]='${campsiteVO.campName}';
-// 					 console.log(${i}+campNameArray[${i}]);
 					<c:set var="i" value="${i + 1}" scope="page"/>
 				  </c:forEach>
 				  
-// 				  console.log(addressArray);
 				  function initialize() {
 				    geocoder = new google.maps.Geocoder();
 				    var latlng = new google.maps.LatLng(23.612794670237307, 120.88138952653813);
@@ -143,10 +140,8 @@
 				    for (i = 0; i < addressArray.length; i++) {
 				   	let address = addressArray[i];
 				   	let campName = campNameArray[i];
-// 				   	console.log(address);
 				    if (geocoder) {
 				      geocoder.geocode( {'address': address}, function(results, status) {
-// 				   		console.log(address);
 				        if (status == google.maps.GeocoderStatus.OK) {
 				          if (status != google.maps.GeocoderStatus.ZERO_RESULTS) {
 				          map.setCenter(results[0].geometry.location);
@@ -184,35 +179,6 @@
 			</div>
 			<div class="col-md-7 camp-list">
 				<div class="list-group">
-					<div class="default-list">
-						<%-- 						<c:forEach var="campsiteVO" items="${list}"> --%>
-						<!-- 							<a  -->
-						<%-- 								href="<%=request.getContextPath()%>/campsite/reserve_campsite.jsp?campId=${campsiteVO.campId}" --%>
-						<!-- 								class="list-group-item list-group-item-action flex-column align-items-start"> -->
-						<!-- 								<div class="row"> -->
-						<!-- 									<div class="col-6 camp-content-div"> -->
-						<!-- 										<div class="d-flex w-100 justify-content-between camp-name"> -->
-						<%-- 											<h5>${campsiteVO.campName}</h5> --%>
-						<!-- 										</div> -->
-						<!-- 										<div class="camp-addr"> -->
-						<%-- 											<p>地址: ${campsiteVO.location}</p> --%>
-						<!-- 										</div> -->
-						<!-- 										<div class="camp-content"> -->
-						<%-- 											<p>${campsiteVO.campDescription}</p> --%>
-						<!-- 										</div> -->
-						<!-- 										<div class="camp-price"> -->
-						<!-- 											<p>$${campsiteVO.campPrice} (平均每人一晚)</p> -->
-						<!-- 										</div> -->
-						<!-- 									</div> -->
-						<!-- 									<div class="col-6 camp-pic-div"> -->
-						<!-- 										<img -->
-						<%-- 											src="<%=request.getContextPath()%>/CampsiteGifReader?column=picture1&camp_id=${campsiteVO.campId}" --%>
-						<!-- 											class="rounded float-right camp-picture" alt="..."> -->
-						<!-- 									</div> -->
-						<!-- 								</div> -->
-						<!-- 							</a> -->
-						<%-- 						</c:forEach> --%>
-					</div>
 					<c:forEach var="campsiteVO" items="${campsiteList}">
 						<a
 							href="campsite.do?action=getReserveCampsite&campId=${campsiteVO.campId}"
