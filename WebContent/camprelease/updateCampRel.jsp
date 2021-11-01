@@ -63,7 +63,7 @@ h4 {
 <header class="header" id="gocamping">
   <h1 class="header__title">Go camping營地更新</h1><br>
   <table id="table-1">
-		 <h4><a href="<%=request.getContextPath()%>/camprelease/Select_Page.jsp"><img src="images/gocamping.jpg" width="500" height="125" border="0"></a><br>Home</h4>
+		 <h4><a href="<%=request.getContextPath()%>/camprelease/Select_Page.jsp"><img src="images/gocamping.jpg" width="500" height="125" border="0"><br>back Home</a></h4>
 </table>
 </header>
 <%-- 錯誤表列 --%>
