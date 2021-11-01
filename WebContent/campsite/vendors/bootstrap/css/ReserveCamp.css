@@ -45,6 +45,12 @@ body {
 	width: 33%;
 }
 
+@media ( max-width : 768px) {
+	.col-md-3 {
+		width: 100%;
+	}
+}
+
 input:focus {
 	border-color: #66afe9;
 	outline: 0;
@@ -62,7 +68,7 @@ input:focus {
 	margin-bottom: 10px;
 	padding-bottom: 20px;
 	position: relative;
-/* 		height: 1500px; */
+	/* 		height: 1500px; */
 }
 
 .camp-title {
@@ -89,6 +95,7 @@ input:focus {
 .camp-comment {
 	/* 	border: 3px yellow solid; */
 	/* 	height: 350px; */
+	
 }
 
 .comment {
