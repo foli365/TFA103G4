@@ -8,10 +8,13 @@
     <script src="https://kit.fontawesome.com/a076d05399.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
     <link rel="stylesheet" href="../css/home.css">
+    <style type="text/css">
+    
+    </style>
 </head>
 <body>
- <div class="container">
-        <nav class="sidebar">
+ <div class="container" id="wrapper">
+        <nav class="sidebar" id="sidebar-wrapper">
             <div class="min_picture">
                 <h1>後臺管理</h1>
             </div>
@@ -88,6 +91,6 @@
     	setTimeout("fn_forward()",1)
     	}
     </script>
-    <script type="text/javascript">prohibitpreviouspage();</script>
+<script type="text/javascript">prohibitpreviouspage();</script>
 </body>
 </html>

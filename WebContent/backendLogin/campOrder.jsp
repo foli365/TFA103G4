@@ -95,7 +95,7 @@
 			<FORM METHOD="post"
 				ACTION="<%=request.getContextPath()%>/backendLogin/CampOrderBackendServlet.do">
 				<input type="text" class="search" name="campOrderId"
-					placeholder="管理員編號查詢"> <input type="hidden" name="action"
+					placeholder="營地訂單編號查詢"> <input type="hidden" name="action"
 					id="" class="btn_search" value="getOne_For_Display">
 				<button type="submit" class="btn btn-outline-success">查詢</button>
 				<button type="button" class="btn btn-outline-success" id="export2">匯出</button>
@@ -205,23 +205,6 @@
 			});
 		});
 	</script>
-	<script>
-    function prohibitpreviouspage(){
-
-    	if(navigator.userAgent.indexOf('Firefox') != -1 && parseFloat(navigator.userAgent.substring(navigator.userAgent.indexOf('Firefox') + 8)) >= 3.6 ){
-
-    	//Firefox
-    	setTimeout("fn_forward()",1);
-    	window.history.go(1);
-    	}else{ //IE.Chrome.Edge
-    	window.history.forward();
-    	}
-    	}
-    	function fn_forward() {
-    	history.forward();
-    	setTimeout("fn_forward()",1)
-    	}
-    </script>
-        <script type="text/javascript">prohibitpreviouspage();</script>
+	
 </body>
 </html>

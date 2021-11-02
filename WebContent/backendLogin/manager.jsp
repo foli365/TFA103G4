@@ -188,6 +188,6 @@
     	setTimeout("fn_forward()",1)
     	}
     </script>
-        <script type="text/javascript">prohibitpreviouspage();</script>
+     
 </body>
 </html>

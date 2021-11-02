@@ -8,7 +8,10 @@
 <%
 	CampsiteVO campsiteVO = (CampsiteVO) request.getAttribute("campsiteVO");
 %>
-
+<%
+	MemberService memSvc = new MemberService();
+	pageContext.setAttribute("memSvc", memSvc);
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -50,9 +53,9 @@
 				<td><%=campsiteVO.getCampId()%></td>
 			</tr>
 			<tr>
-				<td>會員編號:</td>
-				<td><input type="TEXT" name="memberId" size="45"
-					value="<%=campsiteVO.getMemberId()%>" /></td>
+				<td>營地業主:<font color=red><b>*</b></font></td>
+				<td><%=memSvc.findByPrimaryKey(campsiteVO.getMemberId()).getName()%></td>
+				<input type="hidden" name="memberId" value="<%=campsiteVO.getMemberId()%>">
 			</tr>
 			<tr>
 				<td>營地名稱:</td>
