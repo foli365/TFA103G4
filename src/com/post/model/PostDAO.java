@@ -15,8 +15,6 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
-import oracle.sql.DATE;
-
 public class PostDAO implements PostDAO_Interface {
 
 	private static DataSource ds = null;
