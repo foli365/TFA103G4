@@ -4,17 +4,22 @@
 <%@ page import="com.plan.model.*"%>
 
 <%
-	// PlanVO planVO = (PlanVO) request.getAttribute("planVO");
+	PlanVO planVO = (PlanVO) request.getAttribute("planVO");
 
 	// PlanService planSvc = new PlanService();
 	// List<PlanVO> list = planSvc.getAll();
 	// pageContext.setAttribute("planVOList", list);
+	pageContext.setAttribute("campId", request.getAttribute("campId"));
+// 	pageContext.setAttribute("planId", request.getAttribute("planId"));
 %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>新增配套</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css"
+	rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+</head>
 <style>
 body {
 	background-color: #FFEEE1;
@@ -53,13 +58,20 @@ h4 {
 	margin-bottom: 20px;
 	text-align: center;
 }
+a{
+font-size:5px;
+}
 </style>
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css"
-	rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
-</head>
 <body>
 
-	<%-- 錯誤表列 --%>
+	<div id="main" class="container">
+		<h3>配套資料新增</h3>
+		<h4>
+			<a href="<%=request.getContextPath()%>/camprelease/Select_Page.jsp">
+			<img src="<%=request.getContextPath()%>/camprelease/images/title_camp.png" width="100" height="32" border="0"><br>Home</a>
+		</h4>
+		
+		<%-- 錯誤表列 --%>
 	<c:if test="${not empty errorMsgs}">
 		<font style="color: red">請修正以下錯誤:</font>
 		<ul>
@@ -68,13 +80,7 @@ h4 {
 			</c:forEach>
 		</ul>
 	</c:if>
-	<div id="main" class="container">
-		<h3>配套資料新增</h3>
-		<h4>
-			<a href="<%=request.getContextPath()%>/camprelease/Select_Page.jsp">
-			<img src="<%=request.getContextPath()%>/camprelease/images/title_camp.png" width="100" height="32" border="0"></a>
-		</h4>
-		<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/plan/plan.do" name="form1" enctype="multipart/form-data">
+		<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/plan/plan.do" name="form1">
 			<!-- 		<div class="col-md-6"> -->
 			<%-- 			<label for="inputcampId" class="form-label">營地編號<font color=red><b>*</b></font>${planVO.CampId}</label> --%>
 			<!-- 		</div> -->
@@ -86,15 +92,15 @@ h4 {
 				<input type="text" class="form-control" name="planName" id="planName" placeholder="請輸入名稱" value="" />
 			</div>
 			<div class="col-md-6">
-				<label class="form-label">配套人數限制</label> 
+				<label class="form-label">配套人數上限</label> 
 				<input type="text" class="form-control" name="planGuestLimit" id="planGuestLimit" placeholder="請輸入人數限制" value="" />
 			</div>
 			<div class="col-md-6">
-				<label class="form-label">配套年齡限制</label> 
+				<label class="form-label">配套年齡上限</label> 
 				<input type="text" class="form-control" name="planAgeLimit" id="planAgeLimit" placeholder="請輸入年齡限制" value="" />
 			</div>
 			<div class="col-md-4">
-				<label class="form-label">配套價錢</label> 
+				<label class="form-label">配套價格</label> 
 				<input type="text" class="form-control" name="planPrice" id="planPrice" placeholder="請輸入價格" value="" />
 			</div>
 			<div class="col-md-12">
@@ -106,6 +112,7 @@ h4 {
 					<input type="hidden" name="action" value="insert_plan">
 					<button class="btn btn-success ml-auto" type="submit" id="submit">Send</button>
 					<input type="hidden" name="campId" value="${campId}">
+<%-- 					<input type="hidden" name="planId" value="${planId}"> --%>
 				</div>
 			</div>
 		</FORM>

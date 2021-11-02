@@ -33,6 +33,9 @@ public class CampReleaseService {
 		campreleaseVO.setPicture4(picture4);
 		campreleaseVO.setPicture5(picture5);
 		campreleaseVO.setMemberId(memberId);
+//		campreleaseVO.setOpenTime(openTime);
+//		campreleaseVO.setCloseTime(closeTime);
+		
 
 		dao.insert(campreleaseVO);
 		
@@ -58,6 +61,8 @@ public class CampReleaseService {
 		campreleaseVO.setPicture3(picture3);
 		campreleaseVO.setPicture4(picture4);
 		campreleaseVO.setPicture5(picture5);
+//		campreleaseVO.setOpenTime(openTime);
+//		campreleaseVO.setCloseTime(closeTime);
 		campreleaseVO.setCampId(campId);
 		
 		dao.update(campreleaseVO);

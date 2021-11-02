@@ -11,6 +11,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.camprelease.model.CampReleaseService;
+import com.camprelease.model.CampReleaseVO;
 import com.campsite.model.CampsiteService;
 import com.campsite.model.CampsiteVO;
 import com.campsitetentstatus.model.CampsiteTentStatusService;
@@ -38,13 +40,14 @@ public class CampsiteTentStatusServlet extends HttpServlet {
 				if (str == null || (str.trim()).length() == 0) {
 					errorMsgs.add("請輸入營地編號");
 				}
-
-				// Send the use back to the form, if there were errors
-				if (!errorMsgs.isEmpty()) {
-					RequestDispatcher failureView = req.getRequestDispatcher("/campsitetentstatus/select_page.jsp");
-					failureView.forward(req, res);
-					return;// 程式中斷
-				}
+				
+//				java.sql.Date campOpeningTime = null;
+//				try {
+//					campOpeningTime = java.sql.Date.valueOf(req.getParameter("campOpeningTime").trim());
+//				} catch (IllegalArgumentException e) {
+//					campOpeningTime = new java.sql.Date(System.currentTimeMillis());
+//					errorMsgs.add("請輸入日期!");
+//				}
 
 				Integer campId = null;
 				try {
@@ -52,31 +55,38 @@ public class CampsiteTentStatusServlet extends HttpServlet {
 				} catch (Exception e) {
 					errorMsgs.add("營地編號格式不正確");
 				}
+				// Send the use back to the form, if there were errors
+				if (!errorMsgs.isEmpty()) {
+					RequestDispatcher failureView = req.getRequestDispatcher("/camprelease/Select_Page.jsp");
+					failureView.forward(req, res);
+					return;// 程式中斷
+				}
 
-				/*************************** 2.開始查詢資料 *****************************************/
+
+				/*************************** 2.開始查詢資料 *****************************************/				
 				CampsiteTentStatusService campsiteTentStatusSvc = new CampsiteTentStatusService();
-				List<CampsiteTentStatusVO> campsiteTentStatusList = campsiteTentStatusSvc.getAllCampStatusofOneCamp(campId);
+				List<CampsiteTentStatusVO> list = campsiteTentStatusSvc.getAllCampStatusofOneCamp(campId);
 //				System.out.println(campsiteTentStatusList);
-				if (campsiteTentStatusList.isEmpty()) {
+				if (list == null) {
 					errorMsgs.add("查無資料");
 				}
 				// Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
-					RequestDispatcher failureView = req.getRequestDispatcher("/campsitetentstatus/select_page.jsp");
+					RequestDispatcher failureView = req.getRequestDispatcher("/camprelease/Select_Page.jsp");
 					failureView.forward(req, res);
 					return;// 程式中斷
 				}
 
 				/*************************** 3.查詢完成,準備轉交(Send the Success view) *************/
-				req.setAttribute("campsiteTentStatusList", campsiteTentStatusList);
-				String url = "/campsitetentstatus/listOneCampsiteTentStatus.jsp";
+				req.setAttribute("campsiteTentStatusList", list);
+				String url = "/campsitetentstatus/listaddCampTent.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url);
 				successView.forward(req, res);
 
 				/*************************** 其他可能的錯誤處理 *************************************/
 			} catch (Exception e) {
 				errorMsgs.add("無法取得資料:" + e.getMessage());
-				RequestDispatcher failureView = req.getRequestDispatcher("/campsitetentstatus/select_page.jsp");
+				RequestDispatcher failureView = req.getRequestDispatcher("/camprelease/Select_Page.jsp");
 				failureView.forward(req, res);
 			}
 		}
@@ -90,13 +100,13 @@ public class CampsiteTentStatusServlet extends HttpServlet {
 
 			try {
 				/*********************** 1.接收請求參數 - 輸入格式的錯誤處理 *************************/
+				
 				Integer campId = new Integer(req.getParameter("campId").trim()); // 要綁定只能新增自己的
 
 				java.sql.Date campOpeningTime = null;
 				try {
 					campOpeningTime = java.sql.Date.valueOf(req.getParameter("campOpeningTime").trim());
 				} catch (IllegalArgumentException e) {
-					campOpeningTime = new java.sql.Date(System.currentTimeMillis());
 					errorMsgs.add("請輸入日期!");
 				}
 
@@ -104,10 +114,8 @@ public class CampsiteTentStatusServlet extends HttpServlet {
 				try {
 					emptyCampLeft = new Integer(req.getParameter("emptyCampLeft").trim());
 				} catch (NumberFormatException e) {
-					emptyCampLeft = 0;
 					errorMsgs.add("尚餘人數上限請填正整數.");
 				}
-
 				CampsiteTentStatusVO campsiteTentStatusVO = new CampsiteTentStatusVO();
 				campsiteTentStatusVO.setCampId(campId);
 				campsiteTentStatusVO.setCampOpeningTime(campOpeningTime);
@@ -117,18 +125,20 @@ public class CampsiteTentStatusServlet extends HttpServlet {
 				if (!errorMsgs.isEmpty()) {
 					req.setAttribute("CampsiteTentStatusVO", campsiteTentStatusVO);
 					RequestDispatcher failureView = req
-							.getRequestDispatcher("/campsitetentstatus/addCampsiteTentStatus.jsp");
+							.getRequestDispatcher("/campsitetentstatus/addCampTent.jsp");
 					failureView.forward(req, res);
 					return;
 				}
 
 				/*************************** 2.開始新增資料 ***************************************/
 				CampsiteTentStatusService campsiteTentStatusSvc = new CampsiteTentStatusService();
-				campsiteTentStatusVO = campsiteTentStatusSvc.addCampsiteTentStatus(campId, campOpeningTime,
-						emptyCampLeft);
-
+				campsiteTentStatusVO = campsiteTentStatusSvc.addCampsiteTentStatus(campId, campOpeningTime, emptyCampLeft);
+				
+				req.setAttribute("campsiteTentStatusVO", campsiteTentStatusVO);
+//				List<CampsiteTentStatusVO> list = campsiteTentStatusSvc.getByCampId(campId);
+//				req.setAttribute("camptentList" ,list);
 				/*************************** 3.新增完成,準備轉交(Send the Success view) ***********/
-				String url = "/campsitetentstatus/listAllCampsiteTentStatus.jsp";
+				String url = "/campsitetentstatus/listaddCampTent.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url);
 				successView.forward(req, res);
 
@@ -136,7 +146,7 @@ public class CampsiteTentStatusServlet extends HttpServlet {
 			} catch (Exception e) {
 				errorMsgs.add(e.getMessage());
 				RequestDispatcher failureView = req
-						.getRequestDispatcher("/campsitetentstatus/addCampsiteTentStatus.jsp");
+						.getRequestDispatcher("/campsitetentstatus/addCampTent.jsp");
 				failureView.forward(req, res);
 			}
 		}
@@ -152,21 +162,19 @@ public class CampsiteTentStatusServlet extends HttpServlet {
 				/*************************** 1.接收請求參數 ****************************************/
 				Integer campId = new Integer(req.getParameter("campId"));
 
-				java.sql.Date campOpeningTime = null;
-				try {
-					campOpeningTime = java.sql.Date.valueOf(req.getParameter("campOpeningTime").trim());
-				} catch (IllegalArgumentException e) {
-					campOpeningTime = new java.sql.Date(System.currentTimeMillis());
-					errorMsgs.add("請輸入日期!");
-				}
-
+//				java.sql.Date campOpeningTime = null;
+//				try {
+//					campOpeningTime = java.sql.Date.valueOf(req.getParameter("campOpeningTime").trim());
+//				} catch (IllegalArgumentException e) {
+//					campOpeningTime = new java.sql.Date(System.currentTimeMillis());
+//					errorMsgs.add("請輸入日期!");
+//				}
 				/*************************** 2.開始查詢資料 ****************************************/
 				CampsiteTentStatusService campsiteTentStatusSvc = new CampsiteTentStatusService();
-				CampsiteTentStatusVO campsiteTentStatusVO = campsiteTentStatusSvc.getOneCampsiteTentStatus(campId,
-						campOpeningTime);
+				CampsiteTentStatusVO campsiteTentStatusVO = campsiteTentStatusSvc.getOneCampsiteTentByCampId(campId);
 				/*************************** 3.查詢完成,準備轉交(Send the Success view) ************/
 				req.setAttribute("campsiteTentStatusVO", campsiteTentStatusVO);
-				String url = "/campsitetentstatus/updateCampsiteTentStatus.jsp";
+				String url = "/campsitetentstatus/updateCampTent.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url);
 				successView.forward(req, res);
 
@@ -174,7 +182,7 @@ public class CampsiteTentStatusServlet extends HttpServlet {
 			} catch (Exception e) {
 				errorMsgs.add("無法取得要修改的資料:" + e.getMessage());
 				RequestDispatcher failureView = req
-						.getRequestDispatcher("/campsitetentstatus/listAllCampsiteTentStatus.jsp");
+						.getRequestDispatcher("/campsitetentstatus/listaddCampTent.jsp");
 				failureView.forward(req, res);
 			}
 		}
@@ -185,27 +193,28 @@ public class CampsiteTentStatusServlet extends HttpServlet {
 			// Store this set in the request scope, in case we need to
 			// send the ErrorPage view.
 			req.setAttribute("errorMsgs", errorMsgs);
-
 			try {
 				/*********************** 1.接收請求參數 - 輸入格式的錯誤處理 *************************/
 				Integer campId = new Integer(req.getParameter("campId").trim()); // 要綁定只能新增自己的
+				System.out.println("更新");
+				System.out.println("campId: " + campId);
 
 				java.sql.Date campOpeningTime = null;
 				try {
 					campOpeningTime = java.sql.Date.valueOf(req.getParameter("campOpeningTime").trim());
 				} catch (IllegalArgumentException e) {
-					campOpeningTime = new java.sql.Date(System.currentTimeMillis());
 					errorMsgs.add("請輸入日期!");
 				}
+				System.out.println("time: " + campOpeningTime);
 
 				Integer emptyCampLeft = null;
 				try {
 					emptyCampLeft = new Integer(req.getParameter("emptyCampLeft").trim());
 				} catch (NumberFormatException e) {
-					emptyCampLeft = 0;
 					errorMsgs.add("尚餘人數上限請填正整數.");
 				}
-
+				System.out.println("空位: " + emptyCampLeft);
+				
 				CampsiteTentStatusVO campsiteTentStatusVO = new CampsiteTentStatusVO();
 				campsiteTentStatusVO.setCampId(campId);
 				campsiteTentStatusVO.setCampOpeningTime(campOpeningTime);
@@ -213,9 +222,9 @@ public class CampsiteTentStatusServlet extends HttpServlet {
 
 				// Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
-					req.setAttribute("CampsiteTentStatusVO", campsiteTentStatusVO);
+					req.setAttribute("campsiteTentStatusVO", campsiteTentStatusVO);
 					RequestDispatcher failureView = req
-							.getRequestDispatcher("/campsitetentstatus/updateCampsiteTentStatus.jsp");
+							.getRequestDispatcher("/campsitetentstatus/updateCampTent.jsp");
 					failureView.forward(req, res);
 					return;
 				}
@@ -223,18 +232,22 @@ public class CampsiteTentStatusServlet extends HttpServlet {
 				CampsiteTentStatusService campsiteTentStatusSvc = new CampsiteTentStatusService();
 				campsiteTentStatusVO = campsiteTentStatusSvc.updateCampsiteTentStatus(emptyCampLeft, campId,
 						campOpeningTime);
+//				CampsiteTentStatusService csSvc = new CampsiteTentStatusService();
+//				List<CampsiteTentStatusVO> csList =  csSvc.getByCampId(campId);
+				
 
 				/*************************** 3.修改完成,準備轉交(Send the Success view) *************/
-				req.setAttribute("campsiteTentStatusVO", campsiteTentStatusVO);
-				String url = "/campsitetentstatus/listAllCampsiteTentStatus.jsp"; // 沒有回到listOneCampsiteTentStatus是因為那邊是要取得List才能用
+//				req.setAttribute("csList", csList);
+				req.setAttribute("campsiteTentStatusVO", campsiteTentStatusVO); 
+				String url = "/campsitetentstatus/listupdateCampsTent.jsp"; // 沒有回到listOneCampsiteTentStatus是因為那邊是要取得List才能用
 				RequestDispatcher successView = req.getRequestDispatcher(url);
 				successView.forward(req, res);
-
+System.out.println("123");
 				/*************************** 其他可能的錯誤處理 *************************************/
 			} catch (Exception e) {
 				errorMsgs.add("修改資料失敗:" + e.getMessage());
 				RequestDispatcher failureView = req
-						.getRequestDispatcher("/campsitetentstatus/updateCampsiteTentStatus.jsp");
+						.getRequestDispatcher("/campsitetentstatus/updateCampTent.jsp");
 				failureView.forward(req, res);
 			}
 		}
@@ -274,5 +287,27 @@ public class CampsiteTentStatusServlet extends HttpServlet {
 				failureView.forward(req, res);
 			}
 		}
+		
+		if ("go_to_addCampTent".equals(action)) {
+
+//			try {
+				Integer campId = new Integer(req.getParameter("campId"));
+//				java.sql.Date campOpeningTime = null;
+//				campOpeningTime = java.sql.Date.valueOf(req.getParameter("campOpeningTime").trim());
+				System.out.println("轉交: " + campId);
+				req.setAttribute("campId", campId);
+//				req.setAttribute("campOpeningTime", campOpeningTime);
+				String url = "/campsitetentstatus/addCampTent.jsp";
+				RequestDispatcher successView = req.getRequestDispatcher(url);
+				successView.forward(req, res);
+
+//			} catch (Exception e) {
+//				errorMsgs.add("刪除資料失敗:" + e.getMessage());
+//				System.out.println("失敗");
+//				RequestDispatcher failureView = req.getRequestDispatcher("/camprelease/Select_Page.jsp");
+//				failureView.forward(req, res);
+			}
+
+//		}
 	}
 }

@@ -303,4 +303,56 @@ public class CampsiteTentStatusDAO implements CampsiteTentStatusDAO_interface{
 		return campsiteTentStatusList;
 	}
 
+	@Override
+	public CampsiteTentStatusVO getByCampId(Integer campId) {
+		// TODO Auto-generated method stub
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		CampsiteTentStatusVO campsiteTentStatusVO = null;
+
+
+		try {
+			con = DriverManager.getConnection(URL, USER, PASSWORD);
+			pstmt = con.prepareStatement(GET_ALL_OF_ONE);
+
+			pstmt.setInt(1, campId);
+			
+			rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				campsiteTentStatusVO = new CampsiteTentStatusVO();
+				campsiteTentStatusVO.setCampId(campId);
+				campsiteTentStatusVO.setCampOpeningTime(rs.getDate("CAMP_OPENING_TIME"));
+				campsiteTentStatusVO.setEmptyCampLeft(rs.getInt("EMPTY_CAMP_LEFT"));
+			}
+		} catch (SQLException se) {
+			se.printStackTrace();
+		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException se) {
+					se.printStackTrace();
+				}
+			}
+
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace();
+				}
+			}
+
+			if (con != null) {
+				try {
+					con.close();
+				} catch (SQLException se) {
+					se.printStackTrace();
+				}
+			}
+		}
+		return campsiteTentStatusVO;
+	}
 }

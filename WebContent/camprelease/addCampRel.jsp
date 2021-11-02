@@ -94,15 +94,6 @@ imput{
 </head>
 
 <body>
-<%-- 錯誤表列 --%>
-<c:if test="${not empty errorMsgs}">
-	<font style="color:red">請修正以下錯誤:</font>
-	<ul>
-		<c:forEach var="message" items="${errorMsgs}">
-			<li style="color:red">${message}</li>
-		</c:forEach>
-	</ul>
-</c:if>
 
 
 <header class="header" >
@@ -113,7 +104,7 @@ imput{
 </header>
 <!-- 過程按鈕 -->
     <div class="container overflow-hidden">
-      <div name="action" action="#"  method="#" class="multisteps-form" id="the_form">
+      <div class="multisteps-form" id="the_form">
         <div class="row">
           <div class="col-12 col-lg-8 ml-auto mr-auto mb-4">
             <div class="multisteps-form__progress">
@@ -124,6 +115,15 @@ imput{
             </div>
           </div>
         </div>
+        <%-- 錯誤表列 --%>
+<c:if test="${not empty errorMsgs}">
+	<font style="color:red">請修正以下錯誤:</font>
+	<ul>
+		<c:forEach var="message" items="${errorMsgs}">
+			<li style="color:red">${message}</li>
+		</c:forEach>
+	</ul>
+</c:if>
 <c:forEach var="campreleaseVO" items="${memberCamp}">
 				<!-- 新增資訊 -->
 				<div class="row">
@@ -148,19 +148,29 @@ imput{
 										</div>
 										<div class="form-row mt-4">
 											<div class="col-12 col-sm-6">
-												<label for="inputprice" class="col-form-label">價格</label> 
+												<label for="inputprice" class="col-form-label">營地價格(一晚)</label> 
 												<input type="text" class="multisteps-form__input form-control" name="campPrice" id="c_price" placeholder="請輸入價格" value="">
 											</div>
 										</div>
 										<div class="form-row mt-4">
 											<div class="col-12 col-sm-6">
-												<label for="inputLimit" class="col-form-label">營地人數限制</label>
+												<label for="inputLimit" class="col-form-label">營地人數上限</label>
 												<input type="text" class="multisteps-form__input form-control" name="campLimit" id="c_limit" placeholder="請輸入人數" value="">
 											</div>
 										</div>
+<!-- 										<div class="form-row mt-4"> -->
+<!-- 											<div class="col-12 col-sm-6"> -->
+<!-- 												<label for="inputopenTime" class="col-form-label">營業開始時間</label>  -->
+<!-- 												<input type="text" class="multisteps-form__input form-control" name="openTime" size="45" id="openTime" value=""> -->
+<!-- 												<label for="inputcloseTime" class="col-form-label">營業結束時間</label>  -->
+<!-- 												<input type="text" class="multisteps-form__input form-control" name="closeTime" size="45" id="closeTime" value=""> -->
+											
+<!-- 											</div> -->
+<!-- 										</div> -->
 										<div class="form-row mt-4">
 											<div class="col-12 col-sm-6">
-												<label for="inputprice" class="col-form-label">日期</label> <input type="text" class="multisteps-form__input form-control" name="listedTime" size="45" id="f_date1" value="">
+												<label for="inputlistedTime" class="col-form-label">上架日期</label> 
+												<input type="text" class="multisteps-form__input form-control" name="listedTime" size="45" id="listedTime" value="">
 											</div>
 										</div>
 										<div class="button-row d-flex mt-4">
@@ -229,7 +239,7 @@ imput{
 											<input type="hidden" name="action" value="insert">
 											<button class="btn btn-success ml-auto" type="submit">Send</button>
 											<input type="hidden" name="memberId" value="${campreleaseVO.memberId}">
-										    <input type="hidden" name="campId" value="${campreleaseVO.campId}">                       
+<%-- 										    <input type="hidden" name="campId" value="${campreleaseVO.campId}">                        --%>
 										</div>
 									</div>
 								</div>
@@ -347,13 +357,27 @@ imput{
 }) 
 </script>
 <!-------------------datetimepicker------------------------->
-<%
+<% 
   java.sql.Timestamp listedTime = null;
 try{
 	listedTime = campreleaseVO.getListedTime();
 } catch (Exception e) {
 	listedTime = new java.sql.Timestamp(System.currentTimeMillis());
 }
+
+// java.sql.Time openTime = null;
+// try{
+// 	openTime = campreleaseVO.getOpenTime();
+// } catch (Exception e) {
+// 	openTime = new java.sql.Time(System.currentTimeMillis());
+// }
+
+// java.sql.Time closeTime = null;
+// try{
+// 	closeTime = campreleaseVO.getCloseTime();
+// } catch (Exception e) {
+// 	closeTime = new java.sql.Time(System.currentTimeMillis());
+// }
 %>
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/datetimepicker/jquery.datetimepicker.css" />
 <script src="<%=request.getContextPath()%>/datetimepicker/jquery.js"></script>
@@ -369,18 +393,110 @@ try{
 </style>
 
 <script>
+// listedTime
 $.datetimepicker.setLocale('zh');
-$('#f_date1').datetimepicker({
+$('#listedTime').datetimepicker({
    theme: '',              //theme: 'dark',
    timepicker:true,       //timepicker:true,
    step: 1,                //step: 60 (這是timepicker的預設間隔60分鐘)
    format:'Y-m-d H:i:s',         //format:'Y-m-d H:i:s',
    value: '<%=listedTime%>', // value:   new Date(),
    //disabledDates:        ['2017/06/08','2017/06/09','2017/06/10'], // 去除特定不含
-   //startDate:	            '2017/07/10',  // 起始日
+   startDate:	            '2021/10/10',  // 起始日
    //minDate:               '-1970-01-01', // 去除今日(不含)之前
    //maxDate:               '+1970-01-01'  // 去除今日(不含)之後
 });
+
+
+// //openTime
+// $.datetimepicker.setLocale('zh'); // kr ko ja en
+// $('#openTime').datetimepicker({
+//    theme: '',          //theme: 'dark',
+//    timepicker: true,   //timepicker: false,
+//    step: 30,            //step: 60 (這是timepicker的預設間隔60分鐘)
+//    format: 'H:i:s',
+<%--    value: '<%=openTime%>', --%>
+//    //disabledDates:    ['2017/06/08','2017/06/09','2017/06/10'], // 去除特定不含
+//    startDate:	        '2021/11/01',  // 起始日
+//    //minDate:           '-1970-01-01', // 去除今日(不含)之前
+//    //maxDate:           '+1970-01-01'  // 去除今日(不含)之後
+// });
+
+
+
+// // ----------------------------------------------------------以下用來排定無法選擇的日期-----------------------------------------------------------
+
+// //      1.以下為某一天之前的日期無法選擇
+//      var somedate1 = new Date('2021-11-01');
+//      $('#openTime').datetimepicker({
+//          beforeShowDay: function(date) {
+//        	  if (  date.getYear() <  somedate1.getYear() || 
+// 		           (date.getYear() == somedate1.getYear() && date.getMonth() <  somedate1.getMonth()) || 
+// 		           (date.getYear() == somedate1.getYear() && date.getMonth() == somedate1.getMonth() && date.getDate() < somedate1.getDate())
+//              ) {
+//                   return [false, ""]
+//              }
+//              return [true, ""];
+//      }});
+
+
+// //      2.以下為某一天之後的日期無法選擇
+//      var somedate2 = new Date('2021-11-30');
+//      $('#openTime').datetimepicker({
+//          beforeShowDay: function(date) {
+//        	  if (  date.getYear() >  somedate2.getYear() || 
+// 		           (date.getYear() == somedate2.getYear() && date.getMonth() >  somedate2.getMonth()) || 
+// 		           (date.getYear() == somedate2.getYear() && date.getMonth() == somedate2.getMonth() && date.getDate() > somedate2.getDate())
+//              ) {
+//                   return [false, ""]
+//              }
+//              return [true, ""];
+//      }});
+
+// //closeTime
+//         $.datetimepicker.setLocale('zh'); // kr ko ja en
+// $('#closeTime').datetimepicker({
+//    theme: '',          //theme: 'dark',
+//    timepicker: true,   //timepicker: false,
+//    step: 30,            //step: 60 (這是timepicker的預設間隔60分鐘)
+//    format: 'H:i:s',
+<%--    value: '<%=closeTime%>', --%>
+//    //disabledDates:    ['2017/06/08','2017/06/09','2017/06/10'], // 去除特定不含
+//    startDate:	        '2021/11/01',  // 起始日
+//    //minDate:           '-1970-01-01', // 去除今日(不含)之前
+//    //maxDate:           '+1970-01-01'  // 去除今日(不含)之後
+// });
+
+
+
+// // ----------------------------------------------------------以下用來排定無法選擇的日期-----------------------------------------------------------
+
+// //      1.以下為某一天之前的日期無法選擇
+//      var somedate1 = new Date('2021-11-01');
+//      $('#closeTime').datetimepicker({
+//          beforeShowDay: function(date) {
+//        	  if (  date.getYear() <  somedate1.getYear() || 
+// 		           (date.getYear() == somedate1.getYear() && date.getMonth() <  somedate1.getMonth()) || 
+// 		           (date.getYear() == somedate1.getYear() && date.getMonth() == somedate1.getMonth() && date.getDate() < somedate1.getDate())
+//              ) {
+//                   return [false, ""]
+//              }
+//              return [true, ""];
+//      }});
+
+
+// //      2.以下為某一天之後的日期無法選擇
+//      var somedate2 = new Date('2021-11-30');
+//      $('#closeTime').datetimepicker({
+//          beforeShowDay: function(date) {
+//        	  if (  date.getYear() >  somedate2.getYear() || 
+// 		           (date.getYear() == somedate2.getYear() && date.getMonth() >  somedate2.getMonth()) || 
+// 		           (date.getYear() == somedate2.getYear() && date.getMonth() == somedate2.getMonth() && date.getDate() > somedate2.getDate())
+//              ) {
+//                   return [false, ""]
+//              }
+//              return [true, ""];
+//      }});
 
 </script>
 <%@ include file="/template/script.html" %>

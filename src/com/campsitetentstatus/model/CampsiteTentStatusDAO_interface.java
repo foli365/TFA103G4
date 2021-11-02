@@ -11,4 +11,6 @@ public interface CampsiteTentStatusDAO_interface {
 	CampsiteTentStatusVO findbyPrimaryKey(Integer campId, Date campOpeningTime);
 	List<CampsiteTentStatusVO> getAll();
 	List<CampsiteTentStatusVO> getAllOfOne(Integer campId);
+	
+	CampsiteTentStatusVO getByCampId(Integer campId);
 }

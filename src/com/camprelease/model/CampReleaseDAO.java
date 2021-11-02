@@ -59,6 +59,8 @@ public class CampReleaseDAO implements CampReleaseDAO_interface {
 			pstmt.setBytes(12, campreleaseVO.getPicture3());
 			pstmt.setBytes(13, campreleaseVO.getPicture4());
 			pstmt.setBytes(14, campreleaseVO.getPicture5());
+//			pstmt.setTime(15, campreleaseVO.getOpenTime());
+//			pstmt.setTime(16, campreleaseVO.getCloseTime());
 
 			pstmt.executeUpdate();
 
@@ -109,6 +111,8 @@ public class CampReleaseDAO implements CampReleaseDAO_interface {
 			pstmt.setBytes(12, campreleaseVO.getPicture3());
 			pstmt.setBytes(13, campreleaseVO.getPicture4());
 			pstmt.setBytes(14, campreleaseVO.getPicture5());
+//			pstmt.setTime(15, campreleaseVO.getOpenTime());
+//			pstmt.setTime(16, campreleaseVO.getCloseTime());
 			pstmt.setInt(15, campreleaseVO.getCampId());
 
 			pstmt.executeUpdate();
@@ -207,6 +211,8 @@ public class CampReleaseDAO implements CampReleaseDAO_interface {
 				campreleaseVO.setPicture3(rs.getBytes("PICTURE3"));
 				campreleaseVO.setPicture4(rs.getBytes("PICTURE4"));
 				campreleaseVO.setPicture5(rs.getBytes("PICTURE5"));
+//				campreleaseVO.setOpenTime(rs.getTime("OPEN_TIME"));
+//				campreleaseVO.setCloseTime(rs.getTime("CLOSE_TIME"));
 				camplist.add(campreleaseVO);
 			}
 			// Handle any driver errors
@@ -274,6 +280,8 @@ public class CampReleaseDAO implements CampReleaseDAO_interface {
 				campreleaseVO.setPicture3(rs.getBytes("PICTURE3"));
 				campreleaseVO.setPicture4(rs.getBytes("PICTURE4"));
 				campreleaseVO.setPicture5(rs.getBytes("PICTURE5"));
+//				campreleaseVO.setOpenTime(rs.getTime("OPEN_TIME"));
+//				campreleaseVO.setCloseTime(rs.getTime("CLOSE_TIME"));
 			}
 
 			// Handle any driver errors
@@ -340,6 +348,8 @@ public class CampReleaseDAO implements CampReleaseDAO_interface {
 				campreleaseVO.setPicture3(rs.getBytes("PICTURE3"));
 				campreleaseVO.setPicture4(rs.getBytes("PICTURE4"));
 				campreleaseVO.setPicture5(rs.getBytes("PICTURE5"));
+//				campreleaseVO.setOpenTime(rs.getTime("OPEN_TIME"));
+//				campreleaseVO.setCloseTime(rs.getTime("CLOSE_TIME"));
 			
 				list.add(campreleaseVO); // Store the row in the list
 //				}
@@ -448,6 +458,8 @@ public class CampReleaseDAO implements CampReleaseDAO_interface {
 		System.out.println(VO3.getPicture3() + ",");
 		System.out.println(VO3.getPicture4() + ",");
 		System.out.println(VO3.getPicture5() + ",");
+//		System.out.println(VO3.getOpenTime() + ",");
+//		System.out.println(VO3.getCloseTime() + ",");
 		System.out.println("---------------------");
 //
 //		// ¬d¸ß
@@ -468,32 +480,11 @@ public class CampReleaseDAO implements CampReleaseDAO_interface {
 			System.out.print(a.getPicture3() + ",");
 			System.out.print(a.getPicture4() + ",");
 			System.out.print(a.getPicture5() + ",");
+//			System.out.println(VO3.getOpenTime() + ",");
+//			System.out.println(VO3.getCloseTime() + ",");
 			
 			System.out.println();
 		}
-//		CampReleaseVO campsiteVO = new CampReleaseVO();
-//		
-//		campsiteVO.setMemberId(4);
-//		campsiteVO.setCampName("Tibame1");
-//		campsiteVO.setLocation("«n¨Ê´_¿³");
-//		campsiteVO.setLatitude(24.4445);
-//		campsiteVO.setLongtitude(120.4445);
-//		campsiteVO.setCampDescription("Tibame1");
-//		campsiteVO.setCampPrice(44445);
-//		
-//		Timestamp listedTime = getTimestamp("2021-09-12 01:02:23");
-//		campsiteVO.setListedTime(listedTime);
-//		
-//
-//		
-//		byte[] picPicture1 = getPictureByteArray("WebContent/camprelease/NoData/none.jpg");	
-//		campsiteVO.setPicture1(picPicture1);
-//		
-//		campsiteVO.setCampId(5004);
-//		
-//		CampReleaseDAO_interface cpst = new CampReleaseDAO();
-//		cpst.update(campsiteVO);
-//		
 	}
 
 	public static byte[] getPictureByteArray(String path) throws IOException {

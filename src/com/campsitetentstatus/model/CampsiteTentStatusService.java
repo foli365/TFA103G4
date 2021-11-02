@@ -11,6 +11,9 @@ import java.util.stream.Collectors;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 
+import com.plan.model.PlanVO;
+
+
 public class CampsiteTentStatusService {
 
 	private CampsiteTentStatusDAO_interface dao;
@@ -53,6 +56,21 @@ public class CampsiteTentStatusService {
 
 	public List<CampsiteTentStatusVO> getAll() {
 		return dao.getAll();
+	}
+	
+	public List<CampsiteTentStatusVO> getByCampId(Integer campId) {
+		return dao.getAllOfOne(campId);
+	}
+	public CampsiteTentStatusVO getOneCampsiteTentStatus(Integer campId) {
+		return dao.getByCampId(campId);
+	}
+	
+	public CampsiteTentStatusVO getOneCampsiteTentByCampId(Integer campId) {
+		List<CampsiteTentStatusVO> list = dao.getAll();
+		List<CampsiteTentStatusVO> planVO = list.stream()
+				.filter(e -> e.getCampId().equals(campId))
+				.collect(Collectors.toList());
+		return planVO.get(0);
 	}
 
 	

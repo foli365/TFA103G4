@@ -17,7 +17,7 @@
 <html>
 <head>
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-<title>顯示一個設施資料</title>
+<title>顯示設施資料</title>
 <link rel='stylesheet' href='<%=request.getContextPath()%>/camprelease/css/jquery.dataTables.min.css' />
 <link rel="stylesheet" href="<%=request.getContextPath()%>/camprelease/css/bootstrap.min5.1.0.css">
 <link rel="stylesheet" href="<%=request.getContextPath()%>/camprelease/css/icon.css">
@@ -86,9 +86,9 @@ body {
 <body>
 
 	<header class="header" >
-  <h1 class="header__title">顯示一筆資料</h1><br>
+  <h1 class="header__title">顯示資料</h1><br>
   <table id="table-1">
-		 <h4><a href="<%=request.getContextPath()%>/camprelease/Select_Page.jsp"><img src="<%=request.getContextPath()%>/camprelease/images/gocamping.jpg" width="500" height="125" border="0"></a></h4>
+		 <h4><a href="<%=request.getContextPath()%>/camprelease/Select_Page.jsp"><img src="<%=request.getContextPath()%>/camprelease/images/gocamping.jpg" width="500" height="125" border="0"><br>back Home</a></h4>
 </table>
 </header>
 	<table id="example" class="display nowrap" style="width: 100%">
