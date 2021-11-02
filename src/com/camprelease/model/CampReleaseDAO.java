@@ -16,15 +16,15 @@ public class CampReleaseDAO implements CampReleaseDAO_interface {
 	public static final String PASSWORD = "123456";
 
 	private static final String INSERT_STMT = 
-			"INSERT INTO campsite (MEMBER_ID, CAMP_NAME, LOCATION, LATITUDE, LONGTITUDE, CAMP_DESCRIPTION, CAMP_PRICE, CAMP_LIMIT, LISTED_TIME, PICTURE1, PICTURE2, PICTURE3, PICTURE4, PICTURE5, OPEN_TIME, CLOSE_TIME) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+			"INSERT INTO campsite (MEMBER_ID, CAMP_NAME, LOCATION, LATITUDE, LONGTITUDE, CAMP_DESCRIPTION, CAMP_PRICE, CAMP_LIMIT, LISTED_TIME, PICTURE1, PICTURE2, PICTURE3, PICTURE4, PICTURE5) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 	private static final String GET_ALL_STMT = 
-			"SELECT CAMP_ID, MEMBER_ID, CAMP_NAME, LOCATION, LATITUDE, LONGTITUDE, CAMP_DESCRIPTION, CAMP_PRICE, CAMP_LIMIT, LISTED_TIME, PICTURE1, PICTURE2, PICTURE3, PICTURE4, PICTURE5, OPEN_TIME, CLOSE_TIME FROM campsite order by CAMP_ID";
+			"SELECT CAMP_ID, MEMBER_ID, CAMP_NAME, LOCATION, LATITUDE, LONGTITUDE, CAMP_DESCRIPTION, CAMP_PRICE, CAMP_LIMIT, LISTED_TIME, PICTURE1, PICTURE2, PICTURE3, PICTURE4, PICTURE5 FROM campsite order by CAMP_ID";
 	private static final String GET_ONE_STMT = 
-			"SELECT CAMP_ID, MEMBER_ID, CAMP_NAME, LOCATION, LATITUDE, LONGTITUDE, CAMP_DESCRIPTION, CAMP_PRICE, CAMP_LIMIT, LISTED_TIME, PICTURE1, PICTURE2, PICTURE3, PICTURE4, PICTURE5, OPEN_TIME, CLOSE_TIME FROM campsite where CAMP_ID = ?";
+			"SELECT CAMP_ID, MEMBER_ID, CAMP_NAME, LOCATION, LATITUDE, LONGTITUDE, CAMP_DESCRIPTION, CAMP_PRICE, CAMP_LIMIT, LISTED_TIME, PICTURE1, PICTURE2, PICTURE3, PICTURE4, PICTURE5 FROM campsite where CAMP_ID = ?";
 	private static final String DELETE = 
 			"DELETE FROM campsite where CAMP_ID = ?";
 	private static final String UPDATE = 
-			"UPDATE campsite set MEMBER_ID=?, CAMP_NAME=?, LOCATION=?, LATITUDE=?, LONGTITUDE=?, CAMP_DESCRIPTION=?, CAMP_PRICE=?, CAMP_LIMIT=?, LISTED_TIME=?,  PICTURE1=?, PICTURE2=?, PICTURE3=?, PICTURE4=?, PICTURE5=?, OPEN_TIME=?, CLOSE_TIME=? where CAMP_ID = ?";
+			"UPDATE campsite set MEMBER_ID=?, CAMP_NAME=?, LOCATION=?, LATITUDE=?, LONGTITUDE=?, CAMP_DESCRIPTION=?, CAMP_PRICE=?, CAMP_LIMIT=?, LISTED_TIME=?,  PICTURE1=?, PICTURE2=?, PICTURE3=?, PICTURE4=?, PICTURE5=? where CAMP_ID = ?";
 
 	static { 
 		try {
@@ -59,8 +59,8 @@ public class CampReleaseDAO implements CampReleaseDAO_interface {
 			pstmt.setBytes(12, campreleaseVO.getPicture3());
 			pstmt.setBytes(13, campreleaseVO.getPicture4());
 			pstmt.setBytes(14, campreleaseVO.getPicture5());
-			pstmt.setTime(15, campreleaseVO.getOpenTime());
-			pstmt.setTime(16, campreleaseVO.getCloseTime());
+//			pstmt.setTime(15, campreleaseVO.getOpenTime());
+//			pstmt.setTime(16, campreleaseVO.getCloseTime());
 
 			pstmt.executeUpdate();
 
@@ -111,9 +111,9 @@ public class CampReleaseDAO implements CampReleaseDAO_interface {
 			pstmt.setBytes(12, campreleaseVO.getPicture3());
 			pstmt.setBytes(13, campreleaseVO.getPicture4());
 			pstmt.setBytes(14, campreleaseVO.getPicture5());
-			pstmt.setTime(15, campreleaseVO.getOpenTime());
-			pstmt.setTime(16, campreleaseVO.getCloseTime());
-			pstmt.setInt(17, campreleaseVO.getCampId());
+//			pstmt.setTime(15, campreleaseVO.getOpenTime());
+//			pstmt.setTime(16, campreleaseVO.getCloseTime());
+			pstmt.setInt(15, campreleaseVO.getCampId());
 
 			pstmt.executeUpdate();
 
@@ -211,8 +211,8 @@ public class CampReleaseDAO implements CampReleaseDAO_interface {
 				campreleaseVO.setPicture3(rs.getBytes("PICTURE3"));
 				campreleaseVO.setPicture4(rs.getBytes("PICTURE4"));
 				campreleaseVO.setPicture5(rs.getBytes("PICTURE5"));
-				campreleaseVO.setOpenTime(rs.getTime("OPEN_TIME"));
-				campreleaseVO.setCloseTime(rs.getTime("CLOSE_TIME"));
+//				campreleaseVO.setOpenTime(rs.getTime("OPEN_TIME"));
+//				campreleaseVO.setCloseTime(rs.getTime("CLOSE_TIME"));
 				camplist.add(campreleaseVO);
 			}
 			// Handle any driver errors
@@ -280,8 +280,8 @@ public class CampReleaseDAO implements CampReleaseDAO_interface {
 				campreleaseVO.setPicture3(rs.getBytes("PICTURE3"));
 				campreleaseVO.setPicture4(rs.getBytes("PICTURE4"));
 				campreleaseVO.setPicture5(rs.getBytes("PICTURE5"));
-				campreleaseVO.setOpenTime(rs.getTime("OPEN_TIME"));
-				campreleaseVO.setCloseTime(rs.getTime("CLOSE_TIME"));
+//				campreleaseVO.setOpenTime(rs.getTime("OPEN_TIME"));
+//				campreleaseVO.setCloseTime(rs.getTime("CLOSE_TIME"));
 			}
 
 			// Handle any driver errors
@@ -348,8 +348,8 @@ public class CampReleaseDAO implements CampReleaseDAO_interface {
 				campreleaseVO.setPicture3(rs.getBytes("PICTURE3"));
 				campreleaseVO.setPicture4(rs.getBytes("PICTURE4"));
 				campreleaseVO.setPicture5(rs.getBytes("PICTURE5"));
-				campreleaseVO.setOpenTime(rs.getTime("OPEN_TIME"));
-				campreleaseVO.setCloseTime(rs.getTime("CLOSE_TIME"));
+//				campreleaseVO.setOpenTime(rs.getTime("OPEN_TIME"));
+//				campreleaseVO.setCloseTime(rs.getTime("CLOSE_TIME"));
 			
 				list.add(campreleaseVO); // Store the row in the list
 //				}
@@ -458,8 +458,8 @@ public class CampReleaseDAO implements CampReleaseDAO_interface {
 		System.out.println(VO3.getPicture3() + ",");
 		System.out.println(VO3.getPicture4() + ",");
 		System.out.println(VO3.getPicture5() + ",");
-		System.out.println(VO3.getOpenTime() + ",");
-		System.out.println(VO3.getCloseTime() + ",");
+//		System.out.println(VO3.getOpenTime() + ",");
+//		System.out.println(VO3.getCloseTime() + ",");
 		System.out.println("---------------------");
 //
 //		// ¬d¸ß
@@ -480,8 +480,8 @@ public class CampReleaseDAO implements CampReleaseDAO_interface {
 			System.out.print(a.getPicture3() + ",");
 			System.out.print(a.getPicture4() + ",");
 			System.out.print(a.getPicture5() + ",");
-			System.out.println(VO3.getOpenTime() + ",");
-			System.out.println(VO3.getCloseTime() + ",");
+//			System.out.println(VO3.getOpenTime() + ",");
+//			System.out.println(VO3.getCloseTime() + ",");
 			
 			System.out.println();
 		}

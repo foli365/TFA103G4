@@ -101,12 +101,12 @@ h4 {
             <label for="inputcampDescription" class="form-label">營地介紹</label>
             <input type="text" class="form-control" name="campDescription" value="${campreleaseVO.campDescription == null ? '' : campreleaseVO.campDescription}" >
           </div>
-          <div class="col-md-6">
-            <label for="inputlistedTime" class="form-label">營業開始時間</label>
-            <input type="text" class="form-control" name="openTime" id="openTime" value="${campreleaseVO.openTime == null ? '' : campreleaseVO.openTime}">
-            <label for="inputlistedTime" class="form-label">營業結束時間</label>
-            <input type="text" class="form-control" name="closeTime" id="closeTime" value="${campreleaseVO.closeTime == null ? '' : campreleaseVO.closeTime}">
-          </div>
+<!--           <div class="col-md-6"> -->
+<!--             <label for="inputlistedTime" class="form-label">營業開始時間</label> -->
+<%--             <input type="text" class="form-control" name="openTime" id="openTime" value="${campreleaseVO.openTime == null ? '' : campreleaseVO.openTime}"> --%>
+<!--             <label for="inputlistedTime" class="form-label">營業結束時間</label> -->
+<%--             <input type="text" class="form-control" name="closeTime" id="closeTime" value="${campreleaseVO.closeTime == null ? '' : campreleaseVO.closeTime}"> --%>
+<!--           </div> -->
           <div class="col-md-6">
             <label for="inputlistedTime" class="form-label">上架日期</label>
             <input type="text" class="form-control" name="listedTime" id="listedTime" value="${campreleaseVO.listedTime == null ? '' : campreleaseVO.listedTime}">
@@ -126,23 +126,23 @@ h4 {
             <h3>圖片更新</h3><br>
 					<h5>
 						<label>Pic1: <input type="file" accept="image/*"
-							name="picture1" ></label>
+							name="picture1"  value="<%= (campreleaseVO==null)? "" :campreleaseVO.getPicture1()%>"></label>
 					</h5>
 					<h5>
 						<label>Pic2: <input type="file" accept="image/*"
-							name="picture2"></label>
+							name="picture2" value="<%= (campreleaseVO==null)? "" :campreleaseVO.getPicture2()%>"></label>
 					</h5>
 					<h5>
 						<label>Pic3: <input type="file" accept="image/*"
-							name="picture3"></label>
+							name="picture3" value="<%= (campreleaseVO==null)? "" :campreleaseVO.getPicture3()%>"></label>
 					</h5>
 					<h5>
 						<label>Pic4: <input type="file" accept="image/*"
-							name="picture4"></label>
+							name="picture4" value="<%= (campreleaseVO==null)? "" :campreleaseVO.getPicture4()%>"></label>
 					</h5>
 					<h5>
 						<label>Pic5: <input type="file" accept="image/*"
-							name="picture5"></label>
+							name="picture5" value="<%= (campreleaseVO==null)? "" :campreleaseVO.getPicture5()%>"></label>
 					</h5>
 				</div>
 				<div class="button-row d-flex mt-4">
@@ -290,95 +290,95 @@ h4 {
         });
         
         
-// openTime
-        $.datetimepicker.setLocale('zh'); // kr ko ja en
-        $('#openTime').datetimepicker({
-           theme: '',          //theme: 'dark',
-           timepicker: true,   //timepicker: false,
-           step: 30,            //step: 60 (這是timepicker的預設間隔60分鐘)
-	       format: 'H:i:s',
-	       value: '<%=campreleaseVO.getOpenTime()%>' ,
-           //disabledDates:    ['2017/06/08','2017/06/09','2017/06/10'], // 去除特定不含
-           startDate:	        '2021/11/01',  // 起始日
-           //minDate:           '-1970-01-01', // 去除今日(不含)之前
-           //maxDate:           '+1970-01-01'  // 去除今日(不含)之後
-        });
+// // openTime
+//         $.datetimepicker.setLocale('zh'); // kr ko ja en
+//         $('#openTime').datetimepicker({
+//            theme: '',          //theme: 'dark',
+//            timepicker: true,   //timepicker: false,
+//            step: 30,            //step: 60 (這是timepicker的預設間隔60分鐘)
+// 	       format: 'H:i:s',
+<%-- 	       value: '<%=campreleaseVO.getOpenTime()%>' , --%>
+//            //disabledDates:    ['2017/06/08','2017/06/09','2017/06/10'], // 去除特定不含
+//            startDate:	        '2021/11/01',  // 起始日
+//            //minDate:           '-1970-01-01', // 去除今日(不含)之前
+//            //maxDate:           '+1970-01-01'  // 去除今日(不含)之後
+//         });
         
         
    
-        // ----------------------------------------------------------以下用來排定無法選擇的日期-----------------------------------------------------------
+//         // ----------------------------------------------------------以下用來排定無法選擇的日期-----------------------------------------------------------
 
-        //      1.以下為某一天之前的日期無法選擇
-             var somedate1 = new Date('2021-11-01');
-             $('#openTime').datetimepicker({
-                 beforeShowDay: function(date) {
-               	  if (  date.getYear() <  somedate1.getYear() || 
-        		           (date.getYear() == somedate1.getYear() && date.getMonth() <  somedate1.getMonth()) || 
-        		           (date.getYear() == somedate1.getYear() && date.getMonth() == somedate1.getMonth() && date.getDate() < somedate1.getDate())
-                     ) {
-                          return [false, ""]
-                     }
-                     return [true, ""];
-             }});
+//         //      1.以下為某一天之前的日期無法選擇
+//              var somedate1 = new Date('2021-11-01');
+//              $('#openTime').datetimepicker({
+//                  beforeShowDay: function(date) {
+//                	  if (  date.getYear() <  somedate1.getYear() || 
+//         		           (date.getYear() == somedate1.getYear() && date.getMonth() <  somedate1.getMonth()) || 
+//         		           (date.getYear() == somedate1.getYear() && date.getMonth() == somedate1.getMonth() && date.getDate() < somedate1.getDate())
+//                      ) {
+//                           return [false, ""]
+//                      }
+//                      return [true, ""];
+//              }});
 
         
-        //      2.以下為某一天之後的日期無法選擇
-             var somedate2 = new Date('2021-11-30');
-             $('#openTime').datetimepicker({
-                 beforeShowDay: function(date) {
-               	  if (  date.getYear() >  somedate2.getYear() || 
-        		           (date.getYear() == somedate2.getYear() && date.getMonth() >  somedate2.getMonth()) || 
-        		           (date.getYear() == somedate2.getYear() && date.getMonth() == somedate2.getMonth() && date.getDate() > somedate2.getDate())
-                     ) {
-                          return [false, ""]
-                     }
-                     return [true, ""];
-             }});
+//         //      2.以下為某一天之後的日期無法選擇
+//              var somedate2 = new Date('2021-11-30');
+//              $('#openTime').datetimepicker({
+//                  beforeShowDay: function(date) {
+//                	  if (  date.getYear() >  somedate2.getYear() || 
+//         		           (date.getYear() == somedate2.getYear() && date.getMonth() >  somedate2.getMonth()) || 
+//         		           (date.getYear() == somedate2.getYear() && date.getMonth() == somedate2.getMonth() && date.getDate() > somedate2.getDate())
+//                      ) {
+//                           return [false, ""]
+//                      }
+//                      return [true, ""];
+//              }});
         
-// closeTime
-                $.datetimepicker.setLocale('zh'); // kr ko ja en
-        $('#closeTime').datetimepicker({
-           theme: '',          //theme: 'dark',
-           timepicker: true,   //timepicker: false,
-           step: 30,            //step: 60 (這是timepicker的預設間隔60分鐘)
-	       format: 'H:i:s',
-	       value: '<%=campreleaseVO.getCloseTime()%>' ,
-           //disabledDates:    ['2017/06/08','2017/06/09','2017/06/10'], // 去除特定不含
-           startDate:	        '2021/11/01',  // 起始日
-           //minDate:           '-1970-01-01', // 去除今日(不含)之前
-           //maxDate:           '+1970-01-01'  // 去除今日(不含)之後
-        });
+// // closeTime
+//                 $.datetimepicker.setLocale('zh'); // kr ko ja en
+//         $('#closeTime').datetimepicker({
+//            theme: '',          //theme: 'dark',
+//            timepicker: true,   //timepicker: false,
+//            step: 30,            //step: 60 (這是timepicker的預設間隔60分鐘)
+// 	       format: 'H:i:s',
+<%-- 	       value: '<%=campreleaseVO.getCloseTime()%>' , --%>
+//            //disabledDates:    ['2017/06/08','2017/06/09','2017/06/10'], // 去除特定不含
+//            startDate:	        '2021/11/01',  // 起始日
+//            //minDate:           '-1970-01-01', // 去除今日(不含)之前
+//            //maxDate:           '+1970-01-01'  // 去除今日(不含)之後
+//         });
         
         
    
-        // ----------------------------------------------------------以下用來排定無法選擇的日期-----------------------------------------------------------
+//         // ----------------------------------------------------------以下用來排定無法選擇的日期-----------------------------------------------------------
 
-        //      1.以下為某一天之前的日期無法選擇
-             var somedate1 = new Date('2021-11-01');
-             $('#closeTime').datetimepicker({
-                 beforeShowDay: function(date) {
-               	  if (  date.getYear() <  somedate1.getYear() || 
-        		           (date.getYear() == somedate1.getYear() && date.getMonth() <  somedate1.getMonth()) || 
-        		           (date.getYear() == somedate1.getYear() && date.getMonth() == somedate1.getMonth() && date.getDate() < somedate1.getDate())
-                     ) {
-                          return [false, ""]
-                     }
-                     return [true, ""];
-             }});
+//         //      1.以下為某一天之前的日期無法選擇
+//              var somedate1 = new Date('2021-11-01');
+//              $('#closeTime').datetimepicker({
+//                  beforeShowDay: function(date) {
+//                	  if (  date.getYear() <  somedate1.getYear() || 
+//         		           (date.getYear() == somedate1.getYear() && date.getMonth() <  somedate1.getMonth()) || 
+//         		           (date.getYear() == somedate1.getYear() && date.getMonth() == somedate1.getMonth() && date.getDate() < somedate1.getDate())
+//                      ) {
+//                           return [false, ""]
+//                      }
+//                      return [true, ""];
+//              }});
 
         
-        //      2.以下為某一天之後的日期無法選擇
-             var somedate2 = new Date('2021-11-30');
-             $('#closeTime').datetimepicker({
-                 beforeShowDay: function(date) {
-               	  if (  date.getYear() >  somedate2.getYear() || 
-        		           (date.getYear() == somedate2.getYear() && date.getMonth() >  somedate2.getMonth()) || 
-        		           (date.getYear() == somedate2.getYear() && date.getMonth() == somedate2.getMonth() && date.getDate() > somedate2.getDate())
-                     ) {
-                          return [false, ""]
-                     }
-                     return [true, ""];
-             }});
+//         //      2.以下為某一天之後的日期無法選擇
+//              var somedate2 = new Date('2021-11-30');
+//              $('#closeTime').datetimepicker({
+//                  beforeShowDay: function(date) {
+//                	  if (  date.getYear() >  somedate2.getYear() || 
+//         		           (date.getYear() == somedate2.getYear() && date.getMonth() >  somedate2.getMonth()) || 
+//         		           (date.getYear() == somedate2.getYear() && date.getMonth() == somedate2.getMonth() && date.getDate() > somedate2.getDate())
+//                      ) {
+//                           return [false, ""]
+//                      }
+//                      return [true, ""];
+//              }});
         
 </script>
 </html>

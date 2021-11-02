@@ -4,11 +4,13 @@
 <%@ page import="com.plan.model.*"%>
 
 <%
-	// PlanVO planVO = (PlanVO) request.getAttribute("planVO");
+	PlanVO planVO = (PlanVO) request.getAttribute("planVO");
 
 	// PlanService planSvc = new PlanService();
 	// List<PlanVO> list = planSvc.getAll();
 	// pageContext.setAttribute("planVOList", list);
+	pageContext.setAttribute("campId", request.getAttribute("campId"));
+// 	pageContext.setAttribute("planId", request.getAttribute("planId"));
 %>
 <!DOCTYPE html>
 <html>
@@ -62,7 +64,14 @@ font-size:5px;
 </style>
 <body>
 
-	<%-- 錯誤表列 --%>
+	<div id="main" class="container">
+		<h3>配套資料新增</h3>
+		<h4>
+			<a href="<%=request.getContextPath()%>/camprelease/Select_Page.jsp">
+			<img src="<%=request.getContextPath()%>/camprelease/images/title_camp.png" width="100" height="32" border="0"><br>Home</a>
+		</h4>
+		
+		<%-- 錯誤表列 --%>
 	<c:if test="${not empty errorMsgs}">
 		<font style="color: red">請修正以下錯誤:</font>
 		<ul>
@@ -71,13 +80,7 @@ font-size:5px;
 			</c:forEach>
 		</ul>
 	</c:if>
-	<div id="main" class="container">
-		<h3>配套資料新增</h3>
-		<h4>
-			<a href="<%=request.getContextPath()%>/camprelease/Select_Page.jsp">
-			<img src="<%=request.getContextPath()%>/camprelease/images/title_camp.png" width="100" height="32" border="0"><br>Home</a>
-		</h4>
-		<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/plan/plan.do" name="form1" enctype="multipart/form-data">
+		<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/plan/plan.do" name="form1">
 			<!-- 		<div class="col-md-6"> -->
 			<%-- 			<label for="inputcampId" class="form-label">營地編號<font color=red><b>*</b></font>${planVO.CampId}</label> --%>
 			<!-- 		</div> -->
@@ -109,7 +112,7 @@ font-size:5px;
 					<input type="hidden" name="action" value="insert_plan">
 					<button class="btn btn-success ml-auto" type="submit" id="submit">Send</button>
 					<input type="hidden" name="campId" value="${campId}">
-					<input type="hidden" name="planId" value="${planId}">
+<%-- 					<input type="hidden" name="planId" value="${planId}"> --%>
 				</div>
 			</div>
 		</FORM>

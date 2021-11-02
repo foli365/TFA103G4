@@ -21,8 +21,8 @@ public class CampReleaseVO implements Serializable {
 	private byte[] picture5;
 	private Integer memberId;
 	private Integer campLimit;
-	private java.sql.Time openTime;
-	private java.sql.Time closeTime;	
+//	private java.sql.Time openTime;
+//	private java.sql.Time closeTime;	
 	
 	public Integer getCampId() {
 		return campId;
@@ -115,20 +115,6 @@ public class CampReleaseVO implements Serializable {
 	public void setCampLimit(Integer campLimit) {
 		this.campLimit = campLimit;
 	}
-	
-	
-	public java.sql.Time getOpenTime() {
-		return openTime;
-	}
-	public void setOpenTime(java.sql.Time openTime) {
-		this.openTime = openTime;
-	}
-	public java.sql.Time getCloseTime() {
-		return closeTime;
-	}
-	public void setCloseTime(java.sql.Time closeTime) {
-		this.closeTime = closeTime;
-	}
 	@Override
 	public String toString() {
 		return "CampReleaseVO [campId=" + campId + ", campName=" + campName + ", location=" + location + ", latitude="
@@ -136,6 +122,6 @@ public class CampReleaseVO implements Serializable {
 				+ campPrice + ", listedTime=" + listedTime + ", picture1=" + Arrays.toString(picture1) + ", picture2="
 				+ Arrays.toString(picture2) + ", picture3=" + Arrays.toString(picture3) + ", picture4="
 				+ Arrays.toString(picture4) + ", picture5=" + Arrays.toString(picture5) + ", memberId=" + memberId
-				+ ", campLimit=" + campLimit + ", openTime=" + openTime + ", closeTime=" + closeTime + "]";
+				+ ", campLimit=" + campLimit + "]";
 	}
 }

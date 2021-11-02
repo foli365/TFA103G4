@@ -38,7 +38,7 @@ public class CampPlanServlet extends HttpServlet {
 
 				String str = req.getParameter("campId");
 				if (str == null || (str.trim()).length() == 0) {
-					errorMsgs.add("請輸入配套編號");
+					errorMsgs.add("請輸入編號");
 				}
 				// Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
@@ -47,11 +47,11 @@ public class CampPlanServlet extends HttpServlet {
 					return;
 				}
 
-				Integer planId = null;
+				Integer campId = null;
 				try {
-					planId = new Integer(str);
+					campId = new Integer(str);
 				} catch (Exception e) {
-					errorMsgs.add("配套編號格式有錯誤");
+					errorMsgs.add("編號格式有錯誤");
 				}
 				// Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
@@ -61,7 +61,7 @@ public class CampPlanServlet extends HttpServlet {
 				}
 
 				PlanService planSvc = new PlanService();
-				ArrayList<PlanVO> list = planSvc.getPlans(planId);
+				ArrayList<PlanVO> list = planSvc.getPlans(campId);
 				if (list == null) {
 					errorMsgs.add("查無資料");
 				}
@@ -306,6 +306,7 @@ public class CampPlanServlet extends HttpServlet {
 				planVO = planSvc.addPlan(campId, planName, planGuestLimit, planAgeLimit, planPrice, planOutline);
 				List<PlanVO> list = planSvc.getByCampId(campId);
 				req.setAttribute("planVOList", list);
+//				req.setAttribute("planVO", planVO);
 
 				/*************************** 3.新增完成,準備轉交(Send the Success view) ***********/
 				String url = "/camprelease/listOnePlan.jsp";

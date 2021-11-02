@@ -65,7 +65,15 @@ font-size:5px;
 </style>
 </head>
 <body>
-<%-- 錯誤表列 --%>
+	
+	<div id="main" class="container">
+				<h3>配套資料修改</h3>
+				<h4>
+					<a href="<%=request.getContextPath()%>/camprelease/Select_Page.jsp"><img src="<%=request.getContextPath()%>/camprelease/images/title_camp.png" 
+					width="100" height="32" border="0"><br>Home</a>
+				</h4>
+				
+				<%-- 錯誤表列 --%>
 	<c:if test="${not empty errorMsgs}">
 		<font style="color: red">請修正以下錯誤:</font>
 		<ul>
@@ -74,15 +82,8 @@ font-size:5px;
 			</c:forEach>
 		</ul>
 	</c:if>
-	
-	<div id="main" class="container">
-				<h3>配套資料修改</h3>
-				<h4>
-					<a href="<%=request.getContextPath()%>/camprelease/Select_Page.jsp"><img src="<%=request.getContextPath()%>/camprelease/images/title_camp.png" 
-					width="100" height="32" border="0"><br>Home</a>
-				</h4>
 
-	<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/plan/plan.do" name="form1" enctype="multipart/form-data">
+	<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/plan/plan.do" name="form1" >
 <!-- 		<div class="col-md-6"> -->
 <%-- 			<label for="inputcampId" class="form-label">營地編號<font color=red><b>*</b></font><%=planVO.getCampId()%></label> --%>
 <!-- 		</div> -->

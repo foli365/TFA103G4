@@ -176,6 +176,22 @@
 	<servlet-mapping>
 		<servlet-name>CampReleaseServlet</servlet-name>
 		<url-pattern>/camprelease/camprelease.do</url-pattern>
+	</servlet-mapping>
+	<servlet>
+		<servlet-name>FacilitiesServlet</servlet-name>
+		<servlet-class>com.facilities.controller.FacilitiesServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>FacilitiesServlet</servlet-name>
+		<url-pattern>/facilities/facilities.do</url-pattern>
+	</servlet-mapping>
+	<servlet>
+		<servlet-name>CampPlanServlet</servlet-name>
+		<servlet-class>com.campplan.controller.CampPlanServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>CampPlanServlet</servlet-name>
+		<url-pattern>/plan/plan.do</url-pattern>
 	</servlet-mapping>	
 	<!-- 佑叡的 -->
 	<!-- 以下是servlet的明確對應 -->
@@ -202,21 +218,5 @@
 	<servlet-mapping>
 		<servlet-name>PictureServlet</servlet-name>
 		<url-pattern>/eshop/PictureServlet</url-pattern>
-	</servlet-mapping>
-	<servlet>
-		<servlet-name>FacilitiesServlet</servlet-name>
-		<servlet-class>com.facilities.controller.FacilitiesServlet</servlet-class>
-	</servlet>
-	<servlet-mapping>
-		<servlet-name>FacilitiesServlet</servlet-name>
-		<url-pattern>/facilities/facilities.do</url-pattern>
-	</servlet-mapping>
-	<servlet>
-		<servlet-name>CampPlanServlet</servlet-name>
-		<servlet-class>com.campplan.controller.CampPlanServlet</servlet-class>
-	</servlet>
-	<servlet-mapping>
-		<servlet-name>CampPlanServlet</servlet-name>
-		<url-pattern>/plan/plan.do</url-pattern>
 	</servlet-mapping>
 </web-app>

@@ -62,8 +62,8 @@ text-align: center;
 		<th>營地介紹</th>
 		<th>營地價格(一晚)</th>
 		<th>營地人數上限</th>
-		<th>營業開始時間</th>
-		<th>營業結束時間</th>	
+<!-- 		<th>營業開始時間</th> -->
+<!-- 		<th>營業結束時間</th>	 -->
 		<th>pic1</th>
 		<th>pic2</th>
 		<th>pic3</th>
@@ -85,10 +85,10 @@ text-align: center;
 			<td>【${campreleaseVO.campDescription}】</td> 
 			<td>【${campreleaseVO.campPrice}元】</td>
 			<td>【${campreleaseVO.campLimit}人】</td>
-			<td>【<fmt:formatDate value="${campreleaseVO.openTime}"
-					pattern="HH:mm:ss" />】</td>		
-			<td>【<fmt:formatDate value="${campreleaseVO.closeTime}"
-					pattern="HH:mm:ss" />】</td>		
+<%-- 			<td>【<fmt:formatDate value="${campreleaseVO.openTime}" --%>
+<%-- 					pattern="HH:mm:ss" />】</td>		 --%>
+<%-- 			<td>【<fmt:formatDate value="${campreleaseVO.closeTime}" --%>
+<%-- 					pattern="HH:mm:ss" />】</td>		 --%>
 			<td><img src="<%=request.getContextPath() %>/CampReleasePhotoServlet?id=${campreleaseVO.campId}&img=1" width="100"></td>
 			<td><img src="<%=request.getContextPath() %>/CampReleasePhotoServlet?id=${campreleaseVO.campId}&img=2" width="100"></td>
 			<td><img src="<%=request.getContextPath() %>/CampReleasePhotoServlet?id=${campreleaseVO.campId}&img=3" width="100"></td>
