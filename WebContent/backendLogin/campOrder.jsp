@@ -70,7 +70,13 @@
 				</a>
 					<ul class="mky-show">
 						<li><a href="<%=request.getContextPath()%>/emodr/listAllEmodr.jsp" class="shopping_list">商城訂單</a></li>
-					</ul></li>
+					</ul>
+					</li>
+					<li>
+                <form METHOD="get" ACTION="<%=request.getContextPath()%>/backendLogin/home.do">
+                  <button type="submit" class="btn btn-outline-secondary" style="margin-left: 50px;">logout</button>
+                </form>
+                </li>
 			</ul>
 		</nav>
 	</div>
@@ -199,5 +205,23 @@
 			});
 		});
 	</script>
+	<script>
+    function prohibitpreviouspage(){
+
+    	if(navigator.userAgent.indexOf('Firefox') != -1 && parseFloat(navigator.userAgent.substring(navigator.userAgent.indexOf('Firefox') + 8)) >= 3.6 ){
+
+    	//Firefox
+    	setTimeout("fn_forward()",1);
+    	window.history.go(1);
+    	}else{ //IE.Chrome.Edge
+    	window.history.forward();
+    	}
+    	}
+    	function fn_forward() {
+    	history.forward();
+    	setTimeout("fn_forward()",1)
+    	}
+    </script>
+        <script type="text/javascript">prohibitpreviouspage();</script>
 </body>
 </html>
