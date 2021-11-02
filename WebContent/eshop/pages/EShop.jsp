@@ -6,6 +6,10 @@
   response.setHeader("Pragma","no-cache");        //HTTP 1.0
   response.setDateHeader ("Expires", 0);
 %>
+<% 
+	Integer ob = (Integer) session.getAttribute("id");//接來自loginhandler.java的session.setAttribute("id",)
+	pageContext.setAttribute("ob", ob);//這邊將用來判斷使用者是否已登入
+%>
 
 <jsp:useBean id="productSvc" scope="page" class="com.Product.model.ProductService" />
 
@@ -36,8 +40,10 @@
 			</c:if>
 			<a href="<%=request.getContextPath()%>/emodr/emodr.do?action=showMyOders" class="myorders" style="font-size: 1.25em;">我的訂單</a>			
 			<a href="<%=request.getContextPath()%>/eshop/pages/Cart.jsp" class="shoppingcart" style="font-size: 1.25em;">購物車</a>
-			<a href="<%=request.getContextPath()%>/register_and_login/login.jsp" class="loginfromeshop" style="font-size: 1.25em;">登入</a>
-			<a href="<%=request.getContextPath()%>/account/logout.do" class="logoutfromeshop" style="font-size: 1.25em;">登出</a>
+			<a href="<%=request.getContextPath()%>/register_and_login/login.jsp" class="loginfromeshop" style="font-size: 1.25em;">${(ob == null)? "登入":""}</a>
+			<a href="<%=request.getContextPath()%>/account/logout.do" class="logoutfromeshop" style="font-size: 1.25em;">${(ob == null)? "":"登出"}</a>
+			
+			
 		</nav>
 
 		<div class="top_main">
@@ -99,8 +105,7 @@
 			</c:forEach>
 		</div>
 	</div>
-
-
+		
 	<!-- 載入Bootstrap 的 JS -->
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js"
 		integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ"
