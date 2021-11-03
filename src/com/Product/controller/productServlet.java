@@ -13,6 +13,7 @@ import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
 
 import com.Product.model.ProductService;
@@ -147,11 +148,12 @@ public class productServlet extends HttpServlet {
 
 			try {
 				Integer productno = new Integer(req.getParameter("productno"));
-
+				
+				HttpSession session = req.getSession();
 				ProductService proSvc = new ProductService();
 				ProductVO productVO = proSvc.getOneproduct(productno);
 
-				req.setAttribute("productVO", productVO);
+				session.setAttribute("updateproduct", productVO);
 
 				String url = "/product/update_product.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url);
@@ -171,7 +173,9 @@ public class productServlet extends HttpServlet {
 			req.setAttribute("errorMsgs", errorMsgs);
 
 			try {
-
+				
+				
+				
 				Integer productno = new Integer(req.getParameter("productno").trim());
 
 				String pname = req.getParameter("pname");
@@ -248,7 +252,7 @@ public class productServlet extends HttpServlet {
 						in1.close();
 
 					} else {
-						errorMsgs.add("圖片1: 請勿空白");
+						errorMsgs.add("圖片1:不能空");
 					}
 
 					Part part2 = req.getPart("img2");
@@ -259,7 +263,7 @@ public class productServlet extends HttpServlet {
 						in2.read(picture2);
 						in2.close();
 					} else {
-						errorMsgs.add("圖片2: 請勿空白");
+						errorMsgs.add("圖片2:不能空");
 					}
 
 					Part part3 = req.getPart("img3");
@@ -270,13 +274,16 @@ public class productServlet extends HttpServlet {
 						in3.read(picture3);
 						in3.close();
 					} else {
-						errorMsgs.add("圖片3: 請勿空白");
+						errorMsgs.add("圖片3:不能空");
+//						ProductService proSvc = new ProductService();
+//						picture3 = proSvc.getOneproduct(productno).getPicture3();
 					}
 
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
-
+//				ProductVO productVO = (ProductVO)req.getAttribute("productVO");
+				
 				ProductVO productVO = new ProductVO();
 				productVO.setProductno(productno);
 				productVO.setPname(pname);
@@ -286,9 +293,17 @@ public class productServlet extends HttpServlet {
 				productVO.setAdmin_id(admin_id);
 				productVO.setSituation(situation);
 				productVO.setDescript(descript);
-				productVO.setPicture1(picture1);
-				productVO.setPicture2(picture2);
-				productVO.setPicture3(picture3);
+				
+				if(picture1 != null) {
+					productVO.setPicture1(picture1);
+				}
+				if(picture2 != null) {
+					productVO.setPicture2(picture2);
+				}
+				if(picture3 != null) {
+					productVO.setPicture3(picture3);
+				}
+				
 
 				if (!errorMsgs.isEmpty()) {
 					req.setAttribute("productVO", productVO); // 含有輸入格式錯誤的productVO物件,也存入req

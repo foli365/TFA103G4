@@ -1,4 +1,4 @@
-package com.adminList.model;
+package com.admin.model;
 import java.io.Serializable;
 public class AdminListVO implements Serializable{
 private Integer adminId;

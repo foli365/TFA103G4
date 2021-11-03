@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-<%@ page import="com.adminList.model.*"%>
+<%@ page import="com.admin.model.*"%>
 <%@ page import="com.members.model.*"%>
 <%@ page import="java.util.*"%>
 <%
@@ -12,7 +12,7 @@
 <html>
 <head>
 <meta>
-<title>Insert title here</title>
+<title>會員修改</title>
 </head>
 <body>
 	<div class="logo">
@@ -92,7 +92,7 @@ $(function(){
     $("#pwd2").blur(function(){
         if($("#pwd1").val()!=$("#pwd2").val()){
 
-            alert("两次输入的密码不一致");
+            alert("兩次輸入的密碼不一致");
 
         }
     })

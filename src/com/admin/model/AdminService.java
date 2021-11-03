@@ -1,10 +1,10 @@
-package com.adminList.model;
+package com.admin.model;
 
 import java.util.List;
 
-import com.adminList.model.AdminListVO;
-import com.adminList.model.AdminListDAO;
-import com.adminList.model.AdminListDao_interface;
+import com.admin.model.AdminListVO;
+import com.admin.model.AdminListDAO;
+import com.admin.model.AdminListDao_interface;
 
 public class AdminService {
 		private AdminListDao_interface dao;

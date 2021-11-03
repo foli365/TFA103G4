@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-<%@ page import="com.adminList.model.*"%>
+<%@ page import="com.admin.model.*"%>
 <%@ page import="java.util.*"%>
 <%
 	AdminService dao = new AdminService();
@@ -12,7 +12,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>管理員列表</title>
 
 <link
 	href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css"
@@ -32,38 +32,37 @@
 						class="fas fa-caret-down first"></span>
 				</a>
 					<ul class="feat-show">
-						<li><a href="../backendLogin/member.jsp" class="member_list">會員帳號管理</a></li>
+						<li><a href="<%=request.getContextPath()%>/backendLogin/member.jsp" class="member_list">會員帳號管理</a></li>
 					</ul>
 					<ul class="feat-show">
-						<li><a href="../backendLogin/manager.jsp" class="manager_list">管理員帳號管理</a></li>
+						<li><a href="<%=request.getContextPath()%>/backendLogin/manager.jsp" class="manager_list">管理員帳號管理</a></li>
 					</ul></li>
 				<li><a href="#" class="serv-btn">商品管理 <span
 						class="fas fa-caret-down second"></span>
 				</a>
 					<ul class="serv-show">
-						<li><a href="../product/selectAll.jsp" class="product_list">商品資料表</a></li>
+						<li><a href="<%=request.getContextPath()%>/product/selectAll.jsp" class="product_list">商品資料表</a></li>
 					</ul></li>
 				<li><a href="#1" class="bom-btn">營地管理 <span
 						class="fas fa-caret-down second_1"></span>
 				</a>
 
 					<ul class="bom-show">
-						<li><a href="#" class="camp_list">營地列表</a></li>
-						  <li><a href='campOrder.jsp'class="camp_order">營地訂單</a></li>
-						<li><a href="#" class="alert_managament">檢舉管理</a></li>
+						<li><a href="<%=request.getContextPath()%>/backendLogin/camp.jsp" class="camp_list">營地列表</a></li>
+						  <li><a href="<%=request.getContextPath()%>/backendLogin/campOrder.jsp"class="camp_order">營地訂單</a></li>
+						<li><a href="<%=request.getContextPath()%>/backendLogin/alert.jsp" class="alert_managament">檢舉管理</a></li>
 					</ul></li>
 				<li><a href="#" class="mky-btn">商城管理 <span
 						class="fas fa-caret-down second_2"></span>
 				</a>
 					<ul class="mky-show">
-						<li><a href="#" class="shopping_list">商城訂單</a></li>
+						<li><a href="<%=request.getContextPath()%>/emodr/listAllEmodr.jsp" class="shopping_list">商城訂單</a></li>
 					</ul></li>
-					
-				<li>
+				 <li>
                 <form METHOD="get" ACTION="<%=request.getContextPath()%>/backendLogin/home.do">
                   <button type="submit" class="btn btn-outline-secondary" id="btnlog">logout</button>
                 </form>
-                </li>
+                </li>	
 			</ul>
 		</nav>
 	</div>
@@ -94,30 +93,31 @@
 			<!-- 			<button type="button" class="btn btn-outline-success" -->
 			<!-- 			onclick="location.href='http://localhost:8081/GoCamping/backendLogin/addAdmin.jsp'">新增管理員</button> -->
 		</div>
-		<table id="myTable" class="tablesorter">
+		<table id="myTable" class="tablesorter" style="width: 700px">
 			<thead>
 				<tr>
-					<th>管理員編號</th>
-					<th>管理員密碼</th>
-					<th>姓名</th>
-					<th>編輯</th>
-					<th>刪除</th>
+					<th width="60px">管理員編號</th>
+<!-- 					<th>管理員密碼</th> -->
+					<th width="40px">姓名</th>
+					<th width="70px">編輯</th>
+					<th width="70px">刪除</th>
 				</tr>
 			</thead>
 			<%@ include file="page1.file"%>
 			<c:forEach var="VO" items="${list}" begin="<%=pageIndex%>"
-				end="<%=pageIndex+rowsPerPage-1%>">
+				end="<%=pageIndex+rowsPerPage-1%>">  
 				<tr>
 
 					<td>${VO.adminId}</td>
-					<td>${VO.adminPwd}</td>
+<!-- 					<td>*****</td> -->
+<%-- 					<td>${VO.adminPwd}</td> --%>
 					<td>${VO.adminName}</td>
 
 					<td>
 						<FORM METHOD="post"
 							ACTION="<%=request.getContextPath()%>/backendLogin/AdminServlet.do"
 							style="margin-bottom: 0px;">
-							<input type="submit" value="修改"> <input type="hidden"
+							<input type="submit" value="修改" class="btn btn-primary"> <input type="hidden"
 								name="adminId" value="${VO.adminId}"> <input
 								type="hidden" name="action" value="getOne_For_Update">
 						</FORM>
@@ -126,7 +126,7 @@
 						<FORM METHOD="post"
 							ACTION="<%=request.getContextPath()%>/backendLogin/AdminServlet.do"
 							style="margin-bottom: 0px;">
-							<input type="submit" value="刪除"> <input type="hidden"
+							<input type="submit" value="刪除" class="btn btn-danger"> <input type="hidden"
 								name="adminId" value="${VO.adminId}"> <input
 								type="hidden" name="action" value="delete">
 						</FORM>

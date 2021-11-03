@@ -1,18 +1,30 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@page import="com.sun.beans.decoder.ValueObject"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ page import="com.camporder.model.*"%>
+<%@ page import="com.campsite.model.*"%>
+<%@ page import="com.members.model.*"%>
 <%@ page import="java.util.*"%>
-<%	
+<%
 	CampOrderService dao = new CampOrderService();
 	List<CampOrderVO> list = dao.getAll();
 	pageContext.setAttribute("list", list);
+%>
+<%
+	MemberService memSvc = new MemberService();
+	pageContext.setAttribute("memSvc", memSvc);
+%>
+<%
+	CampsiteService campsiteService = new CampsiteService();
+	pageContext.setAttribute("campsiteService", campsiteService);
 %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>營地訂單管理</title>
 
 <link
 	href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css"
@@ -32,31 +44,32 @@
 						class="fas fa-caret-down first"></span>
 				</a>
 					<ul class="feat-show">
-						<li><a href="../backendLogin/member.jsp" class="member_list">會員帳號管理</a></li>
+						<li><a href="<%=request.getContextPath()%>/backendLogin/member.jsp" class="member_list">會員帳號管理</a></li>
 					</ul>
 					<ul class="feat-show">
-						<li><a href="../backendLogin/manager.jsp" class="manager_list">管理員帳號管理</a></li>
+						<li><a href="<%=request.getContextPath()%>/backendLogin/manager.jsp"
+							class="manager_list">管理員帳號管理</a></li>
 					</ul></li>
 				<li><a href="#" class="serv-btn">商品管理 <span
 						class="fas fa-caret-down second"></span>
 				</a>
 					<ul class="serv-show">
-						<li><a href="../product/selectAll.jsp" class="product_list">商品資料表</a></li>
+						<li><a href="<%=request.getContextPath()%>/product/selectAll.jsp" class="product_list">商品資料表</a></li>
 					</ul></li>
 				<li><a href="#1" class="bom-btn">營地管理 <span
 						class="fas fa-caret-down second_1"></span>
 				</a>
 
 					<ul class="bom-show">
-						<li><a href="#" class="camp_list">營地列表</a></li>
-						 <li><a href='campOrder.jsp'class="camp_order">營地訂單</a></li>
-						<li><a href="#" class="alert_managament">檢舉管理</a></li>
+						<li><a href="<%=request.getContextPath()%>/backendLogin/camp.jsp" class="camp_list">營地列表</a></li>
+						<li><a href="<%=request.getContextPath()%>/backendLogin/campOrder.jsp" class="camp_order">營地訂單</a></li>
+						<li><a href="<%=request.getContextPath()%>/backendLogin/alert.jsp" class="alert_managament">檢舉管理</a></li>
 					</ul></li>
 				<li><a href="#" class="mky-btn">商城管理 <span
 						class="fas fa-caret-down second_2"></span>
 				</a>
 					<ul class="mky-show">
-						<li><a href="#" class="shopping_list">商城訂單</a></li>
+						<li><a href="<%=request.getContextPath()%>/emodr/listAllEmodr.jsp" class="shopping_list">商城訂單</a></li>
 					</ul></li>
 			</ul>
 		</nav>
@@ -79,9 +92,11 @@
 					placeholder="管理員編號查詢"> <input type="hidden" name="action"
 					id="" class="btn_search" value="getOne_For_Display">
 				<button type="submit" class="btn btn-outline-success">查詢</button>
-<!-- 				<button type="button" class="btn btn-outline-success" -->
-<%-- 					onclick="location.href='<%=request.getContextPath()%>/backendLogin/addAdmin.jsp'">新增管理員</button> --%>
-<!-- 				<button type="button" class="btn btn-outline-success" id="export">匯出</button> -->
+				<button type="button" class="btn btn-outline-success" id="export2">匯出</button>
+			</Form>
+			<!-- 				<button type="button" class="btn btn-outline-success" -->
+			<%-- 					onclick="location.href='<%=request.getContextPath()%>/backendLogin/addAdmin.jsp'">新增管理員</button> --%>
+			<!-- 				<button type="button" class="btn btn-outline-success" id="export">匯出</button> -->
 
 
 
@@ -101,7 +116,8 @@
 					<th>營地付款截止時間</th>
 					<th>訂單總金額</th>
 					<th>訂單狀態</th>
-<!-- 					<th>修改</th> -->
+					<th>修改訂單</th>
+					<!-- 					<th>取消訂單</th> -->
 				</tr>
 			</thead>
 			<%@ include file="page1.file"%>
@@ -110,42 +126,49 @@
 				<tr>
 
 					<td>${VO.campOrderId}</td>
-					<td>${VO.campId}</td>
-					<td>${VO.memberId}</td>
+					<td>${campsiteService.getOneCampsite(VO.campId).campName}</td>
+					<td>${memSvc.findByPrimaryKey(VO.memberId).name}</td>
 					<td>${VO.guestNumber}</td>
 					<td>${VO.checkInDate}</td>
 					<td>${VO.checkOutDate}</td>
 					<td>${VO.orderDate}</td>
 					<td>${VO.paymentDeadline}</td>
 					<td>${VO.orderTotal}</td>
-					<td>${VO.orderStatus}</td>
-<!-- 					<td> -->
-<!-- 						<FORM METHOD="post" -->
-<%-- 							ACTION="<%=request.getContextPath()%>/backendLogin/AdminServlet.do" --%>
-<!-- 							style="margin-bottom: 0px;"> -->
-<!-- 							<input type="submit" value="修改"> <input type="hidden" -->
-<%-- 								name="adminId" value="${VO.adminId}"> <input --%>
-<!-- 								type="hidden" name="action" value="getOne_For_Update"> -->
-<!-- 						</FORM> -->
-<!-- 					</td> -->
-<!-- 					<td> -->
-<!-- 						<FORM METHOD="post" -->
-<%-- 							ACTION="<%=request.getContextPath()%>/backendLogin/AdminServlet.do" --%>
-<!-- 							style="margin-bottom: 0px;"> -->
-<!-- 							<input type="submit" value="刪除"> <input type="hidden" -->
-<%-- 								name="adminId" value="${VO.adminId}"> <input --%>
-<!-- 								type="hidden" name="action" value="delete"> -->
-<!-- 						</FORM> -->
-<!-- 					</td> -->
+					<td>
+					
+					<c:if test="${VO.orderStatus == 0}"> ${"未付款"}</c:if>
+					<c:if test="${VO.orderStatus == 1}"> ${"已付款"}</c:if>
+					<c:if test="${VO.orderStatus == 2}"> ${"取消訂單"}</c:if>
+
+					</td>
+					<td>
+						<FORM METHOD="post"
+							ACTION="<%=request.getContextPath()%>/backendLogin/CampOrderBackendServlet.do"
+							style="margin-bottom: 0px;">
+							<input type="submit" value="修改訂單" class="btn btn-primary">
+							<input type="hidden" name="campOrderId" value="${VO.campOrderId}">
+							<input type="hidden" name="action" value="getOne_For_Update">
+						</FORM>
+					</td>
+					<!-- 					<td> -->
+					<!-- 						<FORM METHOD="post" -->
+					<%-- 							ACTION="<%=request.getContextPath()%>/backendLogin/CampOrderBackendServlet.do" --%>
+					<!-- 							style="margin-bottom: 0px;"> -->
+					<!-- 							<input type="submit" value="取消訂單" class="btn btn-danger"> <input type="hidden" -->
+					<%-- 								name="campOrderId" value="${VO.campOrderId }"> <input --%>
+					<!-- 								type="hidden" name="action" value="delete"> -->
+					<!-- 						</FORM> -->
+					<!-- 					</td> -->
 
 				</tr>
 
 			</c:forEach>
 		</table>
-		<%@ include file="page2.file"%>
+	<%@ include file="page2.file"%>
 	</div>
 	<script src="../js/jquery.js"></script>
-	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+	<script
+		src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 	<script src="../js/jquery.table2excel.js"></script>
 	<script src="https://kit.fontawesome.com/a076d05399.js"></script>
 	<link rel="stylesheet"
@@ -164,16 +187,16 @@
 		crossorigin="anonymous"></script>
 	<script src="../js/camporder.js"></script>
 	<script>
-		$(document).ready(function(){			
-		$("#export").on("click", function() {
-				  $("#myTable").table2excel({
-				    // exclude CSS class
-				    exclude: ".noExl",
-				    name: "Worksheet Name",
-				    filename: "管理員清單", //do not include extension
-				    fileext: ".xls" // file extension
-				  }); 
-		});
+		$(document).ready(function() {
+			$("#export2").on("click", function() {
+				$("#myTable").table2excel({
+					// exclude CSS class
+					exclude : ".noExl",
+					name : "Worksheet Name",
+					filename : "營地訂單", //do not include extension
+					fileext : ".xls" // file extension
+				});
+			});
 		});
 	</script>
 </body>

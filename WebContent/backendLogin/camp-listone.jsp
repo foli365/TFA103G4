@@ -5,9 +5,9 @@
 <%@ page import="com.campsite.model.*"%>
 <%@ page import="java.util.*"%>
 <%
-// 	MembersVO vo =(MembersVO) request.getAttribute("MembersVO");
-// 	System.out.println(vo);
-//  	pageContext.setAttribute("vo", vo);
+MemberService memSvc = new MemberService();
+pageContext.setAttribute("memSvc", memSvc);
+ 
 %>
 <!DOCTYPE html>
 <html>
@@ -19,7 +19,7 @@ img {
 </style>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>查詢單筆營地</title>
 <script src="../js/jquery.js"></script>
 <script src="https://kit.fontawesome.com/a076d05399.js"></script>
 <link
@@ -95,15 +95,15 @@ img {
 				</tr>
 			</thead>
 				<tr>
-					<td>${CampsiteVO.campId}</td>
-					<td>${memSvc.findByPrimaryKey(CampsiteVO.memberId).name}</td>
-					<td>${CampsiteVO.campName}</td>
-					<td>${CampsiteVO.location}</td>
-					<td>${CampsiteVO.listedTime}</td>
-					<td>${CampsiteVO.siteState}</td>
-					<td>${CampsiteVO.reportedCount}</td>
+					<td>${campsiteVO.campId}</td>
+					<td>${memSvc.findByPrimaryKey(campsiteVO.memberId).name}</td>
+					<td>${campsiteVO.campName}</td>
+					<td>${campsiteVO.location}</td>
+					<td>${campsiteVO.listedTime}</td>
+					<td>${campsiteVO.siteState}</td>
+					<td>${campsiteVO.reportedCount}</td>
 					<td><img
-						src="<%=request.getContextPath()%>/CampsiteGifReader?column=camp_license&camp_id=${CampsiteVO.campId}"
+						src="<%=request.getContextPath()%>/CampsiteGifReader?column=camp_license&camp_id=${campsiteVO.campId}"
 						class="pic"></td>
 				</tr>
 		</table>

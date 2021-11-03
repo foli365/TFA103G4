@@ -1,4 +1,4 @@
-package com.adminList.model;
+package com.admin.model;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -22,7 +22,7 @@ public class AdminListDAO implements AdminListDao_interface{
 	public static final String DELETE_STMT = "DELETE FROM Admin_List WHERE admin_Id = ?";
 	public static final String findByPrimaryKey = "SELECT * FROM Admin_List WHERE admin_Id =?";
 	public static final String GET_ALL ="SELECT* FROM Admin_List ORDER BY admin_Id";
-	static {// é©…å‹•è¼‰å…¥ä¸€æ¬¡ï¼Œä¸‹é¢ä¸ç”¨å†æ‰“
+	static {// ÅX°Ê¸ü¤J¤@¦¸¡A¤U­±¤£¥Î¦A¥´
 		try {
 			Class.forName(DRIVER);
 		} catch (ClassNotFoundException ce) {
@@ -34,12 +34,12 @@ public class AdminListDAO implements AdminListDao_interface{
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		try {
-			con = DriverManager.getConnection(URL, USER, PASSWORD);// å–å¾—é€£ç·š
-			pstmt = con.prepareStatement(INSERT_STMT);// é€å‡ºSQLæŒ‡ä»¤
+			con = DriverManager.getConnection(URL, USER, PASSWORD);// ¨ú±o³s½u
+			pstmt = con.prepareStatement(INSERT_STMT);// °e¥XSQL«ü¥O
 			pstmt.setInt(1, AdminListVO.getAdminId());
 			pstmt.setString(2, AdminListVO.getAdminPwd());
 			pstmt.setString(3, AdminListVO.getAdminName());
-			pstmt.executeUpdate();// åŸ·è¡Œ
+			pstmt.executeUpdate();// °õ¦æ
 		} catch (SQLException se) {
 			se.printStackTrace();
 		} finally {
@@ -148,7 +148,7 @@ public class AdminListDAO implements AdminListDao_interface{
 			pstmt.setInt(1, adminId);
 			rs = pstmt.executeQuery();
 			while (rs.next()) {
-				// åˆ©ç”¨Dept BeanåŒ…è£è‘—æŸ¥è©¢å‡ºä¾†çš„å„å€‹æ¬„ä½å€¼
+				// §Q¥ÎDept Bean¥]¸ËµÛ¬d¸ß¥X¨Óªº¦U­ÓÄæ¦ì­È
 				AdminListVO = new AdminListVO();
 				AdminListVO.setAdminId(adminId);
 				AdminListVO.setAdminPwd(rs.getString("admin_Pwd"));
@@ -198,12 +198,12 @@ public class AdminListDAO implements AdminListDao_interface{
 			pstmt = con.prepareStatement(GET_ALL);
 			rs = pstmt.executeQuery();
 			while (rs.next()) {
-				// åˆ©ç”¨Dept BeanåŒ…è£è‘—æŸ¥è©¢å‡ºä¾†çš„å„å€‹æ¬„ä½å€¼
+				// §Q¥ÎDept Bean¥]¸ËµÛ¬d¸ß¥X¨Óªº¦U­ÓÄæ¦ì­È
 				AdminListVO AdminListVO = new AdminListVO();
 			    AdminListVO.setAdminId(rs.getInt("admin_Id"));
 			    AdminListVO.setAdminPwd(rs.getString("admin_Pwd"));
 			    AdminListVO.setAdminName(rs.getString("admin_Name"));
-				//ç”¨é›†åˆå®¹å™¨æ”¶é›†åŒ…è£å¥½çš„Dept bean
+				//¥Î¶°¦X®e¾¹¦¬¶°¥]¸Ë¦nªºDept bean
 			    adminlistvo.add(AdminListVO);
 
 			}

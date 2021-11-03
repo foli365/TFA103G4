@@ -11,48 +11,46 @@
 </head>
 <body>
  <div class="container">
-        <nav class="sidebar">
+          <nav class="sidebar">
             <div class="min_picture">
                 <h1>後臺管理</h1>
             </div>
-            <ul>
-                <li>
-                    <a href="#" class="feat-btn">帳號管理
-                        <span class="fas fa-caret-down first"></span>
-                    </a>
-                    <ul class="feat-show">
-                        <li><a href="../backendLogin/member.jsp" class="member_list">會員帳號管理</a></li>
-                    </ul>
-                     <ul class="feat-show">
-                        <li><a href="../backendLogin/manager.jsp" class="manager_list">管理員帳號管理</a></li>
-                    </ul>
-                </li>
+           <ul>
+				<li><a href="#" class="feat-btn">帳號管理 <span
+						class="fas fa-caret-down first"></span>
+				</a>
+					<ul class="feat-show">
+						<li><a href="<%=request.getContextPath()%>/backendLogin/member.jsp">會員帳號管理</a></li>
+					</ul>
+					<ul class="feat-show">
+						<li><a href="<%=request.getContextPath()%>/backendLogin/manager.jsp" class="manager_list">管理員帳號管理</a></li>
+					</ul></li>
                 <li>
                     <a href="#" class="serv-btn">商品管理
                         <span class="fas fa-caret-down second"></span> 
                     </a>
                     <ul class="serv-show">
-                        <li><a href="../product/selectAll.jsp" class="product_list">商品資料表</a></li>
+                        <li><a href="<%=request.getContextPath()%>/product/selectAll.jsp" class="product_list">商品資料表</a></li>
                     </ul>
                 </li>
-                <li>
-                    <a href="#1" class="bom-btn">營地管理
-                        <span class="fas fa-caret-down second_1"></span> 
-                        </a>
+                <li><a href="#1" class="bom-btn">營地管理 <span
+						class="fas fa-caret-down second_1"></span>
+				</a>
 
-                    <ul class="bom-show">
-                        <li><a href="../backendLogin/camp.jsp" class="camp_list">營地列表</a></li>
-                        <li><a href="../backendLogin/alert.jsp" class="alert_managament">檢舉管理</a></li>
-                    </ul>
-                </li>
+					<ul class="bom-show">
+						<li><a href="<%=request.getContextPath()%>/backendLogin/camp.jsp" class="camp_list">營地列表</a></li>
+						  <li><a href="<%=request.getContextPath()%>/backendLogin/campOrder.jsp" class="camp_order">營地訂單</a></li>
+						<li><a href="<%=request.getContextPath()%>/backendLogin/alert.jsp" class="alert_managament">檢舉管理</a></li>
+					</ul></li>
                 <li>
                     <a href="#" class="mky-btn">商城管理
                         <span class="fas fa-caret-down second_2"></span> 
                     </a>
                     <ul class="mky-show">
-                        <li><a href="../emodr/listAllEmodr.jsp" "shopping_list">商城訂單</a></li>
+                        <li><a href="<%=request.getContextPath()%>/emodr/listAllEmodr.jsp" class="shopping_list">商城訂單</a></li>
                     </ul>
                 </li>
+                
                 <li>
                 <form METHOD="get" ACTION="<%=request.getContextPath()%>/backendLogin/home.do">
                   <button type="submit" class="btn btn-outline-secondary" id="btnlog">logout</button>

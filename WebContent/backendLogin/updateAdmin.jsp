@@ -2,7 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-<%@ page import="com.adminList.model.*"%>
+<%@ page import="com.admin.model.*"%>
 <%@ page import="java.util.*"%>
 <%
 	AdminListVO adminListVO = (AdminListVO) request.getAttribute("adminListVO");
@@ -12,7 +12,7 @@
 <html>
 <head>
 <meta>
-<title>Insert title here</title>
+<title>管理員資料修改</title>
 </head>
 <body>
 	<div class="logo">

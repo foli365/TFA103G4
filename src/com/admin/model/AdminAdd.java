@@ -1,21 +1,21 @@
-package com.adminList.model;
+package com.admin.model;
 
 import java.util.List;
 import java.util.Scanner;
 
-import com.adminList.model.AdminListVO;
+import com.admin.model.AdminListVO;
 
-import com.adminList.model.AdminListDAO;
-import com.adminList.model.AdminListDao_interface;
+import com.admin.model.AdminListDAO;
+import com.admin.model.AdminListDao_interface;
 public class AdminAdd {
 	public static void main(String[] args) {
 		AdminListDAO dao = new AdminListDAO();
 
-		// Êñ∞Â¢û
+		// ∑sºW
 		AdminListVO VO = new AdminListVO();
 		VO.setAdminId(7005);
 		VO.setAdminPwd("jacky0229");
-		VO.setAdminName("Âê≥ÁãÑËªí");
+		VO.setAdminName("ßd®f∞a");
 		dao.add(VO);
 
 	}

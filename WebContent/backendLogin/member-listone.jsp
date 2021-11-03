@@ -1,3 +1,4 @@
+<%@page import="com.sun.xml.internal.bind.CycleRecoverable.Context"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
@@ -12,7 +13,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>查詢單筆會員</title>
 <script src="../js/jquery.js"></script>
 <script src="https://kit.fontawesome.com/a076d05399.js"></script>
 <link
@@ -65,7 +66,7 @@
 	<div class="rightside">
 		<h2>會員帳號單筆查詢</h2>
 		<br>
-		<h3><a href='menber.jsp'>回會員帳號管理</a></h3>
+		<h3><a href=<%=request.getContextPath()%>/backendLogin/member.jsp>回會員帳號管理</a></h3>
 		<div class="searcher">
 			<form action="" class="parent">
 				<input type="text" class="search" placeholder="會員編號查詢"> <input

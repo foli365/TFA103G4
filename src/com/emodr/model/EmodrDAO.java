@@ -18,7 +18,7 @@ public class EmodrDAO implements EmodrDAO_interface {
 	static {
 		try {
 			Context ctx = new InitialContext();
-			ds = (DataSource) ctx.lookup("java:comp/env/jdbc/camping"); // !!!!!!記得到時要改成這行的程式!!!!!!!
+			ds = (DataSource) ctx.lookup("java:comp/env/jdbc/camping");
 		} catch (NamingException e) {
 			e.printStackTrace();
 		}
@@ -29,6 +29,7 @@ public class EmodrDAO implements EmodrDAO_interface {
 	private static final String DELETE = "DELETE FROM emodr where emodr_id = ?";
 	private static final String UPDATE = "UPDATE emodr set member_id=?, emodr_date=?, receipient=?, addr=?, mobile=?, totalprice=?,emodr_status=? where emodr_id = ?";
 	private static final String NOTDISPLAY_STMT = "SELECT emodr_id,member_id,emodr_date,receipient,addr,mobile,totalprice,emodr_status FROM emodr where emodr_id != ? order by emodr_id";
+	private static final String GET_ALL_BYFK_STMT = "SELECT emodr_id,member_id,emodr_date,receipient,addr,mobile,totalprice,emodr_status FROM emodr where member_id = ? order by emodr_id";
 
 	@Override
 	public void insert(EmodrVO emodrVO) {
@@ -285,7 +286,7 @@ public class EmodrDAO implements EmodrDAO_interface {
 
 			con = ds.getConnection();
 			pstmt = con.prepareStatement(NOTDISPLAY_STMT);
-			
+
 			pstmt.setInt(1, emodrid);
 			rs = pstmt.executeQuery();
 
@@ -335,5 +336,64 @@ public class EmodrDAO implements EmodrDAO_interface {
 		return list;
 	}
 
+	@Override
+	public List<EmodrVO> findByFK(Integer memberid) {
+		List<EmodrVO> list = new ArrayList<EmodrVO>();
+		EmodrVO emodrVO = null;
 
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+
+		try {
+
+			con = ds.getConnection();
+			pstmt = con.prepareStatement(GET_ALL_BYFK_STMT);
+			pstmt.setInt(1, memberid);
+			rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				// emodrVO 也稱為 Domain objects
+				emodrVO = new EmodrVO();
+				emodrVO.setEmodr_id(rs.getInt("emodr_id"));
+				emodrVO.setMember_id(rs.getInt("member_id"));
+				emodrVO.setEmodr_date(rs.getDate("emodr_date"));
+				emodrVO.setReceipient(rs.getString("receipient"));
+				emodrVO.setAddr(rs.getString("addr"));
+				emodrVO.setMobile(rs.getString("mobile"));
+				emodrVO.setTotalprice(rs.getDouble("totalprice"));
+				emodrVO.setEmodr_status(rs.getBoolean("emodr_status"));
+				list.add(emodrVO); // Store the row in the list
+			}
+
+			// Handle any driver errors
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. " + se.getMessage());
+			// Clean up JDBC resources
+		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+
+		return list;
+	}
 }

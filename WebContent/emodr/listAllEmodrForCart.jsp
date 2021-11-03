@@ -4,7 +4,7 @@
 <%@ page import="com.emodr.model.*,com.members.model.*"%>
 
 <%
-  	EmodrVO emodrVO = (EmodrVO) request.getAttribute("emodrVO");
+	EmodrVO emodrVO = (EmodrVO) request.getAttribute("emodrVO");
 %>
 
 <%
@@ -12,10 +12,9 @@
 	MembersVO membersVO = memberSvc.findByPrimaryKey(emodrVO.getMember_id());
 %>
 
-
 <html>
 <head>
-<title>您的訂單資料 </title>
+<title>您的訂單資料</title>
 
 <style>
 html, body {
@@ -23,6 +22,7 @@ html, body {
 		Microsoft JhengHei;
 	background-color: rgb(243, 242, 239);
 }
+
 table#table-1 {
 	background-color: rgb(230, 239, 217);
 	border: 2px solid black;
@@ -40,9 +40,7 @@ h4 {
 	color: blue;
 	display: inline;
 }
-</style>
 
-<style>
 table {
 	/* 	width: 800px;   */
 	width: 100%;
@@ -51,11 +49,8 @@ table {
 	margin-bottom: 5px;
 }
 
-table, th, td {
-/* 	border: 1px solid #CCCCFF; */
-}
-
 th, td {
+	border: 1px solid black;
 	padding: 5px;
 	text-align: center;
 }
@@ -63,21 +58,18 @@ th, td {
 
 </head>
 
-<body bgcolor='white'>
+<body>
 
 	<table id="table-1">
 		<tr>
-			<td>
-				<h3>您的訂單資料</h3>
-				<h4>
-					<a href="<%=request.getContextPath()%>/eshop/pages/EShop.jsp">回首頁</a>
-				</h4>
-			</td>
+			<h4>
+				<a href="<%=request.getContextPath()%>/eshop/pages/EShop.jsp">回商城首頁</a>
+			</h4>
+			<h3>您的訂單資料</h3>
 		</tr>
-<!-- 	</table> -->
-<!-- 	<table> -->
+
 		<tr>
-<!-- 			<th>商城訂單編號</th> -->
+<!-- 			<th>訂單編號</th> -->
 			<th>購買人</th>
 			<th>訂單日期</th>
 			<th>收貨人</th>
@@ -87,15 +79,15 @@ th, td {
 			<th>訂單狀態</th>
 		</tr>
 		<tr>
-<%-- 			<td><%=emodrVO.getEmodr_id()%></td> --%>
-<%-- 			<td><%=emodrVO.getMember_id()%></td> --%>
+			<%-- 			<td><%=emodrVO.getEmodr_id()%></td> --%>
+			<%-- 			<td><%=emodrVO.getMember_id()%></td> --%>
 			<td><%=membersVO.getName()%></td>
 			<td><%=emodrVO.getEmodr_date()%></td>
 			<td><%=emodrVO.getReceipient()%></td>
 			<td><%=emodrVO.getAddr()%></td>
 			<td><%=emodrVO.getMobile()%></td>
 			<td><%=emodrVO.getTotalprice()%></td>
-			<td>成立</td>
+			<td><%=(emodrVO.getEmodr_status() == true) ? "成立" : "不成立"%></td>
 		</tr>
 	</table>
 

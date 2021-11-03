@@ -1,4 +1,4 @@
-package com.adminList.model;
+package com.admin.model;
 
 import java.util.List;
 
@@ -10,6 +10,6 @@ public interface AdminListDao_interface {
 		AdminListVO findByPrimaryKey(Integer adminId);
 	    List<AdminListVO>getALL();
 
-		
+
 		
 	}

@@ -68,7 +68,8 @@ public class ShoppingServlet extends HttpServlet {
 			}
 
 			String amount = String.valueOf(total);
-			req.setAttribute("amount", amount);
+			//req.setAttribute("amount", amount);
+			session.setAttribute("amount", amount);
 			String url = "/eshop/pages/Checkout.jsp";
 			RequestDispatcher rd = req.getRequestDispatcher(url);
 			rd.forward(req, res);
@@ -80,7 +81,7 @@ public class ShoppingServlet extends HttpServlet {
 		String name = req.getParameter("name");
 		String price = req.getParameter("price");
 		String quantity = req.getParameter("quantity");
-		String pic = req.getParameter("pic");/// 這邊是接網址要注意一下
+		String pic = req.getParameter("pic");/// 這邊接的是網址要注意一下
 		Merchandise merchandise = new Merchandise();
 		merchandise.setName(name);
 		merchandise.setPrice(new Double(price));

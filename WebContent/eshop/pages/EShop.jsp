@@ -6,6 +6,10 @@
   response.setHeader("Pragma","no-cache");        //HTTP 1.0
   response.setDateHeader ("Expires", 0);
 %>
+<% 
+	Integer ob = (Integer) session.getAttribute("id");//接來自loginhandler.java的session.setAttribute("id",)
+	pageContext.setAttribute("ob", ob);//這邊將用來判斷使用者是否已登入
+%>
 
 <jsp:useBean id="productSvc" scope="page" class="com.Product.model.ProductService" />
 
@@ -18,9 +22,9 @@
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css"
 	rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU"
 	crossorigin="anonymous">
-<!-- <link rel="stylesheet" href="<%=request.getContextPath()%>/css/bootstrap.min.css"> -->
+<!-- <link rel="stylesheet" href="<%=request.getContextPath()%>/eshop/css_eshop/bootstrap.min.css"> -->
 <!-- 商城 的 CSS -->
-<link rel="stylesheet" href="<%=request.getContextPath()%>/css/EShop.css">
+<link rel="stylesheet" href="<%=request.getContextPath()%>/eshop/css_eshop/EShop.css">
 
 
 </head>
@@ -30,8 +34,16 @@
 
 		<nav class="shopnav">
 			<a href="<%=request.getContextPath()%>/homepage/index.jsp" class="camppage" style="font-size: 1.25em;">GoCamping</a>
-			<a href="#" class="myorders" style="font-size: 1.25em;">我的訂單</a>
+			<%-- 錯誤表列 --%>
+			<c:if test="${not empty errorMsgs}">
+				<a id="errshow" href="#">${errorMsgs}</a>
+			</c:if>
+			<a href="<%=request.getContextPath()%>/emodr/emodr.do?action=showMyOders" class="myorders" style="font-size: 1.25em;">我的訂單</a>			
 			<a href="<%=request.getContextPath()%>/eshop/pages/Cart.jsp" class="shoppingcart" style="font-size: 1.25em;">購物車</a>
+			<a href="<%=request.getContextPath()%>/register_and_login/login.jsp" class="loginfromeshop" style="font-size: 1.25em;">${(ob == null)? "登入":""}</a>
+			<a href="<%=request.getContextPath()%>/account/logout.do" class="logoutfromeshop" style="font-size: 1.25em;">${(ob == null)? "":"登出"}</a>
+			
+			
 		</nav>
 
 		<div class="top_main">
@@ -46,8 +58,7 @@
 			</div>
 
 			<div class="slideshow">
-				<!-- 這邊放入輪播功能<br> 這邊放入輪播功能<br> 這邊放入輪播功能 -->
-<%-- 				<img src="<%=request.getContextPath()%>/eshop/imgs/welcom2.jpg" style="width: 100%"> --%>
+				<!-- 已用背景圖取代這一區塊的顯示 -->
 			</div>
 
 		</div>
@@ -94,8 +105,7 @@
 			</c:forEach>
 		</div>
 	</div>
-
-
+		
 	<!-- 載入Bootstrap 的 JS -->
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js"
 		integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ"

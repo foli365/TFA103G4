@@ -10,21 +10,21 @@ $('.bom-btn').click(function() {
 $('.mky-btn').click(function() {
     $('nav ul.mky-show').toggleClass("show3");
 });
-$("a.member_list").on("click", function() {
-    $(window).attr('location', 'member.jsp');
-});
-$("a.alert_managament").on("click", function() {
-    $(window).attr('location', 'alert.jsp');
-});
-$("a.camp_order").on("click", function(){
-	$(window).attr('location', 'campOrder.jsp');
-});
+//$("a.member_list").on("click", function() {
+//    $(window).attr('location', 'member.jsp');
+//});
+//$("a.alert_managament").on("click", function() {
+//    $(window).attr('location', 'alert.jsp');
+//});
+//$("a.camp_order").on("click", function(){
+//	$(window).attr('location', 'campOrder.jsp');
+//});
 $("h1").on("click", function() {
     $(window).attr('location', 'home.jsp');
 });
 $(".min_picture").on("click", function() {
     $(window).attr('location', 'home.jsp');
 });
-$("a.manager_list").on("click",function(){
-	 $(window).attr('location', 'manager.jsp');
-});
+//$("a.manager_list").on("click",function(){
+//	 $(window).attr('location', 'manager.jsp');
+//});

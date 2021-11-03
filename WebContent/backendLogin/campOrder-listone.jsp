@@ -6,10 +6,14 @@
 <%@ page import="com.camporder.model.*"%>
 <%@ page import="java.util.*"%>
 <%
-// 	MembersVO vo =(MembersVO) request.getAttribute("MembersVO");
-// 	System.out.println(vo);
-//  	pageContext.setAttribute("vo", vo);
+MemberService memSvc = new MemberService();
+pageContext.setAttribute("memSvc", memSvc);
 %>
+<%
+CampsiteService campsiteService = new CampsiteService();
+pageContext.setAttribute("campsiteService", campsiteService);
+%>
+
 <!DOCTYPE html>
 <html>
 <style>
@@ -20,7 +24,7 @@ img {
 </style>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>查詢單筆營地訂單</title>
 <script src="../js/jquery.js"></script>
 <script src="https://kit.fontawesome.com/a076d05399.js"></script>
 <link
@@ -86,8 +90,8 @@ img {
 			<thead>
 				<tr>
 					<th>露營訂單編號</th>
-					<th>營地編號</th>
-					<th>會員編號</th>
+					<th>營地名稱</th>
+					<th>會員名稱</th>
 					<th>預定人數</th>
 					<th>入住日期</th>
 					<th>退房日期</th>
@@ -99,16 +103,19 @@ img {
 			</thead>
 				<tr>
 					<td>${campOrderVO.campOrderId}</td>
-					<td>${campOrderVO.campId}</td>
-					<td>${campOrderVO.memberId}</td>
+					<td>${campsiteService.getOneCampsite(campOrderVO.campId).campName}</td>
+					<td>${memSvc.findByPrimaryKey(campOrderVO.memberId).name}</td>
 					<td>${campOrderVO.guestNumber}</td>
 					<td>${campOrderVO.checkInDate}</td>
 					<td>${campOrderVO.checkOutDate}</td>
 					<td>${campOrderVO.orderDate}</td>
 					<td>${campOrderVO.paymentDeadline}</td>
 					<td>${campOrderVO.orderTotal}</td>
-					<td>${campOrderVO.orderStatus}</td>
-				
+				<td><c:if test="${campOrderVO.orderStatus == 0}"> ${"未付款"}</c:if>
+					<c:if test="${campOrderVO.orderStatus == 1}"> ${"已付款"}</c:if>
+					<c:if test="${campOrderVO.orderStatus == 2}"> ${"取消訂單"}</c:if>
+					
+				</td>
 		</table>
 	</div>
 
