@@ -33,7 +33,6 @@ public class CampsearchServlet extends HttpServlet {
 		req.setCharacterEncoding("UTF-8");
 		String action = req.getParameter("action");
 		List<String> errorMsgs = new LinkedList<String>();
-		
 		if ("getOne_For_Display".equals(action)) { // 來自select_page.jsp的請求
 			req.setAttribute("errorMsgs", errorMsgs);
 
@@ -126,6 +125,7 @@ public class CampsearchServlet extends HttpServlet {
 				/*************************** 1.接收請求參數 - 輸入格式的錯誤處理 **********************/
 				Integer campId = new Integer(req.getParameter("campId").trim());
 				Integer memberId = new Integer(req.getParameter("memberId").trim());
+				System.out.println(memberId);
 				String campName = req.getParameter("campName");
 				String campNameReg = "^[(\u4e00-\u9fa5)(a-zA-Z0-9)]{2,15}$";
 				if (campName == null || campName.trim().length() == 0) {
@@ -276,6 +276,7 @@ public class CampsearchServlet extends HttpServlet {
 
 				/*************************** 3.修改完成,準備轉交(Send the Success view) *************/
 				req.setAttribute("campsiteVO", campsiteVO); // 資料庫update成功後,正確的的campsiteVO物件,存入req
+				System.out.println(campsiteVO);
 				System.out.println(campsiteVO);
 				String url = "/backendLogin/camp-listone.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url); // 修改成功後,轉交listOneCampsite.jsp

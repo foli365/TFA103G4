@@ -49,7 +49,7 @@
 			</p>
 
 			<div class="button">
-				<button type="submit" class="button_submit">送出</button>
+				<button type="submit" class="btn btn-primary" style="margin-right: 40px;">送出</button>
 				<input type="hidden" name="action" value="login"> <a
 					href="<%=request.getContextPath()%>/homepage/index.jsp">回到首頁</a>
 
