@@ -1,8 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%
-	pageContext.setAttribute("name", session.getAttribute("account"));
-%>
 <link
 	href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css"
 	rel="stylesheet">
@@ -32,12 +29,12 @@
 				<li class="nav-item dropdown" id="accountName"><a
 					style="font-weight: bold;" class="nav-link dropdown-toggle"
 					href="#" id="navbarDropdown" role="button"
-					data-bs-toggle="dropdown" aria-expanded="false"> ${name} </a>
+					data-bs-toggle="dropdown" aria-expanded="false"> ${account} </a>
 					<ul class="dropdown-menu dropdown-menu-end "
 						aria-labelledby="navbarDropdown">
 						<li><a class="dropdown-item"
 							href="<%=request.getContextPath()%>/account/account_center.jsp">會員中心</a></li>
-						<li><a class="dropdown-item"
+						<li><a class="dropdown-item" id="campManagement"
 							href="<%=request.getContextPath()%>/camprelease/Select_Page.jsp">營地管理</a></li>
 						<li><a class="dropdown-item"
 							href="<%=request.getContextPath()%>/account/edit_profile.jsp">編輯會員資料</a></li>
@@ -49,5 +46,6 @@
 			</ul>
 		</div>
 	</div>
-	<input type="hidden" id="account" value="${name}">
+	<input type="hidden" id="account" value="${account}">
+	<input type="hidden" id="membership" value="${membership}">
 </nav>

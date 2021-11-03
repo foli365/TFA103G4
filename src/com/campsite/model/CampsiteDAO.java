@@ -387,8 +387,8 @@ public class CampsiteDAO implements CampsiteDAO_Interface {
 			con = DriverManager.getConnection(URL, USER, PASSWORD);
 			String finalSQL = "SELECT DISTINCT c.CAMP_ID, MEMBER_ID, CAMP_NAME, LOCATION, "
 					+ "CAMP_DESCRIPTION, CAMP_PRICE, SITE_STATE, PICTURE1 "
-					+ "FROM CAMPSITE c LEFT JOIN CAMPSITE_TENT_STATUS cts on c.CAMP_ID = cts.CAMP_ID"
-					+ jdbcUtil_CompositeQuery_Campsite.get_WhereCondition(map);
+					+ "FROM CAMPSITE c LEFT JOIN CAMPSITE_TENT_STATUS cts on c.CAMP_ID = cts.CAMP_ID";
+//					+ jdbcUtil_CompositeQuery_Campsite.get_WhereCondition(map);
 //					+ "ORDER BY CAMP_PRICE"; //DESC
 
 			pstmt = con.prepareStatement(finalSQL);

@@ -77,8 +77,8 @@
 			<tr>
 				<td>營業狀態:</td>
 				<td><select size="1" name="siteState">
-						<option value="1" ${campsiteVO.getSiteState()==1?'selected':''}>已停權</option>
-						<option value="0" ${campsiteVO.getSiteState()==0?'selected':''}>營業中</option>
+						<option value="1" ${campsiteVO.getSiteState()==0?'selected':''}>已停權</option>
+						<option value="0" ${campsiteVO.getSiteState()==1?'selected':''}>營業中</option>
 				</select></td>
 			</tr>
 			<tr>

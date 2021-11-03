@@ -158,9 +158,14 @@
 						id="headCount" value="" autocomplete="off">
 					<hr>
 					<p class="check-in">入住日期:</p>
+					<div id="pickr">
 					<input class="flatpickr flatpickr-input active" id="selectDate"
 						name="date" type="text" placeholder="請選擇範圍..."
 						data-id="rangePlugin" readonly="readonly" autocomplete="off">
+					</div>
+					<div class="spinner-border text-primary d-none pl-2" role="status" id="loading">
+						<span class="visually-hidden">Loading...</span>
+					</div>
 					<input type="hidden" id="from" name="from" value=""> <input
 						type="hidden" id="to" name="to" value="">
 					<hr>
@@ -336,11 +341,20 @@
             url: "<%=request.getContextPath()%>/availibleDate",
             contentType: "application/json",
             data: JSON.stringify(json),
+            beforeSend: function () {
+				$("#pickr").addClass("d-none");
+				$("#loading").toggleClass("d-none");
+				$(':input[type="submit"]').prop('disabled', true);
+			},
             success: function (response) {
             	var array = JSON.parse(response);
             	flatpickr.clear();
             	$("#price").text("");
             	flatpickr.set("disable", array);
+            	$("#pickr").toggleClass("d-none");
+				$("#loading").toggleClass("d-none");
+				$(':input[type="submit"]').prop('disabled', false);
+
              },
         });
 		})

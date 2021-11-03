@@ -106,7 +106,7 @@ img {
 					<td>${campsiteVO.campName}</td>
 					<td>${campsiteVO.location}</td>
 					<td>${campsiteVO.listedTime}</td>
-					<td>${campsiteVO.siteState}</td>
+					<td>${campsiteVO.siteState==0 ?  "已停權":"營業中"}</td>
 					<td>${campsiteVO.reportedCount}</td>
 					<td><img
 						src="<%=request.getContextPath()%>/CampsiteGifReader?column=camp_license&camp_id=${campsiteVO.campId}"

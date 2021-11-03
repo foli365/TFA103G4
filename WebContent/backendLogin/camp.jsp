@@ -127,7 +127,7 @@ img {
 					<td>${VO.campName}</td>
 					<td>${VO.location}</td>
 					<td>${VO.listedTime}</td>
-					<td>${VO.siteState==1 ?  "已停權":"營業中"}</td>
+					<td>${VO.siteState==0 ?  "已停權":"營業中"}</td>
 					<td>${VO.reportedCount}</td>
 					<div id="outerdiv" style="position: fixed; top: 0; left: 0; background: rgba(0, 0, 0, 0.7); z-index: 2; width: 100%; height: 100%; display: none;">
 						<div id="innerdiv" style="position: absolute;">

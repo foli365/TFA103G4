@@ -74,7 +74,7 @@ body {
 				class="form-control" type="password" name="passwordConfirm"
 				id="passwordConfirm"><small style="color: red;">${passwordDiff}</small>
 			<input type="hidden" name="token" value="${token}">
-			<button type="submit" id="reset" class="my-3 float-end btn btn-primary">重設密碼</button>
+			<button type="submit" style="margin-bottom: 10px;" id="reset" class="my-3 float-end btn btn-primary">重設密碼</button>
 		</form>
 	</div>
 	<%@ include file="/template/script.html"%>

@@ -7,15 +7,16 @@
 <%@page import="com.camprelease.model.*"%>
 <%@page import="com.campsitetentstatus.model.*"%>
 <% 
+	Integer id = null;
 	if(session.getAttribute("id") != null){
-	Integer id = Integer.parseInt(session.getAttribute("id").toString());
+	id = Integer.parseInt(session.getAttribute("id").toString());
 	System.out.println("id: " + id);
 	pageContext.setAttribute("id", id);		
 	}
 // 有營地時設備可新增
 	CampReleaseService csvc = new CampReleaseService();
 	FacilitiesService fsvc = new FacilitiesService();
-	List<CampReleaseVO> memberCamp = csvc.getAllforMember(1);
+	List<CampReleaseVO> memberCamp = csvc.getAllforMember(id);
 	ArrayList<CampReleaseVO> noFacCamp = new ArrayList<CampReleaseVO>();
 	for(int i = 0; i < memberCamp.size(); i++){
 		FacilitiesVO fvo = fsvc.getCampId(memberCamp.get(i).getCampId());
@@ -230,7 +231,7 @@ body {
 					<li>
 						<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/campsitetentstatus/campsitetentstatus.do">
 							<select size="1" name="campId">
-								<c:forEach var="campreleaseVO" items="${noTentCamptent}">
+								<c:forEach var="campreleaseVO" items="${memberCamp}">
 									<option value="${campreleaseVO.campId}">${campreleaseVO.campName}
 								</c:forEach>
 							</select> <input type="hidden" name="action" value="go_to_addCampTent">

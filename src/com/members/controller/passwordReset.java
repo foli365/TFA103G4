@@ -41,6 +41,8 @@ public class passwordReset extends HttpServlet {
 					.withClaim("password", subPassword)
 					.build();
 			jwt = verifier.verify(token);
+			RequestDispatcher passed = req.getRequestDispatcher("/register_and_login/reset_password.jsp");
+			passed.forward(req, res);
 		} catch (Exception e) {
 			req.setAttribute("invalid", "此連結已失效");
 			RequestDispatcher failed = req.getRequestDispatcher("/register_and_login/reset_password.jsp");

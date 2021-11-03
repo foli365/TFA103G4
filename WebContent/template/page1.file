@@ -1,8 +1,8 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%  int rowsPerPage = 4;  //�C��������    
-    int rowNumber=0;      //�`����
-    int pageNumber=0;     //�`����      
-    int whichPage=1;      //�ĴX��
+<%  int rowsPerPage = 4;    
+    int rowNumber=0;      
+    int pageNumber=0;        
+    int whichPage=1;     
     int pageIndexArray[]=null;
     int pageIndex=0; 
 %>
@@ -21,10 +21,10 @@
 <%  try {
        whichPage = Integer.parseInt(request.getParameter("whichPage"));
        pageIndex=pageIndexArray[whichPage-1];
-    } catch (NumberFormatException e) { //�Ĥ@�����檺�ɭ�
+    } catch (NumberFormatException e) { 
        whichPage=1;
        pageIndex=0;
-    } catch (ArrayIndexOutOfBoundsException e) { //�`���Ƥ��~�����~����
+    } catch (ArrayIndexOutOfBoundsException e) {
          if (pageNumber>0){
               whichPage=pageNumber;
               pageIndex=pageIndexArray[pageNumber-1];

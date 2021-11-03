@@ -2,16 +2,11 @@ package com.campsite.controller;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.sql.Date;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -19,8 +14,6 @@ import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import org.apache.jasper.tagplugins.jstl.core.ForEach;
 
 import com.campsite.model.CampsiteService;
 import com.campsite.model.CampsiteVO;
@@ -39,7 +32,7 @@ public class CampsiteServlet  extends HttpServlet {
 		req.setCharacterEncoding("UTF-8");
 		String action = req.getParameter("action");
 
-		if ("getOne_For_Display".equals(action)) { // ä¾†è‡ªselect_page.jspçš„è«‹æ±‚
+		if ("getOne_For_Display".equals(action)) { // ¨Ó¦Ûselect_page.jspªº½Ğ¨D
 
 			List<String> errorMsgs = new LinkedList<String>();
 			// Store this set in the request scope, in case we need to
@@ -47,54 +40,54 @@ public class CampsiteServlet  extends HttpServlet {
 			req.setAttribute("errorMsgs", errorMsgs);
 
 			try {
-				/*************************** 1.æ¥æ”¶è«‹æ±‚åƒæ•¸ - è¼¸å…¥æ ¼å¼çš„éŒ¯èª¤è™•ç† **********************/
+				/*************************** 1.±µ¦¬½Ğ¨D°Ñ¼Æ - ¿é¤J®æ¦¡ªº¿ù»~³B²z **********************/
 				String str = req.getParameter("campId");
 				if (str == null || (str.trim()).length() == 0) {
-					errorMsgs.add("è«‹è¼¸å…¥ç‡Ÿåœ°ç·¨è™Ÿ");
+					errorMsgs.add("½Ğ¿é¤JÀç¦a½s¸¹");
 				}
 
 				Integer campId = null;
 				try {
 					campId = new Integer(str);
 				} catch (Exception e) {
-					errorMsgs.add("ç‡Ÿåœ°ç·¨è™Ÿæ ¼å¼ä¸æ­£ç¢º");
+					errorMsgs.add("Àç¦a½s¸¹®æ¦¡¤£¥¿½T");
 				}
 				
 				// Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
 					RequestDispatcher failureView = req.getRequestDispatcher("/campsite/select_page.jsp");
 					failureView.forward(req, res);
-					return;// ç¨‹å¼ä¸­æ–·
+					return;// µ{¦¡¤¤Â_
 				}
 
-				/*************************** 2.é–‹å§‹æŸ¥è©¢è³‡æ–™ *****************************************/
+				/*************************** 2.¶}©l¬d¸ß¸ê®Æ *****************************************/
 				CampsiteService campsiteSvc = new CampsiteService();
 				CampsiteVO campsiteVO = campsiteSvc.getOneCampsite(campId);
 				if (campsiteVO == null) {
-					errorMsgs.add("æŸ¥ç„¡è³‡æ–™");
+					errorMsgs.add("¬dµL¸ê®Æ");
 				}
 				// Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
 					RequestDispatcher failureView = req.getRequestDispatcher("/campsite/select_page.jsp");
 					failureView.forward(req, res);
-					return;// ç¨‹å¼ä¸­æ–·
+					return;// µ{¦¡¤¤Â_
 				}
 
-				/*************************** 3.æŸ¥è©¢å®Œæˆ,æº–å‚™è½‰äº¤(Send the Success view) *************/
-				req.setAttribute("campsiteVO", campsiteVO); // è³‡æ–™åº«å–å‡ºçš„campsiteVOç‰©ä»¶,å­˜å…¥req
+				/*************************** 3.¬d¸ß§¹¦¨,·Ç³ÆÂà¥æ(Send the Success view) *************/
+				req.setAttribute("campsiteVO", campsiteVO); // ¸ê®Æ®w¨ú¥XªºcampsiteVOª«¥ó,¦s¤Jreq
 				String url = "/campsite/listOneCampsite.jsp";
-				RequestDispatcher successView = req.getRequestDispatcher(url); // æˆåŠŸè½‰äº¤ listOneCampsite.jsp
+				RequestDispatcher successView = req.getRequestDispatcher(url); // ¦¨¥\Âà¥æ listOneCampsite.jsp
 				successView.forward(req, res);
 
-				/*************************** å…¶ä»–å¯èƒ½çš„éŒ¯èª¤è™•ç† *************************************/
+				/*************************** ¨ä¥L¥i¯àªº¿ù»~³B²z *************************************/
 			} catch (Exception e) {
-				errorMsgs.add("ç„¡æ³•å–å¾—è³‡æ–™:" + e.getMessage());
+				errorMsgs.add("µLªk¨ú±o¸ê®Æ:" + e.getMessage());
 				RequestDispatcher failureView = req.getRequestDispatcher("/campsite/select_page.jsp");
 				failureView.forward(req, res);
 			}
 		}
 
-		if ("listCampsites_ByCompositeQuery".equals(action)) { // ä¾†è‡ªsearch_campsite.jspçš„è¤‡åˆæŸ¥è©¢è«‹æ±‚
+		if ("listCampsites_ByCompositeQuery".equals(action)) { // ¨Ó¦Ûsearch_campsite.jspªº½Æ¦X¬d¸ß½Ğ¨D
 			List<String> errorMsgs = new LinkedList<String>();
 			// Store this set in the request scope, in case we need to
 			// send the ErrorPage view.
@@ -102,21 +95,21 @@ public class CampsiteServlet  extends HttpServlet {
 
 			try {
 
-				/*************************** 1.å°‡è¼¸å…¥è³‡æ–™è½‰ç‚ºMap **********************************/
+				/*************************** 1.±N¿é¤J¸ê®ÆÂà¬°Map **********************************/
 //				String dateRange = req.getParameter("CAMP_OPENING_TIME");
 //				if (dateRange == null || dateRange.trim().length() == 0) {
-//					errorMsgs.add("è«‹é¸æ“‡æ—¥æœŸ!");
+//					errorMsgs.add("½Ğ¿ï¾Ü¤é´Á!");
 //				}
 
-				// æ¡ç”¨Map<String,String[]> getParameterMap()çš„æ–¹æ³•
-				// æ³¨æ„:an immutable java.util.Map
+				// ±Ä¥ÎMap<String,String[]> getParameterMap()ªº¤èªk
+				// ª`·N:an immutable java.util.Map
 				Map<String, String[]> map = req.getParameterMap();
 				Set<String> keys = map.keySet();
 				for (String key : keys) {
 					String value = map.get(key)[0];
 					System.out.println(key + " : " + value);
 				}
-				/*************************** 2.é–‹å§‹è¤‡åˆæŸ¥è©¢ ***************************************/
+				/*************************** 2.¶}©l½Æ¦X¬d¸ß ***************************************/
 				CampsiteService campsiteSvc = new CampsiteService();
 				List<CampsiteVO> list = campsiteSvc.getAll(map);
 				System.out.println("Servlet list= " + list);
@@ -153,7 +146,7 @@ public class CampsiteServlet  extends HttpServlet {
 								filterList.add(campsiteVO);
 							}
 						} else if (customerNum != null) {
-							if(campsiteTentStatusSvc.getUnavailibleDatewithGuestNumberOnly(campsiteVO.getCampId(), customerNum).isEmpty()) {
+							if(campsiteTentStatusSvc.getUnavailibleDatewithGuestNumberOnly(campsiteVO.getCampId(), customerNum).isEmpty() && campsiteSvc.getOneCampsite(campsiteVO.getCampId()).getCampLimit() >= customerNum) {
 								filterList.add(campsiteVO);
 							}
 						}
@@ -161,13 +154,13 @@ public class CampsiteServlet  extends HttpServlet {
 				}
 				System.out.println("Servlet filterList " + filterList);
 				
-				/*************************** 3.æŸ¥è©¢å®Œæˆ,æº–å‚™è½‰äº¤(Send the Success view) ************/
+				/*************************** 3.¬d¸ß§¹¦¨,·Ç³ÆÂà¥æ(Send the Success view) ************/
 				req.setAttribute("listExist", "empty");
-				req.setAttribute("campsiteList", filterList); // è³‡æ–™åº«å–å‡ºçš„filterListç‰©ä»¶,å­˜å…¥request
-				RequestDispatcher successView = req.getRequestDispatcher("/campsite/search_campsite.jsp"); // æˆåŠŸè½‰äº¤search_campsite.jsp
+				req.setAttribute("campsiteList", filterList); // ¸ê®Æ®w¨ú¥XªºfilterListª«¥ó,¦s¤Jrequest
+				RequestDispatcher successView = req.getRequestDispatcher("/campsite/search_campsite.jsp"); // ¦¨¥\Âà¥æsearch_campsite.jsp
 				successView.forward(req, res);
 
-				/*************************** å…¶ä»–å¯èƒ½çš„éŒ¯èª¤è™•ç† **********************************/
+				/*************************** ¨ä¥L¥i¯àªº¿ù»~³B²z **********************************/
 			} catch (Exception e) {
 //				errorMsgs.add(e.getMessage());
 				RequestDispatcher failureView = req.getRequestDispatcher("/campsite/search_campsite.jsp");
@@ -175,7 +168,7 @@ public class CampsiteServlet  extends HttpServlet {
 			}
 		}
 
-		if ("getReserveCampsite".equals(action)) { // ä¾†è‡ªselect_page.jspçš„è«‹æ±‚
+		if ("getReserveCampsite".equals(action)) { // ¨Ó¦Ûselect_page.jspªº½Ğ¨D
 
 			List<String> errorMsgs = new LinkedList<String>();
 			// Store this set in the request scope, in case we need to
@@ -183,36 +176,36 @@ public class CampsiteServlet  extends HttpServlet {
 			req.setAttribute("errorMsgs", errorMsgs);
 
 			try {
-				/*************************** 1.æ¥æ”¶è«‹æ±‚åƒæ•¸ - è¼¸å…¥æ ¼å¼çš„éŒ¯èª¤è™•ç† **********************/
+				/*************************** 1.±µ¦¬½Ğ¨D°Ñ¼Æ - ¿é¤J®æ¦¡ªº¿ù»~³B²z **********************/
 				String str = req.getParameter("campId");
 				if (str == null || (str.trim()).length() == 0) {
-					errorMsgs.add("è«‹è¼¸å…¥ç‡Ÿåœ°ç·¨è™Ÿ");
+					errorMsgs.add("½Ğ¿é¤JÀç¦a½s¸¹");
 				}
 
 				Integer campId = null;
 				try {
 					campId = new Integer(str);
 				} catch (Exception e) {
-					errorMsgs.add("ç‡Ÿåœ°ç·¨è™Ÿæ ¼å¼ä¸æ­£ç¢º");
+					errorMsgs.add("Àç¦a½s¸¹®æ¦¡¤£¥¿½T");
 				}
 				// Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
 					RequestDispatcher failureView = req.getRequestDispatcher("/campsite/search_campsite.jsp");
 					failureView.forward(req, res);
-					return;// ç¨‹å¼ä¸­æ–·
+					return;// µ{¦¡¤¤Â_
 				}
 
-				/*************************** 2.é–‹å§‹æŸ¥è©¢è³‡æ–™ *****************************************/
+				/*************************** 2.¶}©l¬d¸ß¸ê®Æ *****************************************/
 				CampsiteService campsiteSvc = new CampsiteService();
 				CampsiteVO campsiteVO = campsiteSvc.getOneCampsite(campId);
 				if (campsiteVO == null) {
-					errorMsgs.add("æŸ¥ç„¡è³‡æ–™");
+					errorMsgs.add("¬dµL¸ê®Æ");
 				}
 				// Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
 					RequestDispatcher failureView = req.getRequestDispatcher("/campsite/search_campsite.jsp");
 					failureView.forward(req, res);
-					return;// ç¨‹å¼ä¸­æ–·
+					return;// µ{¦¡¤¤Â_
 				}
 				
 				List<Integer> picturesNum = new ArrayList<>();
@@ -229,22 +222,22 @@ public class CampsiteServlet  extends HttpServlet {
 					picturesNum.add(5);
 				}
 
-				/*************************** 3.æŸ¥è©¢å®Œæˆ,æº–å‚™è½‰äº¤(Send the Success view) *************/
-				req.setAttribute("campsiteVO", campsiteVO); // è³‡æ–™åº«å–å‡ºçš„campsiteVOç‰©ä»¶,å­˜å…¥req
+				/*************************** 3.¬d¸ß§¹¦¨,·Ç³ÆÂà¥æ(Send the Success view) *************/
+				req.setAttribute("campsiteVO", campsiteVO); // ¸ê®Æ®w¨ú¥XªºcampsiteVOª«¥ó,¦s¤Jreq
 				req.setAttribute("picturesNum", picturesNum);
 				String url = "/campsite/reserve_campsite.jsp";
-				RequestDispatcher successView = req.getRequestDispatcher(url); // æˆåŠŸè½‰äº¤ listOneCampsite.jsp
+				RequestDispatcher successView = req.getRequestDispatcher(url); // ¦¨¥\Âà¥æ listOneCampsite.jsp
 				successView.forward(req, res);
 
-				/*************************** å…¶ä»–å¯èƒ½çš„éŒ¯èª¤è™•ç† *************************************/
+				/*************************** ¨ä¥L¥i¯àªº¿ù»~³B²z *************************************/
 			} catch (Exception e) {
-				errorMsgs.add("ç„¡æ³•å–å¾—è³‡æ–™:" + e.getMessage());
+				errorMsgs.add("µLªk¨ú±o¸ê®Æ:" + e.getMessage());
 				RequestDispatcher failureView = req.getRequestDispatcher("/campsite/search_campsite.jsp");
 				failureView.forward(req, res);
 			}
 		}
 
-		if ("insert".equals(action)) { // ä¾†è‡ªaddEmp.jspçš„è«‹æ±‚
+		if ("insert".equals(action)) { // ¨Ó¦ÛaddEmp.jspªº½Ğ¨D
 
 			List<String> errorMsgs = new LinkedList<String>();
 			// Store this set in the request scope, in case we need to
@@ -252,23 +245,23 @@ public class CampsiteServlet  extends HttpServlet {
 			req.setAttribute("errorMsgs", errorMsgs);
 
 			try {
-				/*********************** 1.æ¥æ”¶è«‹æ±‚åƒæ•¸ - è¼¸å…¥æ ¼å¼çš„éŒ¯èª¤è™•ç† *************************/
+				/*********************** 1.±µ¦¬½Ğ¨D°Ñ¼Æ - ¿é¤J®æ¦¡ªº¿ù»~³B²z *************************/
 				Integer memberId = new Integer(req.getParameter("memberId").trim());
 
 				String campName = req.getParameter("campName");
 				String campNameReg = "^[(\u4e00-\u9fa5)(a-zA-Z0-9)]{2,15}$";
 				if (campName == null || campName.trim().length() == 0) {
-					errorMsgs.add("ç‡Ÿåœ°åç¨±: è«‹å‹¿ç©ºç™½");
-				} else if (!campName.trim().matches(campNameReg)) { // ä»¥ä¸‹ç·´ç¿’æ­£å‰‡(è¦)è¡¨ç¤ºå¼(regular-expression)
-					errorMsgs.add("ç‡Ÿåœ°åç¨±: åªèƒ½æ˜¯ä¸­ã€è‹±æ–‡å­—æ¯ã€æ•¸å­—, ä¸”é•·åº¦å¿…éœ€åœ¨2åˆ°15ä¹‹é–“");
+					errorMsgs.add("Àç¦a¦WºÙ: ½Ğ¤ÅªÅ¥Õ");
+				} else if (!campName.trim().matches(campNameReg)) { // ¥H¤U½m²ß¥¿«h(³W)ªí¥Ü¦¡(regular-expression)
+					errorMsgs.add("Àç¦a¦WºÙ: ¥u¯à¬O¤¤¡B­^¤å¦r¥À¡B¼Æ¦r, ¥Bªø«×¥²»İ¦b2¨ì15¤§¶¡");
 				}
 
 				String location = req.getParameter("location");
 				String locationReg = "^[(\u4e00-\u9fa5)(a-zA-Z0-9)]{10,25}$";
 				if (location == null || location.trim().length() == 0) {
-					errorMsgs.add("åœ°å€: è«‹å‹¿ç©ºç™½");
-				} else if (!location.trim().matches(locationReg)) { // ä»¥ä¸‹ç·´ç¿’æ­£å‰‡(è¦)è¡¨ç¤ºå¼(regular-expression)
-					errorMsgs.add("åœ°å€: åªèƒ½æ˜¯ä¸­ã€è‹±æ–‡å­—æ¯ã€æ•¸å­—, ä¸”é•·åº¦å¿…éœ€åœ¨10åˆ°25ä¹‹é–“");
+					errorMsgs.add("¦a§}: ½Ğ¤ÅªÅ¥Õ");
+				} else if (!location.trim().matches(locationReg)) { // ¥H¤U½m²ß¥¿«h(³W)ªí¥Ü¦¡(regular-expression)
+					errorMsgs.add("¦a§}: ¥u¯à¬O¤¤¡B­^¤å¦r¥À¡B¼Æ¦r, ¥Bªø«×¥²»İ¦b10¨ì25¤§¶¡");
 				}
 
 				Double latitude = null;
@@ -276,7 +269,7 @@ public class CampsiteServlet  extends HttpServlet {
 					latitude = new Double(req.getParameter("latitude").trim());
 				} catch (NumberFormatException e) {
 					latitude = 0.0;
-					errorMsgs.add("ç¶“åº¦è«‹å¡«æ•¸å­—.");
+					errorMsgs.add("¸g«×½Ğ¶ñ¼Æ¦r.");
 				}
 
 				Double longtitude = null;
@@ -284,12 +277,12 @@ public class CampsiteServlet  extends HttpServlet {
 					longtitude = new Double(req.getParameter("longtitude").trim());
 				} catch (NumberFormatException e) {
 					longtitude = 0.0;
-					errorMsgs.add("ç·¯åº¦è«‹å¡«æ•¸å­—.");
+					errorMsgs.add("½n«×½Ğ¶ñ¼Æ¦r.");
 				}
 
 				String campDescription = req.getParameter("campDescription").trim();
 				if (campDescription == null || campDescription.trim().length() == 0) {
-					errorMsgs.add("ç‡Ÿåœ°èªªæ˜è«‹å‹¿ç©ºç™½");
+					errorMsgs.add("Àç¦a»¡©ú½Ğ¤ÅªÅ¥Õ");
 				}
 
 				Integer campPrice = null;
@@ -297,7 +290,7 @@ public class CampsiteServlet  extends HttpServlet {
 					campPrice = new Integer(req.getParameter("campPrice").trim());
 				} catch (NumberFormatException e) {
 					campPrice = 0;
-					errorMsgs.add("ç‡Ÿåœ°åƒ¹æ ¼è«‹å¡«æ­£æ•´æ•¸.");
+					errorMsgs.add("Àç¦a»ù®æ½Ğ¶ñ¥¿¾ã¼Æ.");
 				}
 
 				Integer campLimit = null;
@@ -305,7 +298,7 @@ public class CampsiteServlet  extends HttpServlet {
 					campLimit = new Integer(req.getParameter("campLimit").trim());
 				} catch (NumberFormatException e) {
 					campLimit = 0;
-					errorMsgs.add("äººæ•¸ä¸Šé™è«‹å¡«æ­£æ•´æ•¸.");
+					errorMsgs.add("¤H¼Æ¤W­­½Ğ¶ñ¥¿¾ã¼Æ.");
 				}
 
 				java.sql.Timestamp listedTime = null;
@@ -313,7 +306,7 @@ public class CampsiteServlet  extends HttpServlet {
 					listedTime = java.sql.Timestamp.valueOf(req.getParameter("listedTime").trim());
 				} catch (IllegalArgumentException e) {
 					listedTime = new java.sql.Timestamp(System.currentTimeMillis());
-					errorMsgs.add("è«‹è¼¸å…¥æ—¥æœŸ!");
+					errorMsgs.add("½Ğ¿é¤J¤é´Á!");
 				}
 
 				Integer siteState = new Integer(req.getParameter("siteState").trim());
@@ -323,7 +316,7 @@ public class CampsiteServlet  extends HttpServlet {
 					lovedCount = new Integer(req.getParameter("lovedCount").trim());
 				} catch (NumberFormatException e) {
 					lovedCount = 0;
-					errorMsgs.add("å–œæ­¡äººæ•¸è«‹å¡«æ­£æ•´æ•¸.");
+					errorMsgs.add("³ßÅw¤H¼Æ½Ğ¶ñ¥¿¾ã¼Æ.");
 				}
 
 				Integer reportedCount = null;
@@ -331,7 +324,7 @@ public class CampsiteServlet  extends HttpServlet {
 					reportedCount = new Integer(req.getParameter("reportedCount").trim());
 				} catch (NumberFormatException e) {
 					reportedCount = 0;
-					errorMsgs.add("æª¢èˆ‰äººæ•¸è«‹å¡«æ­£æ•´æ•¸.");
+					errorMsgs.add("ÀËÁ|¤H¼Æ½Ğ¶ñ¥¿¾ã¼Æ.");
 				}
 
 				InputStream in = req.getPart("campLicense").getInputStream();
@@ -341,7 +334,7 @@ public class CampsiteServlet  extends HttpServlet {
 					in.read(campLicense);
 					in.close();
 				} else {
-					errorMsgs.add("è«‹ä¸Šå‚³ç‡Ÿæ¥­åŸ·ç…§");
+					errorMsgs.add("½Ğ¤W¶ÇÀç·~°õ·Ó");
 				}
 
 				InputStream in1 = req.getPart("picture1").getInputStream();
@@ -377,24 +370,24 @@ public class CampsiteServlet  extends HttpServlet {
 
 				// Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
-					req.setAttribute("campsiteVO", campsiteVO); // å«æœ‰è¼¸å…¥æ ¼å¼éŒ¯èª¤çš„empVOç‰©ä»¶,ä¹Ÿå­˜å…¥req
+					req.setAttribute("campsiteVO", campsiteVO); // §t¦³¿é¤J®æ¦¡¿ù»~ªºempVOª«¥ó,¤]¦s¤Jreq
 					RequestDispatcher failureView = req.getRequestDispatcher("/campsite/addCampsite.jsp");
 					failureView.forward(req, res);
 					return;
 				}
 
-				/*************************** 2.é–‹å§‹æ–°å¢è³‡æ–™ ***************************************/
+				/*************************** 2.¶}©l·s¼W¸ê®Æ ***************************************/
 				CampsiteService campsiteSvc = new CampsiteService();
 				campsiteVO = campsiteSvc.addCampsite(memberId, campName, location, latitude, longtitude,
 						campDescription, campPrice, campLimit, listedTime, siteState, lovedCount, reportedCount,
 						campLicense, picture1, picture2, picture3, picture4, picture5);
 
-				/*************************** 3.æ–°å¢å®Œæˆ,æº–å‚™è½‰äº¤(Send the Success view) ***********/
+				/*************************** 3.·s¼W§¹¦¨,·Ç³ÆÂà¥æ(Send the Success view) ***********/
 				String url = "/campsite/listAllCampsite_byDAO.jsp";
-				RequestDispatcher successView = req.getRequestDispatcher(url); // æ–°å¢æˆåŠŸå¾Œè½‰äº¤listAllEmp.jsp
+				RequestDispatcher successView = req.getRequestDispatcher(url); // ·s¼W¦¨¥\«áÂà¥ælistAllEmp.jsp
 				successView.forward(req, res);
 
-				/*************************** å…¶ä»–å¯èƒ½çš„éŒ¯èª¤è™•ç† **********************************/
+				/*************************** ¨ä¥L¥i¯àªº¿ù»~³B²z **********************************/
 			} catch (Exception e) {
 				errorMsgs.add(e.getMessage());
 				RequestDispatcher failureView = req.getRequestDispatcher("/campsite/addCampsite.jsp");
@@ -402,7 +395,7 @@ public class CampsiteServlet  extends HttpServlet {
 			}
 		}
 
-		if ("getOne_For_Update".equals(action)) { // ä¾†è‡ªlistAllCampsite.jspçš„è«‹æ±‚
+		if ("getOne_For_Update".equals(action)) { // ¨Ó¦ÛlistAllCampsite.jspªº½Ğ¨D
 
 			List<String> errorMsgs = new LinkedList<String>();
 			// Store this set in the request scope, in case we need to
@@ -410,28 +403,28 @@ public class CampsiteServlet  extends HttpServlet {
 			req.setAttribute("errorMsgs", errorMsgs);
 
 			try {
-				/*************************** 1.æ¥æ”¶è«‹æ±‚åƒæ•¸ ****************************************/
+				/*************************** 1.±µ¦¬½Ğ¨D°Ñ¼Æ ****************************************/
 				Integer campId = new Integer(req.getParameter("campId"));
 
-				/*************************** 2.é–‹å§‹æŸ¥è©¢è³‡æ–™ ****************************************/
+				/*************************** 2.¶}©l¬d¸ß¸ê®Æ ****************************************/
 				CampsiteService campsiteSvc = new CampsiteService();
 				CampsiteVO campsiteVO = campsiteSvc.getOneCampsite(campId);
 
-				/*************************** 3.æŸ¥è©¢å®Œæˆ,æº–å‚™è½‰äº¤(Send the Success view) ************/
-				req.setAttribute("campsiteVO", campsiteVO); // è³‡æ–™åº«å–å‡ºçš„campsiteVOç‰©ä»¶,å­˜å…¥req
+				/*************************** 3.¬d¸ß§¹¦¨,·Ç³ÆÂà¥æ(Send the Success view) ************/
+				req.setAttribute("campsiteVO", campsiteVO); // ¸ê®Æ®w¨ú¥XªºcampsiteVOª«¥ó,¦s¤Jreq
 				String url = "/campsite/update_campsite_input.jsp";
-				RequestDispatcher successView = req.getRequestDispatcher(url);// æˆåŠŸè½‰äº¤ update_campsite_input.jsp
+				RequestDispatcher successView = req.getRequestDispatcher(url);// ¦¨¥\Âà¥æ update_campsite_input.jsp
 				successView.forward(req, res);
 
-				/*************************** å…¶ä»–å¯èƒ½çš„éŒ¯èª¤è™•ç† **********************************/
+				/*************************** ¨ä¥L¥i¯àªº¿ù»~³B²z **********************************/
 			} catch (Exception e) {
-				errorMsgs.add("ç„¡æ³•å–å¾—è¦ä¿®æ”¹çš„è³‡æ–™:" + e.getMessage());
+				errorMsgs.add("µLªk¨ú±o­n­×§ïªº¸ê®Æ:" + e.getMessage());
 				RequestDispatcher failureView = req.getRequestDispatcher("/campsite/listAllCampsite_byDAO.jsp");
 				failureView.forward(req, res);
 			}
 		}
 
-		if ("update".equals(action)) { // ä¾†è‡ªupdate_campsite_input.jspçš„è«‹æ±‚
+		if ("update".equals(action)) { // ¨Ó¦Ûupdate_campsite_input.jspªº½Ğ¨D
 
 			List<String> errorMsgs = new LinkedList<String>();
 			// Store this set in the request scope, in case we need to
@@ -439,7 +432,7 @@ public class CampsiteServlet  extends HttpServlet {
 			req.setAttribute("errorMsgs", errorMsgs);
 
 			try {
-				/*************************** 1.æ¥æ”¶è«‹æ±‚åƒæ•¸ - è¼¸å…¥æ ¼å¼çš„éŒ¯èª¤è™•ç† **********************/
+				/*************************** 1.±µ¦¬½Ğ¨D°Ñ¼Æ - ¿é¤J®æ¦¡ªº¿ù»~³B²z **********************/
 				Integer campId = new Integer(req.getParameter("campId").trim());
 
 				Integer memberId = new Integer(req.getParameter("memberId").trim());
@@ -447,17 +440,17 @@ public class CampsiteServlet  extends HttpServlet {
 				String campName = req.getParameter("campName");
 				String campNameReg = "^[(\u4e00-\u9fa5)(a-zA-Z0-9)]{2,15}$";
 				if (campName == null || campName.trim().length() == 0) {
-					errorMsgs.add("ç‡Ÿåœ°åç¨±: è«‹å‹¿ç©ºç™½");
-				} else if (!campName.trim().matches(campNameReg)) { // ä»¥ä¸‹ç·´ç¿’æ­£å‰‡(è¦)è¡¨ç¤ºå¼(regular-expression)
-					errorMsgs.add("ç‡Ÿåœ°åç¨±: åªèƒ½æ˜¯ä¸­ã€è‹±æ–‡å­—æ¯ã€æ•¸å­—, ä¸”é•·åº¦å¿…éœ€åœ¨2åˆ°15ä¹‹é–“");
+					errorMsgs.add("Àç¦a¦WºÙ: ½Ğ¤ÅªÅ¥Õ");
+				} else if (!campName.trim().matches(campNameReg)) { // ¥H¤U½m²ß¥¿«h(³W)ªí¥Ü¦¡(regular-expression)
+					errorMsgs.add("Àç¦a¦WºÙ: ¥u¯à¬O¤¤¡B­^¤å¦r¥À¡B¼Æ¦r, ¥Bªø«×¥²»İ¦b2¨ì15¤§¶¡");
 				}
 
 				String location = req.getParameter("location");
 				String locationReg = "^[(\u4e00-\u9fa5)(a-zA-Z0-9)]{10,25}$";
 				if (location == null || location.trim().length() == 0) {
-					errorMsgs.add("åœ°å€: è«‹å‹¿ç©ºç™½");
-				} else if (!location.trim().matches(locationReg)) { // ä»¥ä¸‹ç·´ç¿’æ­£å‰‡(è¦)è¡¨ç¤ºå¼(regular-expression)
-					errorMsgs.add("åœ°å€: åªèƒ½æ˜¯ä¸­ã€è‹±æ–‡å­—æ¯ã€æ•¸å­—, ä¸”é•·åº¦å¿…éœ€åœ¨10åˆ°25ä¹‹é–“");
+					errorMsgs.add("¦a§}: ½Ğ¤ÅªÅ¥Õ");
+				} else if (!location.trim().matches(locationReg)) { // ¥H¤U½m²ß¥¿«h(³W)ªí¥Ü¦¡(regular-expression)
+					errorMsgs.add("¦a§}: ¥u¯à¬O¤¤¡B­^¤å¦r¥À¡B¼Æ¦r, ¥Bªø«×¥²»İ¦b10¨ì25¤§¶¡");
 				}
 
 				Double latitude = null;
@@ -465,7 +458,7 @@ public class CampsiteServlet  extends HttpServlet {
 					latitude = new Double(req.getParameter("latitude").trim());
 				} catch (NumberFormatException e) {
 					latitude = 0.0;
-					errorMsgs.add("ç¶“åº¦è«‹å¡«æ•¸å­—.");
+					errorMsgs.add("¸g«×½Ğ¶ñ¼Æ¦r.");
 				}
 
 				Double longtitude = null;
@@ -473,12 +466,12 @@ public class CampsiteServlet  extends HttpServlet {
 					longtitude = new Double(req.getParameter("longtitude").trim());
 				} catch (NumberFormatException e) {
 					longtitude = 0.0;
-					errorMsgs.add("ç·¯åº¦è«‹å¡«æ•¸å­—.");
+					errorMsgs.add("½n«×½Ğ¶ñ¼Æ¦r.");
 				}
 
 				String campDescription = req.getParameter("campDescription").trim();
 				if (campDescription == null || campDescription.trim().length() == 0) {
-					errorMsgs.add("ç‡Ÿåœ°èªªæ˜è«‹å‹¿ç©ºç™½");
+					errorMsgs.add("Àç¦a»¡©ú½Ğ¤ÅªÅ¥Õ");
 				}
 
 				Integer campPrice = null;
@@ -486,7 +479,7 @@ public class CampsiteServlet  extends HttpServlet {
 					campPrice = new Integer(req.getParameter("campPrice").trim());
 				} catch (NumberFormatException e) {
 					campPrice = 0;
-					errorMsgs.add("ç‡Ÿåœ°åƒ¹æ ¼è«‹å¡«æ­£æ•´æ•¸.");
+					errorMsgs.add("Àç¦a»ù®æ½Ğ¶ñ¥¿¾ã¼Æ.");
 				}
 
 				Integer campLimit = null;
@@ -494,7 +487,7 @@ public class CampsiteServlet  extends HttpServlet {
 					campLimit = new Integer(req.getParameter("campLimit").trim());
 				} catch (NumberFormatException e) {
 					campLimit = 0;
-					errorMsgs.add("äººæ•¸ä¸Šé™è«‹å¡«æ­£æ•´æ•¸.");
+					errorMsgs.add("¤H¼Æ¤W­­½Ğ¶ñ¥¿¾ã¼Æ.");
 				}
 
 				java.sql.Timestamp listedTime = null;
@@ -502,7 +495,7 @@ public class CampsiteServlet  extends HttpServlet {
 					listedTime = java.sql.Timestamp.valueOf(req.getParameter("listedTime").trim());
 				} catch (IllegalArgumentException e) {
 					listedTime = new java.sql.Timestamp(System.currentTimeMillis());
-					errorMsgs.add("è«‹è¼¸å…¥æ—¥æœŸ!");
+					errorMsgs.add("½Ğ¿é¤J¤é´Á!");
 				}
 
 				Integer siteState = new Integer(req.getParameter("siteState").trim());
@@ -512,7 +505,7 @@ public class CampsiteServlet  extends HttpServlet {
 					lovedCount = new Integer(req.getParameter("lovedCount").trim());
 				} catch (NumberFormatException e) {
 					lovedCount = 0;
-					errorMsgs.add("å–œæ­¡äººæ•¸è«‹å¡«æ­£æ•´æ•¸.");
+					errorMsgs.add("³ßÅw¤H¼Æ½Ğ¶ñ¥¿¾ã¼Æ.");
 				}
 
 				Integer reportedCount = null;
@@ -520,7 +513,7 @@ public class CampsiteServlet  extends HttpServlet {
 					reportedCount = new Integer(req.getParameter("reportedCount").trim());
 				} catch (NumberFormatException e) {
 					reportedCount = 0;
-					errorMsgs.add("æª¢èˆ‰äººæ•¸è«‹å¡«æ­£æ•´æ•¸.");
+					errorMsgs.add("ÀËÁ|¤H¼Æ½Ğ¶ñ¥¿¾ã¼Æ.");
 				}
 
 				InputStream in = req.getPart("campLicense").getInputStream();
@@ -530,7 +523,7 @@ public class CampsiteServlet  extends HttpServlet {
 					in.read(campLicense);
 					in.close();
 				} else {
-					errorMsgs.add("è«‹ä¸Šå‚³ç‡Ÿæ¥­åŸ·ç…§");
+					errorMsgs.add("½Ğ¤W¶ÇÀç·~°õ·Ó");
 				}
 
 				InputStream in1 = req.getPart("picture1").getInputStream();
@@ -568,32 +561,32 @@ public class CampsiteServlet  extends HttpServlet {
 
 				// Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
-					req.setAttribute("campsiteVO", campsiteVO); // å«æœ‰è¼¸å…¥æ ¼å¼éŒ¯èª¤çš„empVOç‰©ä»¶,ä¹Ÿå­˜å…¥req
+					req.setAttribute("campsiteVO", campsiteVO); // §t¦³¿é¤J®æ¦¡¿ù»~ªºempVOª«¥ó,¤]¦s¤Jreq
 					RequestDispatcher failureView = req.getRequestDispatcher("/campsite/update_campsite_input.jsp");
 					failureView.forward(req, res);
-					return; // ç¨‹å¼ä¸­æ–·
+					return; // µ{¦¡¤¤Â_
 				}
-				/*************************** 2.é–‹å§‹ä¿®æ”¹è³‡æ–™ *****************************************/
+				/*************************** 2.¶}©l­×§ï¸ê®Æ *****************************************/
 				CampsiteService campsiteSvc = new CampsiteService();
 				campsiteVO = campsiteSvc.updateCampsite(memberId, campName, location, latitude, longtitude,
 						campDescription, campPrice, campLimit, listedTime, siteState, lovedCount, reportedCount,
 						campLicense, picture1, picture2, picture3, picture4, picture5, campId);
 
-				/*************************** 3.ä¿®æ”¹å®Œæˆ,æº–å‚™è½‰äº¤(Send the Success view) *************/
-				req.setAttribute("campsiteVO", campsiteVO); // è³‡æ–™åº«updateæˆåŠŸå¾Œ,æ­£ç¢ºçš„çš„campsiteVOç‰©ä»¶,å­˜å…¥req
+				/*************************** 3.­×§ï§¹¦¨,·Ç³ÆÂà¥æ(Send the Success view) *************/
+				req.setAttribute("campsiteVO", campsiteVO); // ¸ê®Æ®wupdate¦¨¥\«á,¥¿½TªºªºcampsiteVOª«¥ó,¦s¤Jreq
 				String url = "/campsite/listOneCampsite.jsp";
-				RequestDispatcher successView = req.getRequestDispatcher(url); // ä¿®æ”¹æˆåŠŸå¾Œ,è½‰äº¤listOneCampsite.jsp
+				RequestDispatcher successView = req.getRequestDispatcher(url); // ­×§ï¦¨¥\«á,Âà¥ælistOneCampsite.jsp
 				successView.forward(req, res);
 
-				/*************************** å…¶ä»–å¯èƒ½çš„éŒ¯èª¤è™•ç† *************************************/
+				/*************************** ¨ä¥L¥i¯àªº¿ù»~³B²z *************************************/
 			} catch (Exception e) {
-				errorMsgs.add("ä¿®æ”¹è³‡æ–™å¤±æ•—:" + e.getMessage());
+				errorMsgs.add("­×§ï¸ê®Æ¥¢±Ñ:" + e.getMessage());
 				RequestDispatcher failureView = req.getRequestDispatcher("/campsite/update_campsite_input.jsp");
 				failureView.forward(req, res);
 			}
 		}
 
-		if ("delete".equals(action)) { // ä¾†è‡ªlistAllCampsite.jsp
+		if ("delete".equals(action)) { // ¨Ó¦ÛlistAllCampsite.jsp
 
 			List<String> errorMsgs = new LinkedList<String>();
 			// Store this set in the request scope, in case we need to
@@ -601,21 +594,21 @@ public class CampsiteServlet  extends HttpServlet {
 			req.setAttribute("errorMsgs", errorMsgs);
 
 			try {
-				/*************************** 1.æ¥æ”¶è«‹æ±‚åƒæ•¸ ***************************************/
+				/*************************** 1.±µ¦¬½Ğ¨D°Ñ¼Æ ***************************************/
 				Integer campId = new Integer(req.getParameter("campId"));
 
-				/*************************** 2.é–‹å§‹åˆªé™¤è³‡æ–™ ***************************************/
+				/*************************** 2.¶}©l§R°£¸ê®Æ ***************************************/
 				CampsiteService campsiteSvc = new CampsiteService();
 				campsiteSvc.deleteCampsite(campId);
 
-				/*************************** 3.åˆªé™¤å®Œæˆ,æº–å‚™è½‰äº¤(Send the Success view) ***********/
+				/*************************** 3.§R°£§¹¦¨,·Ç³ÆÂà¥æ(Send the Success view) ***********/
 				String url = "/campsite/listAllCampsite_byDAO.jsp";
-				RequestDispatcher successView = req.getRequestDispatcher(url);// åˆªé™¤æˆåŠŸå¾Œ,è½‰äº¤å›é€å‡ºåˆªé™¤çš„ä¾†æºç¶²é 
+				RequestDispatcher successView = req.getRequestDispatcher(url);// §R°£¦¨¥\«á,Âà¥æ¦^°e¥X§R°£ªº¨Ó·½ºô­¶
 				successView.forward(req, res);
 
-				/*************************** å…¶ä»–å¯èƒ½çš„éŒ¯èª¤è™•ç† **********************************/
+				/*************************** ¨ä¥L¥i¯àªº¿ù»~³B²z **********************************/
 			} catch (Exception e) {
-				errorMsgs.add("åˆªé™¤ç‡Ÿåœ°å¤±æ•—:" + e.getMessage());
+				errorMsgs.add("§R°£Àç¦a¥¢±Ñ:" + e.getMessage());
 				RequestDispatcher failureView = req.getRequestDispatcher("/campsite/listAllCampsite_byDAO.jsp");
 				failureView.forward(req, res);
 			}

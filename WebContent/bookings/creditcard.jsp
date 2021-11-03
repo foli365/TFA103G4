@@ -25,7 +25,7 @@
 <body>
 	<div class="container mt-3 px-5">
 		<div class="mb-4">
-			<h2>Confirm order and pay</h2>
+			<h2>確認訂單和結帳</h2>
 			<span>please make the payment, after that you can enjoy all
 				the features and benefits.</span>
 		</div>

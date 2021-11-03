@@ -11,6 +11,7 @@ import java.util.stream.Collectors;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 
+import com.campsite.model.CampsiteService;
 import com.plan.model.PlanVO;
 
 
@@ -82,6 +83,7 @@ public class CampsiteTentStatusService {
 	}
 
 	public ArrayList<String> getUnavailibleDatewithGuestNumberOnly(Integer campId, Integer guestCount) throws ParseException {
+		CampsiteService CSvc = new CampsiteService();
 		CampsiteTentStatusService CTSSvc = new CampsiteTentStatusService();
 		ArrayList<CampsiteTentStatusVO> list = (ArrayList<CampsiteTentStatusVO>) CTSSvc.getAllCampStatusofOneCamp(campId);
 		String pattern = "yyyy-MM-dd";
@@ -96,12 +98,16 @@ public class CampsiteTentStatusService {
 		while (parsedToday.compareTo(sixtyDaysAfter) <= 0) {
 			if(getIndexByProperty(list, parsedToday) != -1) {
 				if (list.get(getIndexByProperty(list, parsedToday)).getCampOpeningTime().equals(parsedToday)) {
-					if (list.get(getIndexByProperty(list, parsedToday)).getEmptyCampLeft()<guestCount) {
+					if (list.get(getIndexByProperty(list, parsedToday)).getEmptyCampLeft() < guestCount) {
 						String matchDay = simpleDateFormat.format(parsedToday);
 						unavilibleDate.add("\"" + matchDay + "\"");
 					}
 				}
-			};
+			}
+			if( guestCount > CSvc.getOneCampsite(campId).getCampLimit()) {
+				String matchDay = simpleDateFormat.format(parsedToday);
+				unavilibleDate.add("\"" + matchDay + "\"");
+			}
 			Calendar c1 = Calendar.getInstance();
 			c1.setTime(parsedToday);
 			c1.add(Calendar.DATE, 1);
@@ -111,6 +117,7 @@ public class CampsiteTentStatusService {
 	}
 	
 	public Boolean isTentAvailiblewithGuestNumberandTimeRange(Integer campId, Integer guestNumber, java.util.Date start, java.util.Date end) throws ParseException {
+		CampsiteService CSvc = new CampsiteService();
 		CampsiteTentStatusService CTSSvc = new CampsiteTentStatusService();
 		ArrayList<CampsiteTentStatusVO> list = (ArrayList<CampsiteTentStatusVO>) CTSSvc.getAllCampStatusofOneCamp(campId);
 		for (CampsiteTentStatusVO campsiteTentStatusVO : list) {
@@ -135,7 +142,7 @@ public class CampsiteTentStatusService {
 							unavilibleDate.add("\"" + matchDay + "\"");
 						}
 					} else {
-						if (list.get(getIndexByProperty(list, start)).getEmptyCampLeft() < guestCount) {
+						if (list.get(getIndexByProperty(list, start)).getEmptyCampLeft() < guestCount || CSvc.getOneCampsite(campId).getCampLimit() < guestCount) {
 							String matchDay = simpleDateFormat.format(start);
 							unavilibleDate.add("\"" + matchDay + "\"");
 						}

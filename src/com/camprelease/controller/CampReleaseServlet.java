@@ -124,6 +124,7 @@ public class CampReleaseServlet extends HttpServlet {
 
 		if ("update".equals(action)) { 
 			List<String> errorMsgs = new LinkedList<String>();
+			System.out.println("inside");
 			// Store this set in the request scope, in case we need to
 			// send the ErrorPage view.
 			req.setAttribute("errorMsgs", errorMsgs);

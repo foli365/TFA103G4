@@ -106,6 +106,7 @@ form i {
 				<small style="color: red;">${noPassword}<a id="forget"
 					href="/TFA103G4/register_and_login/search_by_email.jsp"
 					style="color: red; font-weight: bold;">忘記密碼?</a></small>
+				<small style="color: red;">${invalid}</small>
 			</div>
 			<div class="d-grid gap-2 col-6 mx-auto">
 				<button id="submit" class="btn btn-success" type="submit">登入</button>

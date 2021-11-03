@@ -64,8 +64,8 @@ public class JWTMailGenerator extends HttpServlet {
 						.sign(algorithm);
 				System.out.println(token);
 				MailService mailService = new MailService();
-				String content = memVO.getName() + "\t請在十分鐘內透過此連結重設密碼:\n\n"+
-				"http://localhost:8081"+req.getContextPath()+"/register_and_login/reset_password.jsp?token="+token;
+				String content = "親愛的" + memVO.getName() + "您好:\n\t點擊以下連結以重設密碼:\n\n"+
+				"http://localhost:8081"+req.getContextPath()+"/passwordReset.do?token="+token;
 				mailService.sendMail(email, "重設密碼", content);
 				req.setAttribute("success", "寄送成功!");
 				RequestDispatcher success = req.getRequestDispatcher("/register_and_login/search_by_email.jsp");
