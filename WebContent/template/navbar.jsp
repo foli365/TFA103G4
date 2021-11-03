@@ -28,7 +28,7 @@
 			<ul class="navbar-nav ms-auto mb-2 mb-lg-0 me-xl-5">
 				<li class="nav-item"><a id="hosting" class="nav-link" href="<%=request.getContextPath()%>/camprelease/addCampRel.jsp"
 					style="color: green;">上架營地</a></li>
-				<li class="nav-item"><a class="nav-link" href="#"
+				<li class="nav-item"><a class="nav-link" href="<%=request.getContextPath()%>/eshop/pages/EShop.jsp"
 					style="color: #E40580;">商城</a></li>
 				<li class="nav-item"><a class="nav-link"
 					href="<%=request.getContextPath()%>/post/index.jsp" style="color: #0B83ED;">論壇</a></li>

@@ -268,16 +268,15 @@ public class EmodrServlet extends HttpServlet {
 				MemberService memberSvc = new MemberService();
 				MembersVO membersVO = memberSvc.findByPrimaryKey(memberId);
 				req.setAttribute("memberName", membersVO.getName());
-				
 				String url = "/emodr/MyOrders.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url); // 修改成功後,轉交MyOrders.jsp
 				successView.forward(req, res);
-
 				/*************************** 其他可能的錯誤處理 *************************************/
 			} catch (Exception e) {
-				errorMsgs.add("新增資料失敗:" + e.getMessage());
-//						RequestDispatcher failureView = req.getRequestDispatcher("/emodr/addEmodr.jsp");
-//						failureView.forward(req, res);
+				errorMsgs.add("請先登入才能看訂單!");
+				System.out.println(errorMsgs);
+						RequestDispatcher failureView = req.getRequestDispatcher("/eshop/pages/EShop.jsp");
+						failureView.forward(req, res);
 			}
 		}
 

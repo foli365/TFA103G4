@@ -68,7 +68,8 @@ public class ShoppingServlet extends HttpServlet {
 			}
 
 			String amount = String.valueOf(total);
-			req.setAttribute("amount", amount);
+			//req.setAttribute("amount", amount);
+			session.setAttribute("amount", amount);
 			String url = "/eshop/pages/Checkout.jsp";
 			RequestDispatcher rd = req.getRequestDispatcher(url);
 			rd.forward(req, res);
