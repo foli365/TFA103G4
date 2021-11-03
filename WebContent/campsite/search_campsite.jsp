@@ -203,7 +203,7 @@
 								<div class="col-md-6 camp-pic-div">
 									<img
 										src="<%=request.getContextPath()%>/CampsiteGifReader?column=picture1&camp_id=${campsiteVO.campId}"
-										class="rounded float-right camp-picture" alt="...">
+										class="rounded float-right" alt="...">
 								</div>
 							</div>
 						</a>
