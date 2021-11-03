@@ -224,22 +224,9 @@ public class CampsearchServlet extends HttpServlet {
 				} else {
 					errorMsgs.add("請上傳營業執照");
 				}
-
-				InputStream in1 = req.getPart("picture1").getInputStream();
-				byte[] picture1 = null;
-				if (in1.available() != 0) {
-					picture1 = new byte[in1.available()];
-					in1.read(picture1);
-					in1.close();
-				} else {
-					CampsiteService campsiteSvc = new CampsiteService();
-					picture1 = campsiteSvc.getOneCampsite(campId).getPicture1();
-				}
-
-				byte[] picture2 = null;
-				byte[] picture3 = null;
-				byte[] picture4 = null;
-				byte[] picture5 = null;
+				
+				CampsiteService cs = new CampsiteService();
+				CampsiteVO oldvo = cs.getOneCampsite(campId);
 
 				CampsiteVO campsiteVO = new CampsiteVO();
 				campsiteVO.setCampId(campId);
@@ -255,8 +242,7 @@ public class CampsearchServlet extends HttpServlet {
 				campsiteVO.setSiteState(siteState);
 				campsiteVO.setLovedCount(lovedCount);
 				campsiteVO.setReportedCount(reportedCount);
-				campsiteVO.setCampLicense(campLicense); // :(
-				campsiteVO.setPicture1(picture1); // :(
+				campsiteVO.setCampLicense(campLicense);
 
 				// Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
@@ -271,8 +257,8 @@ public class CampsearchServlet extends HttpServlet {
 				CampsiteService campsiteSvc = new CampsiteService();
 				campsiteVO = campsiteSvc.updateCampsite(memberId, campName, location, latitude,
 						longtitude, campDescription, campPrice, campLimit, listedTime,
-						siteState, lovedCount, reportedCount, campLicense, picture1,
-						picture2, picture3, picture4, picture5, campId);
+						siteState, lovedCount, reportedCount, campLicense, oldvo.getPicture1(),
+						oldvo.getPicture2(), oldvo.getPicture3(), oldvo.getPicture4(), oldvo.getPicture5(), campId);
 
 				/*************************** 3.修改完成,準備轉交(Send the Success view) *************/
 				req.setAttribute("campsiteVO", campsiteVO); // 資料庫update成功後,正確的的campsiteVO物件,存入req

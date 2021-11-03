@@ -18,7 +18,7 @@
 <body>
 	<div class="logo">
 		<a href="#"> <img src="../images/200x1280.png"
-			style="width: 1280px; height: 200px;">
+			style="width: 100%; height: 200px;">
 		</a>
 	</div>
 	<div class="divform">

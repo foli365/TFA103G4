@@ -5,6 +5,13 @@
 <%
 CampReleaseVO campreleaseVO = (CampReleaseVO) request.getAttribute("campreleaseVO");
 
+Object account = session.getAttribute("account");
+if (account == null) {
+	session.setAttribute("location", request.getRequestURI());
+	response.sendRedirect(request.getContextPath() + "/register_and_login/login.jsp");
+	return;
+}
+
 if(session.getAttribute("id") != null){
 	Integer id = Integer.parseInt(session.getAttribute("id").toString());
 	System.out.println("id: " + id);
@@ -238,7 +245,7 @@ imput{
 										<div>
 											<input type="hidden" name="action" value="insert">
 											<button class="btn btn-success ml-auto" type="submit">Send</button>
-											<input type="hidden" name="memberId" value="${campreleaseVO.memberId}">
+											<input type="hidden" name="memberId" value="${id}">
 <%-- 										    <input type="hidden" name="campId" value="${campreleaseVO.campId}">                        --%>
 										</div>
 									</div>

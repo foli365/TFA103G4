@@ -1,14 +1,8 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@page import="com.adminList.model.AdminService"%>
+<%@ page import="com.adminList.model.*"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="com.Product.model.*"%>
 <%@ page import="java.util.*"%>
-
-
-
-<%
-ProductVO productVO = (ProductVO) request.getAttribute("productVO"); 
-%>
 
 
 
@@ -114,56 +108,56 @@ ProductVO productVO = (ProductVO) request.getAttribute("productVO");
 <table id="table-3">
 	<tr>
 		<td>商品編號:<font color=red><b>*</b></font></td>
-		<td><%=productVO.getProductno()%></td>
+		<td>${updateproduct.productno}</td>
 	</tr>
 	<tr>
 		<td>商品名稱:</td>
-		<td><input type="TEXT" name="pname"  class="input_1" size="45" value="<%=productVO.getPname()%>" /></td>
+		<td><input type="TEXT" name="pname"  class="input_1" size="45" value="${updateproduct.pname}" /></td>
 	</tr>
 	
 	<tr>
 		<td>價格:</td>
-		<td><input type="TEXT" name="price"  class="input_1" size="45" value="<%=productVO.getPrice()%>" /></td>
+		<td><input type="TEXT" name="price"  class="input_1" size="45" value="${updateproduct.price}" /></td>
 	</tr>
 	
 	<tr>
 		<td>數量:</td>
-		<td><input type="TEXT" name="inventory"  class="input_1" size="45" value="<%=productVO.getInventory()%>" /></td>
+		<td><input type="TEXT" name="inventory"  class="input_1" size="45" value="${updateproduct.inventory}" /></td>
 	</tr>
 	
 	<tr>
 		<td>上架人員:</td>
-		<td><input type="TEXT" name="admin_id"  class="input_1" size="45" value="<%=productVO.getAdmin_id()%>" /></td>
+		<td><input type="TEXT" name="admin_id"  class="input_1" size="45" value="${updateproduct.admin_id}" /></td>
 	</tr>
 	
 	<tr>
 		<td>狀態:</td>
-		<td><input type="TEXT" name="situation"  class="input_1" size="45" value="<%=productVO.getSituation()%>" /></td>		
+		<td><input type="TEXT" name="situation"  class="input_1" size="45" value="${updateproduct.situation}" /></td>		
 	</tr>
 	
 	<tr>
 		<td>商品介紹:</td>
-		<td><input type="TEXT" name="descript"  class="input_1" size="45" value="<%=productVO.getDescript()%>" /></td>
+		<td><input type="TEXT" name="descript"  class="input_1" size="45" value="${updateproduct.descript}" /></td>
 	</tr>
 	
 	<tr>
 		<td>商品圖片1:</td>
 		<td><input type="file" name="img1" id="the_file1"
-			 value="<%= (productVO==null)? "" : productVO.getPicture1()%>" />
+			 value="${updateproduct.picture1}" />
 			 <ul class="picture_list1"></ul></td>
 	</tr>
 	
 	<tr>
 		<td>商品圖片2:</td>
 		<td><input type="file" name="img2" id="the_file2"
-			 value="<%= (productVO==null)? "" : productVO.getPicture2()%>" />
+			 value="${updateproduct.picture2}" />
 			 <ul class="picture_list2"></ul></td>
 	</tr>
 	
 	<tr>
 		<td>商品圖片3:</td>
 		<td><input type="file" name="img3" id="the_file3"
-			 value="<%= (productVO==null)? "" : productVO.getPicture3()%>" />
+			 value="${updateproduct.picture3}" />
 			 <ul class="picture_list3"></ul></td>
 	</tr>
 
@@ -185,7 +179,7 @@ ProductVO productVO = (ProductVO) request.getAttribute("productVO");
 
 </table>
 <br>
-<input type="hidden" name="productno" value="<%=productVO.getProductno()%>">
+<input type="hidden" name="productno" value="${updateproduct.productno}">
 <input type="hidden" name="action" value="update">
 <input type="submit" class="toupdate" value="送出修改">
 </FORM>

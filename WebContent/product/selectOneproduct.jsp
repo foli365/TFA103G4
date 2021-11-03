@@ -2,7 +2,7 @@
 <%@ page import="com.Product.model.*"%>
 <%@ page import="java.util.*"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ page import="com.adminList.model.*"%>
+<%@ page import="com.adminList.model.*"%>%>
 
 <%
   ProductVO productVO = (ProductVO) request.getAttribute("productVO"); 

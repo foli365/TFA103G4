@@ -140,15 +140,20 @@ public class CampsiteServlet  extends HttpServlet {
 				
 				for (CampsiteVO campsiteVO : list) {
 					if(campsiteVO.getSiteState() == 1) {
-						System.out.println("vo: " + campsiteVO);
+//						System.out.println("vo: " + campsiteVO);
+						
 						if (strDate != null && endDate != null) {
+							System.out.println("first");
 							if (campsiteTentStatusSvc.isTentAvailiblewithGuestNumberandTimeRange(campsiteVO.getCampId(), customerNum, strDate, endDate)) {
 								filterList.add(campsiteVO);
 							}
-						} else if (customerNum != null) {
+						}  else if (!"".equals(str)) {
+							System.out.println("second");
 							if(campsiteTentStatusSvc.getUnavailibleDatewithGuestNumberOnly(campsiteVO.getCampId(), customerNum).isEmpty() && campsiteSvc.getOneCampsite(campsiteVO.getCampId()).getCampLimit() >= customerNum) {
 								filterList.add(campsiteVO);
 							}
+						} if("".equals(str) && "".equals(value)) {
+							filterList.add(campsiteVO);
 						}
 					}
 				}
