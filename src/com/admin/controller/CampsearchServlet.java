@@ -13,8 +13,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.admin.model.AdminListVO;
-import com.admin.model.AdminService;
+import com.adminList.model.AdminListVO;
+import com.adminList.model.AdminService;
 import com.campAlert.model.CampAlertService;
 import com.campAlert.model.CampAlertVO;
 import com.campsite.model.*;
@@ -33,7 +33,6 @@ public class CampsearchServlet extends HttpServlet {
 		req.setCharacterEncoding("UTF-8");
 		String action = req.getParameter("action");
 		List<String> errorMsgs = new LinkedList<String>();
-		
 		if ("getOne_For_Display".equals(action)) { // 來自select_page.jsp的請求
 			req.setAttribute("errorMsgs", errorMsgs);
 
@@ -126,6 +125,7 @@ public class CampsearchServlet extends HttpServlet {
 				/*************************** 1.接收請求參數 - 輸入格式的錯誤處理 **********************/
 				Integer campId = new Integer(req.getParameter("campId").trim());
 				Integer memberId = new Integer(req.getParameter("memberId").trim());
+				System.out.println(memberId);
 				String campName = req.getParameter("campName");
 				String campNameReg = "^[(\u4e00-\u9fa5)(a-zA-Z0-9)]{2,15}$";
 				if (campName == null || campName.trim().length() == 0) {
@@ -224,22 +224,9 @@ public class CampsearchServlet extends HttpServlet {
 				} else {
 					errorMsgs.add("請上傳營業執照");
 				}
-
-				InputStream in1 = req.getPart("picture1").getInputStream();
-				byte[] picture1 = null;
-				if (in1.available() != 0) {
-					picture1 = new byte[in1.available()];
-					in1.read(picture1);
-					in1.close();
-				} else {
-					CampsiteService campsiteSvc = new CampsiteService();
-					picture1 = campsiteSvc.getOneCampsite(campId).getPicture1();
-				}
-
-				byte[] picture2 = null;
-				byte[] picture3 = null;
-				byte[] picture4 = null;
-				byte[] picture5 = null;
+				
+				CampsiteService cs = new CampsiteService();
+				CampsiteVO oldvo = cs.getOneCampsite(campId);
 
 				CampsiteVO campsiteVO = new CampsiteVO();
 				campsiteVO.setCampId(campId);
@@ -255,8 +242,7 @@ public class CampsearchServlet extends HttpServlet {
 				campsiteVO.setSiteState(siteState);
 				campsiteVO.setLovedCount(lovedCount);
 				campsiteVO.setReportedCount(reportedCount);
-				campsiteVO.setCampLicense(campLicense); // :(
-				campsiteVO.setPicture1(picture1); // :(
+				campsiteVO.setCampLicense(campLicense);
 
 				// Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
@@ -271,11 +257,12 @@ public class CampsearchServlet extends HttpServlet {
 				CampsiteService campsiteSvc = new CampsiteService();
 				campsiteVO = campsiteSvc.updateCampsite(memberId, campName, location, latitude,
 						longtitude, campDescription, campPrice, campLimit, listedTime,
-						siteState, lovedCount, reportedCount, campLicense, picture1,
-						picture2, picture3, picture4, picture5, campId);
+						siteState, lovedCount, reportedCount, campLicense, oldvo.getPicture1(),
+						oldvo.getPicture2(), oldvo.getPicture3(), oldvo.getPicture4(), oldvo.getPicture5(), campId);
 
 				/*************************** 3.修改完成,準備轉交(Send the Success view) *************/
 				req.setAttribute("campsiteVO", campsiteVO); // 資料庫update成功後,正確的的campsiteVO物件,存入req
+				System.out.println(campsiteVO);
 				System.out.println(campsiteVO);
 				String url = "/backendLogin/camp-listone.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url); // 修改成功後,轉交listOneCampsite.jsp

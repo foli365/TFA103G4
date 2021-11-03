@@ -68,10 +68,10 @@ body {
 					<th>配套編號</th>
 					<th>營地編號</th>
 					<th>配套名稱</th>
-					<th>配套人數限制</th>
-					<th>配套年齡限制</th>
-					<th>配套價錢</th>
-					<th>Plan修改</th>
+					<th>配套人數上限</th>
+					<th>配套年齡上限</th>
+					<th>配套價格</th>
+					<th>配套修改</th>
 					<th>刪除</th>					
 				</tr>
 			</thead>
@@ -86,7 +86,7 @@ body {
 						<td>【${planVO.planPrice}元】</td>
 						<td>
 							<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/plan/plan.do" style="margin-bottom: 0px;">
-								<input type="submit" value="Plan修改"> 
+								<input type="submit" value="配套修改"> 
 								<input type="hidden" name="planId" value="${planVO.planId}"> 
 								<input type="hidden" name="action" value="getOnePlan_For_Update">
 							</FORM>

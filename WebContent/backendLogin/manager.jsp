@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-<%@ page import="com.admin.model.*"%>
+<%@ page import="com.adminList.model.*"%>
 <%@ page import="java.util.*"%>
 <%
 	AdminService dao = new AdminService();
@@ -57,12 +57,13 @@
 				</a>
 					<ul class="mky-show">
 						<li><a href="<%=request.getContextPath()%>/emodr/listAllEmodr.jsp" class="shopping_list">商城訂單</a></li>
-					</ul></li>
-				 <li>
+					</ul>
+					</li>
+			<li>
                 <form METHOD="get" ACTION="<%=request.getContextPath()%>/backendLogin/home.do">
-                  <button type="submit" class="btn btn-outline-secondary" id="btnlog">logout</button>
+                  <button type="submit" class="btn btn-outline-secondary" style="margin-left: 50px;">logout</button>
                 </form>
-                </li>	
+                </li>
 			</ul>
 		</nav>
 	</div>
@@ -170,5 +171,23 @@
 		});
 		});
 	</script>
+	<script>
+    function prohibitpreviouspage(){
+
+    	if(navigator.userAgent.indexOf('Firefox') != -1 && parseFloat(navigator.userAgent.substring(navigator.userAgent.indexOf('Firefox') + 8)) >= 3.6 ){
+
+    	//Firefox
+    	setTimeout("fn_forward()",1);
+    	window.history.go(1);
+    	}else{ //IE.Chrome.Edge
+    	window.history.forward();
+    	}
+    	}
+    	function fn_forward() {
+    	history.forward();
+    	setTimeout("fn_forward()",1)
+    	}
+    </script>
+     
 </body>
 </html>

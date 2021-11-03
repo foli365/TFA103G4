@@ -47,7 +47,7 @@ public class JWTMailGenerator extends HttpServlet {
 		cal.add(Calendar.MINUTE, 10);
 		java.util.Date exp = cal.getTime();
 		if (!emailConfirm(email)) {
-			req.setAttribute("noEmail", "寄送失敗，請輸入正確信箱地址");
+			req.setAttribute("noEmail", "查無電子信箱");
 			RequestDispatcher noEmail = req.getRequestDispatcher("/register_and_login/search_by_email.jsp");
 			noEmail.forward(req, res);
 		} else {
@@ -64,10 +64,10 @@ public class JWTMailGenerator extends HttpServlet {
 						.sign(algorithm);
 				System.out.println(token);
 				MailService mailService = new MailService();
-				String content = memVO.getName() + "您好:\n\t請在10分鐘內透過此連結重設密碼:\n\n"+
-				"http://localhost:8081"+req.getContextPath()+"/register_and_login/reset_password.jsp?token="+token;
+				String content = "親愛的" + memVO.getName() + "您好:\n\t點擊以下連結以重設密碼:\n\n"+
+				"http://localhost:8081"+req.getContextPath()+"/passwordReset.do?token="+token;
 				mailService.sendMail(email, "重設密碼", content);
-				req.setAttribute("success", "註冊成功，請於10分鐘內點擊郵件中的網址");
+				req.setAttribute("success", "寄送成功!");
 				RequestDispatcher success = req.getRequestDispatcher("/register_and_login/search_by_email.jsp");
 				success.forward(req, res);
 			} catch (JWTCreationException e) {

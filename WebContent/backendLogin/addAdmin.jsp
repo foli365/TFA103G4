@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-<%@ page import="com.admin.model.*"%>
+<%@ page import="com.adminList.model.*"%>
 <%@ page import="java.util.*"%>
 <%
   AdminListVO adminListVO = (AdminListVO) request.getAttribute("AdminListVO");
@@ -37,7 +37,7 @@
 	</tr>
 	<tr>
 		<td>管理員密碼:</td>
-		<td><input type="TEXT" name="adminPwd" size="45"
+		<td><input type="password" name="adminPwd" size="45"
 			 value="<%= (adminListVO==null)? "jacky0229" : adminListVO.getAdminPwd()%>"/></td>
 	</tr>
 	<tr>

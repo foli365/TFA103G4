@@ -1,10 +1,3 @@
-<Resource auth="Container"
-		driverClassName="com.mysql.cj.jdbc.Driver" maxIdle="10" maxTotal="20"
-		maxWaitMillis="-1" name="jdbc/camping" password="123456"
-		type="javax.sql.DataSource"
-		url="jdbc:mysql://localhost:3306/GoCamping?serverTimezone=Asia/Taipei"
-		username="root" />
-
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="Big5"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="com.members.model.*"%>

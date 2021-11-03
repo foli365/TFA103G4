@@ -1,12 +1,25 @@
-<%@ page contentType="text/html; charset=UTF-8" pageEncoding="Big5"%>
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="java.util.*"%>
 <%@ page import="com.camprelease.model.*"%>
-<%@ page import="com.facilities.model.*"%>
-
 <%
 CampReleaseVO campreleaseVO = (CampReleaseVO) request.getAttribute("campreleaseVO");
-FacilitiesVO facilitiesVO = (FacilitiesVO) request.getAttribute("facilitiesVO");
+
+Object account = session.getAttribute("account");
+if (account == null) {
+	session.setAttribute("location", request.getRequestURI());
+	response.sendRedirect(request.getContextPath() + "/register_and_login/login.jsp");
+	return;
+}
+
+if(session.getAttribute("id") != null){
+	Integer id = Integer.parseInt(session.getAttribute("id").toString());
+	System.out.println("id: " + id);
+	pageContext.setAttribute("id", id);		
+	}
+	CampReleaseService csvc = new CampReleaseService();
+	List<CampReleaseVO> memberCamp = csvc.getAllforMember(1);
+	pageContext.setAttribute("memberCamp", memberCamp);
 
 %>
 
@@ -14,11 +27,11 @@ FacilitiesVO facilitiesVO = (FacilitiesVO) request.getAttribute("facilitiesVO");
 <html>
 <head>
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
-<title>Go campingÀç¦a¥Zµn</title>
-  <link rel='stylesheet' href='<%=request.getContextPath()%>/camprelease/css/bootstrap.min4.1.3.css' />
-  <link rel="stylesheet" href="<%=request.getContextPath()%>/camprelease/css/stepstyle.css">
-  <link rel="stylesheet" href="<%=request.getContextPath()%>/camprelease/css/icon.css">
-<!-- ¥H¤UCSS¬°ºô­¶¼Ë¦¡ -->
+<title>Go campingç‡Ÿåœ°åˆŠç™»</title>
+<link rel='stylesheet' href='<%=request.getContextPath()%>/camprelease/css/bootstrap.min4.1.3.css' />
+<link rel="stylesheet" href="<%=request.getContextPath()%>/camprelease/css/stepstyle.css">
+<!-- ä»¥ä¸‹CSSç‚ºç¶²é æ¨£å¼ -->
+<%@ include file="/template/navbar.jsp" %>
 <style>
 body{
   background-color: #FFEEE1;
@@ -84,445 +97,182 @@ imput{
         white-space: nowrap;
       }
 
-      /* ¥H¤U³]³Æ */
-      .setting-label{
-        position: relative;
-        display: inline-block;
-        line-height: 1em;
-        overflow: hidden;
-        margin: 0 5px 5px 0;
-        cursor: pointer;
-      }
-      .setting-label > input{
-        position: absolute;
-        top: -20px;
-        left: -20px;
-      }
-      .setting-label > span{
-        position: relative;
-        display: block;
-        padding: 10px 12px 10px 10px;
-        color: #000;
-        font-weight: 500;
-        background-color: lightgray;
-        /* white-space: nowrap;
-        border-radius: 2em; */
-        -webkit-border-radius: 2em;
-        -moz-border-radius: 2em;
-      }
-      .setting-label > span > i{
-        opacity: 1;
-      }
-      .setting-label:hover > span{
-        color:#fff;
-        background-color: #F4A249;
-      }
-      .setting-label:hover >span.male{
-        background-color: #F4A249;
-      }
-      .setting-label input:checked + span{
-        background-color: #f23557;
-        color: white;
-      }
 </style>
 </head>
 
 <body>
-<%-- ¿ù»~ªí¦C --%>
-<%-- <c:if test="${not empty errorMsgs}"> --%>
-<!-- 	<font style="color:red">½Ğ­×¥¿¥H¤U¿ù»~:</font> -->
-<!-- 	<ul> -->
-<%-- 		<c:forEach var="message" items="${errorMsgs}"> --%>
-<%-- 			<li style="color:red">${message}</li> --%>
-<%-- 		</c:forEach> --%>
-<!-- 	</ul> -->
-<%-- </c:if> --%>
 
 
 <header class="header" >
-  <h1 class="header__title">Go campingÀç¦a¥Zµn</h1><br>
+  <h1 class="header__title">Go campingç‡Ÿåœ°åˆŠç™»</h1><br>
   <table id="table-1">
-		 <h4><a href="<%=request.getContextPath()%>/camprelease/Select_Page.jsp"><img src="images/gocamping.jpg" width="500" height="125" border="0"><br>back home</a></h4>
+		 <h4><a href="<%=request.getContextPath()%>/camprelease/Select_Page.jsp"><img src="images/gocamping.jpg" width="500" height="125" border="0"></a></h4>
 </table>
 </header>
-
-<!-- ¹Lµ{«ö¶s -->
+<!-- éç¨‹æŒ‰éˆ• -->
     <div class="container overflow-hidden">
-      <div name="action" action="#"  method="#" class="multisteps-form" id="the_form">
+      <div class="multisteps-form" id="the_form">
         <div class="row">
           <div class="col-12 col-lg-8 ml-auto mr-auto mb-4">
             <div class="multisteps-form__progress">
-              <button class="multisteps-form__progress-btn js-active" type="button" title="User Info">Àç¦a¸ê°T</button>
-              <button class="multisteps-form__progress-btn" type="button" title="Address">¦aÂI</button>
-              <button class="multisteps-form__progress-btn" type="button" title="Picture">Àç¦a¹Ï¤ù</button>
-              <button class="multisteps-form__progress-btn" type="button" title="Order tirp">°t®M¦æµ{</button>
-              <button class="multisteps-form__progress-btn" type="button" title="Setting">³]³Æ»PªA°È</button>            
+              <button class="multisteps-form__progress-btn js-active" type="button" title="User Info">ç‡Ÿåœ°è³‡è¨Š</button>
+              <button class="multisteps-form__progress-btn" type="button" title="Address">åœ°é»</button>
+              <button class="multisteps-form__progress-btn" type="button" title="Picture">ç‡Ÿåœ°åœ–ç‰‡</button>
+              <button class="multisteps-form__progress-btn" type="button" title="Setting">é€å‡º</button>            
             </div>
           </div>
         </div>
-
-<jsp:useBean id="facilitiesSvc" scope="page" class="com.facilities.model.FacilitiesService" />
-<jsp:useBean id="campreleaseSvc" scope="page" class="com.camprelease.model.CampReleaseService" />
-<!-- ·s¼W¸ê°T -->
-        <div class="row">
-          <div class="col-12 col-lg-8 m-auto">
-            <div class="multisteps-form__form">
-<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/camprelease/camprelease.do" name="form1" enctype="multipart/form-data">
-              <div class="multisteps-form__panel shadow p-4 rounded bg-white js-active" data-animation="scaleIn">
-                <h3 class="multisteps-form__title">Àç¦a¸ê°T</h3>
-                <span class="errorMsgs">${errorMsgs['insertError']}</span>
-                <div class="multisteps-form__content">
-                  <div class="form-row mt-4">
-                    <div class="col-12 col-sm-6">
-                      <label class="col-form-label">¿ï¾Ü·|­û½s¸¹<font color=red><b>*</b></font>
-                        <select size="1" name="memberId">
-		                <c:forEach var="campreleaseVO" items="${campreleaseSvc.all}">
-		                <option value="${campreleaseVO.memberId}">${campreleaseVO.memberId}</c:forEach>
-		                </select>
-		              </label>
-                    </div>
-                  </div>
-                  <div class="form-row mt-4">
-                    <div class="col-12 col-sm-6">
-                      <label for="inputName" class="col-form-label">Àç¦a¦WºÙ</label>
-                      <input type="text" name="campName" size="45" class="multisteps-form__input form-control" placeholder="¿é¤JÀç¦a¦WºÙ" 
-                      value="${campreleaseVO.campName == null ? '' : campreleaseVO.getCampName()}">
-                      <span class="errorMsgs" style="color:red">${errorMsgs['campNameError']}</span>
-                    </div>
-                  </div>
-                  <div class="form-row mt-4">
-                      <label for="inputintr" class="col-form-label">Àç¦a¤¶²Ğ</label>
-                        <textarea class="multisteps-form__textarea form-control" id="intr" name="campDescription" >
-                        </textarea>
-                        <span class="errorMsgs" style="color:red">${errorMsgs['campDescriptionError']}</span>
-                  </div>
-                  <div class="form-row mt-4">
-                    <div class="col-12 col-sm-6">
-                      <label for="inputprice" class="col-form-label">»ù®æ</label>
-                        <input type="text" class="multisteps-form__input form-control" name="campPrice" id="c_price" placeholder="½Ğ¿é¤J»ù®æ"
-                        value="${campreleaseVO.campPrice == null ? '' : campreleaseVO.getCampPrice()}">
-                        <span class="errorMsgs" style="color:red">${errorMsgs['campPriceError']}</span>
-                    </div>
-                  </div>
-                  <div class="form-row mt-4">
-                    <div class="col-12 col-sm-6">
-                      <label for="inputprice" class="col-form-label">¤é´Á</label>
-                        <input type="text" class="multisteps-form__input form-control" name="listedTime" size="45" id="f_date1"
-                        value="${campreleaseVO.listedTime == null ? '' : campreleaseVO.getListedTime()}">
-                        <span class="errorMsgs" style="color:red">${errorMsgs['listedTimeError']}</span>
-                    </div>
-                  </div>
-<!--                   ¤ÀÃş¤§«á¬İ­n¤£­n¥[ -->
-<!--                   <div class="form-row mt-4"> -->
-<!--                     <div class="col-12 col-sm-6"> -->
-<!--                       <label for="inputchoose" class="col-form-label">¤ÀÃş -->
-<!--                       <select class="multisteps-form__select form-control" name="campChoose" id="c_choose"> -->
-<!--                           <option disabled required>¤ÀÃş..</option> -->
-<!--                           <option value="0" -->
-<%--                           ${(campreleaseVO.campChoose==0)? "selected":""}>¤s¤W</option> --%>
-<!--                           <option selected value="1" -->
-<%--                           ${(campreleaseVO.campChoose==1)? "selected":""}>´òÃä</option> --%>
-<!--                           <option value="2" -->
-<%--                           ${(campreleaseVO.campChoose==2)? "selected":""}>´ËªL</option> --%>
-<!--                       </select> -->
-<!--                       </label> -->
-<!--                     </div> -->
-<!--                   </div> -->
-                  <div class="button-row d-flex mt-4">
-                    <button class="btn btn-primary ml-auto js-btn-next" type="button" title="Next">Next</button>
-                  </div>
-                </div>
-              </div>
-<!-- ¦aÂI¥h§ì¸g½n«× -->
-              <div class="multisteps-form__panel shadow p-4 rounded bg-white" data-animation="scaleIn">
-                <h3 class="multisteps-form__title">¦aÂI</h3>
-                <div class="multisteps-form__content">
-                  <div class="form-row mt-4">
-                    <div class="col">
-                      <div id="webbulutumap" style="height: 280px;"></div>
-                        <input type="text" name="location" value="" size="40" class="wpcf7-form-control wpcf7-text wpcf7-validates-as-required" id="address" aria-required="true" aria-invalid="false" placeholder="Street Address"/>
-                        <br><span class="errorMsgs" style="color:red">${errorMsgs['locationError']}</span>
-                        <br><input type="text" name="latitude" value="" placeholder="latitude" id="latitude"/>
-                        <br><span class="errorMsgs" style="color:red">${errorMsgs['latitudeError']}</span>
-                        <br><input type="text" name="longtitude" value="" placeholder="longtitude" id="longtitude"/>
-                        <br><span class="errorMsgs" style="color:red">${errorMsgs['longtitudeError']}</span>
-                        <a href="#" id="find-address" title="Find Address" class="button">Find Address</a>
-                    </div>
-                  </div>
-                  <div class="button-row d-flex mt-4">
-                    <button class="btn btn-primary js-btn-prev" type="button" title="Prev">Prev</button>
-                    <button class="btn btn-primary ml-auto js-btn-next" type="button" title="Next">Next</button>
-                  </div>
-                </div>
-              </div>
-<!-- Àç¦a¹Ï¤ù·s¼W -->
-              <div class="multisteps-form__panel shadow p-4 rounded bg-white" data-animation="scaleIn">
-                <h3 class="multisteps-form__title">½Ğ¤W¶ÇÀç¦a¹Ï¤ù</h3>
-                <div class="multisteps-form__content">
-                  <div class="form-row mt-4">
-<!--                     <div class="col" id="preview"> -->
-<%--                       <canvas id="can1"></canvas> --%>
-<!--                         <p>filename: -->
-<!--                            <input type="file" multiple="false" accept="image/*" id="finput" onchange=upload()> -->
-<!--                         </p> -->
-<!--                     </div> -->
-
-										<h5>
-											<label>Pic1: <input type="file" accept="image/*"
-												name="picture1"></label>
-										</h5>
-										<h5>
-											<label>Pic2: <input type="file" accept="image/*"
-												name="picture2"></label>
-										</h5>
-										<h5>
-											<label>Pic3: <input type="file" accept="image/*"
-												name="picture3"></label>
-										</h5>
-										<h5>
-											<label>Pic4: <input type="file" accept="image/*"
-												name="picture4"></label>
-										</h5>
-										<h5>
-											<label>Pic5: <input type="file" accept="image/*"
-												name="picture5"></label>
-										</h5>
+        <%-- éŒ¯èª¤è¡¨åˆ— --%>
+<c:if test="${not empty errorMsgs}">
+	<font style="color:red">è«‹ä¿®æ­£ä»¥ä¸‹éŒ¯èª¤:</font>
+	<ul>
+		<c:forEach var="message" items="${errorMsgs}">
+			<li style="color:red">${message}</li>
+		</c:forEach>
+	</ul>
+</c:if>
+<c:forEach var="campreleaseVO" items="${memberCamp}">
+				<!-- æ–°å¢è³‡è¨Š -->
+				<div class="row">
+					<div class="col-12 col-lg-8 m-auto">
+						<div class="multisteps-form__form">
+							<FORM METHOD="post"
+								ACTION="<%=request.getContextPath()%>/camprelease/camprelease.do"
+								name="form1" enctype="multipart/form-data">
+								<div class="multisteps-form__panel shadow p-4 rounded bg-white js-active" data-animation="scaleIn">
+									<h3 class="multisteps-form__title">ç‡Ÿåœ°è³‡è¨Š</h3>
+									<div class="multisteps-form__content">
+										<div class="form-row mt-4">
+											<div class="col-12 col-sm-6">
+												<label for="inputName" class="col-form-label">ç‡Ÿåœ°åç¨±</label> 
+												<input type="text" name="campName" size="45" class="multisteps-form__input form-control" placeholder="è¼¸å…¥ç‡Ÿåœ°åç¨±" value="">
+											</div>
+										</div>
+										<div class="form-row mt-4">
+											<label for="inputcampDescription" class="form-label">ç‡Ÿåœ°ä»‹ç´¹</label>
+											<textarea class="form-control" name="campDescription"
+												rows="3" placeholder="è«‹è¼¸å…¥...."></textarea>
+										</div>
+										<div class="form-row mt-4">
+											<div class="col-12 col-sm-6">
+												<label for="inputprice" class="col-form-label">ç‡Ÿåœ°åƒ¹æ ¼(ä¸€æ™š)</label> 
+												<input type="text" class="multisteps-form__input form-control" name="campPrice" id="c_price" placeholder="è«‹è¼¸å…¥åƒ¹æ ¼" value="">
+											</div>
+										</div>
+										<div class="form-row mt-4">
+											<div class="col-12 col-sm-6">
+												<label for="inputLimit" class="col-form-label">ç‡Ÿåœ°äººæ•¸ä¸Šé™</label>
+												<input type="text" class="multisteps-form__input form-control" name="campLimit" id="c_limit" placeholder="è«‹è¼¸å…¥äººæ•¸" value="">
+											</div>
+										</div>
+<!-- 										<div class="form-row mt-4"> -->
+<!-- 											<div class="col-12 col-sm-6"> -->
+<!-- 												<label for="inputopenTime" class="col-form-label">ç‡Ÿæ¥­é–‹å§‹æ™‚é–“</label>  -->
+<!-- 												<input type="text" class="multisteps-form__input form-control" name="openTime" size="45" id="openTime" value=""> -->
+<!-- 												<label for="inputcloseTime" class="col-form-label">ç‡Ÿæ¥­çµæŸæ™‚é–“</label>  -->
+<!-- 												<input type="text" class="multisteps-form__input form-control" name="closeTime" size="45" id="closeTime" value=""> -->
+											
+<!-- 											</div> -->
+<!-- 										</div> -->
+										<div class="form-row mt-4">
+											<div class="col-12 col-sm-6">
+												<label for="inputlistedTime" class="col-form-label">ä¸Šæ¶æ—¥æœŸ</label> 
+												<input type="text" class="multisteps-form__input form-control" name="listedTime" size="45" id="listedTime" value="">
+											</div>
+										</div>
+										<div class="button-row d-flex mt-4">
+											<button class="btn btn-primary ml-auto js-btn-next" type="button" title="Next">Next</button>
+										</div>
 									</div>
-                  <div class="button-row d-flex mt-4">
-                    <button class="btn btn-primary js-btn-prev" type="button" title="Prev">Prev</button>
-                    <button class="btn btn-primary ml-auto js-btn-next" type="button" title="Next">Next</button>
-                  </div>
-                </div>
-              </div>
-<!--                </FORM> -->
-<!-- °t®M¦æµ{·s¼W -->
-              <div class="multisteps-form__panel shadow p-4 rounded bg-white" data-animation="scaleIn">
-                <h3 class="multisteps-form__title">°t®M¦æµ{</h3>
-                <div class="multisteps-form__content">
-                 <div class="form-row mt-4">
-                    <div class="col-12 col-sm-6">
-                      <label for="inputName" class="col-form-label">°t®M¦WºÙ</label>
-                      <input type="text" name="planName" size="45" class="multisteps-form__input form-control" placeholder="¿é¤J¦æµ{¦WºÙ" 
-                      value="${planVO.planName == null ? '' : planVO.getPlanName()}">
-                      <span class="errorMsgs" style="color:red">${errorMsgs['planNameError']}</span>
-                    </div>
-                  </div>
-                 <div class="form-row mt-4">
-                    <div class="col-12 col-sm-6">
-                      <label for="inputPeople" class="col-form-label">¤H¼Æ­­¨î</label>
-                      <input type="text" name="planGuestLimit" size="45" class="multisteps-form__input form-control" placeholder="¿é¤J¤H¼Æ" 
-                      value="${planVO.planGuestLimit == null ? '' : planVO.getPlanGuestLimit()}">
-                      <span class="errorMsgs" style="color:red">${errorMsgs['planGuestLimitError']}</span>
-                    </div>
-                  </div>
-                 <div class="form-row mt-4">
-                    <div class="col-12 col-sm-6">
-                      <label for="inputAge" class="col-form-label">¦~ÄÖ­­¨î</label>
-                      <input type="text" name="planName" size="45" class="multisteps-form__input form-control" placeholder="¿é¤J¦~ÄÖ" 
-                      value="${planVO.planAgeLimit == null ? '' : planVO.getPlanAgeLimit()}">
-                      <span class="errorMsgs" style="color:red">${errorMsgs['planAgeLimiteError']}</span>
-                    </div>
-                  </div>
-                  <div class="form-row mt-4">
-                    <div class="col-12 col-sm-6">
-                      <label for="inputprice" class="col-form-label">°t®M»ù®æ</label>
-                        <input type="text" class="multisteps-form__input form-control" name="planPrice" id="p_price" placeholder="½Ğ¿é¤J»ù®æ"
-                        value="${planVO.planPrice == null ? '' : campreleaseVO.getCampPrice()}">
-                        <span class="errorMsgs" style="color:red">${errorMsgs['planPriceError']}</span>
-                    </div>
-                    </div>
-                  <div class="form-row mt-4">
-                      <label for="inputintr" class="col-form-label">°t®M¤¶²Ğ</label>
-                        <textarea class="multisteps-form__textarea form-control" id="planintr" name="planDescription" >
-                        </textarea>
-                        <span class="errorMsgs" style="color:red">${errorMsgs['planDescriptionError']}</span>
-                  </div>
-                  </div>
-                  <div class="row">
-                    <div class="button-row d-flex mt-4 col-12">
-                      <button class="btn btn-primary js-btn-prev" type="button" title="Prev">Prev</button>
-                      <button class="btn btn-primary ml-auto js-btn-next" type="button" title="Next">Next</button>
-                    </div>
-                  </div>
-                </div>
-<!-- ³]¬IªA°ÈICON -->
-<%-- <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/facilities/facilities.do" name="form1" enctype="multipart/form-data"> --%>
-              <div class="multisteps-form__panel shadow p-4 rounded bg-white" data-animation="scaleIn">
-                <h3 class="multisteps-form__title">³]³Æ»PªA°È</h3>
-                <div class="multisteps-form__content">
-                  <div class="ws-nowrap camp5">
-<%--                     <input type="checkbox" name="bbq" id="bbq" value="1" ${facilitiesSvc.getByCampId(facilitiesVO.getCampId()).bbq == '1' ? 'checked'}><label class="setting-label circle-line" for="setting[]"><span class="material-icons md-18">outdoor_grill</span></label> --%>
-<%--                     <label class="setting-label circle-line" for="setting[]"><input type="checkbox" name="wifi" id="wifi" value="1" ${facilitiesSvc.findByCampId(facilitiesVO.getCampId()).wifi == '1' ? 'checked' : ''}><span class="material-icons md-18">wifi</span></label> --%>
-<%--                     <label class="setting-label circle-line" for="setting[]"><input type="checkbox" name="nosmoke" id="nosmoke" value="1" ${facilitiesSvc.findByCampId(facilitiesVO.getCampId()).nosmoke == '1' ? 'checked' : ''}><span class="material-icons md-18">smoke_free</span></label> --%>
-<%--                     <label class="setting-label circle-line" for="setting[]"><input type="checkbox" name="pets" id="pets" value="1" ${facilitiesSvc.findByCampId(facilitiesVO.getCampId()).pets == '1' ? 'checked' : ''}><span class="material-icons md-18">pets</span></label> --%>
-                  </div>
-                  <div class="button-row d-flex mt-4">
-                    
-                       <button class="btn btn-primary js-btn-prev" type="button" title="Prev">Prev</button>
-                       <button class="btn ml-auto" type="reset" title="Reset">Reset</button>
+								</div>
+								<!-- åœ°é»å»æŠ“ç¶“ç·¯åº¦ -->
+								<div class="multisteps-form__panel shadow p-4 rounded bg-white"
+									data-animation="scaleIn">
+									<h3 class="multisteps-form__title">åœ°é»</h3>
+									<div class="multisteps-form__content">
+										<div class="form-row mt-4">
+											<div class="col">
+												<div id="webbulutumap" style="height: 280px;"></div>
+												<br>
+												<br> 
+												<input type="text" name="location" value="" size="40" class="wpcf7-form-control wpcf7-text wpcf7-validates-as-required"
+													id="address" aria-required="true" aria-invalid="false" placeholder="Street Address" /><br>
+												<br> <input type="text" name="latitude" value="" placeholder="latitude" id="latitude" /><br>
+												<br> <input type="text" name="longtitude" value="" placeholder="longitude" id="longitude" /><br>
+												<br> <a href="#" id="find-address" title="Find Address" class="button">Find Address</a>
+											</div>
+										</div>
+										<div class="button-row d-flex mt-4">
+											<button class="btn btn-primary js-btn-prev" type="button" title="Prev">Prev</button>
+											<button class="btn btn-primary ml-auto js-btn-next" type="button" title="Next">Next</button>
+										</div>
+									</div>
+								</div>
+								<!-- ç‡Ÿåœ°åœ–ç‰‡æ–°å¢ -->
+								<div class="multisteps-form__panel shadow p-4 rounded bg-white"
+									data-animation="scaleIn">
+									<h3 class="multisteps-form__title">è«‹ä¸Šå‚³ç‡Ÿåœ°åœ–ç‰‡</h3>
+									<div class="multisteps-form__content">
+										<div class="form-row mt-4">
+											<h5>
+												<label>Pic1: <input type="file" accept="image/*" name="picture1"></label>
+											</h5>
+											<h5>
+												<label>Pic2: <input type="file" accept="image/*" name="picture2"></label>
+											</h5>
+											<h5>
+												<label>Pic3: <input type="file" accept="image/*" name="picture3"></label>
+											</h5>
+											<h5>
+												<label>Pic4: <input type="file" accept="image/*" name="picture4"></label>
+											</h5>
+											<h5>
+												<label>Pic5: <input type="file" accept="image/*" name="picture5"></label>
+											</h5>
+										</div>
+										<div class="button-row d-flex mt-4">
+											<button class="btn btn-primary js-btn-prev" type="button" title="Prev">Prev</button>
+											<button class="btn btn-primary ml-auto js-btn-next" type="button" title="Next">Next</button>
+										</div>
+									</div>
+								</div>
+								<div class="multisteps-form__panel shadow p-4 rounded bg-white" data-animation="scaleIn">
+									<div class="button-row d-flex mt-4">
 
-                    <div>
-                       <input type="hidden" name="action" value="insert">
-                       <button class="btn btn-success ml-auto" type="submit">Send</button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-        </FORM>
-            </div>
-            </div>
+										<button class="btn btn-primary js-btn-prev" type="button" title="Prev">Prev</button>
+										<button class="btn ml-auto" type="reset" title="Reset">Reset</button>
+
+										<div>
+											<input type="hidden" name="action" value="insert">
+											<button class="btn btn-success ml-auto" type="submit">Send</button>
+											<input type="hidden" name="memberId" value="${id}">
+<%-- 										    <input type="hidden" name="campId" value="${campreleaseVO.campId}">                        --%>
+										</div>
+									</div>
+								</div>
+							</FORM>
+						</div>
+					</div>
+				</div>
+			</c:forEach>
           </div>
         </div>
-      </div>
 
-      
-<!--      °t®M¼u¥Xµøµ¡ -->
-<!--     <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true"> -->
-<!--       <div class="modal-dialog" role="document"> -->
-<!--         <div class="modal-content"> -->
-<!--           <div class="modal-header"> -->
-<!--             <h5 class="modal-title" id="exampleModalLabel">½Ğ·s¼W°t®M¦æµ{</h5> -->
-<!--             <button type="button" class="close" data-dismiss="modal" aria-label="Close"> -->
-<!--               <span aria-hidden="true">&times;</span> -->
-<!--             </button> -->
-<!--           </div> -->
-<!--           <div class="modal-body"> -->
-<!--             <form> -->
-<!--               <div class="form-group"> -->
-<!--                 <label for="recipient-name" class="col-form-label">¦æµ{¦WºÙ</label> -->
-<!--                 <input type="text" class="form-control" id="recipient-name"> -->
-<!--               </div> -->
-<!--               <div class="form-group"> -->
-<!--                 <label for="recipient-people" class="col-form-label">¤H¼Æ</label> -->
-<!--                 <input type="text" class="form-control" id="recipient-people"> -->
-<!--               </div> -->
-<!--               <div class="form-group"> -->
-<!--                 <label for="recipient-price" class="col-form-label">»ù¿ú</label> -->
-<!--                 <input type="text" class="form-control" id="recipient-price"> -->
-<!--               </div> -->
-<!--               <div class="form-group"> -->
-<!--                 <label for="recipient-price" class="col-form-label">¦~ÄÖ­­¨î</label> -->
-<!--                 <input type="text" class="form-control" id="recipient-age"> -->
-<!--               </div> -->
-<!--               <div class="form-group"> -->
-<!--                 <label for="message-text" class="col-form-label">Message:</label> -->
-<!--                 <textarea class="form-control" id="message-text"></textarea> -->
-<!--               </div> -->
-<!--             </form> -->
-<!--           </div> -->
-<!--           <div class="modal-footer"> -->
-<!--             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button> -->
-<!--             <button type="button" class="btn btn-primary">Send</button> -->
-<!--           </div> -->
-<!--         </div> -->
-<!--       </div> -->
-<!--     </div> -->
-    
-<!-- ¦Ñ®v½d¨Ò -->
-<%-- ¿ù»~ªí¦C --%>
-<%-- <c:if test="${not empty errorMsgs}"> --%>
-<!-- 	<font style="color:red">½Ğ­×¥¿¥H¤U¿ù»~:</font> -->
-<!-- 	<ul> -->
-<%-- 		<c:forEach var="message" items="${errorMsgs}"> --%>
-<%-- 			<li style="color:red">${message}</li> --%>
-<%-- 		</c:forEach> --%>
-<!-- 	</ul> -->
-<%-- </c:if> --%>
-<%-- <jsp:useBean id="campreleaseSvc" scope="page" class="com.camprelease.model.CampReleaseService" /> --%>
-<%-- <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/camprelease/camprelease.do" name="form1" enctype="multipart/form-data"> --%>
-<!-- <table> -->
-<!-- <tr> -->
-<!-- 		<td>¿ï¾Ü·|­û½s¸¹:<font color=red><b>*</b></font></td> -->
-<!-- 		<td><select size="1" name="memberId"> -->
-<%-- 		<c:forEach var="campreleaseVO" items="${campreleaseSvc.all}"> --%>
-<%-- 		<option value="${campreleaseVO.memberId}">${campreleaseVO.memberId}</c:forEach> --%>
-<!-- 		</select> -->
-<!-- 		</td> -->
-<!-- 	</tr> -->
-<!-- 	<tr> -->
-<!-- 		<td>Àç¦a¦WºÙ:</td> -->
-<!-- 		<td><input type="TEXT" name="campName" size="45"  -->
-<%-- 			 value="<%= (campreleaseVO==null)? "¤Ñ¤ÑÀç¦a³õ" : campreleaseVO.getCampName()%>" /></td> --%>
-<!-- 	</tr> -->
-<!-- 	<tr> -->
-<!-- 		<td>¦aÂI:</td> -->
-<!-- 		<td><input type="TEXT" name="location" size="45" -->
-<%-- 			 value="<%= (campreleaseVO==null)? "¥x¥_¥«¤j¦w°Ï23¸¹" : campreleaseVO.getLocation()%>" /></td> --%>
-<!-- 	</tr> -->
-<!-- 	<tr> -->
-<!-- 		<td>¸g«×:</td> -->
-<!-- 		<td><input type="TEXT" name="latitude" size="45" -->
-<%-- 			 value="<%= (campreleaseVO==null)? "23.567" : campreleaseVO.getLatitude()%>" /></td> --%>
-<!-- 	</tr> -->
-<!-- 	<tr> -->
-<!-- 		<td>½n«×:</td> -->
-<!-- 		<td><input type="TEXT" name="longtitude" size="45" -->
-<%-- 			 value="<%= (campreleaseVO==null)? "50.2321" : campreleaseVO.getLongtitude()%>" /></td> --%>
-<!-- 	</tr> -->
-<!-- 	<tr> -->
-<!-- 		<td>Àç¦a¤¶²Ğ:</td> -->
-<!-- 		<td><input type="TEXT" name="campDescription" size="45" -->
-<%-- 		     value="<%= (campreleaseVO==null)? "³o¬OÀç¦a°Ï,¥i¥HÅSÀç³o¼Ë" : campreleaseVO.getCampDescription()%>" /></td> --%>
-<!-- 	</tr> -->
-<!-- 	<tr> -->
-<!-- 		<td>»ù¿ú:</td> -->
-<!-- 		<td><input type="TEXT" name="campPrice" size="45" -->
-<%-- 		     value="<%= (campreleaseVO==null)? "1000" : campreleaseVO.getCampPrice()%>" /></td> --%>
-<!-- 	</tr> -->
-<!-- 	<tr> -->
-<!-- 		<td>¤é´Á:</td> -->
-<!-- 		<td><input type="TEXT" name="listedTime" size="45" id="f_date1"></td> -->
-<!-- 	</tr> -->
-<!-- 	<tr> -->
-<!-- 		<td>Pic1:</td> -->
-<!-- 		<td><input type="file" size="50" name="picture1"/></td> -->
-<!-- 	</tr> -->
-<!-- 	<tr> -->
-<!-- 		<td>Pic2:</td> -->
-<!-- 		<td><input type="file" size="50" name="picture2"/></td> -->
-<!-- 	</tr> -->
-<!-- 	<tr> -->
-<!-- 		<td>Pic3:</td> -->
-<!-- 		<td><input type="file" size="50" name="picture3"/></td> -->
-<!-- 	</tr> -->
-<!-- 	<tr> -->
-<!-- 		<td>Pic4:</td> -->
-<!-- 		<td><input type="file" size="50" name="picture4"/></td> -->
-<!-- 	</tr> -->
-<!-- 	<tr> -->
-<!-- 		<td>Pic5:</td> -->
-<!-- 		<td><input type="file" size="50" name="picture5"/></td> -->
-<!-- 	</tr> -->
-<!-- 	<tr> -->
-<!-- 		<td>·|­û½s¸¹:<font color=red><b>*</b></font></td> -->
-<!-- 		<td><select size="1" name="memberId"> -->
-<%-- 		<c:forEach var="campreleaseVO" items="${deptSvc.all}"> --%>
-<%-- 				<option value="${campreleaseVO.memberId}" > --%>
-<%-- 			</c:forEach> --%>
-<!-- 		</select></td> -->
-<!-- 	</tr> -->
-
-<!-- </table> -->
-<!-- <br> -->
-<!-- <input type="hidden" name="action" value="insert"> -->
-<!-- <input type="submit" value="°e¥X·s¼W"> -->
-<!-- </FORM> -->
 <script src="<%=request.getContextPath()%>/camprelease/js/jquery_3.3.1.slim.min.js"></script>
-<%-- <script src="<%=request.getContextPath()%>/camprelease/js/popper.min.js"></script> --%>
 <script src="<%=request.getContextPath()%>/camprelease/js/bootstrap.min4.1.3.js"></script>
 
 <script src="<%=request.getContextPath()%>/camprelease/vendors/jquery/jquery-3.6.0.min.js"></script>
 <script src="<%=request.getContextPath()%>/camprelease/js/camp.js"></script>
 <script src="<%=request.getContextPath()%>/camprelease/js/stepfunction.js"></script>
-<%-- <script src="<%=request.getContextPath()%>/camprelease/js/planAlert.js"></script> --%>
 <script src="<%=request.getContextPath()%>/camprelease/js/photoUpload.js"></script>
 
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA1SwBl3CYCg1oon98Lyge8VLpxdcx-RZU"></script>
-<!-- <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script> -->
+<script src="<%=request.getContextPath()%>/https://maps.googleapis.com/maps/api/js?key=AIzaSyBsqt74NPCV93dg4iOpJtLL0RDvMSfsnYM"></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBsqt74NPCV93dg4iOpJtLL0RDvMSfsnYM"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script type="text/javascript">
     var map;
     var marker;
-    var myLatlng = new google.maps.LatLng('25.055998', '121.539728');
+    var myLatlng = new google.maps.LatLng('25.0511536', '121.5675248');
     var geocoder = new google.maps.Geocoder();
     var infowindow = new google.maps.InfoWindow();
     function initialize() {
@@ -557,7 +307,7 @@ imput{
 </script>
 <script>
   $("#find-address").click(function(){
-    var apiKey = 'AIzaSyA1SwBl3CYCg1oon98Lyge8VLpxdcx-RZU';
+    var apiKey = 'AIzaSyBsqt74NPCV93dg4iOpJtLL0RDvMSfsnYM';
     var  address =  $('#address').val();
     var addressClean = address.replace(/\s+/g, '+');
     var geocoder = new google.maps.Geocoder();
@@ -568,10 +318,10 @@ imput{
       if (status == 'OK') {
         longitude = results[0].geometry.location.lng();
         latitude = results[0].geometry.location.lat();
-        document.getElementById("longtitude").value = longitude;
+        document.getElementById("longitude").value = longitude;
         document.getElementById("latitude").value = latitude;
         // geocoder is asynchronous, do this in the callback function
-        longitude = $("input#longtitude").val();
+        longitude = $("input#longitude").val();
         latitude = $("input#latitude").val();
         if (longitude && latitude) {
           longitude = parseFloat(longitude);
@@ -603,7 +353,7 @@ imput{
                         jQuery.each(address_components, function(k,v1) {jQuery.each(v1.types, function(k2, v2){components[v2]=v1.long_name});});
 
                         $('#latitude').val(marker.getPosition().lat());
-                        $('#longtitude').val(marker.getPosition().lng());
+                        $('#longitude').val(marker.getPosition().lng());
                         infowindow.setContent(results[0].formatted_address);
                         infowindow.open(map, marker);
                     }
@@ -614,13 +364,27 @@ imput{
 }) 
 </script>
 <!-------------------datetimepicker------------------------->
-<%
+<% 
   java.sql.Timestamp listedTime = null;
 try{
 	listedTime = campreleaseVO.getListedTime();
 } catch (Exception e) {
 	listedTime = new java.sql.Timestamp(System.currentTimeMillis());
 }
+
+// java.sql.Time openTime = null;
+// try{
+// 	openTime = campreleaseVO.getOpenTime();
+// } catch (Exception e) {
+// 	openTime = new java.sql.Time(System.currentTimeMillis());
+// }
+
+// java.sql.Time closeTime = null;
+// try{
+// 	closeTime = campreleaseVO.getCloseTime();
+// } catch (Exception e) {
+// 	closeTime = new java.sql.Time(System.currentTimeMillis());
+// }
 %>
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/datetimepicker/jquery.datetimepicker.css" />
 <script src="<%=request.getContextPath()%>/datetimepicker/jquery.js"></script>
@@ -636,19 +400,112 @@ try{
 </style>
 
 <script>
+// listedTime
 $.datetimepicker.setLocale('zh');
-$('#f_date1').datetimepicker({
+$('#listedTime').datetimepicker({
    theme: '',              //theme: 'dark',
    timepicker:true,       //timepicker:true,
-   step: 1,                //step: 60 (³o¬Otimepickerªº¹w³]¶¡¹j60¤ÀÄÁ)
+   step: 1,                //step: 60 (é€™æ˜¯timepickerçš„é è¨­é–“éš”60åˆ†é˜)
    format:'Y-m-d H:i:s',         //format:'Y-m-d H:i:s',
    value: '<%=listedTime%>', // value:   new Date(),
-   //disabledDates:        ['2017/06/08','2017/06/09','2017/06/10'], // ¥h°£¯S©w¤£§t
-   //startDate:	            '2017/07/10',  // °_©l¤é
-   //minDate:               '-1970-01-01', // ¥h°£¤µ¤é(¤£§t)¤§«e
-   //maxDate:               '+1970-01-01'  // ¥h°£¤µ¤é(¤£§t)¤§«á
+   //disabledDates:        ['2017/06/08','2017/06/09','2017/06/10'], // å»é™¤ç‰¹å®šä¸å«
+   startDate:	            '2021/10/10',  // èµ·å§‹æ—¥
+   //minDate:               '-1970-01-01', // å»é™¤ä»Šæ—¥(ä¸å«)ä¹‹å‰
+   //maxDate:               '+1970-01-01'  // å»é™¤ä»Šæ—¥(ä¸å«)ä¹‹å¾Œ
 });
 
+
+// //openTime
+// $.datetimepicker.setLocale('zh'); // kr ko ja en
+// $('#openTime').datetimepicker({
+//    theme: '',          //theme: 'dark',
+//    timepicker: true,   //timepicker: false,
+//    step: 30,            //step: 60 (é€™æ˜¯timepickerçš„é è¨­é–“éš”60åˆ†é˜)
+//    format: 'H:i:s',
+<%--    value: '<%=openTime%>', --%>
+//    //disabledDates:    ['2017/06/08','2017/06/09','2017/06/10'], // å»é™¤ç‰¹å®šä¸å«
+//    startDate:	        '2021/11/01',  // èµ·å§‹æ—¥
+//    //minDate:           '-1970-01-01', // å»é™¤ä»Šæ—¥(ä¸å«)ä¹‹å‰
+//    //maxDate:           '+1970-01-01'  // å»é™¤ä»Šæ—¥(ä¸å«)ä¹‹å¾Œ
+// });
+
+
+
+// // ----------------------------------------------------------ä»¥ä¸‹ç”¨ä¾†æ’å®šç„¡æ³•é¸æ“‡çš„æ—¥æœŸ-----------------------------------------------------------
+
+// //      1.ä»¥ä¸‹ç‚ºæŸä¸€å¤©ä¹‹å‰çš„æ—¥æœŸç„¡æ³•é¸æ“‡
+//      var somedate1 = new Date('2021-11-01');
+//      $('#openTime').datetimepicker({
+//          beforeShowDay: function(date) {
+//        	  if (  date.getYear() <  somedate1.getYear() || 
+// 		           (date.getYear() == somedate1.getYear() && date.getMonth() <  somedate1.getMonth()) || 
+// 		           (date.getYear() == somedate1.getYear() && date.getMonth() == somedate1.getMonth() && date.getDate() < somedate1.getDate())
+//              ) {
+//                   return [false, ""]
+//              }
+//              return [true, ""];
+//      }});
+
+
+// //      2.ä»¥ä¸‹ç‚ºæŸä¸€å¤©ä¹‹å¾Œçš„æ—¥æœŸç„¡æ³•é¸æ“‡
+//      var somedate2 = new Date('2021-11-30');
+//      $('#openTime').datetimepicker({
+//          beforeShowDay: function(date) {
+//        	  if (  date.getYear() >  somedate2.getYear() || 
+// 		           (date.getYear() == somedate2.getYear() && date.getMonth() >  somedate2.getMonth()) || 
+// 		           (date.getYear() == somedate2.getYear() && date.getMonth() == somedate2.getMonth() && date.getDate() > somedate2.getDate())
+//              ) {
+//                   return [false, ""]
+//              }
+//              return [true, ""];
+//      }});
+
+// //closeTime
+//         $.datetimepicker.setLocale('zh'); // kr ko ja en
+// $('#closeTime').datetimepicker({
+//    theme: '',          //theme: 'dark',
+//    timepicker: true,   //timepicker: false,
+//    step: 30,            //step: 60 (é€™æ˜¯timepickerçš„é è¨­é–“éš”60åˆ†é˜)
+//    format: 'H:i:s',
+<%--    value: '<%=closeTime%>', --%>
+//    //disabledDates:    ['2017/06/08','2017/06/09','2017/06/10'], // å»é™¤ç‰¹å®šä¸å«
+//    startDate:	        '2021/11/01',  // èµ·å§‹æ—¥
+//    //minDate:           '-1970-01-01', // å»é™¤ä»Šæ—¥(ä¸å«)ä¹‹å‰
+//    //maxDate:           '+1970-01-01'  // å»é™¤ä»Šæ—¥(ä¸å«)ä¹‹å¾Œ
+// });
+
+
+
+// // ----------------------------------------------------------ä»¥ä¸‹ç”¨ä¾†æ’å®šç„¡æ³•é¸æ“‡çš„æ—¥æœŸ-----------------------------------------------------------
+
+// //      1.ä»¥ä¸‹ç‚ºæŸä¸€å¤©ä¹‹å‰çš„æ—¥æœŸç„¡æ³•é¸æ“‡
+//      var somedate1 = new Date('2021-11-01');
+//      $('#closeTime').datetimepicker({
+//          beforeShowDay: function(date) {
+//        	  if (  date.getYear() <  somedate1.getYear() || 
+// 		           (date.getYear() == somedate1.getYear() && date.getMonth() <  somedate1.getMonth()) || 
+// 		           (date.getYear() == somedate1.getYear() && date.getMonth() == somedate1.getMonth() && date.getDate() < somedate1.getDate())
+//              ) {
+//                   return [false, ""]
+//              }
+//              return [true, ""];
+//      }});
+
+
+// //      2.ä»¥ä¸‹ç‚ºæŸä¸€å¤©ä¹‹å¾Œçš„æ—¥æœŸç„¡æ³•é¸æ“‡
+//      var somedate2 = new Date('2021-11-30');
+//      $('#closeTime').datetimepicker({
+//          beforeShowDay: function(date) {
+//        	  if (  date.getYear() >  somedate2.getYear() || 
+// 		           (date.getYear() == somedate2.getYear() && date.getMonth() >  somedate2.getMonth()) || 
+// 		           (date.getYear() == somedate2.getYear() && date.getMonth() == somedate2.getMonth() && date.getDate() > somedate2.getDate())
+//              ) {
+//                   return [false, ""]
+//              }
+//              return [true, ""];
+//      }});
+
 </script>
+<%@ include file="/template/script.html" %>
 </body>
 </html>

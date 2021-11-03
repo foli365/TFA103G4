@@ -27,7 +27,29 @@ public class passwordReset extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		doPost(req, res);
+		MemberService memSvc = new MemberService();
+		String token = req.getParameter("token");
+		System.out.println("new token :" + token);
+		try {
+			DecodedJWT jwt = JWT.decode(token);
+			Integer id = new Integer(jwt.getKeyId());
+			String subPassword = memSvc.findByPrimaryKey(id).getPassword().substring(7);
+			Algorithm algorithm = Algorithm.HMAC256(SECRET);
+			JWTVerifier verifier = JWT.require(algorithm)
+					.withIssuer(ISSUER)
+					.withSubject(SUB)
+					.withClaim("password", subPassword)
+					.build();
+			jwt = verifier.verify(token);
+			RequestDispatcher passed = req.getRequestDispatcher("/register_and_login/reset_password.jsp");
+			passed.forward(req, res);
+		} catch (Exception e) {
+			req.setAttribute("invalid", "此連結已失效");
+			RequestDispatcher failed = req.getRequestDispatcher("/register_and_login/reset_password.jsp");
+			failed.forward(req, res);
+		}
+		
+		
 	}
 
 	@Override
@@ -40,11 +62,11 @@ public class passwordReset extends HttpServlet {
 		String passwordConfirm = req.getParameter("passwordConfirm");
 		String passwordReg = "^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{8,}$";
 		if (!password.trim().equals(passwordConfirm.trim())) {
-			req.setAttribute("passwordDiff", "請檢查新密碼與確認新密碼是否相同");
+			req.setAttribute("passwordDiff", "新密碼與確認密碼不同");
 			RequestDispatcher failed = req.getRequestDispatcher("/register_and_login/reset_password.jsp");
 			failed.forward(req, res);
 		} else if (!password.trim().matches(passwordReg)) {
-			req.setAttribute("pwordTooWeak", "新密碼長度不得小於8且至少須有一字母");
+			req.setAttribute("pwordTooWeak", "密碼強度不足");
 			RequestDispatcher failed = req.getRequestDispatcher("/register_and_login/reset_password.jsp");
 			failed.forward(req, res);
 		} else {
@@ -61,11 +83,11 @@ public class passwordReset extends HttpServlet {
 				jwt = verifier.verify(token);
 				String bcryptHashString = BCrypt.withDefaults().hashToString(12, password.toCharArray());
 				memSvc.updatePassword(bcryptHashString, id);
-				req.setAttribute("success", "修改成功");
+				req.setAttribute("success", "已重設密碼，請重新登入");
 				RequestDispatcher success = req.getRequestDispatcher("/register_and_login/reset_password.jsp");
 				success.forward(req, res);
 			} catch (Exception e) {
-				req.setAttribute("invalid", "此連結已失效或不存在");
+				req.setAttribute("invalid", "此連結已失效");
 				RequestDispatcher failed = req.getRequestDispatcher("/register_and_login/reset_password.jsp");
 				failed.forward(req, res);
 			}

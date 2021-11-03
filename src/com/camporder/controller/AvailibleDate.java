@@ -27,6 +27,8 @@ public class AvailibleDate extends HttpServlet{
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+
+		req.setCharacterEncoding("UTF-8");
 		BufferedReader br = new BufferedReader(new InputStreamReader(req.getInputStream()));
 		ObjectMapper objectMapper = new ObjectMapper();
 		String json = "";

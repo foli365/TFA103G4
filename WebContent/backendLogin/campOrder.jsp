@@ -70,7 +70,13 @@
 				</a>
 					<ul class="mky-show">
 						<li><a href="<%=request.getContextPath()%>/emodr/listAllEmodr.jsp" class="shopping_list">商城訂單</a></li>
-					</ul></li>
+					</ul>
+					</li>
+					<li>
+                <form METHOD="get" ACTION="<%=request.getContextPath()%>/backendLogin/home.do">
+                  <button type="submit" class="btn btn-outline-secondary" style="margin-left: 50px;">logout</button>
+                </form>
+                </li>
 			</ul>
 		</nav>
 	</div>
@@ -89,7 +95,7 @@
 			<FORM METHOD="post"
 				ACTION="<%=request.getContextPath()%>/backendLogin/CampOrderBackendServlet.do">
 				<input type="text" class="search" name="campOrderId"
-					placeholder="管理員編號查詢"> <input type="hidden" name="action"
+					placeholder="營地訂單編號查詢"> <input type="hidden" name="action"
 					id="" class="btn_search" value="getOne_For_Display">
 				<button type="submit" class="btn btn-outline-success">查詢</button>
 				<button type="button" class="btn btn-outline-success" id="export2">匯出</button>
@@ -199,5 +205,6 @@
 			});
 		});
 	</script>
+	
 </body>
 </html>

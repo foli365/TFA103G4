@@ -34,23 +34,18 @@ public class Register extends HttpServlet {
 		String name = jwt.getClaim("name").asString();
 		String email = jwt.getSubject();
 		if (memSvc.findByEmail(email)!=null) {
-			req.setAttribute("exist", "此帳號已存在");
+			req.setAttribute("exist", "此email已存在");
 			RequestDispatcher success = req.getRequestDispatcher("/register_and_login/validate_result.jsp");
 			success.forward(req, res);
-			System.out.println("1");
 			return;
 		}
 		String path = getServletContext().getRealPath("/img/avatar.jpg");
 		try {
-			System.out.println("2");
 			Algorithm algorithm = Algorithm.HMAC256(SECRET);
-			System.out.println("3");
 			JWTVerifier verifier = JWT
 					.require(algorithm)
 					.build();
-			System.out.println("4");
 			jwt = verifier.verify(token);
-			System.out.println("5");
 			memSvc.addMember(name, password, email, getPictureByteArray(path));
 			HttpSession session = req.getSession();
 			session.setAttribute("account", name);
@@ -59,7 +54,7 @@ public class Register extends HttpServlet {
 			RequestDispatcher success = req.getRequestDispatcher("/register_and_login/validate_result.jsp");
 			success.forward(req, res);
 		} catch (Exception e) {
-			req.setAttribute("invalid", "此連結已失效");
+			req.setAttribute("invalid", "此連結已失效，請重新操作");
 			RequestDispatcher failed = req.getRequestDispatcher("/register_and_login/validate_result.jsp");
 			failed.forward(req, res);
 		} 
@@ -77,20 +72,20 @@ public class Register extends HttpServlet {
 		String email = req.getParameter("email");
 		MemberService memSvc = new MemberService();
 		if (memSvc.findByEmail(email) != null) {
-			req.setAttribute("emailRepeat", "此電子郵件已被註冊過");
+			req.setAttribute("emailRepeat", "此email已被註冊");
 			req.setAttribute("name", name);
 			RequestDispatcher failed = req.getRequestDispatcher("/register_and_login/register.jsp");
 			failed.forward(req, res);
 			return;
 		} else if (!password.matches(passwordReg)) {
-			req.setAttribute("pwordTooWeak", "密碼長度不得小於8且至少須有一字母");
+			req.setAttribute("pwordTooWeak", "密碼強度不足");
 			req.setAttribute("name", name);
 			req.setAttribute("email", email);
 			RequestDispatcher failed = req.getRequestDispatcher("/register_and_login/register.jsp");
 			failed.forward(req, res);
 			return;
 		} else if (!password.equals(passwordConfirm.trim())) {
-			req.setAttribute("passwordDiff", "請檢查密碼與確認密碼是否相同");
+			req.setAttribute("passwordDiff", "密碼與確認密碼不同");
 			req.setAttribute("name", name);
 			req.setAttribute("email", email);
 			RequestDispatcher failed = req.getRequestDispatcher("/register_and_login/register.jsp");
@@ -109,10 +104,10 @@ public class Register extends HttpServlet {
 						.withExpiresAt(exp)
 						.sign(algorithm);
 				MailService mailService = new MailService();
-				String content = "親愛的" + name + "您好:\n\t請在10分鐘內透過此連結開通帳號:\n\n"+
+				String content = "親愛的" + name + "您好:\n\t點擊以下連結以開通帳號:\n\n"+
 				"http://localhost:8081"+req.getContextPath()+"/account/register.do?token="+token;
 				mailService.sendMail(email, "帳號開通", content);
-				req.setAttribute("success", "請您在10分鐘內前往電子信箱開通帳號");
+				req.setAttribute("success", "註冊成功，請於10分鐘內至電子信箱開通帳號");
 				RequestDispatcher success = req.getRequestDispatcher("/register_and_login/register.jsp");
 				success.forward(req, res);
 			} catch (JWTCreationException e) {

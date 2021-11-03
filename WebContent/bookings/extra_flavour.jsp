@@ -7,7 +7,7 @@
 <%
 	PlanService planSvc = new PlanService();
 	Integer campId = ((CampOrderVO)session.getAttribute("campOrderVO")).getCampId();
-	List<PlanVO> planList = planSvc.getOnePlan(campId);
+	List<PlanVO> planList = planSvc.getByCampId(campId);
 	pageContext.setAttribute("list", planList);
 %>
 <!DOCTYPE html>

@@ -70,7 +70,7 @@ public class CampAlertService {
 
 	public CampAlertVO updateStatus(Integer alertId, Integer campId) {
 		CampsiteVO campsiteVO = dao1.findbyPrimaryKey(campId);
-		dao1.update(campsiteVO);
+		dao1.updateForOne(campsiteVO);
 		CampAlertVO campAlertVO = dao.findByPrimaryKey(alertId);
 		dao.updateStatus(campAlertVO);
 		return campAlertVO;

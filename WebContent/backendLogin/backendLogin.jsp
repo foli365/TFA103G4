@@ -18,7 +18,7 @@
 <body>
 	<div class="logo">
 		<a href="#"> <img src="../images/200x1280.png"
-			style="width: 1280px; height: 200px;">
+			style="width: 100%; height: 200px;">
 		</a>
 	</div>
 	<div class="divform">
@@ -49,7 +49,7 @@
 			</p>
 
 			<div class="button">
-				<button type="submit" class="button_submit">送出</button>
+				<button type="submit" class="btn btn-primary" style="margin-right: 40px;">送出</button>
 				<input type="hidden" name="action" value="login"> <a
 					href="<%=request.getContextPath()%>/homepage/index.jsp">回到首頁</a>
 

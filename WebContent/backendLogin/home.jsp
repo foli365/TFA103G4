@@ -8,10 +8,13 @@
     <script src="https://kit.fontawesome.com/a076d05399.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
     <link rel="stylesheet" href="../css/home.css">
+    <style type="text/css">
+    
+    </style>
 </head>
 <body>
- <div class="container">
-        <nav class="sidebar">
+ <div class="container" id="wrapper">
+        <nav class="sidebar" id="sidebar-wrapper">
             <div class="min_picture">
                 <h1>後臺管理</h1>
             </div>
@@ -54,10 +57,9 @@
                         <li><a href="<%=request.getContextPath()%>/emodr/listAllEmodr.jsp" "shopping_list">商城訂單</a></li>
                     </ul>
                 </li>
-               
-               <li>
+                <li>
                 <form METHOD="get" ACTION="<%=request.getContextPath()%>/backendLogin/home.do">
-                  <button type="submit" class="btn btn-outline-secondary" id="btnlog">logout</button>
+                  <button type="submit" class="btn btn-outline-secondary" style="margin-left: 50px;">logout</button>
                 </form>
                 </li>
             </ul>
@@ -89,6 +91,6 @@
     	setTimeout("fn_forward()",1)
     	}
     </script>
-    <script type="text/javascript">prohibitpreviouspage();</script>
+<script type="text/javascript">prohibitpreviouspage();</script>
 </body>
 </html>

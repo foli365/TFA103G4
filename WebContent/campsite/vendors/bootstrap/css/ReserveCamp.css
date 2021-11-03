@@ -1,12 +1,13 @@
 @import url(reset.css);
 
 body {
+	background-color: #fbefe7;
 	font-family: Arial;
+	margin-bottom: 20px;
 }
 
 .navbar {
 	margin-bottom: 10px;
-	margin-left: 20px;
 }
 
 @media ( max-width : 767px) {
@@ -44,6 +45,12 @@ body {
 	width: 33%;
 }
 
+@media ( max-width : 768px) {
+	.col-md-3 {
+		width: 100%;
+	}
+}
+
 input:focus {
 	border-color: #66afe9;
 	outline: 0;
@@ -54,19 +61,24 @@ input:focus {
 }
 
 .camp-content {
-	border: 3px lightblue solid;
+	/* 	border: 3px lightblue solid; */
+	background-color: white;
+	box-shadow: rgb(0 0 0/ 25%) 0px 2px 4px 0px;
 	margin-right: 27px;
+	margin-bottom: 10px;
+	padding-bottom: 20px;
 	position: relative;
-	height: 1500px;
+	/* 		height: 1500px; */
 }
 
 .camp-title {
-	border: 3px red solid;
+	/* 	border: 3px red solid; */
 	height: 100px;
 }
 
 .camp-name {
 	font-size: 28px;
+	margin-top: 10px;
 	margin-bottom: 5px;
 }
 
@@ -75,20 +87,32 @@ input:focus {
 }
 
 .camp-detail {
-	border: 3px orange solid;
-	height: 1000px;
+	/* 	border: 3px orange solid; */
+	/* 	height: 1000px; */
+	margin-bottom: 10px;
 }
 
 .camp-comment {
-	border: 3px yellow solid;
-	height: 350px;
+	/* 	border: 3px yellow solid; */
+	/* 	height: 350px; */
+	
+}
+
+.comment {
+	margin-top: 10px;
+	font-size: 20px;
+	font-weight: bold;
+}
+
+.camp-row {
+	position: relative;
 }
 
 .order-menu {
 	background-color: #ffffff;
 	box-shadow: rgb(0 0 0/ 25%) 0px 2px 4px 0px;
 	padding: 10px;
-	height: 450px;
+	height: 500px;
 	width: 400px;
 }
 
@@ -110,4 +134,82 @@ input:focus {
 
 .check-in {
 	margin-bottom: 10px;
+}
+
+.total-price {
+	margin-bottom: 10px;
+}
+
+#price {
+	margin-top: 10px;
+	margin-bottom: 10px;
+	font-weight: bold;
+	font-size: 24px;
+	font-weight: bold;
+}
+
+.container-comment {
+	padding: 0px;
+}
+
+.card {
+	border: none;
+	box-shadow: 5px 6px 6px 2px #e9ecef;
+	border-radius: 4px;
+}
+
+.dots {
+	height: 4px;
+	width: 4px;
+	margin-bottom: 2px;
+	background-color: #bbb;
+	border-radius: 50%;
+	display: inline-block
+}
+
+.badge {
+	padding: 7px;
+	padding-right: 9px;
+	padding-left: 16px;
+	box-shadow: 5px 6px 6px 2px #e9ecef
+}
+
+.user-img {
+	margin-top: 4px;
+	margin-right: 10px;
+}
+
+.check-icon {
+	font-size: 17px;
+	color: #c3bfbf;
+	top: 1px;
+	position: relative;
+	margin-left: 3px
+}
+
+.form-check-input {
+	margin-top: 6px;
+	margin-left: -24px !important;
+	cursor: pointer
+}
+
+.form-check-input:focus {
+	box-shadow: none
+}
+
+.icons i {
+	margin-left: 8px
+}
+
+.reply {
+	margin-left: 12px
+}
+
+.reply small {
+	color: #b7b4b4
+}
+
+.reply small:hover {
+	color: green;
+	cursor: pointer
 }

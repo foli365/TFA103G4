@@ -6,7 +6,7 @@
 <%@ page import="com.campAlert.model.*"%>
 <%@ page import="com.members.model.*"%>
 <%@ page import="com.campsite.model.*"%>
-<%@ page import="com.admin.model.*"%>
+<%@ page import="com.adminList.model.*"%>
 <%@ page import="java.util.*"%>
 <%
 	CampAlertDAO dao = new CampAlertDAO();
@@ -101,11 +101,11 @@
 						<li><a
 							href="<%=request.getContextPath()%>/emodr/listAllEmodr.jsp"
 							class="shopping_list">商城訂單</a></li>
-					</ul></li>
-				
-				<li>
+					</ul>
+					</li>
+					<li>
                 <form METHOD="get" ACTION="<%=request.getContextPath()%>/backendLogin/home.do">
-                  <button type="submit" class="btn btn-outline-secondary" id="btnlog">logout</button>
+                  <button type="submit" class="btn btn-outline-secondary" style="margin-left: 50px;">logout</button>
                 </form>
                 </li>
 			</ul>
@@ -132,7 +132,7 @@
 				<th>營地名稱</th>
 				<th>檢舉時間</th>
 				<th>檢舉內容</th>
-				<th>檢舉圖片1</th>
+				<th >檢舉圖片1</th>
 				<th>檢舉圖片2</th>
 				<th>檢舉圖片3</th>
 				<th>檢舉狀態</th>
@@ -256,6 +256,7 @@
 			});
 		}
 	</script>
+	
 
 </body>
 </html>

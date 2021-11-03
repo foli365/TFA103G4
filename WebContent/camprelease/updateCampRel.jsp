@@ -1,146 +1,265 @@
-<%@ page contentType="text/html; charset=UTF-8" pageEncoding="Big5"%>
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="com.camprelease.model.*"%>
-<%@ page import="com.facilities.model.*"%>
-<%@ page import="com.plan.model.*"%>
 <%@ page import="java.util.List.*"%>
 
-
+    
 <%
-CampReleaseVO campreleaseVO = (CampReleaseVO) request.getAttribute("campreleaseVO"); //CampReleaseServlet.java (Concroller) ¦s¤JreqªºempVOª«¥ó (¥]¬AÀ°¦£¨ú¥XªºcampreleaseVO, ¤]¥]¬A¿é¤J¸ê®Æ¿ù»~®ÉªºcampreleaseVOª«¥ó)
-// List<facilitiesVO> facilitieslist = facilitiesSvc.getFacilitiesVO(facilitiesVO.getfacilitiesId());
+CampReleaseVO campreleaseVO = (CampReleaseVO) request.getAttribute("campreleaseVO"); //CampReleaseServlet.java (Concroller) å­˜å…¥reqçš„empVOç‰©ä»¶ (åŒ…æ‹¬å¹«å¿™å–å‡ºçš„campreleaseVO, ä¹ŸåŒ…æ‹¬è¼¸å…¥è³‡æ–™éŒ¯èª¤æ™‚çš„campreleaseVOç‰©ä»¶)
 %>
 
 <!DOCTYPE html>
 <html>
-<head>
-<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
-<title>Àç¦a¸ê®Æ§ó·s</title>
-
-<style type="text/css">
+  <head>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>  
+<title>ç‡Ÿåœ°åˆŠç™»è³‡æ–™æ›´æ–°</title>
+<!-- Bootstrap CSS -->
+      <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+      <link rel="stylesheet" href="<%=request.getContextPath()%>/camprelease/css/icon.css">
+<style>
    body{
-   background-image: url("<%=request.getContextPath()%>/camprelease/images/camppic/9719.jpg");
-   }
-</style>
+       background-color: #FFEEE1;
+       background-position: center;
+       background-size: cover;
+       font-family: sans-serif;
+       margin-top: 40px;
+       font-family: arial;
+       margin: 30px;
+      }
+ #main {
+	background-color: #E4F5E9;
+	margin-top: 150px;
+	border-radius: 30px;
+	width: 600px;
+	height: 70%;
+	box-shadow: 0 2px 4px rgb(0 0 0/ 10%), 0 8px 16px rgb(0 0 0/ 10%);
+}
+#gocamping {
+margin-top: 15px;
+margin-bottom: 10px;
+text-align: center;
+}
+h3 {
+	margin-top: 15px;
+	text-align: center;
+	margin-bottom: 10px;
+}
 
+h4 {
+	text-align: center;
+	color: #9c9494;
+	margin-bottom: 40px;
+}
+
+#submit {
+	margin-top: 25px;
+	border-radius: 20px;
+	margin-bottom: 20px;
+	text-align: center;
+}
+</style>
 </head>
 <body>
-
-<table id="table-1">
-	<tr><td>
-		 <h3>Àç¦a¸ê®Æ­×§ï</h3>
-		 <h4><a href="<%=request.getContextPath()%>/camprelease/Select_Page.jsp"><img src="images/title_camp.png" width="100" height="32" border="0">back home</a></h4>
-	</td></tr>
+<header class="header" id="gocamping">
+  <h1 class="header__title">Go campingç‡Ÿåœ°æ›´æ–°</h1><br>
+  <table id="table-1">
+		 <h4><a href="<%=request.getContextPath()%>/camprelease/Select_Page.jsp"><img src="images/gocamping.jpg" width="500" height="125" border="0"><br>back Home</a></h4>
 </table>
-
-<h3>¸ê®Æ­×§ï:</h3>
-
-<%-- ¿ù»~ªí¦C --%>
+</header>
+<%-- éŒ¯èª¤è¡¨åˆ— --%>
 <c:if test="${not empty errorMsgs}">
-	<font style="color:red">½Ğ­×¥¿¥H¤U¿ù»~:</font>
+	<font style="color:red">è«‹ä¿®æ­£ä»¥ä¸‹éŒ¯èª¤:</font>
 	<ul>
 		<c:forEach var="message" items="${errorMsgs}">
 			<li style="color:red">${message}</li>
 		</c:forEach>
 	</ul>
 </c:if>
-<jsp:useBean id="campreleaseSvc" scope="page" class="com.camprelease.model.CampReleaseService" />
+
+    <div class="container mt-5" id="main">
+        <div class="row g-3">
 <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/camprelease/camprelease.do" name="form1" enctype="multipart/form-data">
-<table>
-	<tr>
-		<td>Àç¦a½s¸¹:<font color=red><b>*</b></font></td>
-		<td><%=campreleaseVO.getCampId()%></td>
-	</tr>
-	<tr>
-		<td>·|­û½s¸¹:<font color=red><b>*</b></font></td>
-		<td><%=campreleaseVO.getMemberId()%></td>
-	</tr>
-	<tr>
-		<td>Àç¦a¦WºÙ:</td>
-		<td><input type="TEXT" name="campName" size="45" value="${campreleaseVO.campName}" ></td>
-	</tr>
-	<tr>
-		<td>¦a§}:</td>
-		<td><input type="TEXT" name="location" size="45"	value="<%=campreleaseVO.getLocation()%>" /></td>
-	</tr>
-	<tr>
-		<td>¸g«×:</td>
-		<td><input type="TEXT" name="latitude" size="45"	value="<%=campreleaseVO.getLatitude()%>" /></td>
-	</tr>
-	<tr>
-		<td>½n«×:</td>
-		<td><input type="TEXT" name="longtitude" size="45" value="<%=campreleaseVO.getLongtitude()%>" /></td>
-	</tr>
-	<tr>
-		<td>Àç¦a¤¶²Ğ:</td>
-		<td><input type="TEXT" name="campDescription" size="45" value="<%=campreleaseVO.getCampDescription()%>" /></td>
-	</tr>
-	<tr>
-		<td>»ù®æ:</td>
-		<td><input type="TEXT" name="campPrice" size="45" value="<%=campreleaseVO.getCampPrice()%>" /></td>
-	</tr>
-	<tr>
-		<td>¤é´Á:</td>
-		<td><input name="listedTime" id="f_date1" type="text" ></td>
-	</tr>
-	<tr>
-		<td>pic1:</td>
-		<td><input type="file" name="picture1" /></td>
-	</tr>
-	<tr>
-		<td>pic2:</td>
-		<td><input type="file" name="picture2" /></td>
-	</tr>
-	<tr>
-		<td>pic3:</td>
-		<td><input type="file" name="picture3" /></td>
-	</tr>
-	<tr>
-		<td>pic4:</td>
-		<td><input type="file" name="picture4" /></td>
-	</tr>
-	<tr>
-		<td>pic5:</td>
-		<td><input type="file" name="picture5" /></td>
-	</tr>
-	
-<!-- 	<tr> -->
-<!-- 		<td>Pic1:</td> -->
-<!-- 		<td><input type="file" size="50" name="picture1" -->
-<%-- 		     value="<%= (campreleaseVO==null)? "" : campreleaseVO.getPicture1()%>" /></td> --%>
-<!-- 	</tr> -->
-<!-- 	<tr> -->
-<!-- 		<td>Pic2:</td> -->
-<!-- 		<td><input type="file" size="50" name="picture2" -->
-<%-- 		     value="<%= (campreleaseVO==null)? "" : campreleaseVO.getPicture2()%>" /></td> --%>
-<!-- 	</tr> -->
-<!-- 	<tr> -->
-<!-- 		<td>Pic3:</td> -->
-<!-- 		<td><input type="file" size="50" name="picture3" -->
-<%-- 		     value="<%= (campreleaseVO==null)? "" : campreleaseVO.getPicture3()%>" /></td> --%>
-<!-- 	</tr> -->
-<!-- 	<tr> -->
-<!-- 		<td>Pic4:</td> -->
-<!-- 		<td><input type="file" size="50" name="picture4" -->
-<%-- 		     value="<%= (campreleaseVO==null)? "" : campreleaseVO.getPicture4()%>" /></td> --%>
-<!-- 	</tr> -->
-<!-- 	<tr> -->
-<!-- 		<td>Pic5:</td> -->
-<!-- 		<td><input type="file" size="50" name="picture5" -->
-<%-- 		     value="<%= (campreleaseVO==null)? "" : campreleaseVO.getPicture5()%>" /></td> --%>
-<!-- 	</tr> -->
+<!--           <div class="col-md-8"> -->
+<%--             <label for="inputcampId" class="form-label">ç‡Ÿåœ°ç·¨è™Ÿ<font color=red><b>*</b></font><%=campreleaseVO.getCampId()%></label> --%>
+<!--           </div> -->
+<!--           <div class="col-md-6"> -->
+<%--             <label for="inputmemberId" class="form-label">æœƒå“¡ç·¨è™Ÿ<font color=red><b>*</b></font><%=campreleaseVO.getMemberId()%></label> --%>
+<!--           </div> -->
+          <div class="col-md-6">
+            <label for="inputcampName" class="form-label">ç‡Ÿåœ°åç¨±</label>
+            <input type="text" class="form-control" name="campName" id="campName" value="${campreleaseVO.campName == null ? '' : campreleaseVO.campName}" required>
+          </div>
+          <div class="col-md-6">
+            <label for="inputcampPrice" class="form-label">ç‡Ÿåœ°åƒ¹æ ¼(ä¸€æ™š)</label>
+            <input type="text" class="form-control" name="campPrice" id="campPrice" value="${campreleaseVO.campPrice == null ? '' : campreleaseVO.campPrice}">
+          </div>
+          <div class="col-md-6">
+            <label for="inputcampLimit" class="form-label">ç‡Ÿåœ°äººæ•¸ä¸Šé™</label>
+            <input type="text" class="form-control" name="campLimit" id="campLimit" value="${campreleaseVO.campLimit == null ? '' : campreleaseVO.campLimit}">
+          </div>
+          <div class="col-md-12">
+            <label for="inputcampDescription" class="form-label">ç‡Ÿåœ°ä»‹ç´¹</label>
+            <input type="text" class="form-control" name="campDescription" value="${campreleaseVO.campDescription == null ? '' : campreleaseVO.campDescription}" >
+          </div>
+<!--           <div class="col-md-6"> -->
+<!--             <label for="inputlistedTime" class="form-label">ç‡Ÿæ¥­é–‹å§‹æ™‚é–“</label> -->
+<%--             <input type="text" class="form-control" name="openTime" id="openTime" value="${campreleaseVO.openTime == null ? '' : campreleaseVO.openTime}"> --%>
+<!--             <label for="inputlistedTime" class="form-label">ç‡Ÿæ¥­çµæŸæ™‚é–“</label> -->
+<%--             <input type="text" class="form-control" name="closeTime" id="closeTime" value="${campreleaseVO.closeTime == null ? '' : campreleaseVO.closeTime}"> --%>
+<!--           </div> -->
+          <div class="col-md-6">
+            <label for="inputlistedTime" class="form-label">ä¸Šæ¶æ—¥æœŸ</label>
+            <input type="text" class="form-control" name="listedTime" id="listedTime" value="${campreleaseVO.listedTime == null ? '' : campreleaseVO.listedTime}">
+          </div>
+  <!-- åœ°é» -->
+          <div class="form-row mt-4">
+            <h3>åœ°é»æ›´æ–°</h3><br>
+            <div class="col">
+              <div id="webbulutumap" style="height: 280px;"></div>
+                <input type="text" name="location" value="${campreleaseVO.location == null ? '' : campreleaseVO.location}" size="40" class="wpcf7-form-control wpcf7-text wpcf7-validates-as-required" id="address" aria-required="true" aria-invalid="false" placeholder="Street Address"/><br><br>
+                 <input type="text" name="latitude" value="${campreleaseVO.latitude}" placeholder="latitude" id="latitude"/><br><br>
+                 <input type="text" name="longtitude" value="${campreleaseVO.longtitude == null ? '' : campreleaseVO.longtitude}" placeholder="longitude" id="longitude"/><br><br>
+                 <a href="#" id="find-address" title="Find Address" class="button">Find Address</a>
+            </div>
+          </div>
+          <div class="form-row mt-4">
+            <h3>åœ–ç‰‡æ›´æ–°</h3><br>
+					<h5>
+						<label>Pic1: <input type="file" accept="image/*"
+							name="picture1"  value="<%= (campreleaseVO==null)? "" :campreleaseVO.getPicture1()%>"></label>
+					</h5>
+					<h5>
+						<label>Pic2: <input type="file" accept="image/*"
+							name="picture2" value="<%= (campreleaseVO==null)? "" :campreleaseVO.getPicture2()%>"></label>
+					</h5>
+					<h5>
+						<label>Pic3: <input type="file" accept="image/*"
+							name="picture3" value="<%= (campreleaseVO==null)? "" :campreleaseVO.getPicture3()%>"></label>
+					</h5>
+					<h5>
+						<label>Pic4: <input type="file" accept="image/*"
+							name="picture4" value="<%= (campreleaseVO==null)? "" :campreleaseVO.getPicture4()%>"></label>
+					</h5>
+					<h5>
+						<label>Pic5: <input type="file" accept="image/*"
+							name="picture5" value="<%= (campreleaseVO==null)? "" :campreleaseVO.getPicture5()%>"></label>
+					</h5>
+				</div>
+				<div class="button-row d-flex mt-4">
+					<div>
+						<input type="hidden" name="action" value="update"> 
+						<input type="hidden" name="campId" value="<%=campreleaseVO.getCampId()%>"> 
+						<input type="hidden" name="memberId" value="<%=campreleaseVO.getMemberId()%>">
+						<button class="btn btn-success ml-auto" type="submit" id="submit">Send</button>
+					</div>
+				</div>
 
+			</FORM>
+        </div>
+    </div>
+    
+     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script> 
+     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.min.js" integrity="sha384-Atwg2Pkwv9vp0ygtn1JAojH0nYbwNJLPhwyoVbhoPwBhjQPR5VtM2+xf0Uwh9KtT" crossorigin="anonymous"></script> 
 
-</table>
-<br>
+    
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBsqt74NPCV93dg4iOpJtLL0RDvMSfsnYM"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+<script type="text/javascript">
+    var map;
+    var marker;
+    var myLatlng = new google.maps.LatLng('25.0511536', '121.5675248');
+    var geocoder = new google.maps.Geocoder();
+    var infowindow = new google.maps.InfoWindow();
+    function initialize() {
+        var mapOptions = {
+        zoom: 10,
+        center: myLatlng,
+        mapTypeId: google.maps.MapTypeId.ROADMAP
+        };
+        map = new google.maps.Map(document.getElementById("webbulutumap"), mapOptions);
+        marker = new google.maps.Marker({
+            map: map,
+            position: myLatlng,
+            draggable: true
+        });
+        google.maps.event.addListener(marker, 'dragend', function() {
+            geocoder.geocode({'latLng': marker.getPosition()}, function(results, status) {
+                if (status == google.maps.GeocoderStatus.OK) {
+                    if (results[0]) {
+                        var address_components = results[0].address_components;
+                        var components={};
+                        jQuery.each(address_components, function(k,v1) {jQuery.each(v1.types, function(k2, v2){components[v2]=v1.long_name});});
+                        $('#latitude').val(marker.getPosition().lat());
+                        $('#longitude').val(marker.getPosition().lng());
+                        infowindow.setContent(results[0].formatted_address);
+                        infowindow.open(map, marker);
+                    }
+                }
+            });
+        });
+    }
+    google.maps.event.addDomListener(window, 'load', initialize);
+</script>
+<script>
+  $("#find-address").click(function(){
+    var apiKey = 'AIzaSyBsqt74NPCV93dg4iOpJtLL0RDvMSfsnYM';
+    var  address =  $('#address').val();
+    var addressClean = address.replace(/\s+/g, '+');
+    var geocoder = new google.maps.Geocoder();
+    geocoder.geocode({
+      address: addressClean 
+    }, function(results, status) {
+      console.log(status);
+      if (status == 'OK') {
+        longitude = results[0].geometry.location.lng();
+        latitude = results[0].geometry.location.lat();
+        document.getElementById("longitude").value = longitude;
+        document.getElementById("latitude").value = latitude;
+        // geocoder is asynchronous, do this in the callback function
+        longitude = $("input#longitude").val();
+        latitude = $("input#latitude").val();
+        if (longitude && latitude) {
+          longitude = parseFloat(longitude);
+          latitude = parseFloat(latitude);
+          initMap(longitude, latitude);
+        }
+      } else alert("geocode failed")
+    });
+    function initMap(longitude, latitude) {
+    var myLatlng = new google.maps.LatLng(latitude, longitude);
+    var mapOptions = {
+      zoom: 12,
+      center: myLatlng,
+      mapTypeId: google.maps.MapTypeId.ROADMAP
+    }
+    var map = new google.maps.Map(document.getElementById("webbulutumap"), mapOptions);
+    var marker = new google.maps.Marker({
+      position: myLatlng,
+      map: map,
+      draggable: true,
+      title: "Where's your garden?"
+    });
+    google.maps.event.addListener(marker, 'dragend', function() {
+            geocoder.geocode({'latLng': marker.getPosition()}, function(results, status) {
+                if (status == google.maps.GeocoderStatus.OK) {
+                    if (results[0]) {
+                        var address_components = results[0].address_components;
+                        var components={};
+                        jQuery.each(address_components, function(k,v1) {jQuery.each(v1.types, function(k2, v2){components[v2]=v1.long_name});});
 
-<input type="hidden" name="action" value="update">
-<input type="hidden" name="campId" value="<%=campreleaseVO.getCampId()%>">
-<input type="hidden" name="memberId" value="<%=campreleaseVO.getMemberId()%>">
-<input type="submit" value="°e¥X­×§ï"></FORM>
-</body>
-
-<!-- =========================================¥H¤U¬° datetimepicker ¤§¬ÛÃö³]©w========================================== -->
+                        $('#latitude').val(marker.getPosition().lat());
+                        $('#longitude').val(marker.getPosition().lng());
+                        infowindow.setContent(results[0].formatted_address);
+                        infowindow.open(map, marker);
+                    }
+                }
+            });
+        });
+  };
+}) 
+</script>
+  </body>
+  <!-- =========================================ä»¥ä¸‹ç‚º datetimepicker ä¹‹ç›¸é—œè¨­å®š========================================== -->
 
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/datetimepicker/jquery.datetimepicker.css" />
 <script src="<%=request.getContextPath()%>/datetimepicker/jquery.js"></script>
@@ -156,17 +275,110 @@ CampReleaseVO campreleaseVO = (CampReleaseVO) request.getAttribute("campreleaseV
 </style>
 
 <script>
+// listedTime
         $.datetimepicker.setLocale('zh');
-        $('#f_date1').datetimepicker({
+        $('#listedTime').datetimepicker({
            theme: '',              //theme: 'dark',
  	       timepicker:false,       //timepicker:true,
- 	       step: 1,                //step: 60 (³o¬Otimepickerªº¹w³]¶¡¹j60¤ÀÄÁ)
+ 	       step: 1,                //step: 60 (é€™æ˜¯timepickerçš„é è¨­é–“éš”60åˆ†é˜)
  	       format:'Y-m-d H:i:s',         //format:'Y-m-d H:i:s',
  		   value: '<%=campreleaseVO.getListedTime()%>', // value:   new Date(),
-           //disabledDates:        ['2017/06/08','2017/06/09','2017/06/10'], // ¥h°£¯S©w¤£§t
-           //startDate:	            '2017/07/10',  // °_©l¤é
-           //minDate:               '-1970-01-01', // ¥h°£¤µ¤é(¤£§t)¤§«e
-           //maxDate:               '+1970-01-01'  // ¥h°£¤µ¤é(¤£§t)¤§«á
+           //disabledDates:        ['2017/06/08','2017/06/09','2017/06/10'], // å»é™¤ç‰¹å®šä¸å«
+           startDate:	            '2021/11/01',  // èµ·å§‹æ—¥
+           //minDate:               '-1970-01-01', // å»é™¤ä»Šæ—¥(ä¸å«)ä¹‹å‰
+           //maxDate:               '+1970-01-01'  // å»é™¤ä»Šæ—¥(ä¸å«)ä¹‹å¾Œ
         });
-</script>   
+        
+        
+// // openTime
+//         $.datetimepicker.setLocale('zh'); // kr ko ja en
+//         $('#openTime').datetimepicker({
+//            theme: '',          //theme: 'dark',
+//            timepicker: true,   //timepicker: false,
+//            step: 30,            //step: 60 (é€™æ˜¯timepickerçš„é è¨­é–“éš”60åˆ†é˜)
+// 	       format: 'H:i:s',
+<%-- 	       value: '<%=campreleaseVO.getOpenTime()%>' , --%>
+//            //disabledDates:    ['2017/06/08','2017/06/09','2017/06/10'], // å»é™¤ç‰¹å®šä¸å«
+//            startDate:	        '2021/11/01',  // èµ·å§‹æ—¥
+//            //minDate:           '-1970-01-01', // å»é™¤ä»Šæ—¥(ä¸å«)ä¹‹å‰
+//            //maxDate:           '+1970-01-01'  // å»é™¤ä»Šæ—¥(ä¸å«)ä¹‹å¾Œ
+//         });
+        
+        
+   
+//         // ----------------------------------------------------------ä»¥ä¸‹ç”¨ä¾†æ’å®šç„¡æ³•é¸æ“‡çš„æ—¥æœŸ-----------------------------------------------------------
+
+//         //      1.ä»¥ä¸‹ç‚ºæŸä¸€å¤©ä¹‹å‰çš„æ—¥æœŸç„¡æ³•é¸æ“‡
+//              var somedate1 = new Date('2021-11-01');
+//              $('#openTime').datetimepicker({
+//                  beforeShowDay: function(date) {
+//                	  if (  date.getYear() <  somedate1.getYear() || 
+//         		           (date.getYear() == somedate1.getYear() && date.getMonth() <  somedate1.getMonth()) || 
+//         		           (date.getYear() == somedate1.getYear() && date.getMonth() == somedate1.getMonth() && date.getDate() < somedate1.getDate())
+//                      ) {
+//                           return [false, ""]
+//                      }
+//                      return [true, ""];
+//              }});
+
+        
+//         //      2.ä»¥ä¸‹ç‚ºæŸä¸€å¤©ä¹‹å¾Œçš„æ—¥æœŸç„¡æ³•é¸æ“‡
+//              var somedate2 = new Date('2021-11-30');
+//              $('#openTime').datetimepicker({
+//                  beforeShowDay: function(date) {
+//                	  if (  date.getYear() >  somedate2.getYear() || 
+//         		           (date.getYear() == somedate2.getYear() && date.getMonth() >  somedate2.getMonth()) || 
+//         		           (date.getYear() == somedate2.getYear() && date.getMonth() == somedate2.getMonth() && date.getDate() > somedate2.getDate())
+//                      ) {
+//                           return [false, ""]
+//                      }
+//                      return [true, ""];
+//              }});
+        
+// // closeTime
+//                 $.datetimepicker.setLocale('zh'); // kr ko ja en
+//         $('#closeTime').datetimepicker({
+//            theme: '',          //theme: 'dark',
+//            timepicker: true,   //timepicker: false,
+//            step: 30,            //step: 60 (é€™æ˜¯timepickerçš„é è¨­é–“éš”60åˆ†é˜)
+// 	       format: 'H:i:s',
+<%-- 	       value: '<%=campreleaseVO.getCloseTime()%>' , --%>
+//            //disabledDates:    ['2017/06/08','2017/06/09','2017/06/10'], // å»é™¤ç‰¹å®šä¸å«
+//            startDate:	        '2021/11/01',  // èµ·å§‹æ—¥
+//            //minDate:           '-1970-01-01', // å»é™¤ä»Šæ—¥(ä¸å«)ä¹‹å‰
+//            //maxDate:           '+1970-01-01'  // å»é™¤ä»Šæ—¥(ä¸å«)ä¹‹å¾Œ
+//         });
+        
+        
+   
+//         // ----------------------------------------------------------ä»¥ä¸‹ç”¨ä¾†æ’å®šç„¡æ³•é¸æ“‡çš„æ—¥æœŸ-----------------------------------------------------------
+
+//         //      1.ä»¥ä¸‹ç‚ºæŸä¸€å¤©ä¹‹å‰çš„æ—¥æœŸç„¡æ³•é¸æ“‡
+//              var somedate1 = new Date('2021-11-01');
+//              $('#closeTime').datetimepicker({
+//                  beforeShowDay: function(date) {
+//                	  if (  date.getYear() <  somedate1.getYear() || 
+//         		           (date.getYear() == somedate1.getYear() && date.getMonth() <  somedate1.getMonth()) || 
+//         		           (date.getYear() == somedate1.getYear() && date.getMonth() == somedate1.getMonth() && date.getDate() < somedate1.getDate())
+//                      ) {
+//                           return [false, ""]
+//                      }
+//                      return [true, ""];
+//              }});
+
+        
+//         //      2.ä»¥ä¸‹ç‚ºæŸä¸€å¤©ä¹‹å¾Œçš„æ—¥æœŸç„¡æ³•é¸æ“‡
+//              var somedate2 = new Date('2021-11-30');
+//              $('#closeTime').datetimepicker({
+//                  beforeShowDay: function(date) {
+//                	  if (  date.getYear() >  somedate2.getYear() || 
+//         		           (date.getYear() == somedate2.getYear() && date.getMonth() >  somedate2.getMonth()) || 
+//         		           (date.getYear() == somedate2.getYear() && date.getMonth() == somedate2.getMonth() && date.getDate() > somedate2.getDate())
+//                      ) {
+//                           return [false, ""]
+//                      }
+//                      return [true, ""];
+//              }});
+        
+</script>
 </html>

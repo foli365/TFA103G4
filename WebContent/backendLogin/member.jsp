@@ -55,18 +55,18 @@
 					 <li><a href="<%=request.getContextPath()%>/backendLogin/campOrder.jsp"class="camp_order">營地訂單</a></li>
 						<li><a href="<%=request.getContextPath()%>/backendLogin/alert.jsp" class="alert_managament">檢舉管理</a></li>
 					</ul></li>
-				<li>
-				<a href="#" class="mky-btn">商城管理 <span
+				<li><a href="#" class="mky-btn">商城管理 <span
 						class="fas fa-caret-down second_2"></span>
 				</a>
 					<ul class="mky-show">
 						<li><a href="<%=request.getContextPath()%>/emodr/listAllEmodr.jsp" class="shopping_list">商城訂單</a></li>
-					</ul></li>
-				 <li>
+					</ul>
+					</li>
+					<li>
                 <form METHOD="get" ACTION="<%=request.getContextPath()%>/backendLogin/home.do">
-                  <button type="submit" class="btn btn-outline-secondary" id="btnlog">logout</button>
+                  <button type="submit" class="btn btn-outline-secondary" style="margin-left: 50px;">logout</button>
                 </form>
-                </li>	
+                </li>
 			</ul>
 		</nav>
 	</div>
@@ -166,6 +166,7 @@
 		});
 		});
 	</script>
+	
 		</body>
 		</html>
 	

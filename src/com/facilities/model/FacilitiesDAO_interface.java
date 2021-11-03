@@ -1,6 +1,8 @@
 package com.facilities.model;
 
+import java.util.ArrayList;
 import java.util.List;
+
 
 public interface FacilitiesDAO_interface {
 	
@@ -13,5 +15,6 @@ public interface FacilitiesDAO_interface {
 	List<FacilitiesVO> findbyCampId(Integer campId);
 	void deletebyCampId(Integer campId);
 	FacilitiesVO getCampId(Integer campId);
+	ArrayList<FacilitiesVO> getCamp(Integer campId);
 	void facilitiesInsertWithCampId(FacilitiesVO facilitiesVO, java.sql.Connection con);
 }

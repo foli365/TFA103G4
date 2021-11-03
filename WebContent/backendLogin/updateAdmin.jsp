@@ -2,7 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-<%@ page import="com.admin.model.*"%>
+<%@ page import="com.adminList.model.*"%>
 <%@ page import="java.util.*"%>
 <%
 	AdminListVO adminListVO = (AdminListVO) request.getAttribute("adminListVO");

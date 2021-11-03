@@ -9,7 +9,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
+
 import jdbc.util.CompositeQuery.jdbcUtil_CompositeQuery_Campsite;
 
 public class CampsiteDAO implements CampsiteDAO_Interface {
@@ -340,7 +340,6 @@ public class CampsiteDAO implements CampsiteDAO_Interface {
 				campsiteVO.setPicture1(rs.getBytes("PICTURE1"));
 				campsiteVO.setCampId(rs.getInt("CAMP_ID"));
 				campsiteVO.setMemberId(rs.getInt("MEMBER_ID"));
-				;
 
 				campsiteList.add(campsiteVO);
 			}
@@ -374,80 +373,6 @@ public class CampsiteDAO implements CampsiteDAO_Interface {
 		return campsiteList;
 	}
 
-	@Override
-	public List<CampsiteVO> getMultiSearchCampsite(String campName, Date strDate, Date endDate, Integer customerNum,
-			Integer campPriceL, Integer campPriceH) {
-		List<CampsiteVO> campsiteList = new ArrayList<>();
-		Connection con = null;
-		PreparedStatement pstmt = null;
-		ResultSet rs = null;
-		CampsiteVO campsiteVO = null;
-
-		String condition = "";
-		String sql = "SELECT c.CAMP_ID, MEMBER_ID, CAMP_NAME, LOCATION, CAMP_DESCRIPTION, CAMP_PRICE, CAMP_OPENING_TIME, EMPTY_CAMP_LEFT, PICTURE1 "
-				+ "FROM CAMPSITE c LEFT JOIN CAMPSITE_TENT_STATUS cts on c.CAMP_ID = cts.CAMP_ID " + "WHERE {criteria}";
-
-		if (campName != null && campName != "") {
-			condition = condition + "(CAMP_NAME LIKE '%" + campName + "%' OR LOCATION LIKE '%" + campName + "%') ";
-		}
-		if (strDate != null && endDate != null) {
-			condition = condition + "AND CAMP_OPENING_TIME BETWEEN '" + strDate + "' AND '" + endDate + "' ";
-		}
-		if (campPriceL != null && campPriceH != null) {
-			condition = condition + "AND CAMP_PRICE BETWEEN '" + campPriceL + "' AND '" + campPriceH + "' ";
-		}
-		if (customerNum != null) {
-			condition = condition + "AND EMPTY_CAMP_LEFT > " + customerNum;
-		}
-		sql = sql.replace("{criteria}", condition);
-		System.out.println(sql);
-
-		try {
-			con = DriverManager.getConnection(URL, USER, PASSWORD);
-			pstmt = con.prepareStatement(sql);
-
-			rs = pstmt.executeQuery();
-
-			while (rs.next()) {
-				campsiteVO = new CampsiteVO();
-				campsiteVO.setCampName(rs.getString("CAMP_NAME"));
-				campsiteVO.setLocation(rs.getString("LOCATION"));
-				campsiteVO.setCampDescription(rs.getString("CAMP_DESCRIPTION"));
-				campsiteVO.setPicture1(rs.getBytes("PICTURE1"));
-				campsiteVO.setCampId(rs.getInt("CAMP_ID"));
-				campsiteVO.setMemberId(rs.getInt("MEMBER_ID"));
-
-				campsiteList.add(campsiteVO);
-			}
-		} catch (SQLException se) {
-			se.printStackTrace();
-		} finally {
-			if (rs != null) {
-				try {
-					rs.close();
-				} catch (SQLException se) {
-					se.printStackTrace();
-				}
-			}
-
-			if (pstmt != null) {
-				try {
-					pstmt.close();
-				} catch (SQLException se) {
-					se.printStackTrace();
-				}
-			}
-
-			if (con != null) {
-				try {
-					con.close();
-				} catch (SQLException se) {
-					se.printStackTrace();
-				}
-			}
-		}
-		return campsiteList;
-	}
 
 	@Override
 	public List<CampsiteVO> getAll(Map<String, String[]> map) {
@@ -459,14 +384,13 @@ public class CampsiteDAO implements CampsiteDAO_Interface {
 		CampsiteVO campsiteVO = null;
 
 		try {
-
 			con = DriverManager.getConnection(URL, USER, PASSWORD);
 			String finalSQL = "SELECT DISTINCT c.CAMP_ID, MEMBER_ID, CAMP_NAME, LOCATION, "
-					+ "CAMP_DESCRIPTION, CAMP_PRICE, PICTURE1 "
+					+ "CAMP_DESCRIPTION, CAMP_PRICE, SITE_STATE, PICTURE1 "
 					+ "FROM CAMPSITE c LEFT JOIN CAMPSITE_TENT_STATUS cts on c.CAMP_ID = cts.CAMP_ID"
-					+ jdbcUtil_CompositeQuery_Campsite.get_WhereCondition(map)
-					+ "ORDER BY CAMP_PRICE"; //DESC
-			
+					+ jdbcUtil_CompositeQuery_Campsite.get_WhereCondition(map);
+//					+ "ORDER BY CAMP_PRICE"; //DESC
+
 			pstmt = con.prepareStatement(finalSQL);
 			System.out.println("¡´¡´finalSQL(by DAO) = " + finalSQL);
 			rs = pstmt.executeQuery();
@@ -477,6 +401,7 @@ public class CampsiteDAO implements CampsiteDAO_Interface {
 				campsiteVO.setLocation(rs.getString("LOCATION"));
 				campsiteVO.setCampDescription(rs.getString("CAMP_DESCRIPTION"));
 				campsiteVO.setCampPrice(rs.getInt("CAMP_PRICE"));
+				campsiteVO.setSiteState(rs.getInt("SITE_STATE"));
 				campsiteVO.setPicture1(rs.getBytes("PICTURE1"));
 				campsiteVO.setCampId(rs.getInt("CAMP_ID"));
 				campsiteVO.setMemberId(rs.getInt("MEMBER_ID"));
@@ -514,4 +439,53 @@ public class CampsiteDAO implements CampsiteDAO_Interface {
 		return list;
 	}
 
+	public void updateForOne(CampsiteVO campsiteVO) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+
+		try {
+			con = DriverManager.getConnection(URL, USER, PASSWORD);
+			pstmt = con.prepareStatement(UPDATE_STMT);
+
+			pstmt.setInt(1, campsiteVO.getMemberId());
+			pstmt.setString(2, campsiteVO.getCampName());
+			pstmt.setString(3, campsiteVO.getLocation());
+			pstmt.setDouble(4, campsiteVO.getLatitude());
+			pstmt.setDouble(5, campsiteVO.getLongtitude());
+			pstmt.setString(6, campsiteVO.getCampDescription());
+			pstmt.setInt(7, campsiteVO.getCampPrice());
+			pstmt.setInt(8, campsiteVO.getCampLimit());
+			pstmt.setTimestamp(9, campsiteVO.getListedTime());
+			pstmt.setInt(10, campsiteVO.getSiteState());
+			pstmt.setInt(11, campsiteVO.getLovedCount());
+			pstmt.setInt(12, (campsiteVO.getReportedCount() + 1));
+			pstmt.setBytes(13, campsiteVO.getCampLicense());
+			pstmt.setBytes(14, campsiteVO.getPicture1());
+			pstmt.setBytes(15, campsiteVO.getPicture2());
+			pstmt.setBytes(16, campsiteVO.getPicture3());
+			pstmt.setBytes(17, campsiteVO.getPicture4());
+			pstmt.setBytes(18, campsiteVO.getPicture5());
+			pstmt.setInt(19, campsiteVO.getCampId());
+
+			pstmt.executeUpdate();
+
+		} catch (SQLException se) {
+			se.printStackTrace();
+		} finally {
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+	}
 }

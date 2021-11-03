@@ -190,8 +190,10 @@
 						</div>
 					</div>
 				</div>
-				<c:forEach var="postVO" items="${list}">
-					<div id="post" class="row card mb-3" style="max-width: 800px">
+				<%@include file="/template/page1.file" %>
+				<div class="infinite-container">
+				<c:forEach var="postVO" items="${list}" begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>">
+					<div id="post" class="row card mb-3 infinite-item" style="max-width: 800px">
 						<div class="row g-0">
 							<div class="col">
 								<div class="card-body">
@@ -206,77 +208,30 @@
 													style="text-decoration: none; color: inherit;">${postVO.title}</a>
 											</h4>
 										</div>
-										<div class="col-1 text-end">
-											<div class="btn-group dropend">
-												<button id="option" class="btn btn-secondary btn-sm" type="button"
-													data-bs-toggle="dropdown" aria-expanded="false">
-													<i class="fas fa-ellipsis-v"></i>
-												</button>
-												<ul class="dropdown-menu">
-													<li class="dropdown-item text-end">
-														<button data-bs-toggle="modal"
-															data-bs-target="#popEdit${postVO.postId}">編輯</button>
-													</li>
-													<li class="dropdown-item text-end">
-														<form method="post"
-															action="<%=request.getContextPath()%>/post/post.do">
-															<input id="delete"
-																style="background-color: white; border: 0px"
-																type="submit" value="刪除"> <input type="hidden"
-																name="action" value="delete"> <input type="hidden"
-																name="postId" value="${postVO.postId}">
-														</form>
-													</li>
-												</ul>
-											</div>
-										</div>
 									</div>
 									<p class="card-text">${postVO.article}</p>
-									<p class="read-more"></p>
-								</div>
-							</div>
-						</div>
-					</div>
-					<div class="modal fade" id="popEdit${postVO.postId}" data-bs-backdrop="static"
-						data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-						<div class="modal-dialog modal-xl">
-							<div class="modal-content">
-								<div class="modal-header">
-									<h5 class="modal-title" id="staticBackdropLabel">編輯文章</h5>
-									<button type="button" class="btn-close" data-bs-dismiss="modal"
-										aria-label="Close"></button>
-								</div>
-								<div class="modal-body">
-									<FORM method="POST" ACTION="<%=request.getContextPath()%>/post/post.do">
-										<div class="mb-1">
-											<input name="title" type="text" placeholder="文章標題" class="form-control"
-												id="recipient-name" value="${postVO.title}" />
-										</div>
-										<div class="mb-3">
-											<textarea name="article" class="summernote" id="summernote2" cols="30"
-												rows="30">${postVO.article}</textarea>
-										</div>
-										<div class="modal-footer">
-											<button type="button" class="btn btn-secondary"
-												data-bs-dismiss="modal">取消</button>
-											<button type="submit" class="btn btn-primary">確認</button>
-											<input type="hidden" name="action" value="update"> <input type="hidden"
-												name="postId" value="${postVO.postId}">
-										</div>
-									</FORM>
+									<div class="read-more"></div>
 								</div>
 							</div>
 						</div>
 					</div>
 				</c:forEach>
+				<%@include file="/template/page2.file" %>
+				</div>
 			</div>
 		</div>
 		<input type="hidden" id="name" value="${memberVO.name}">
+		
 	</div>
 	<%@ include file="/template/script.html" %>
-		<script src="./summernote-0.8.18-dist/summernote-lite.js"></script>
-		<script src="./summernote-0.8.18-dist/lang/summernote-zh-TW.js"></script>
-		<script>
+	<script src="<%=request.getContextPath()%>/post/imakewebthings-waypoints-34d9f6d/lib/jquery.waypoints.min.js"></script>
+	<script src="<%=request.getContextPath()%>/post/imakewebthings-waypoints-34d9f6d/lib/shortcuts/infinite.min.js"></script>
+	<script src="<%=request.getContextPath()%>/post/summernote-0.8.18-dist/summernote-lite.js"></script>
+	<script src="<%=request.getContextPath()%>/post/summernote-0.8.18-dist/lang/summernote-zh-TW.js"></script>
+	<script>
+		let infinite = new Waypoint.Infinite({
+			  element: $('.infinite-container')[0]
+			});
 			// 		function uploadImage(image) {
 			// 			var data = new FormData();
 			// 			data.append("img", image);

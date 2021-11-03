@@ -34,7 +34,9 @@ h4 {
 
 a:hover{
 	color:red;
-/* 	font-size: 25px; */
+
+ 	font-size: 25px;
+
 }
 
 table {

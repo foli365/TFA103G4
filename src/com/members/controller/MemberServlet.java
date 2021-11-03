@@ -104,24 +104,24 @@ public class MemberServlet extends HttpServlet {
 			String bcryptHashString = memSvc.findByPrimaryKey(id).getPassword();
 			BCrypt.Result result = BCrypt.verifyer().verify(currentPassword.toCharArray(), bcryptHashString);
 			if (!result.verified) {
-				req.setAttribute("wrongPword", "密碼或確認密碼輸入錯誤，請重新檢查");
+				req.setAttribute("wrongPword", "目前密碼輸入錯誤");
 				req.setAttribute("index", "2");
 				View.forward(req, res);
 				return;
 			} else {
 				String passwordReg = "^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{8,}$";
 				if (!newPassword.matches(passwordReg)) {
-					req.setAttribute("pwordTooWeak", "密碼長度不得小於8且至少須有一字母");
+					req.setAttribute("pwordTooWeak", "密碼強度不足");
 					req.setAttribute("index", "2");
 					View.forward(req, res);
 					return;
 				} else if (newPassword.equals(currentPassword)) {
-					req.setAttribute("samePword", "新密碼請勿與舊密碼相同");
+					req.setAttribute("samePword", "請勿設置與目前密碼相同密碼");
 					req.setAttribute("index", "2");
 					View.forward(req, res);
 					return;
 				} else if (!newPassword.equals(confirmNewPword)) {
-					req.setAttribute("wrongPword", "密碼或確認密碼輸入錯誤，請重新檢查");
+					req.setAttribute("wrongPword", "確認密碼與新密碼不同");
 					req.setAttribute("index", "2");
 					View.forward(req, res);
 					return;
@@ -137,12 +137,12 @@ public class MemberServlet extends HttpServlet {
 
 	}
 
-	// 取出上傳的檔案名稱 (因為API未提供method,所以必須自行撰寫)
+	// 嚙踝蕭嚙碼嚙磕嚙褒迎蕭嚙褕案名嚙踝蕭 (嚙稽嚙踝蕭API嚙踝蕭嚙踝蕭嚙踝蕭method,嚙課以嚙踝蕭嚙踝蕭嚙諛行撰嚙篇)
 	public String getFileNameFromPart(Part part) {
 		String header = part.getHeader("content-disposition");
-		System.out.println("header=" + header); // 測試用
+		System.out.println("header=" + header); // 嚙踝蕭嚙調伐蕭
 		String filename = new File(header.substring(header.lastIndexOf("=") + 2, header.length() - 1)).getName();
-		System.out.println("filename=" + filename); // 測試用
+		System.out.println("filename=" + filename); // 嚙踝蕭嚙調伐蕭
 		if (filename.length() == 0) {
 			return null;
 		}

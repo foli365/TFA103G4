@@ -11,8 +11,6 @@ public interface CampsiteDAO_Interface {
 	CampsiteVO findbyPrimaryKey(Integer campId);
 	List<CampsiteVO> getAll();
 	List<CampsiteVO> getSearchCampsite(String campName);
-	List<CampsiteVO> getMultiSearchCampsite(String campName, Date strDate, Date endDate, 
-											Integer customerNum, Integer campPriceL, 
-											Integer campPriceH); // 自己做的複合查詢
 	List<CampsiteVO> getAll(Map<String, String[]> map); // 複合查詢
+	void updateForOne(CampsiteVO campsiteVO);
 }

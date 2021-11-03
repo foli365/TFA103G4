@@ -26,6 +26,9 @@ public class LoginHandler extends HttpServlet {
 		} catch (Throwable e) {
 			return false;
 		}
+		if(memSvc.findByPrimaryKey(memSvc.findByEmail(email).getMemberId()).getMemberStatus() == 1) {
+			return false;
+		}
 		BCrypt.Result result = BCrypt.verifyer().verify(password.toCharArray(), bcryptHashString);
 		return result.verified;
 	}
@@ -35,43 +38,49 @@ public class LoginHandler extends HttpServlet {
 		// TODO Auto-generated method stub
 		req.setCharacterEncoding("UTF-8");
 
-		// 【取得使用者 帳號(account) 密碼(password)】
+		
 		String email = req.getParameter("email");
 		String password = req.getParameter("password");
 
-		// 【檢查該帳號 , 密碼是否有效】
+		
 		if (!allowUser(email, password)) {
 			MemberService memSvc = new MemberService();
 			MembersVO membersVO = memSvc.findByEmail(email);
 			String url = "/register_and_login/login.jsp";
 			RequestDispatcher failedView = req.getRequestDispatcher(url);
 			if (membersVO != null) {
+				if(memSvc.findByPrimaryKey(memSvc.findByEmail(email).getMemberId()).getMemberStatus() == 1) {
+					req.setAttribute("invalid", "此帳號已被停權");
+					failedView.forward(req, res);
+					return;
+				}
 				req.setAttribute("email", membersVO.getEmail());
-				req.setAttribute("noPassword", "你所輸入的密碼錯誤。");
+				req.setAttribute("noPassword", "密碼錯誤。");
 				failedView.forward(req, res);
 				return;
 			} else {
-				req.setAttribute("noEmail", "你所輸入的電子信箱錯誤");
-				req.setAttribute("noPassword", "你所輸入的密碼錯誤。");
+				req.setAttribute("noEmail", "帳號錯誤");
+				req.setAttribute("noPassword", "密碼錯誤。");
 				failedView.forward(req, res);
 			}
 
 		} else {
-			// 【帳號 , 密碼有效時, 才做以下工作】
+			
 			MemberService memSvc = new MemberService();
 			HttpSession session = req.getSession();
-			session.setAttribute("account", memSvc.findByEmail(email).getName()); // *工作1: 才在session內做已經登入過的標識
+			session.setAttribute("account", memSvc.findByEmail(email).getName());
 			session.setAttribute("id", memSvc.findByEmail(email).getMemberId());
+			session.setAttribute("membership", memSvc.findByPrimaryKey(memSvc.findByEmail(email).getMemberId()).getMembership());
 			try {
 				String location = (String) session.getAttribute("location");
 				if (location != null) {
-					session.removeAttribute("location"); // *工作2: 看看有無來源網頁 (-->如有來源網頁:則重導至來源網頁)
+					session.removeAttribute("location"); 
 					res.sendRedirect(location);
 					return;
 				}
 			} catch (Exception ignored) {
 			}
-			res.sendRedirect(req.getContextPath() + "/homepage/index.jsp"); // *工作3: (-->如無來源網頁:則重導至login_success.jsp)
+			res.sendRedirect(req.getContextPath() + "/homepage/index.jsp");
 		}
 
 	}

@@ -107,6 +107,7 @@
 							<div class="mb-3 mx-auto" style="width: 400px;">
 								<input type="password" placeholder="更新密碼" class="form-control"
 									id="newPword" name="newPword">
+								<div id="emailHelp" class="form-text">密碼長度最少8碼，並且須至少有一字母和一數字</div>
 							</div>
 							<div class="mb-3 mx-auto" style="width: 400px;">
 								<input type="password" placeholder="確認更新密碼" class="form-control"

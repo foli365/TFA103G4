@@ -1,5 +1,50 @@
-<%@ page contentType="text/html; charset=UTF-8" pageEncoding="Big5"%>
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page import="java.util.*" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@page import="oracle.net.aso.f"%>
+<%@page import="org.apache.jasper.tagplugins.jstl.core.ForEach"%>
+<%@page import="com.facilities.model.*"%>
+<%@page import="com.camprelease.model.*"%>
+<%@page import="com.campsitetentstatus.model.*"%>
+<% 
+	Integer id = null;
+	if(session.getAttribute("id") != null){
+	id = Integer.parseInt(session.getAttribute("id").toString());
+	System.out.println("id: " + id);
+	pageContext.setAttribute("id", id);		
+	}
+// æœ‰ç‡Ÿåœ°æ™‚è¨­å‚™å¯æ–°å¢
+	CampReleaseService csvc = new CampReleaseService();
+	FacilitiesService fsvc = new FacilitiesService();
+	List<CampReleaseVO> memberCamp = csvc.getAllforMember(id);
+	ArrayList<CampReleaseVO> noFacCamp = new ArrayList<CampReleaseVO>();
+	for(int i = 0; i < memberCamp.size(); i++){
+		FacilitiesVO fvo = fsvc.getCampId(memberCamp.get(i).getCampId());
+		System.out.println(fvo);		
+		if(fvo == null){
+			noFacCamp.add(memberCamp.get(i));
+		} 
+	}	
+	pageContext.setAttribute("noFacCamp", noFacCamp);
+	pageContext.setAttribute("memberCamp", memberCamp);
+	
+// æœ‰ç‡Ÿåœ°æ™‚å¸³ç¯·ç‹€æ…‹å¯æ–°å¢
+	CampReleaseService csvctent = new CampReleaseService();
+	CampsiteTentStatusService ctss = new CampsiteTentStatusService();
+	List<CampReleaseVO> memberCamptent = csvctent.getAllforMember(1);
+	ArrayList<CampReleaseVO> noTentCamptent = new ArrayList<CampReleaseVO>();
+	for(int i = 0; i < memberCamp.size(); i++){
+		CampsiteTentStatusVO cvo = ctss.getOneCampsiteTentStatus(memberCamp.get(i).getCampId());
+		System.out.println(cvo);		
+		if(cvo == null){
+			noTentCamptent.add(memberCamp.get(i));
+		}
+	}	
+	pageContext.setAttribute("noTentCamptent", noTentCamptent);
+	pageContext.setAttribute("memberCamptent", memberCamptent);
+%>
+<jsp:useBean id="campreleaseSvc" scope="page" class="com.camprelease.model.CampReleaseService" />
+<jsp:useBean id="facilitiesSvc" scope="page" class="com.facilities.model.FacilitiesService" />
 
 <!DOCTYPE html>
 <html>
@@ -7,8 +52,8 @@
 <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>­º­¶</title>
-<link rel="stylesheet" href="<%=request.getContextPath()%>/camprelease/css/bootstrap.min5.1.0.css">
+<title>é¦–é </title>
+<%@ include file="/template/navbar.jsp" %>
 
 <style>
 body {
@@ -37,115 +82,75 @@ body {
 </head>
 <body>
 
-	<%-- ¿ù»~ªí¦C --%>
+	<%-- éŒ¯èª¤è¡¨åˆ— --%>
 	<c:if test="${not empty errorMsgs}">
-		<font style="color: red">½Ğ­×¥¿¥H¤U¿ù»~:</font>
+		<font style="color: red">è«‹ä¿®æ­£ä»¥ä¸‹éŒ¯èª¤:</font>
 		<ul>
 			<c:forEach var="message" items="${errorMsgs}">
 				<li style="color: red">${message}</li>
 			</c:forEach>
 		</ul>
 	</c:if>
-	<jsp:useBean id="campreleaseSvc" scope="page" class="com.camprelease.model.CampReleaseService" />
-	<jsp:useBean id="planSvc" scope="page" class="com.plan.model.PlanService" />
-	<jsp:useBean id="facilitiesSvc" scope="page" class="com.facilities.model.FacilitiesService" />
+	
 
 	<main class="container">
-		<!-- ¼ĞÃD-->
+		<!-- æ¨™é¡Œ-->
 		<div
-			class="d-flex align-items-center p-3 my-3 text-white bg-purple rounded shadow-sm">
+			class="d-flex align-items-center p-3 my-3 text-black bg-purple rounded shadow-sm">
 			<img class="me-3" src="./svg/triangle-half.svg" alt="" width="48"
 				height="38">
 			<div class="lh-1">Go Camping</div>
 		</div>
 
-		<!-- ·s¼WÀç¦a¥Zµn -->
-		<div class="my-3 p-3 rounded shadow-sm">
-			<h6 class="border-bottom pb-2 mb-0">Àç¦a¸ê®ÆºŞ²z</h6>
+		<!-- ç‡Ÿåœ°åˆŠç™»ç›¸é—œ -->
+		<div class="my-3 p-3 rounded ">
+			<h6 class="border-bottom pb-2 mb-0">ç‡Ÿåœ°è³‡æ–™ç®¡ç†</h6>
 			<div class="d-flex text-muted pt-3">
 				<img class="me-3" src="./svg/tree.svg" alt="" width="48" height="38">
 				<p class="pb-3 mb-0 small lh-sm border-bottom">
-					<strong class="d-block text-gray-dark">Àç¦a¤W¬[ºŞ²z</strong> 
+					<strong class="d-block text-gray-dark">ç‡Ÿåœ°ä¸Šæ¶ç®¡ç†</strong> 
 					<a href='<%=request.getContextPath()%>/camprelease/addCampRel.jsp'>Add</a>
 					a new Camp.
 				</p>
 			</div>
-		</div>
-		<!-- Àç¦a¸ê®Æ¬d¸ß¬ÛÃö -->
-		<div class="my-3 p-3 rounded ">
-			<h6 class="border-bottom pb-2 mb-0">Àç¦a¸ê®Æ¬d¸ß(¬d¸ßÀç¦a¥Zµn¬ÛÃö¸ê®Æ)</h6>
-			<div class="d-flex text-muted pt-3">
-				<img class="me-3" src="./svg/tree.svg" alt="" width="48" height="38">
-
-				<p class="pb-3 mb-0 small lh-sm border-bottom">
-					<strong class="d-block text-blue">¬d¸ß¥ş³¡Àç¦a¥Zµn¬ÛÃö¸ê®Æ</strong> 
-					<a href='listCampRel.jsp'>List</a> all Camps.
-				</p>
-			</div>
 			<div class="d-flex text-muted pt-3">
 				<img class="me-3" src="./svg/tree.svg" alt="" width="48" height="38">
 				<p class="pb-3 mb-0 small lh-sm border-bottom">
-					<strong class="d-block text-gray-dark">¥ÑÀç¦a½s¸¹¬d¸ß</strong>
+					<strong class="d-block text-gray-dark">ç”±ç‡Ÿåœ°åç¨±æŸ¥è©¢</strong>
 				</p>
 				<ul>
 					<li>
 						<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/camprelease/camprelease.do">
 							<select size="1" name="campId">
-								<c:forEach var="campreleaseVO" items="${campreleaseSvc.all}">
-									<option value="${campreleaseVO.campId}">${campreleaseVO.campId}
-								</c:forEach>
-							</select> <input type="hidden" name="action" value="getOne_For_Display">
-							<input type="submit" value="°e¥X">
-						</FORM>
-					</li>
-				</ul>
-			</div>
-			<div class="d-flex text-muted pt-3">
-				<img class="me-3" src="./svg/tree.svg" alt="" width="48" height="38">
-				<p class="pb-3 mb-0 small lh-sm border-bottom">
-					<strong class="d-block text-gray-dark">¥ÑÀç¦a¦WºÙ¬d¸ß</strong>
-				</p>
-				<ul>
-					<li>
-						<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/camprelease/camprelease.do">
-							<select size="1" name="campId">
-								<c:forEach var="campreleaseVO" items="${campreleaseSvc.all}">
+								<c:forEach var="campreleaseVO" items="${memberCamp}">
 									<option value="${campreleaseVO.campId}">${campreleaseVO.campName}
 								</c:forEach>
 							</select> <input type="hidden" name="action" value="getOne_For_Display">
-							<input type="submit" value="°e¥X">
+							<input type="submit" value="é€å‡º">
 						</FORM>
 					</li>
 				</ul>
 			</div>
 		</div>
 
-		<!-- °t®M¸ê®Æ¬ÛÃö -->
+		<!-- é…å¥—è³‡æ–™ç›¸é—œ -->
 		<div class="my-3 p-3 rounded shadow-sm">
-			<h6 class="border-bottom pb-2 mb-0">°t®M¸ê®ÆºŞ²z(¬d¸ß°t®M¬ÛÃö¸ê®Æ)</h6>
-			<div class="d-flex text-muted pt-3">
-				<img class="me-3" src="./svg/tree.svg" alt="" width="48" height="38">
-
-				<p class="pb-3 mb-0 small lh-sm border-bottom">
-					<strong class="d-block text-blue">¬d¸ß¥ş³¡°t®M¬ÛÃö¸ê®Æ</strong> 
-					<a href='listPlan.jsp'>List</a> all Plans.
-				</p>
-			</div>
+			<h6 class="border-bottom pb-2 mb-0">é…å¥—è³‡æ–™ç®¡ç†</h6>
 			<div class="d-flex text-muted pt-3">
 				<img class="me-3" src="./svg/tree.svg" alt="" width="48" height="38">
 				<p class="pb-3 mb-0 small lh-sm border-bottom">
-					<strong class="d-block text-gray-dark">¥Ñ°t®M½s¸¹¬d¸ß</strong>
+					<strong class="d-block text-gray-dark">é…å¥—æ–°å¢ç®¡ç†</strong> 
+					a new Plan.
 				</p>
 				<ul>
 					<li>
 						<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/plan/plan.do">
-							<select size="1" name="planId">
-								<c:forEach var="planVO" items="${planSvc.all}">
-									<option value="${planVO.planId}">${planVO.planId}
+							<select size="1" name="campId">
+								<c:forEach var="campreleaseVO" items="${memberCamp}">
+									<option value="${campreleaseVO.campId}">${campreleaseVO.campName}
 								</c:forEach>
-							</select> <input type="hidden" name="action"
-								value="getOnePlan_For_Display"> <input type="submit"
-								value="°e¥X">
+							</select> <input type="hidden" name="action" value="go_to_addPlan">
+							<input type="submit" value="é€å‡º">
 						</FORM>
 					</li>
 				</ul>
@@ -153,57 +158,110 @@ body {
 			<div class="d-flex text-muted pt-3">
 				<img class="me-3" src="./svg/tree.svg" alt="" width="48" height="38">
 				<p class="pb-3 mb-0 small lh-sm border-bottom">
-					<strong class="d-block text-gray-dark">¥Ñ°t®M¦WºÙ¬d¸ß</strong>
+					<strong class="d-block text-gray-dark">ç”±ç‡Ÿåœ°åç¨±æŸ¥è©¢</strong>
 				</p>
 				<ul>
 					<li>
 						<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/plan/plan.do">
-							<select size="1" name="planId">
-								<c:forEach var="planVO" items="${planSvc.all}">
-									<option value="${planVO.planId}">${planVO.planName}
+							<select size="1" name="campId">
+								<c:forEach var="campreleaseVO" items="${memberCamp}">
+									<option value="${campreleaseVO.campId}">${campreleaseVO.campName}
 								</c:forEach>
-							</select> <input type="hidden" name="action"
-								value="getOnePlan_For_Display"> <input type="submit"
-								value="°e¥X">
+							</select> <input type="hidden" name="action" value="getOnePlan_For_Display">
+							<input type="submit" value="é€å‡º">
 						</FORM>
 					</li>
 				</ul>
 			</div>
 		</div>
-		<!--³]¬I¸ê®Æ¬ÛÃö -->
+		
+		<!--è¨­æ–½è³‡æ–™ç›¸é—œ -->
 		<div class="my-3 p-3 rounded shadow-sm">
-			<h6 class="border-bottom pb-2 mb-0">³]¬I¸ê®ÆºŞ²z(¬d¸ß³]¬I¬ÛÃö¸ê®Æ)</h6>
-			<div class="d-flex text-muted pt-3">
-				<img class="me-3" src="./svg/tree.svg" alt="" width="48" height="38">
-
-				<p class="pb-3 mb-0 small lh-sm border-bottom">
-					<strong class="d-block text-blue">¬d¸ß¥ş³¡³]¬I¬ÛÃö¸ê®Æ</strong> <a
-						href='listFac.jsp'>List</a> all Facilities.
-				</p>
-			</div>
+			<h6 class="border-bottom pb-2 mb-0">è¨­æ–½è³‡æ–™ç®¡ç†</h6>
 			<div class="d-flex text-muted pt-3">
 				<img class="me-3" src="./svg/tree.svg" alt="" width="48" height="38">
 				<p class="pb-3 mb-0 small lh-sm border-bottom">
-					<strong class="d-block text-gray-dark">¥Ñ³]¬I½s¸¹¬d¸ß</strong>
+					<strong class="d-block text-gray-dark">è¨­æ–½æ–°å¢ç®¡ç†</strong> 
+					a new Fac.
 				</p>
 				<ul>
 					<li>
 						<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/facilities/facilities.do">
-							<select size="1" name="facilitiesId">
-								<c:forEach var="facilitiesVO" items="${facilitiesSvc.all}">
-									<option value="${facilitiesVO.facilitiesId}">${facilitiesVO.facilitiesId}
+							<select size="1" name="campId">
+								<c:forEach var="campreleaseVO" items="${noFacCamp}">
+									<option value="${campreleaseVO.campId}">${campreleaseVO.campName}
+								</c:forEach>
+							</select> <input type="hidden" name="action" value="go_to_addFacil">
+							<input type="submit" value="é€å‡º">
+						</FORM>
+					</li>
+				</ul>
+			</div>
+			<div class="d-flex text-muted pt-3">
+				<img class="me-3" src="./svg/tree.svg" alt="" width="48" height="38">
+				<p class="pb-3 mb-0 small lh-sm border-bottom">
+					<strong class="d-block text-gray-dark">ç”±ç‡Ÿåœ°åç¨±æŸ¥è©¢</strong>
+				</p>
+				<ul>
+					<li>
+						<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/facilities/facilities.do">
+							<select size="1" name="campId">
+								<c:forEach var="campreleaseVO" items="${memberCamp}">
+									<option value="${campreleaseVO.campId}">${campreleaseVO.campName}
 								</c:forEach>
 							</select> <input type="hidden" name="action"
 								value="getOneFacilities_For_Display"> <input type="submit"
-								value="°e¥X">
+								value="é€å‡º">
+						</FORM>
+					</li>
+				</ul>
+			</div>
+		</div>
+		
+				<!-- ç‡Ÿåœ°å¸³ç¯·ç‹€æ…‹ç›¸é—œ -->
+		<div class="my-3 p-3 rounded shadow-sm">
+			<h6 class="border-bottom pb-2 mb-0">ç‡Ÿåœ°å¸³ç¯·ç‹€æ…‹è³‡æ–™ç®¡ç†</h6>
+			<div class="d-flex text-muted pt-3">
+				<img class="me-3" src="./svg/tree.svg" alt="" width="48" height="38">
+				<p class="pb-3 mb-0 small lh-sm border-bottom">
+					<strong class="d-block text-gray-dark">ç‡Ÿåœ°å¸³ç¯·ç‹€æ…‹æ–°å¢ç®¡ç†</strong> 
+					a new CampTent.
+				</p>
+				<ul>
+					<li>
+						<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/campsitetentstatus/campsitetentstatus.do">
+							<select size="1" name="campId">
+								<c:forEach var="campreleaseVO" items="${memberCamp}">
+									<option value="${campreleaseVO.campId}">${campreleaseVO.campName}
+								</c:forEach>
+							</select> <input type="hidden" name="action" value="go_to_addCampTent">
+							<input type="submit" value="é€å‡º">
+						</FORM>
+					</li>
+				</ul>
+			</div>
+			<div class="d-flex text-muted pt-3">
+				<img class="me-3" src="./svg/tree.svg" alt="" width="48" height="38">
+				<p class="pb-3 mb-0 small lh-sm border-bottom">
+					<strong class="d-block text-gray-dark">ç”±ç‡Ÿåœ°åç¨±æŸ¥è©¢</strong>
+				</p>
+				<ul>
+					<li>
+						<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/campsitetentstatus/campsitetentstatus.do">
+							<select size="1" name="campId">
+								<c:forEach var="campreleaseVO" items="${memberCamp}">
+									<option value="${campreleaseVO.campId}">${campreleaseVO.campName}
+								</c:forEach>
+							</select> <input type="hidden" name="action" value="getAllOfOne">
+							<input type="submit" value="é€å‡º">
 						</FORM>
 					</li>
 				</ul>
 			</div>
 		</div>
 	</main>
-
-	<script
-		src="<%=request.getContextPath()%>/camprelease/js/popper.min.2.10.2.js"></script>
+	
+	<%@ include file="/template/script.html" %>
+	<script src="<%=request.getContextPath()%>/camprelease/js/popper.min.2.10.2.js"></script>
 </body>
 </html>

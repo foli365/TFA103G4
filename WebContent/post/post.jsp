@@ -19,9 +19,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<link
-	href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css"
-	rel="stylesheet" />
+<%@ include file="/template/navbar.jsp"%>
 <link rel="stylesheet"
 	href="https://use.fontawesome.com/releases/v5.15.4/css/all.css">
 <link rel="stylesheet" href="post.css" />
@@ -31,6 +29,7 @@ button:focus {
 	outline: none !important;
 	box-shadow: none !important;
 }
+
 #userImage {
 	background-size: cover;
 	max-width: 50px;
@@ -42,6 +41,17 @@ button:focus {
 		url('data:image/jpg;base64,${memSvc.findByPrimaryKey(postVO.authorId).base64Image}');
 	max-height: 50px;
 }
+
+#commentImage {
+	background-size: cover;
+	max-width: 50px;
+	height: 50px;
+	max-height: 50px;
+	border-radius: 50%;
+	display: inline-block;
+	max-height: 50px;
+}
+
 #option {
 	background-color: white;
 	border: 0px;
@@ -54,85 +64,39 @@ button:focus {
 <title>${postVO.title}</title>
 </head>
 <body style="background-color: #484442">
-	<nav class="navbar navbar-expand-md navbar-light sticky-top"
-		style="background-color: #fbefe7">
-		<div class="container-fluid">
-			<a class="navbar-brand ms-lg-5" href="../Homepage/index.html"
-				style="font-size: 1.25em">GoCamping</a>
-			<button class="navbar-toggler" type="button"
-				data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
-				aria-controls="navbarSupportedContent" aria-expanded="false"
-				aria-label="Toggle navigation">
-				<span class="navbar-toggler-icon"></span>
-			</button>
-			<div class="collapse navbar-collapse" id="navbarSupportedContent">
-				<form class="d-flex">
-					<input class="form-control me-2 rounded-pill ml-0" type="search"
-						placeholder="Search" aria-label="Search" />
-					<button id="searchIcon" class="btn" type="submit"
-						style="padding: 0">
-						<i class="bi bi-search"></i>
-					</button>
-				</form>
-				<ul class="navbar-nav ms-auto mb-2 mb-lg-0 me-xl-5">
-					<li class="nav-item"><a id="hosting" class="nav-link" href="#"
-						style="color: green">上架營地</a></li>
-					<li class="nav-item"><a class="nav-link" href="#"
-						style="color: #e40580">商城</a></li>
-					<li class="nav-item"><a class="nav-link" href="index.jsp"
-						style="color: #0b83ed">論壇</a></li>
-					<li class="nav-item"><a class="nav-link"
-						href="../RegisterAndLogin/register.html">註冊</a></li>
-					<li class="nav-item"><a class="nav-link"
-						href="../RegisterAndLogin/login.html">登入</a></li>
-					<li class="nav-item dropdown"><a
-						class="nav-link dropdown-toggle" href="#" id="navbarDropdown"
-						role="button" data-bs-toggle="dropdown" aria-expanded="false">
-							會員姓名 </a>
-						<ul class="dropdown-menu dropdown-menu-end"
-							aria-labelledby="navbarDropdown">
-							<li><a class="dropdown-item"
-								href="../Account/accountCenter.html">會員中心</a></li>
-							<li><a class="dropdown-item"
-								href="../Account/editProfile.html">編輯會員資料</a></li>
-							<li>
-								<hr class="dropdown-divider" />
-							</li>
-							<li><a class="dropdown-item" href="#">登出</a></li>
-						</ul></li>
-				</ul>
-			</div>
-		</div>
-	</nav>
+
 	<div class="container" id="main"
 		style="padding-bottom: 25px; margin-top: 50px; max-width: 1100px; background-color: white; border-radius: 10px">
 		<div class="container">
 			<div class="px-3">
 				<div class="row">
-				<h1 class="col-11" style="padding-top: 30px;">${postVO.title}</h1>
-				<div class="col-1 text-end">
-					<div class="btn">
-						<button id="option" style="border: 0px;" class="btn btn-outline-secondary btn-sm" type="button"
-							data-bs-toggle="dropdown" aria-expanded="false">
-							<i class="fas fa-ellipsis-v fa-2x"></i>
-						</button>
-						<ul class="dropdown-menu" style="width: 60px">
-							<li class="dropdown-item text-end">
-								<button data-bs-toggle="modal"s
-									data-bs-target="#popEdit${postVO.postId}" style="background-color: white; border: 0px">編輯</button>
-							</li>
-							<li class="dropdown-item text-end">
-								<form method="post"
-									action="<%=request.getContextPath()%>/post/post.do">
-									<input id="delete" style="background-color: white; border: 0px"
-										type="submit" value="刪除"> <input type="hidden"
-										name="action" value="delete"> <input type="hidden"
-										name="postId" value="${postVO.postId}">
-								</form>
-							</li>
-						</ul>
+					<h1 class="col-11" style="padding-top: 30px;">${postVO.title}</h1>
+					<div class="col-1 text-end">
+						<div class="btn">
+							<button id="option" style="border: 0px;"
+								class="btn btn-outline-secondary btn-sm" type="button"
+								data-bs-toggle="dropdown" aria-expanded="false">
+								<i class="fas fa-ellipsis-v fa-2x"></i>
+							</button>
+							<ul class="dropdown-menu" style="width: 60px">
+								<li class="dropdown-item text-end">
+									<button data-bs-toggle="modal" s
+										data-bs-target="#popEdit${postVO.postId}"
+										style="background-color: white; border: 0px">編輯</button>
+								</li>
+								<li class="dropdown-item text-end">
+									<form method="post"
+										action="<%=request.getContextPath()%>/post/post.do">
+										<input id="delete"
+											style="background-color: white; border: 0px" type="submit"
+											value="刪除"> <input type="hidden" name="action"
+											value="delete"> <input type="hidden" name="postId"
+											value="${postVO.postId}">
+									</form>
+								</li>
+							</ul>
+						</div>
 					</div>
-				</div>
 				</div>
 				<div class="row mb-3 px-2 py-2">
 					<div class="col-1" id="userImage"></div>
@@ -170,8 +134,10 @@ button:focus {
 				<div class="container">
 					<c:forEach var="commentVO"
 						items="${commentSvc.findByPostId(postVO.postId)}">
-						<div class="row mb-3 py-2">
-							<div class="col-1" id="userImage"></div>
+						<div class="row mb-2 py-2">
+							<div class="col-1" id="commentImage"
+								style="background-image:
+									url('data:image/jpg;base64,${memSvc.findByPrimaryKey(commentVO.memberId).base64Image}');"></div>
 							<div class="col-2">
 								<small>${memSvc.findByPrimaryKey(commentVO.memberId).name}<br>
 									${commentVO.passed}
@@ -179,6 +145,7 @@ button:focus {
 							</div>
 						</div>
 						<div>${commentVO.content}</div>
+						<hr style="margin-bottom: 5px;">
 					</c:forEach>
 				</div>
 			</div>
@@ -187,10 +154,6 @@ button:focus {
 
 	</div>
 
-
-
-
-	<script
-		src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js"></script>
+	<%@ include file="/template/script.html"%>
 </body>
 </html>

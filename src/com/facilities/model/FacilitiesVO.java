@@ -4,6 +4,11 @@ import java.io.Serializable;
 
 public class FacilitiesVO implements Serializable{
 	
+	@Override
+	public String toString() {
+		return "FacilitiesVO [facilitiesId=" + facilitiesId + ", campId=" + campId + ", bbq=" + bbq + ", wifi=" + wifi
+				+ ", nosmoke=" + nosmoke + ", pets=" + pets + "]";
+	}
 	private Integer facilitiesId;
 	private Integer campId;
 	private Integer bbq;

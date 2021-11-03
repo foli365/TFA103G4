@@ -53,7 +53,7 @@ img {
 						class="fas fa-caret-down second"></span>
 				</a>
 					<ul class="serv-show">
-						<li><a href="<%=request.getContextPath()%>/backendLogin/product/selectAll.jsp"
+						<li><a href="<%=request.getContextPath()%>/product/selectAll.jsp"
 							class="product_list">商品資料表</a></li>
 					</ul></li>
 				<li><a href="#1" class="bom-btn">營地管理 <span
@@ -70,11 +70,11 @@ img {
 				</a>
 					<ul class="mky-show">
 						<li><a href="<%=request.getContextPath()%>/emodr/listAllEmodr.jsp" class="shopping_list">商城訂單</a></li>
-					</ul></li>
-					
-				<li>
+					</ul>
+					</li>
+					<li>
                 <form METHOD="get" ACTION="<%=request.getContextPath()%>/backendLogin/home.do">
-                  <button type="submit" class="btn btn-outline-secondary" id="btnlog">logout</button>
+                  <button type="submit" class="btn btn-outline-secondary" style="margin-left: 50px;">logout</button>
                 </form>
                 </li>
 			</ul>
@@ -127,7 +127,7 @@ img {
 					<td>${VO.campName}</td>
 					<td>${VO.location}</td>
 					<td>${VO.listedTime}</td>
-					<td>${VO.siteState==1 ?  "已停權":"營業中"}</td>
+					<td>${VO.siteState==0 ?  "已停權":"營業中"}</td>
 					<td>${VO.reportedCount}</td>
 					<div id="outerdiv" style="position: fixed; top: 0; left: 0; background: rgba(0, 0, 0, 0.7); z-index: 2; width: 100%; height: 100%; display: none;">
 						<div id="innerdiv" style="position: absolute;">
@@ -242,5 +242,6 @@ img {
 			});
 		}
 	</script>
+	
 </body>
 </html>
